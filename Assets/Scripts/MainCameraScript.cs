@@ -3,6 +3,7 @@
  * Possible improvements: 
  * -Wait for player to reach given point before panning
  * -Zoom in/out depending on players run speed to give larger FOV
+ * 
  */
 
 using System.Collections;
