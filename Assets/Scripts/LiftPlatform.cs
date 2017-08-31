@@ -20,7 +20,7 @@ public class LiftPlatform : MonoBehaviour {
 		atStart = true;
 	}
 
-	void Update() {
+	void FixedUpdate() {
 		if (movingToStart) {
 			MoveToStart ();
 		} else if (movingToTarget) {
