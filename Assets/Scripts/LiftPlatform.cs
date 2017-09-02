@@ -32,12 +32,20 @@ public class LiftPlatform : MonoBehaviour {
 		// Check if the platform is below the player's feet
 		if ((col.transform.position.y - col.gameObject.GetComponent<BoxCollider2D> ().bounds.extents.y) > transform.position.y) {
 
+			// Attatch the player to the platform by parenting them
+			col.transform.parent = transform;
+
 			// The player jumps onto the top of the block, move up to the target
 			if (!movingToTarget && atStart) {
 				Debug.Log("Moving to target");
 				movingToTarget = true;
 			}
 		}
+	}
+
+	void OnCollisionExit2D(Collision2D col) {
+		// Detatch the player
+		col.transform.parent = null;
 	}
 
 	void MoveToTarget() {
