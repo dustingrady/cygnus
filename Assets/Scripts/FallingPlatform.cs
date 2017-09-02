@@ -7,7 +7,6 @@ public class FallingPlatform : MonoBehaviour {
 
 	private Rigidbody2D rb;
 	private Tilemap tilemap;
-	public Tile test;
 	public GameObject fallingPrefab;
 
 	// Use this for initialization
@@ -40,6 +39,12 @@ public class FallingPlatform : MonoBehaviour {
 
 			if (tilemap.GetTile (cellPos) != null) {
 				blockPosition = tilemap.CellToWorld (cellPos) + tilemap.tileAnchor;
+
+				// Get The tile sprite for replacement
+				Sprite replacementSprite = tilemap.GetSprite (cellPos);
+				fallingPrefab.GetComponent<SpriteRenderer> ().sprite = replacementSprite;
+
+				// Delete tile
 				tilemap.SetTile (cellPos, null);
 				tileDestroyed = true;
 				tilesHit.Add (blockPosition);
