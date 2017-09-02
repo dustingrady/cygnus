@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4926672368170742}
   - component: {fileID: 114218745689609376}
   m_Layer: 0
-  m_Name: Door
+  m_Name: Breakable Door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -127,7 +127,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1119793450626098}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -22.5, y: -7.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4106675117680842}
@@ -279,7 +279,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1119793450626098}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 51fac6b1dbd804a48afe5d3f0abfe31c, type: 3}
+  m_Script: {fileID: 11500000, guid: 230cd40d17a10f248950364417a6be00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!212 &212008809462747090
