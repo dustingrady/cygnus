@@ -859,9 +859,9 @@ MonoBehaviour:
   jumpVel: 7
   stdFallMulti: 3.5
   jumpingFallMulti: 3
-  jumpTravel: 2.2
-  jumpSpeed: 2.5
-  curveCutoff: 3.5
+  jumpTravel: 1.8
+  jumpSpeed: 6
+  curveCutoff: 4
   groundMask:
     serializedVersion: 2
     m_Bits: 256

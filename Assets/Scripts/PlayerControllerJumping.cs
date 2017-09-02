@@ -18,13 +18,13 @@ public class PlayerControllerJumping: MonoBehaviour {
 	public float jumpingFallMulti;
 
     [Range(0.01f, 5.0f)]
-    public float jumpTravel = 2.2f;
+    public float jumpTravel = 1.8f;
 
     [Range(0.01f, 10.0f)]
-    public float jumpSpeed = 2.5f;
+    public float jumpSpeed = 6.0f;
 
     [Range(0.01f, 5.0f)]
-    public float curveCutoff = 3.5f;
+    public float curveCutoff = 4.0f;
 
 	public LayerMask groundMask;
 
