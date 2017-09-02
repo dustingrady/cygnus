@@ -29,20 +29,28 @@ public class PlayerController: MonoBehaviour {
 		// Help to visualize the raycast checking the ground
 		Debug.DrawRay (transform.position, Vector3.down, Color.red);
 
-		Move ();
+		
 
 		if (Input.GetKeyDown (KeyCode.Space) && Grounded()) {
 			Jump ();
 		}
-
-		// Gravity adjustment to improve platforming
-		if (rb.velocity.y < 0) {
-			rb.velocity += Vector2.up * Physics2D.gravity.y * (stdFallMulti - 1) * Time.deltaTime;
-		} else if (rb.velocity.y > 0 && !Input.GetKey (KeyCode.Space)) {
-			rb.velocity += Vector2.up * Physics2D.gravity.y * (jumpingFallMulti - 1) * Time.deltaTime;
-		}
 	}
+  
+  //Removed old FixedUpdate()
 
+    void FixedUpdate()
+    {
+        Move();
+        // Gravity adjustment to improve platforming
+        if (rb.velocity.y < 0)
+        {
+            rb.velocity += Vector2.up * Physics2D.gravity.y * (stdFallMulti - 1) * Time.deltaTime;
+        }
+        else if (rb.velocity.y > 0 && !Input.GetKey(KeyCode.Space))
+        {
+            rb.velocity += Vector2.up * Physics2D.gravity.y * (jumpingFallMulti - 1) * Time.deltaTime;
+        }
+    }
 
 	private void Move() {
 		rb.velocity = new Vector2 (Input.GetAxis ("Horizontal") * speed, rb.velocity.y);
