@@ -1,36 +1,51 @@
-﻿/* Purpose: Controls main camera as it follows player throughout environment
- * Status: Working
- * Possible improvements: 
- * -Wait for player to reach given point before panning
- * -Zoom in/out depending on players run speed to give larger FOV
- * 
- */
-
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MainCameraScript : MonoBehaviour {
+public class MainCameraScript : MonoBehaviour
+{
+    GameObject target;
+    [SerializeField]
+    float xMax;
+    [SerializeField]
+    float yMax;
+    [SerializeField]
+    float xMin;
+    [SerializeField]
+    float yMin;
 
-    public GameObject target;
-    public float xOffset = 0;
-    public float yOffset = 0;
-    public float zOffset = 0;
 
-    // Use this for initialization
-    void Start () {
-		
-	}
-	
-    void Update() {
+    float leftCameraBound = 0.47f;
+    float rightCameraBound = 0.53f;
 
-    }
+    float leftbound, rightbound;
 
-    // Late Update preferred so that we ensure target has moved before tracking
-    void LateUpdate()
+    float smoothing = 0.5f;
+    Vector2 velocity = Vector2.zero;
+
+    void Start()
     {
-        this.transform.position = new Vector3(target.transform.position.x + xOffset,
-                                              target.transform.position.y + yOffset,
-                                              target.transform.position.z + zOffset);
+        target = GameObject.FindGameObjectWithTag("Player");
+        rightbound =Camera.main.ViewportToWorldPoint(new Vector3(Mathf.Abs(0.5f - rightCameraBound), 0, 0)).x;
+        Debug.Log(rightbound);
     }
+
+    void Update()
+    {
+        //Debug.Log(Camera.main.WorldToViewportPoint(target.transform.position).x + " "+ leftCameraBound);
+        if(Camera.main.WorldToViewportPoint(target.transform.position).x <= (leftCameraBound - 0.01f))
+        {
+            float camPos = target.transform.position.x + Camera.main.ViewportToWorldPoint(new Vector3(Mathf.Abs(Mathf.Abs(Camera.main.WorldToViewportPoint(target.transform.position).x) - Mathf.Abs(rightCameraBound)), 0, 0)).x;
+            float smoothx = Mathf.SmoothDamp(transform.position.x, target.transform.position.x, ref velocity.x, smoothing);
+            transform.position = new Vector3(Mathf.Clamp(smoothx, xMin, xMax), Mathf.Clamp(target.transform.position.y, yMin, yMax), transform.position.z);
+        }
+
+        else if (Camera.main.WorldToViewportPoint(target.transform.position).x >= (rightCameraBound + 0.01f))
+        {
+            float camPos = target.transform.position.x - Camera.main.ViewportToWorldPoint(new Vector3(Mathf.Abs(Mathf.Abs(Camera.main.WorldToViewportPoint(target.transform.position).x) - Mathf.Abs(leftCameraBound)), 0, 0)).x;
+            float smoothx = Mathf.SmoothDamp(transform.position.x, target.transform.position.x, ref velocity.x, smoothing);
+            transform.position = new Vector3(Mathf.Clamp(smoothx, xMin, xMax), Mathf.Clamp(target.transform.position.y, yMin, yMax), transform.position.z);
+        }
+    }
+
 }
