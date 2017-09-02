@@ -12,14 +12,7 @@ using UnityEngine;
 
 public class MainCameraScript : MonoBehaviour {
 
-    [SerializeField]
     GameObject target;
-    [SerializeField]
-    float xOffset = 0;
-    [SerializeField]
-    float yOffset = 0;
-    [SerializeField]
-    float zOffset = 0;
     [SerializeField]
     float xMax;
     [SerializeField]
@@ -31,6 +24,7 @@ public class MainCameraScript : MonoBehaviour {
     [SerializeField]
     float smoothing = 0.5f;
     [SerializeField]
+
     Camera reference;
 
     Vector3 oldPos;
@@ -48,11 +42,12 @@ public class MainCameraScript : MonoBehaviour {
         reference = GameObject.FindGameObjectWithTag("Reference").GetComponent<Camera>();
         oldPos = Camera.main.WorldToScreenPoint(target.transform.position);
         currentVelocity = target.GetComponent<Rigidbody2D>().velocity;
-        Debug.Log(oldPos);
+        //Debug.Log(oldPos);
 	}
 	
     void Update() {
         currentVelocity = target.GetComponent<Rigidbody2D>().velocity;
+        Debug.Log(Camera.main.WorldToViewportPoint(target.transform.position));
         if (currentVelocity.x == 0)
         {
             oldPos = Camera.main.WorldToScreenPoint(target.transform.position);
@@ -69,7 +64,8 @@ public class MainCameraScript : MonoBehaviour {
             //transform.position = new Vector3(Mathf.Clamp(smoothx, xMin, xMax), Mathf.Clamp(smoothy, yMin, yMax), transform.position.z);
             transform.position = new Vector3(Mathf.Clamp(smoothx, xMin, xMax), Mathf.Clamp(target.transform.position.y, yMin, yMax), transform.position.z);
         }
-        else if ((Mathf.Abs(currentVelocity.x) >= 0 && (Mathf.Abs(currentVelocity.y) > 0)))
+        else if (((Mathf.Abs(currentVelocity.x) >= 0 || (Mathf.Abs(currentVelocity.x) == 0 )) 
+            && (Mathf.Abs(currentVelocity.y) > 0)))
         {
             //testy = true;
             //testx = false;
@@ -79,7 +75,7 @@ public class MainCameraScript : MonoBehaviour {
             transform.position = new Vector3(Mathf.Clamp(smoothx, xMin, xMax), Mathf.Clamp(smoothy, yMin, yMax), transform.position.z);
         }
 
-        Debug.Log((Camera.main.WorldToScreenPoint(target.transform.position).x - oldPos.x) + " " + currentVelocity.x);
+        //Debug.Log((Camera.main.WorldToScreenPoint(target.transform.position).x - oldPos.x) + " " + currentVelocity.x);
     }
 
     // Late Update preferred so that we ensure target has moved before tracking
