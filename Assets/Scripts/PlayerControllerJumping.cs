@@ -24,7 +24,7 @@ public class PlayerControllerJumping: MonoBehaviour {
     public float jumpSpeed = 6.0f;
 
     [Range(0.01f, 5.0f)]
-    public float curveCutoff = 4.0f;
+    public float curveCutoff = 3.5f;
 
 	public LayerMask groundMask;
 
@@ -64,7 +64,7 @@ public class PlayerControllerJumping: MonoBehaviour {
         float time = (10.0f - jumpSpeed) / Mathf.Pow(10.0f, jumpTravel);
         float curveVel = jumpTravel / time;
 
-        while (Input.GetKey(KeyCode.Space) && curveVel > 3.5f)
+        while (Input.GetKey(KeyCode.Space) && curveVel > curveCutoff)
         {
             Debug.Log(curveVel);
             rb.velocity = new Vector2(rb.velocity.x, curveVel);

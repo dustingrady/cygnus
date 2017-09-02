@@ -257,7 +257,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 7.3125
+  orthographic size: 8.734375
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1149,7 +1149,7 @@ MonoBehaviour:
   jumpingFallMulti: 3
   jumpTravel: 1.8
   jumpSpeed: 4
-  curveCutoff: 4
+  curveCutoff: 3.5
   groundMask:
     serializedVersion: 2
     m_Bits: 256
