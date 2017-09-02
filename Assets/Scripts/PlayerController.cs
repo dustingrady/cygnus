@@ -34,17 +34,9 @@ public class PlayerController: MonoBehaviour {
 		if (Input.GetKeyDown (KeyCode.Space) && Grounded()) {
 			Jump ();
 		}
-
-        /*
-        Move ();
-		// Gravity adjustment to improve platforming
-		if (rb.velocity.y < 0) {
-			rb.velocity += Vector2.up * Physics2D.gravity.y * (stdFallMulti - 1) * Time.deltaTime;
-		} else if (rb.velocity.y > 0 && !Input.GetKey (KeyCode.Space)) {
-			rb.velocity += Vector2.up * Physics2D.gravity.y * (jumpingFallMulti - 1) * Time.deltaTime;
-		}
-        */
 	}
+  
+  //Removed old FixedUpdate()
 
     void FixedUpdate()
     {
