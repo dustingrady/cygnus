@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,12 +10,20 @@ public class PlayerController: MonoBehaviour {
 
 	[SerializeField]
 	private float speed;
+
 	[SerializeField]
-	private float jumpVel;
+	private float gravity = 30;
+
 	private bool grounded;
 
-	public float stdFallMulti;
-	public float jumpingFallMulti;
+    [Range(0.01f, 5.0f)]
+    public float jumpTravel = 1.8f;
+
+    [Range(0.01f, 10.0f)]
+    public float jumpSpeed = 6.0f;
+
+    [Range(0.01f, 5.0f)]
+    public float curveCutoff = 3.5f;
 
 	public LayerMask groundMask;
 
@@ -26,47 +35,52 @@ public class PlayerController: MonoBehaviour {
 
 
 	void Update () {
-		// Help to visualize the raycast checking the ground
-		Debug.DrawRay (transform.position, Vector3.down, Color.red);
-
-		
+		// ------------- Visualize groundcheck rays -----------------------------
+		Vector3[] castPos = new Vector3[] { transform.position, 
+			new Vector3 (transform.position.x - col.bounds.extents.x + 0.1f, transform.position.y, transform.position.z),
+			new Vector3 (transform.position.x + col.bounds.extents.x - 0.1f, transform.position.y, transform.position.z)
+		};
+		foreach (Vector3 pos in castPos) {
+			Debug.DrawRay (pos, Vector3.down, Color.red);
+		}
+		// ------------- Visualize groundcheck rays -----------------------------
 
 		if (Input.GetKeyDown (KeyCode.Space) && Grounded()) {
-			Jump ();
+            StartCoroutine("JumpCurve");
 		}
-
-        /*
-        Move ();
-		// Gravity adjustment to improve platforming
-		if (rb.velocity.y < 0) {
-			rb.velocity += Vector2.up * Physics2D.gravity.y * (stdFallMulti - 1) * Time.deltaTime;
-		} else if (rb.velocity.y > 0 && !Input.GetKey (KeyCode.Space)) {
-			rb.velocity += Vector2.up * Physics2D.gravity.y * (jumpingFallMulti - 1) * Time.deltaTime;
-		}
-        */
 	}
 
-    void FixedUpdate()
-    {
-        Move();
-        // Gravity adjustment to improve platforming
-        if (rb.velocity.y < 0)
-        {
-            rb.velocity += Vector2.up * Physics2D.gravity.y * (stdFallMulti - 1) * Time.deltaTime;
-        }
-        else if (rb.velocity.y > 0 && !Input.GetKey(KeyCode.Space))
-        {
-            rb.velocity += Vector2.up * Physics2D.gravity.y * (jumpingFallMulti - 1) * Time.deltaTime;
-        }
-    }
+
+	void FixedUpdate() {
+		rb.AddForce(Vector3.down * gravity * rb.mass); // Add more weight to the player
+		Move ();
+	}
+		
 
 	private void Move() {
 		rb.velocity = new Vector2 (Input.GetAxis ("Horizontal") * speed, rb.velocity.y);
 	}
+		
+
+    private IEnumerator JumpCurve()
+    {
+        float time = (10.0f - jumpSpeed) / Mathf.Pow(10.0f, jumpTravel);
+        float curveVel = jumpTravel / time;
+
+        while (Input.GetKey(KeyCode.Space) && curveVel > curveCutoff)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, curveVel);
+            time += Time.deltaTime;
+            curveVel = jumpTravel / time;
+			yield return new WaitForFixedUpdate ();
+        }
+
+        rb.velocity = new Vector2(rb.velocity.x, Vector2.down.y * 0.01f);
+    }
 
 
 	private bool Grounded() {
-		if (Physics2D.Raycast (transform.position, Vector2.down, col.bounds.extents.y + 0.1f, groundMask).collider != null) {
+		if (JumpCasts()) {
 			// On the ground
 			return true;
 		} else {
@@ -76,7 +90,20 @@ public class PlayerController: MonoBehaviour {
 	}
 
 
-	private void Jump() {
-		rb.velocity = new Vector2 (rb.velocity.x, jumpVel);
+	private bool JumpCasts() {
+		Vector3[] castPos = new Vector3[] { transform.position, 
+			new Vector3 (transform.position.x - col.bounds.extents.x + 0.1f, transform.position.y, transform.position.z),
+			new Vector3 (transform.position.x + col.bounds.extents.x - 0.1f, transform.position.y, transform.position.z)
+		};
+
+		bool validJump = false;
+		foreach (Vector3 pos in castPos) {
+			if (Physics2D.Raycast (pos, Vector2.down, col.bounds.extents.y + 0.1f, groundMask).collider != null) {
+				Debug.Log ("Casting ray from:" + pos);
+				validJump = true;
+			}
+		}
+
+		return validJump;
 	}
 }

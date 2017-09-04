@@ -14,25 +14,34 @@ public class MainCameraScript : MonoBehaviour
     [SerializeField]
     float yMin;
 
+	[Range(0f, 0.1f)]
+	[SerializeField]
+	float horizontalMoveSpace = 0.03f;
+	[Range(0f, 0.1f)]
+	[SerializeField]
+	float verticalMoveSpace = 0.03f;
 
-    float leftCameraBound = 0.47f;
-    float rightCameraBound = 0.53f;
+	[SerializeField]
+	float smoothing = 0.5f;
 
-    float leftbound, rightbound;
+    float leftCameraBound;
+    float rightCameraBound;
+	float upperCameraBound;
+	float lowerCameraBound;
 
-    float smoothing = 0.5f;
-
-    Vector3 lastPos;
-    Vector3 currentPos;
-
-    bool movingDiagonally = false;
-
-    Vector2 velocity = Vector2.zero;
+   	Vector2 velocity = Vector2.zero;
 
     void Start()
-    {
+	{
         target = GameObject.FindGameObjectWithTag("Player");
-        rightbound = Camera.main.ViewportToWorldPoint(new Vector3(Mathf.Abs(0.5f - rightCameraBound), 0, 0)).x;
+
+		leftCameraBound = 0.5f - horizontalMoveSpace;
+		rightCameraBound = 0.5f + horizontalMoveSpace;
+
+		lowerCameraBound = 0.5f - verticalMoveSpace;
+		upperCameraBound = 0.5f + verticalMoveSpace;
+
+        //rightbound = Camera.main.ViewportToWorldPoint(new Vector3(Mathf.Abs(0.5f - rightCameraBound), 0, 0)).x;
         //Debug.Log(rightbound);
         //lastPos = target.transform.position;
     }
@@ -56,24 +65,34 @@ public class MainCameraScript : MonoBehaviour
     }
     */
 
-    void Update()
+    void LateUpdate()
     {
-        yMin = 0; //For diagonal smoothing
-        yMax = 0; //For diagonal smoothing
-        //Debug.Log(Camera.main.WorldToViewportPoint(target.transform.position).x + " "+ leftCameraBound);
+		Debug.Log (leftCameraBound);
+
+        // Holds the target camera positions with smoothing applied.
+		Vector2 smooth = new Vector2(transform.position.x, transform.position.y);
 
         if (Camera.main.WorldToViewportPoint(target.transform.position).x <= (leftCameraBound - 0.01f))
         {
-            float camPos = target.transform.position.x + Camera.main.ViewportToWorldPoint(new Vector3(Mathf.Abs(Mathf.Abs(Camera.main.WorldToViewportPoint(target.transform.position).x) - Mathf.Abs(rightCameraBound)), 0, 0)).x;
-            float smoothx = Mathf.SmoothDamp(transform.position.x, target.transform.position.x, ref velocity.x, smoothing);
-            transform.position = new Vector3(Mathf.Clamp(smoothx, xMin, xMax), Mathf.Clamp(target.transform.position.y, yMin, yMax), transform.position.z);
+			smooth.x = Mathf.SmoothDamp(transform.position.x, target.transform.position.x, ref velocity.x, smoothing);
+        } 
+
+		else if (Camera.main.WorldToViewportPoint(target.transform.position).x >= (rightCameraBound + 0.01f)) 
+		{
+            smooth.x = Mathf.SmoothDamp(transform.position.x, target.transform.position.x, ref velocity.x, smoothing);
         }
 
-        else if (Camera.main.WorldToViewportPoint(target.transform.position).x >= (rightCameraBound + 0.01f))
-        {
-            float camPos = target.transform.position.x - Camera.main.ViewportToWorldPoint(new Vector3(Mathf.Abs(Mathf.Abs(Camera.main.WorldToViewportPoint(target.transform.position).x) - Mathf.Abs(leftCameraBound)), 0, 0)).x;
-            float smoothx = Mathf.SmoothDamp(transform.position.x, target.transform.position.x, ref velocity.x, smoothing);
-            transform.position = new Vector3(Mathf.Clamp(smoothx, xMin, xMax), Mathf.Clamp(target.transform.position.y, yMin, yMax), transform.position.z);
-        }
+		if (Camera.main.WorldToViewportPoint(target.transform.position).y <= (lowerCameraBound - 0.01f))
+		{
+			smooth.y = Mathf.SmoothDamp(transform.position.y, target.transform.position.y, ref velocity.y, smoothing);
+		}
+
+		else if (Camera.main.WorldToViewportPoint(target.transform.position).y >= (upperCameraBound + 0.01f))
+		{
+			smooth.y = Mathf.SmoothDamp(transform.position.y, target.transform.position.y, ref velocity.y, smoothing);
+		}
+
+		transform.position = new Vector3(Mathf.Clamp(smooth.x, xMin, xMax), Mathf.Clamp(smooth.y, yMin, yMax), transform.position.z);
+			
     }
 }
