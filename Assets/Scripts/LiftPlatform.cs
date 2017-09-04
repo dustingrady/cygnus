@@ -37,7 +37,7 @@ public class LiftPlatform : MonoBehaviour {
 
 			// The player jumps onto the top of the block, move up to the target
 			if (!movingToTarget && atStart) {
-				Debug.Log("Moving to target");
+				//Debug.Log("Moving to target");
 				movingToTarget = true;
 			}
 		}

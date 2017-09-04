@@ -66,7 +66,7 @@ public class PlayerControllerJumping: MonoBehaviour {
 
         while (Input.GetKey(KeyCode.Space) && curveVel > curveCutoff)
         {
-            Debug.Log(curveVel);
+            //Debug.Log(curveVel);
             rb.velocity = new Vector2(rb.velocity.x, curveVel);
             time += Time.deltaTime;
             curveVel = jumpTravel / time;
