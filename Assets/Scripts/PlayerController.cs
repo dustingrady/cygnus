@@ -7,8 +7,12 @@ public class PlayerController: MonoBehaviour {
 
 	private Rigidbody2D rb;
 	private Collider2D col;
+	private Player playerScript; // Reference to player script where elemental abilities live
 
 	[SerializeField]
+	private float baseSpeed = 7;
+	[SerializeField]
+	private float sprintMulti = 1.4f;
 	private float speed;
 
 	[SerializeField]
@@ -31,6 +35,7 @@ public class PlayerController: MonoBehaviour {
 		grounded = true;
 		rb = GetComponent<Rigidbody2D> ();
 		col = GetComponent<BoxCollider2D> ();
+		playerScript = GetComponent<Player> ();
 	}
 
 
@@ -45,8 +50,16 @@ public class PlayerController: MonoBehaviour {
 		}
 		// ------------- Visualize groundcheck rays -----------------------------
 
+		// Jumping
 		if (Input.GetKeyDown (KeyCode.Space) && Grounded()) {
             StartCoroutine("JumpCurve");
+		}
+
+		// Sprinting
+		if (Input.GetKey (KeyCode.LeftShift) && Grounded ()) {
+			speed = baseSpeed * sprintMulti;
+		} else if (Grounded()) {
+			speed = baseSpeed;
 		}
 	}
 
@@ -99,7 +112,6 @@ public class PlayerController: MonoBehaviour {
 		bool validJump = false;
 		foreach (Vector3 pos in castPos) {
 			if (Physics2D.Raycast (pos, Vector2.down, col.bounds.extents.y + 0.1f, groundMask).collider != null) {
-				Debug.Log ("Casting ray from:" + pos);
 				validJump = true;
 			}
 		}
