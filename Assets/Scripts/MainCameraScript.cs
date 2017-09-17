@@ -82,12 +82,12 @@ public class MainCameraScript : MonoBehaviour
 
 		if (Camera.main.WorldToViewportPoint(target.transform.position).y <= (lowerCameraBound - 0.01f))
 		{
-			smooth.y = Mathf.SmoothDamp(transform.position.y, target.transform.position.y + 1.0f, ref velocity.y, smoothing);
+			smooth.y = Mathf.SmoothDamp(transform.position.y, target.transform.position.y, ref velocity.y, smoothing);
 		}
 
 		else if (Camera.main.WorldToViewportPoint(target.transform.position).y >= (upperCameraBound + 0.01f))
 		{
-			smooth.y = Mathf.SmoothDamp(transform.position.y, target.transform.position.y + 1.0f, ref velocity.y, smoothing);
+			smooth.y = Mathf.SmoothDamp(transform.position.y, target.transform.position.y, ref velocity.y, smoothing);
 		}
 
 		transform.position = new Vector3(Mathf.Clamp(smooth.x, xMin, xMax), Mathf.Clamp(smooth.y, yMin, yMax), transform.position.z);

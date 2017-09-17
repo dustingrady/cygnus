@@ -8,11 +8,9 @@ public class PlayerController: MonoBehaviour {
 	private Rigidbody2D rb;
 	private Collider2D col;
 	private Player playerScript; // Reference to player script where elemental abilities live
-	[SerializeField]
-	private Animator playerAnim;
 
 	[SerializeField]
-	private float baseSpeed = 7;
+	private float baseSpeed = 4;
 	[SerializeField]
 	private float sprintMulti = 1.4f;
 	private float speed;
@@ -34,7 +32,6 @@ public class PlayerController: MonoBehaviour {
 	public LayerMask groundMask;
 
 	void Start () {
-		grounded = true;
 		rb = GetComponent<Rigidbody2D> ();
 		col = GetComponent<BoxCollider2D> ();
 		playerScript = GetComponent<Player> ();
@@ -58,7 +55,7 @@ public class PlayerController: MonoBehaviour {
 		}
 
 		// Sprinting
-		if (Input.GetKey (KeyCode.LeftShift) && Grounded ()) {
+		if (Input.GetKey (KeyCode.LeftShift) && Grounded()) {
 			speed = baseSpeed * sprintMulti;
 		} else if (Grounded()) {
 			speed = baseSpeed;
@@ -74,24 +71,6 @@ public class PlayerController: MonoBehaviour {
 
 	private void Move() {
 		rb.velocity = new Vector2 (Input.GetAxis ("Horizontal") * speed, rb.velocity.y);
-
-		if (playerAnim != null) {
-			//Debug.Log (Input.GetAxis ("Horizontal"));
-
-			if (Input.GetAxis ("Horizontal") > 0) {
-				transform.localScale = new Vector3 (1, transform.localScale.y, transform.localScale.z);
-			} else if (Input.GetAxis ("Horizontal") < 0) {
-				transform.localScale = new Vector3 (-1, transform.localScale.y, transform.localScale.z);
-			}
-
-			if (Grounded() && Input.GetAxis("Horizontal") > 0.001 || Input.GetAxis("Horizontal") < -0.001) {
-				playerAnim.SetInteger ("State", 1);
-			}
-			else if (Grounded() && Input.GetAxis("Horizontal") <= 0.001 && Input.GetAxis("Horizontal") >= -0.001) {
-				Debug.Log ("Going into idle state");
-				playerAnim.SetInteger ("State", 0);
-			}
-		}
 	}
 		
 
@@ -112,7 +91,7 @@ public class PlayerController: MonoBehaviour {
     }
 
 
-	private bool Grounded() {
+	public bool Grounded() {
 		if (JumpCasts()) {
 			// On the ground
 			return true;
@@ -125,8 +104,8 @@ public class PlayerController: MonoBehaviour {
 
 	private bool JumpCasts() {
 		Vector3[] castPos = new Vector3[] { transform.position, 
-			new Vector3 (transform.position.x - col.bounds.extents.x + 0.01f, transform.position.y, transform.position.z),
-			new Vector3 (transform.position.x + col.bounds.extents.x - 0.01f, transform.position.y, transform.position.z)
+			new Vector3 (transform.position.x - col.bounds.extents.x + 0.005f, transform.position.y, transform.position.z),
+			new Vector3 (transform.position.x + col.bounds.extents.x - 0.005f, transform.position.y, transform.position.z)
 		};
 
 		bool validJump = false;
