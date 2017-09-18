@@ -27,7 +27,6 @@ public class PlayerAnimation : MonoBehaviour {
 		if (Input.GetKey (KeyCode.LeftShift) && landed) {
 			if (playerAnim != null)
 				playerAnim.speed = sprintMulti;
-
 		} else if (landed) {
 			if (playerAnim != null)
 				playerAnim.speed = 1;
@@ -37,16 +36,26 @@ public class PlayerAnimation : MonoBehaviour {
 		if (landed == false) {
 			playerAnim.SetInteger ("State", 2);
 		}
+			
 
-		// Change the player's facing direction
+		// Change the player's facing direction based on mouse
+		if (Camera.main.ScreenToWorldPoint(Input.mousePosition).x > transform.position.x) {
+			transform.localScale = new Vector3 (1, transform.localScale.y, transform.localScale.z);
+		} else if (Camera.main.ScreenToWorldPoint(Input.mousePosition).x < transform.position.x) {
+			transform.localScale = new Vector3 (-1, transform.localScale.y, transform.localScale.z);
+		}
+
+
+		// Change the player's facing direction based on directional movement
 		if (Input.GetAxis ("Horizontal") > 0) {
 			transform.localScale = new Vector3 (1, transform.localScale.y, transform.localScale.z);
 		} else if (Input.GetAxis ("Horizontal") < 0) {
 			transform.localScale = new Vector3 (-1, transform.localScale.y, transform.localScale.z);
 		}
 
+
 		// Determine if the player is standing or running
-		if (landed && Input.GetAxis("Horizontal") > 0.001 || Input.GetAxis("Horizontal") < -0.001) {
+		if (landed && Input.GetAxis("Horizontal") > 0.001 || landed && Input.GetAxis("Horizontal") < -0.001) {
 			playerAnim.SetInteger ("State", 1);
 		}
 		else if (landed && Input.GetAxis("Horizontal") <= 0.001 && Input.GetAxis("Horizontal") >= -0.001) {
@@ -55,9 +64,7 @@ public class PlayerAnimation : MonoBehaviour {
 	}
 
 	void OnCollisionEnter2D(Collision2D collision) {
-		if (playerControl.Grounded()) {
-			landed = true;
-		}
+		landed = true;
 	}
 
 }
