@@ -10,13 +10,13 @@ public class PlayerController: MonoBehaviour {
 	private Player playerScript; // Reference to player script where elemental abilities live
 
 	[SerializeField]
-	private float baseSpeed = 4;
+	private float baseSpeed = 250;
 	[SerializeField]
 	private float sprintMulti = 1.4f;
 	private float speed;
 
 	[SerializeField]
-	private float gravity = 30;
+	private float gravity = 20;
 
 	private bool grounded;
 
@@ -24,10 +24,10 @@ public class PlayerController: MonoBehaviour {
     public float jumpTravel = 1.8f;
 
     [Range(0.01f, 10.0f)]
-    public float jumpSpeed = 6.0f;
+    public float jumpSpeed = 3.0f;
 
     [Range(0.01f, 5.0f)]
-    public float curveCutoff = 3.5f;
+    public float curveCutoff = 3.0f;
 
 	public LayerMask groundMask;
 
@@ -70,7 +70,7 @@ public class PlayerController: MonoBehaviour {
 		
 
 	private void Move() {
-		rb.velocity = new Vector2 (Input.GetAxis ("Horizontal") * speed, rb.velocity.y);
+		rb.velocity = new Vector2 (Input.GetAxis ("Horizontal") * speed * Time.deltaTime, rb.velocity.y);
 	}
 		
 
@@ -82,7 +82,7 @@ public class PlayerController: MonoBehaviour {
         while (Input.GetKey(KeyCode.Space) && curveVel > curveCutoff)
         {
             rb.velocity = new Vector2(rb.velocity.x, curveVel);
-            time += Time.deltaTime;
+            time += Time.fixedDeltaTime;
             curveVel = jumpTravel / time;
 			yield return new WaitForFixedUpdate ();
         }
@@ -110,7 +110,7 @@ public class PlayerController: MonoBehaviour {
 
 		bool validJump = false;
 		foreach (Vector3 pos in castPos) {
-			if (Physics2D.Raycast (pos, Vector2.down, col.bounds.extents.y + 0.1f, groundMask).collider != null) {
+			if (Physics2D.Raycast (pos, Vector2.down, col.bounds.extents.y + 0.2f, groundMask).collider != null) {
 				validJump = true;
 			}
 		}

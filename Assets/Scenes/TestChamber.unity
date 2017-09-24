@@ -273,12 +273,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb6084de9c9ea1443b4b5127f7199952, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  xMax: 43
-  yMax: 20
-  xMin: -14
-  yMin: -1.5
-  smoothing: 0.3
-  reference: {fileID: 0}
 --- !u!114 &420641130
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -294,8 +288,9 @@ MonoBehaviour:
   yMax: 20
   xMin: -14
   yMin: -1.5
-  leftCameraBound: 0.4
-  rightCameraBound: 0.6
+  horizontalMoveSpace: 0.03
+  verticalMoveSpace: 0.03
+  smoothing: 0.5
 --- !u!1001 &573068232
 Prefab:
   m_ObjectHideFlags: 0
@@ -8902,7 +8897,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46852ecdc88d2dc4ea764112edf7d6a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  test: {fileID: 11400000, guid: df153634dff7822488fd8e044df9e47c, type: 2}
   fallingPrefab: {fileID: 1242726139004860, guid: ecd6f36ca8aee2f47a98d095ef496f5b,
     type: 2}
 --- !u!50 &1665125320
@@ -8952,13 +8946,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1666404036}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae95da31767e63f478991e76a99128a3, type: 3}
+  m_Script: {fileID: 11500000, guid: 26f4f264f143da64c9ccd149b39e909a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 8
-  jumpVel: 7
-  stdFallMulti: 3.5
-  jumpingFallMulti: 3
+  baseSpeed: 250
+  sprintMulti: 1.4
+  gravity: 20
+  jumpTravel: 1.8
+  jumpSpeed: 3
+  curveCutoff: 3
   groundMask:
     serializedVersion: 2
     m_Bits: 256

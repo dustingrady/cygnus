@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerBullet : MonoBehaviour {
+public class PlayerBulletClassic : MonoBehaviour {
 
 	public float speed = 0.2f;
 	public bool movingRight = true;
@@ -23,6 +23,13 @@ public class PlayerBullet : MonoBehaviour {
 		} else {
 			transform.position += Vector3.left * speed;
 			transform.localScale = new Vector3 (-1, 1, 1);
+		}
+	}
+
+	void OnTriggerEnter2D(Collider2D col) {
+		if (col.gameObject.tag != "Player") {
+			Debug.Log ("Hit something: " + col.gameObject.tag);
+			DestroyObject (this.gameObject);
 		}
 	}
 }

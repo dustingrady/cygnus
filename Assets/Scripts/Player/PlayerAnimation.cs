@@ -11,10 +11,13 @@ public class PlayerAnimation : MonoBehaviour {
 
 	private PlayerController playerControl;
 	private bool landed;
+	private bool shooting;
 
 	void Start() {
 		playerAnim = GetComponent<Animator> ();
 		playerControl = GetComponent<PlayerController> ();
+
+		PlayerShooting.OnShoot += PlayShoot;
 	}
 
 	void Update() {
@@ -36,15 +39,16 @@ public class PlayerAnimation : MonoBehaviour {
 		if (landed == false) {
 			playerAnim.SetInteger ("State", 2);
 		}
-			
 
+			
+		/*
 		// Change the player's facing direction based on mouse
 		if (Camera.main.ScreenToWorldPoint(Input.mousePosition).x > transform.position.x) {
 			transform.localScale = new Vector3 (1, transform.localScale.y, transform.localScale.z);
 		} else if (Camera.main.ScreenToWorldPoint(Input.mousePosition).x < transform.position.x) {
 			transform.localScale = new Vector3 (-1, transform.localScale.y, transform.localScale.z);
 		}
-
+		*/
 
 		// Change the player's facing direction based on directional movement
 		if (Input.GetAxis ("Horizontal") > 0) {
@@ -56,15 +60,32 @@ public class PlayerAnimation : MonoBehaviour {
 
 		// Determine if the player is standing or running
 		if (landed && Input.GetAxis("Horizontal") > 0.001 || landed && Input.GetAxis("Horizontal") < -0.001) {
-			playerAnim.SetInteger ("State", 1);
+			if (shooting != true)
+				playerAnim.SetInteger ("State", 1);
 		}
 		else if (landed && Input.GetAxis("Horizontal") <= 0.001 && Input.GetAxis("Horizontal") >= -0.001) {
-			playerAnim.SetInteger ("State", 0);
+			if (shooting != true)
+				playerAnim.SetInteger ("State", 0);
 		}
 	}
 
 	void OnCollisionEnter2D(Collision2D collision) {
 		landed = true;
+	}
+
+
+	IEnumerator StandUp() {
+		yield return new WaitForSeconds (0.25f);
+		shooting = false;
+		playerAnim.SetInteger ("State", 0);
+	}
+
+	void PlayShoot() {
+		if (landed) {
+			shooting = true;
+			playerAnim.SetInteger ("State", 3);
+			StartCoroutine ("StandUp");
+		}
 	}
 
 }
