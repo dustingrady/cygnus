@@ -22,7 +22,7 @@ public class PlayerAnimation : MonoBehaviour {
 
 	void Update() {
 		// Jumping
-		if (Input.GetKeyDown (KeyCode.Space) && landed) {
+		if (Input.GetButtonDown ("Jump") && landed) {
 			landed = false;
 		}
 

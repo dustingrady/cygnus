@@ -50,7 +50,9 @@ public class PlayerController: MonoBehaviour {
 		// ------------- Visualize groundcheck rays -----------------------------
 
 		// Jumping
-		if (Input.GetKeyDown (KeyCode.Space) && Grounded()) {
+
+		Debug.Log(Input.GetButtonDown("Jump") && Grounded());
+		if (Input.GetButtonDown("Jump") && Grounded()) {
             StartCoroutine("JumpCurve");
 		}
 
@@ -79,7 +81,7 @@ public class PlayerController: MonoBehaviour {
         float time = (10.0f - jumpSpeed) / Mathf.Pow(10.0f, jumpTravel);
         float curveVel = jumpTravel / time;
 
-        while (Input.GetKey(KeyCode.Space) && curveVel > curveCutoff)
+		while (Input.GetButton("Jump") && curveVel > curveCutoff)
         {
             rb.velocity = new Vector2(rb.velocity.x, curveVel);
             time += Time.fixedDeltaTime;
