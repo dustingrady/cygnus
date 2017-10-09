@@ -51,7 +51,7 @@ public class PlayerController: MonoBehaviour {
 
 		// Jumping
 
-		Debug.Log(Input.GetButtonDown("Jump") && Grounded());
+		//Debug.Log(Input.GetButtonDown("Jump") && Grounded());
 		if (Input.GetButtonDown("Jump") && Grounded()) {
             StartCoroutine("JumpCurve");
 		}

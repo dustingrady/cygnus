@@ -165,9 +165,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 772c31681a20fa540bc7c74910f6e28e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerBullet: {fileID: 1983617426347514, guid: e0b107cedeede9f4ba1fee11a6259d6f,
-    type: 2}
+  absorb: 0
+  fireInHand: 0
+  speed: 0
+  direction: {x: 0, y: 0, z: 0}
+  absorber: {fileID: 0}
   shootCooldown: 1
+  absorberSpeed: 10
+  absorberCooldown: 0.25
 --- !u!212 &212119184905475790
 SpriteRenderer:
   m_ObjectHideFlags: 1
