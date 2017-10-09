@@ -29,15 +29,15 @@ public class Absorber : MonoBehaviour {
 		if (col.gameObject.tag == "FireElement") {
 			//Check if we obtained fire with left or right hand
 			if (PlayerShooting.shotFromLeft) {
-				fireInLeftHand = true; //We now have fire to use
+				fireInLeftHand = true;
 				Debug.Log("That was fired from the left hand");
 
 			}
 			if(PlayerShooting.shotFromRight){
-				fireInRightHand = true; //We now have fire to use
+				fireInRightHand = true;
 				Debug.Log("That was fired from the right hand");
+
 			}
-				
 			DestroyObject (this.gameObject);
 			DestroyObject (col.gameObject);
 			PlayerShooting.shotFromRight = false;

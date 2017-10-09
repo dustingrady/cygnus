@@ -44,12 +44,12 @@ public class PlayerShooting : MonoBehaviour {
 				primaryBtnRelease = true;
 			}
 
-			if (Input.GetAxis("PrimaryFireGamePad") > 0.5f && shootTimer > shootCooldown && primaryBtnRelease) {
+			if (Input.GetAxis ("PrimaryFireGamePad") > 0.5f && shootTimer > shootCooldown && primaryBtnRelease) {
 				Debug.Log ("Triggered primary fire on controller!");
 				// Shoot goes here
 			}
 
-			if (Input.GetAxis("SecondaryFireGamePad") > 0.5f && absorbTimer > absorberCooldown && secondaryBtnRelease) {
+			if (Input.GetAxis ("SecondaryFireGamePad") > 0.5f && absorbTimer > absorberCooldown && secondaryBtnRelease) {
 				secondaryBtnRelease = false;
 				Absorb ();
 
@@ -59,18 +59,34 @@ public class PlayerShooting : MonoBehaviour {
 				}
 			}
 		} else {
-			//if (Input.GetButton("PrimaryFire") && shootTimer > shootCooldown) {
-			if (Input.GetButton("PrimaryFire") && absorbTimer > absorberCooldown) {
-				DetermineLeftShot ();
+			
+			//If PrimaryAbsorb
+			if (Input.GetButton ("PrimaryFire") && (Input.GetButton ("LeftCtrl")) && absorbTimer > absorberCooldown) {
+				shotFromLeft = true;
+				Absorb ();
+				Debug.Log ("Primary absorb fired");
 			}
 
-			if (Input.GetButton("SecondaryFire") && absorbTimer > absorberCooldown) {
-				DetermineRightShot();
+			//If SecondaryAbsorb
+			if (Input.GetButton ("SecondaryFire") && (Input.GetButton ("LeftCtrl")) && absorbTimer > absorberCooldown) {
+				shotFromRight = true;
+				Absorb ();
+				Debug.Log ("Secondary absorb fired");
+			}
 
-				// Broadcast the shoot event to anyone who cares (PlayerAnimations)
-				if (OnShoot != null) {
-					OnShoot ();
-				}
+			//if (Input.GetButton("PrimaryFire") && shootTimer > shootCooldown) {
+			if (Input.GetButton ("PrimaryFire") && absorbTimer > shootCooldown) {
+				DetermineLeftShot ();
+			}
+				
+			if (Input.GetButton ("SecondaryFire") && absorbTimer > shootCooldown) {
+				DetermineRightShot ();
+				/*
+					// Broadcast the shoot event to anyone who cares (PlayerAnimations)
+					if (OnShoot != null) {
+						OnShoot ();
+					}
+					*/
 			}
 		}
 	}
@@ -80,10 +96,7 @@ public class PlayerShooting : MonoBehaviour {
 		if (Absorber.fireInLeftHand) {
 			Fire();
 			Absorber.fireInLeftHand = false; //Mark false after used
-		} else{
-			shotFromLeft = true;
-			Absorb ();
-		}
+		} 
 	}
 
 	//Determine what we should shoot (absorb or element)
@@ -91,10 +104,7 @@ public class PlayerShooting : MonoBehaviour {
 		if (Absorber.fireInRightHand) {
 			Fire();
 			Absorber.fireInRightHand = false; //Mark false after used
-		} else{
-			shotFromRight = true;
-			Absorb ();
-		}
+		} 
 	}
 
 	void Absorb() {
