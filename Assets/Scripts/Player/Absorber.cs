@@ -6,6 +6,8 @@ using UnityEngine;
 public class Absorber : MonoBehaviour {
 	public static bool fireInLeftHand;
 	public static bool fireInRightHand;
+	public static bool waterInLeftHand;
+	public static bool waterInRightHand;
 
 	//public bool iceInHand;
 	//...
@@ -37,6 +39,23 @@ public class Absorber : MonoBehaviour {
 				fireInRightHand = true;
 				Debug.Log("That was fired from the right hand");
 
+			}
+			DestroyObject (this.gameObject);
+			DestroyObject (col.gameObject);
+			PlayerShooting.shotFromRight = false;
+			PlayerShooting.shotFromLeft = false;
+		}
+
+		if (col.gameObject.tag == "WaterElement") {
+			//Check if we obtained fire with left or right hand
+			if (PlayerShooting.shotFromLeft) {
+				waterInLeftHand = true;
+				Debug.Log("That was fired from the left hand");
+
+			}
+			if(PlayerShooting.shotFromRight){
+				waterInRightHand = true;
+				Debug.Log("That was fired from the right hand");
 			}
 			DestroyObject (this.gameObject);
 			DestroyObject (col.gameObject);

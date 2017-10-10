@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4435060709933630}
   - component: {fileID: 212297411976851028}
   - component: {fileID: 58145256348616500}
-  - component: {fileID: 114089674663809052}
+  - component: {fileID: 114674367073958524}
   m_Layer: 0
   m_Name: Fireball
   m_TagString: Untagged
@@ -57,7 +57,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
---- !u!114 &114089674663809052
+--- !u!114 &114674367073958524
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}

@@ -165,13 +165,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 772c31681a20fa540bc7c74910f6e28e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  absorb: 0
-  fireInHand: 0
-  speed: 0
-  direction: {x: 0, y: 0, z: 0}
-  absorber: {fileID: 0}
-  shootCooldown: 1
+  absorber: {fileID: 1477703447882114, guid: 25d2d4fa29e80c34a871134809ff6635, type: 2}
+  fire: {fileID: 1219230856590874, guid: 987ced180638e4447b31321b1fdee309, type: 2}
+  water: {fileID: 1696625015924108, guid: fae4fcf11be36124991fe3adf14f05d9, type: 2}
+  shootCooldown: 0.25
   absorberSpeed: 10
+  fireSpeed: 10
   absorberCooldown: 0.25
 --- !u!212 &212119184905475790
 SpriteRenderer:

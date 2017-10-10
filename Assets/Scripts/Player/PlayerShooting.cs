@@ -8,6 +8,8 @@ public class PlayerShooting : MonoBehaviour {
 	[SerializeField]
 	private GameObject fire;
 	[SerializeField]
+	private GameObject water;
+	[SerializeField]
 	private float shootCooldown = 0.25f;
 	[SerializeField]
 	private float absorberSpeed = 10f;
@@ -97,6 +99,11 @@ public class PlayerShooting : MonoBehaviour {
 			Fire();
 			Absorber.fireInLeftHand = false; //Mark false after used
 		} 
+
+		if (Absorber.waterInLeftHand) {
+			Water();
+			Absorber.waterInLeftHand = false; //Mark false after used
+		} 
 	}
 
 	//Determine what we should shoot (absorb or element)
@@ -104,6 +111,11 @@ public class PlayerShooting : MonoBehaviour {
 		if (Absorber.fireInRightHand) {
 			Fire();
 			Absorber.fireInRightHand = false; //Mark false after used
+		} 
+
+		if (Absorber.waterInRightHand) {
+			Water();
+			Absorber.waterInRightHand = false; //Mark false after used
 		} 
 	}
 
@@ -149,6 +161,21 @@ public class PlayerShooting : MonoBehaviour {
 		// Instantiate the Sorb Orb with a direction and speed
 		GameObject blt = Instantiate (fire, transform.position, transform.rotation);
 		blt.GetComponent<Fire> ().Initialize (dir, absorberSpeed);
+
+		// restart the clock on the shoot cooldown
+		absorbTimer = 0f;
+	}
+
+	void Water(){
+		// Get the location of the mouse relative to the player
+		Vector3 dirV3 = Camera.main.ScreenToWorldPoint (Input.mousePosition) - transform.position;
+
+		// Convert this into a Vector2d
+		Vector2 dir = new Vector2 (dirV3.x, dirV3.y);
+
+		// Instantiate the Sorb Orb with a direction and speed
+		GameObject blt = Instantiate (water, transform.position, transform.rotation);
+		blt.GetComponent<Water>().Initialize (dir, absorberSpeed);
 
 		// restart the clock on the shoot cooldown
 		absorbTimer = 0f;

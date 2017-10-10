@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Reference
   - FireElement
+  - WaterElement
   layers:
   - Default
   - TransparentFX
