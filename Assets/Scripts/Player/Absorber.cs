@@ -4,19 +4,23 @@ using UnityEngine;
 
 //Absorbs different materials for player to use
 public class Absorber : MonoBehaviour {
-	public static bool fireInLeftHand;
-	public static bool fireInRightHand;
-	public static bool waterInLeftHand;
-	public static bool waterInRightHand;
 
 	//public bool iceInHand;
 	//...
 	public float speed;
 	public Vector3 direction;
+	private string hand;
 
-	public void Initialize(Vector2 direction, float speed) {
+	Player plr;
+
+	public void Initialize(Vector2 direction, float speed, string hand) {
 		this.speed = speed;
 		this.direction = direction.normalized;
+		this.hand = hand;
+	}
+
+	void Start() {
+		plr = GameObject.FindGameObjectWithTag ("Player").GetComponent<Player>();
 	}
 
 	void Update() {
@@ -29,38 +33,23 @@ public class Absorber : MonoBehaviour {
 		}
 
 		if (col.gameObject.tag == "FireElement") {
-			//Check if we obtained fire with left or right hand
-			if (PlayerShooting.shotFromLeft) {
-				fireInLeftHand = true;
-				Debug.Log("That was fired from the left hand");
-
+			if (hand == "left") {
+				Debug.Log ("Added fire to player's left hand");
+				plr.leftElement = plr.elements["fire"];
+			} else {
+				Debug.Log ("Added fire to player's right hand");
+				plr.rightElement = plr.elements["fire"];
 			}
-			if(PlayerShooting.shotFromRight){
-				fireInRightHand = true;
-				Debug.Log("That was fired from the right hand");
-
-			}
-			DestroyObject (this.gameObject);
-			DestroyObject (col.gameObject);
-			PlayerShooting.shotFromRight = false;
-			PlayerShooting.shotFromLeft = false;
 		}
 
 		if (col.gameObject.tag == "WaterElement") {
-			//Check if we obtained fire with left or right hand
-			if (PlayerShooting.shotFromLeft) {
-				waterInLeftHand = true;
-				Debug.Log("That was fired from the left hand");
-
+			if (hand == "left") {
+				Debug.Log ("Added water to player's left hand");
+				plr.leftElement = plr.elements["water"];
+			} else {
+				Debug.Log ("Added water to player's right hand");
+				plr.rightElement = plr.elements["water"];
 			}
-			if(PlayerShooting.shotFromRight){
-				waterInRightHand = true;
-				Debug.Log("That was fired from the right hand");
-			}
-			DestroyObject (this.gameObject);
-			DestroyObject (col.gameObject);
-			PlayerShooting.shotFromRight = false;
-			PlayerShooting.shotFromLeft = false;
 		}
 	}
 }

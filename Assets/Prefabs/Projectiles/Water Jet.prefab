@@ -21,9 +21,9 @@ GameObject:
   - component: {fileID: 4179975296517452}
   - component: {fileID: 212229806998289028}
   - component: {fileID: 58771704258711094}
-  - component: {fileID: 114295827050660636}
+  - component: {fileID: 114297009803467198}
   m_Layer: 0
-  m_Name: Water
+  m_Name: Water Jet
   m_TagString: WaterElement
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -57,7 +57,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
---- !u!114 &114295827050660636
+--- !u!114 &114297009803467198
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -65,10 +65,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1696625015924108}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8cc432d084e8bc04a945c194a8b27887, type: 3}
+  m_Script: {fileID: 11500000, guid: 86ffc96d66152514daf7fd86a15c8e64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0
+  speed: 10
   direction: {x: 0, y: 0, z: 0}
 --- !u!212 &212229806998289028
 SpriteRenderer:

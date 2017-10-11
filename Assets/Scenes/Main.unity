@@ -325,7 +325,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 8
+  orthographic size: 7.5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -461,6 +461,60 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 861492cfc176e5f448fe67f76759bce1, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &651541692
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 651541695}
+  - component: {fileID: 651541694}
+  - component: {fileID: 651541693}
+  m_Layer: 0
+  m_Name: Elements
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &651541693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 651541692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 970e581666e22b24a992bf88e9e90348, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fireball: {fileID: 1219230856590874, guid: 987ced180638e4447b31321b1fdee309, type: 2}
+--- !u!114 &651541694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 651541692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cc432d084e8bc04a945c194a8b27887, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waterJet: {fileID: 1696625015924108, guid: fae4fcf11be36124991fe3adf14f05d9, type: 2}
+--- !u!4 &651541695
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 651541692}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 4.873635, y: 1.315382, z: -0.008282657}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1312233809}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &722093216 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4214640078176436, guid: 3664a21d39e8dfd47b2b7123cca877ca,
@@ -973,6 +1027,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 6
+  leftElement: {fileID: 0}
+  rightElement: {fileID: 0}
 --- !u!114 &1312233807
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1048,6 +1104,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1578017208}
+  - {fileID: 651541695}
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1093,8 +1150,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   absorber: {fileID: 1477703447882114, guid: 25d2d4fa29e80c34a871134809ff6635, type: 2}
-  fire: {fileID: 1219230856590874, guid: 987ced180638e4447b31321b1fdee309, type: 2}
-  water: {fileID: 1696625015924108, guid: fae4fcf11be36124991fe3adf14f05d9, type: 2}
   shootCooldown: 0.3
   absorberSpeed: 10
   fireSpeed: 10
