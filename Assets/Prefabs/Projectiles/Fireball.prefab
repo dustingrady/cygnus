@@ -20,11 +20,12 @@ GameObject:
   m_Component:
   - component: {fileID: 4435060709933630}
   - component: {fileID: 212297411976851028}
+  - component: {fileID: 95901808064110838}
   - component: {fileID: 58145256348616500}
   - component: {fileID: 114347158272264998}
   m_Layer: 0
   m_Name: Fireball
-  m_TagString: Untagged
+  m_TagString: FireElement
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -36,7 +37,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1219230856590874}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.2568088, y: -3.09, z: 0}
+  m_LocalPosition: {x: 8.574988, y: -8.389501, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -54,9 +55,26 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.1, y: 0}
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.25
+--- !u!95 &95901808064110838
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1219230856590874}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 3466e7db62ad9f34187d1e7cd117406d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114347158272264998
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -68,7 +86,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e208e5924c51db04fa4f9029866234de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
   direction: {x: 0, y: 0, z: 0}
 --- !u!212 &212297411976851028
 SpriteRenderer:
