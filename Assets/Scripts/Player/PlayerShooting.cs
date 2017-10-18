@@ -65,13 +65,13 @@ public class PlayerShooting : MonoBehaviour {
 			//If PrimaryAbsorb
 			if (Input.GetButton ("PrimaryFire") && (Input.GetButton ("LeftCtrl")) && absorbTimer > absorberCooldown) {
 				Absorb ("left");
-				Debug.Log ("Primary absorb fired");
+				//Debug.Log ("Primary absorb fired");
 			}
 
 			//If SecondaryAbsorb
 			if (Input.GetButton ("SecondaryFire") && (Input.GetButton ("LeftCtrl")) && absorbTimer > absorberCooldown) {
 				Absorb ("right");
-				Debug.Log ("Secondary absorb fired");
+				//Debug.Log ("Secondary absorb fired");
 			}
 
 			if (Input.GetButton ("PrimaryFire") && absorbTimer > shootCooldown) {

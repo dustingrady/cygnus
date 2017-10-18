@@ -7,6 +7,9 @@ TagManager:
   - Reference
   - FireElement
   - WaterElement
+  - Enemy
+  - Fireball
+  - WaterJet
   layers:
   - Default
   - TransparentFX
