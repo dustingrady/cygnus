@@ -31,8 +31,18 @@ public class MainCameraScript : MonoBehaviour
 
    	Vector2 velocity = Vector2.zero;
 
+
+    Vector3 prevCamPos;
+    float parallax;
+    float backgroundPosX;
+    public Transform background;
+    [SerializeField]
+    float psmooth = 1f;
+
     void Start()
 	{
+        prevCamPos = this.transform.position;
+
         target = GameObject.FindGameObjectWithTag("Player");
 
 		leftCameraBound = 0.5f - horizontalMoveSpace;
@@ -64,6 +74,10 @@ public class MainCameraScript : MonoBehaviour
         return movingDiagonally;
     }
     */
+    void Update()
+    {
+        parallaxScroll();
+    }
 
     void LateUpdate()
     {
@@ -91,6 +105,20 @@ public class MainCameraScript : MonoBehaviour
 		}
 
 		transform.position = new Vector3(Mathf.Clamp(smooth.x, xMin, xMax), Mathf.Clamp(smooth.y, yMin, yMax), transform.position.z);
-			
+
+        
+    }
+
+    void parallaxScroll()
+    {
+        parallax = (prevCamPos.x - this.transform.position.x) * (this.transform.position.z * -1);
+
+        backgroundPosX = background.position.x + parallax;
+
+        Vector3 newBackgroundPos = new Vector3(backgroundPosX, background.position.y, background.position.z);
+
+        background.position = Vector3.Lerp(background.position, newBackgroundPos, psmooth * Time.deltaTime);
+
+        prevCamPos = this.transform.position;
     }
 }

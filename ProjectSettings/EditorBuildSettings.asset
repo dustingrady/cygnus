@@ -4,4 +4,16 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Map.unity
+    guid: 803ef0b75eca81c4eb5130a988f18006
+  - enabled: 1
+    path: Assets/Scenes/Main.unity
+    guid: a958ae8f33f07fa4d9e668a67f524c37
+  - enabled: 1
+    path: Assets/Scenes/ShipInterior.unity
+    guid: d7ed34690f50f8e4eaa18d573c586cd5
+  - enabled: 1
+    path: Assets/Scenes/TestChamber.unity
+    guid: 514592acec2a09444b4eb7e6ea7a76ad
