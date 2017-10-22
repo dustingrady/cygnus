@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -26,6 +26,10 @@ namespace UnityEngine.Tilemaps
 			{
 				tileData.sprite = m_AnimatedSprites[m_AnimatedSprites.Length - 1];
 			}
+
+			//tileData.flags = TileFlags.LockAll;
+			tileData.colliderType = Tile.ColliderType.Grid;
+
 		}
 
 		public override bool GetTileAnimationData(Vector3Int location, ITilemap tileMap, ref TileAnimationData tileAnimationData)
@@ -63,7 +67,7 @@ namespace UnityEngine.Tilemaps
 		public override void OnInspectorGUI()
 		{
 			EditorGUI.BeginChangeCheck();
-			int count = EditorGUILayout.IntField("Number of Animated Sprites", tile.m_AnimatedSprites.Length);
+			int count = EditorGUILayout.IntField("Number of Animated Sprites", tile.m_AnimatedSprites != null ? tile.m_AnimatedSprites.Length : 0);
 			if (count < 0)
 				count = 0;
 			if (tile.m_AnimatedSprites == null || tile.m_AnimatedSprites.Length != count)

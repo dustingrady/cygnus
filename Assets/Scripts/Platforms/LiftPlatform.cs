@@ -51,7 +51,7 @@ public class LiftPlatform : MonoBehaviour {
 	void MoveToTarget() {
         //Varying speed vs constant speed
         //transform.position = Vector2.Lerp (transform.position, target.transform.position, speed * Time.deltaTime);
-        transform.position = Vector2.MoveTowards(transform.position, target.transform.position, 0.05f);
+        transform.position = Vector2.MoveTowards(transform.position, target.transform.position, 0.05f * speed);
 
 		// Block has reached the target, move back to start
 		if (Vector2.Distance (transform.position, target.transform.position) < 0.05) {
@@ -64,7 +64,7 @@ public class LiftPlatform : MonoBehaviour {
 	void MoveToStart() {
         //Varying speed vs constant speed
         //transform.position = Vector2.Lerp (transform.position, start.transform.position, speed * Time.deltaTime);
-        transform.position = Vector2.MoveTowards(transform.position, start.transform.position, 0.05f);
+        transform.position = Vector2.MoveTowards(transform.position, start.transform.position, 0.05f * speed);
 
         if (Vector2.Distance (transform.position, start.transform.position) < 0.02) {
 			movingToTarget = false;
