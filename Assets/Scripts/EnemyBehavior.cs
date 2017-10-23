@@ -5,21 +5,30 @@ using UnityEngine;
 public class EnemyBehavior : MonoBehaviour {
 	private Vector3 startingPos;
 
-
 	public float delta = 15f; //How far we move left and right
 	public float speed = 2.0f; //How fast we move left and right
+	public int health = 100;
 	// Use this for initialization
 	void Start () {
 		startingPos = transform.position; //Initialize startingPos
 	}
-	
-	// Update is called once per frame
+
 	void Update () {
-		Vector3 v = startingPos;
-		v.x += delta * Mathf.Sin (Time.time * speed); //Sin gives better movement
-		transform.position = v;
+		Behavior ();
 	}
 
+	void Behavior(){
+		//---------Movement---------
+		Vector3 v = startingPos;
+		v.x += delta * Mathf.Sin (Time.time * speed);
+		transform.position = v;	
+
+		//-------Check if dead-------
+		if (health <= 0) {
+			Destroy(this.gameObject);
+		}
+	}
+		
 	void OnTriggerEnter2D(Collider2D col) {
 		if (col.gameObject.tag == "Fireball") {
 			Debug.Log ("You hit an enemy with a fireball");
@@ -31,14 +40,18 @@ public class EnemyBehavior : MonoBehaviour {
 		}
 	}
 
-	//These could be status effects on/ damage to the enemy (unless we want to put that somewhere else)
+	//These could be status effects/ damage to the enemy (unless we want to put that somewhere else)
 	private void FireEffect(){
 		GetComponent<SpriteRenderer> ().color = Color.red;
-		//yield return new WaitForSeconds (1); 
-		//renderer.material.color = 
+		speed = 2.0f; //Modify speed
+		health -= 20; //Deal damage
+		Debug.Log ("Enemy Health: " + health);
 	}
 
 	private void IceEffect(){
-		GetComponent<SpriteRenderer> ().color = Color.blue;
+		GetComponent<SpriteRenderer> ().color = Color.blue; //Change sprite to blue
+		speed = 1.0f; //Modify speed
+		health -= 10; //Deal damage
+		Debug.Log ("Enemy Health: " + health);
 	}
 }
