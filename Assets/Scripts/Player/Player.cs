@@ -21,6 +21,9 @@ public class Player : MonoBehaviour {
 
 		Element earth = GetComponentInChildren<Earth> ();
 		elements.Add ("earth", earth);
+
+		Element metal = GetComponentInChildren<Metal> ();
+		elements.Add ("metal", metal);
 	}
 	
 	// Update is called once per frame

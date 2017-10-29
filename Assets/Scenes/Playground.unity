@@ -180,7 +180,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   earth: {fileID: 1026038261556570, guid: 1fa4fa7bdc9dd4847b3cb8f512410715, type: 2}
-  earthCooldown: 0.5
+  boulderStrength: 1000
 --- !u!1 &710269031
 GameObject:
   m_ObjectHideFlags: 0
@@ -3086,7 +3086,7 @@ GameObject:
   - component: {fileID: 1921831508}
   m_Layer: 8
   m_Name: Foreground
-  m_TagString: EarthElement
+  m_TagString: MetalElement
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
