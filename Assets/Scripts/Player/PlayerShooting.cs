@@ -13,11 +13,7 @@ public class PlayerShooting : MonoBehaviour {
 	private float fireSpeed = 10f;
 	[SerializeField]
 	private float absorberCooldown = 0.25f;
-	private float shootTimer = 0f;
 	private float absorbTimer = 0f;
-
-	public static bool shotFromLeft;
-	public static bool shotFromRight;
 
 	private bool secondaryBtnRelease = true;
 	private bool primaryBtnRelease = true;
@@ -35,7 +31,6 @@ public class PlayerShooting : MonoBehaviour {
 	}
 
 	void Update () {
-		shootTimer += Time.deltaTime;
 		absorbTimer += Time.deltaTime;
 
 		if (gm.controllerConnected) {
@@ -46,7 +41,7 @@ public class PlayerShooting : MonoBehaviour {
 				primaryBtnRelease = true;
 			}
 
-			if (Input.GetAxis ("PrimaryFireGamePad") > 0.5f && shootTimer > shootCooldown && primaryBtnRelease) {
+			if (Input.GetAxis ("PrimaryFireGamePad") > 0.5f && primaryBtnRelease) {
 				Debug.Log ("Triggered primary fire on controller!");
 				// Shoot goes here
 			}
@@ -65,22 +60,20 @@ public class PlayerShooting : MonoBehaviour {
 			//If PrimaryAbsorb
 			if (Input.GetButton ("PrimaryFire") && (Input.GetButton ("LeftCtrl")) && absorbTimer > absorberCooldown) {
 				Absorb ("left");
-				//Debug.Log ("Primary absorb fired");
 			}
 
 			//If SecondaryAbsorb
 			if (Input.GetButton ("SecondaryFire") && (Input.GetButton ("LeftCtrl")) && absorbTimer > absorberCooldown) {
 				Absorb ("right");
-				//Debug.Log ("Secondary absorb fired");
 			}
 
-			if (Input.GetButton ("PrimaryFire") && absorbTimer > shootCooldown) {
+			if (Input.GetButton ("PrimaryFire") && !(Input.GetButton ("LeftCtrl"))) {
 				if (plr.leftElement != null) {
 					useElement ("left");
 				}
 			}
 				
-			if (Input.GetButton ("SecondaryFire") && absorbTimer > shootCooldown) {
+			if (Input.GetButton ("SecondaryFire") && !(Input.GetButton ("LeftCtrl"))) {
 				if (plr.rightElement != null)
 					useElement ("right");
 			}
@@ -132,9 +125,6 @@ public class PlayerShooting : MonoBehaviour {
 			} else {
 				plr.rightElement.UseElement (transform.position, dir);
 			}
-
-			// restart the clock on the shoot cooldown
-			absorbTimer = 0f;
 		} else {
 			Debug.Log ("shooting absorb with controller");
 			float x = Input.GetAxis ("RightHorizontal");
@@ -147,9 +137,6 @@ public class PlayerShooting : MonoBehaviour {
 			} else {
 				plr.rightElement.UseElement (transform.position, dir);
 			}
-
-			// restart the clock on the shoot cooldown
-			absorbTimer = 0f;	
 		}
 	}
 }

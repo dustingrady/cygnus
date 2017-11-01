@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour {
 
@@ -17,10 +18,24 @@ public class Player : MonoBehaviour {
 
 		Element water = GetComponentInChildren<Water> ();
 		elements.Add("water", water);
+
+		Element earth = GetComponentInChildren<Earth> ();
+		elements.Add ("earth", earth);
+
+		Element metal = GetComponentInChildren<Metal> ();
+		elements.Add ("metal", metal);
 	}
 	
 	// Update is called once per frame
 	void Update () {
 			
+	}
+
+	// Test for the Playground, if you hit Lava reload
+	void OnTriggerEnter2D(Collider2D col) {
+		Debug.Log (col.gameObject.name);
+		if (col.gameObject.name == "Lava") {
+			SceneManager.LoadScene (SceneManager.GetActiveScene().name);
+		}
 	}
 }
