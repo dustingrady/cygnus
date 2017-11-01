@@ -8,6 +8,8 @@ TagManager:
   - FireElement
   - WaterElement
   - Ice
+  - EarthElement
+  - MetalElement
   layers:
   - Default
   - TransparentFX
