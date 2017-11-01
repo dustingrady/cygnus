@@ -163,6 +163,24 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 075cc8820e5995547aff679f6bf74c30, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &479612926 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1415237660958432, guid: 064bb79712746ca4fb4eeb186b912e89,
+    type: 2}
+  m_PrefabInternal: {fileID: 1235859870}
+--- !u!114 &479612930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 479612926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbfe292870eb3e041ae61f381fb7be8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  earth: {fileID: 1026038261556570, guid: 1fa4fa7bdc9dd4847b3cb8f512410715, type: 2}
+  boulderStrength: 1000
 --- !u!1 &710269031
 GameObject:
   m_ObjectHideFlags: 0
@@ -712,6 +730,11 @@ Prefab:
     - target: {fileID: 4062297412796568, guid: cf06be31013f6c346ab2e54dfe3dcbf4, type: 2}
       propertyPath: m_RootOrder
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 20854867546697684, guid: cf06be31013f6c346ab2e54dfe3dcbf4,
+        type: 2}
+      propertyPath: orthographic size
+      value: 8.5625
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cf06be31013f6c346ab2e54dfe3dcbf4, type: 2}
@@ -3063,7 +3086,7 @@ GameObject:
   - component: {fileID: 1921831508}
   m_Layer: 8
   m_Name: Foreground
-  m_TagString: Untagged
+  m_TagString: MetalElement
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

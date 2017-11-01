@@ -40,13 +40,33 @@ public class Absorber : MonoBehaviour {
 			}
 		}
 
-		if (col.gameObject.tag == "WaterElement") {
+		if (col.gameObject.tag == "WaterElement" || col.gameObject.tag == "Ice") {
 			if (hand == "left") {
 				Debug.Log ("Added water to player's left hand");
 				plr.leftElement = plr.elements["water"];
 			} else {
 				Debug.Log ("Added water to player's right hand");
 				plr.rightElement = plr.elements["water"];
+			}
+		}
+
+		if (col.gameObject.tag == "EarthElement") {
+			if (hand == "left") {
+				Debug.Log ("Added earth to player's left hand");
+				plr.leftElement = plr.elements["earth"];
+			} else {
+				Debug.Log ("Added earth to player's right hand");
+				plr.rightElement = plr.elements["earth"];
+			}
+		}
+
+		if (col.gameObject.tag == "MetalElement") {
+			if (hand == "left") {
+				Debug.Log ("Added metal to player's left hand");
+				plr.leftElement = plr.elements["metal"];
+			} else {
+				Debug.Log ("Added metal to player's right hand");
+				plr.rightElement = plr.elements["metal"];
 			}
 		}
 	}

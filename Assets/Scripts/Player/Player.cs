@@ -18,6 +18,12 @@ public class Player : MonoBehaviour {
 
 		Element water = GetComponentInChildren<Water> ();
 		elements.Add("water", water);
+
+		Element earth = GetComponentInChildren<Earth> ();
+		elements.Add ("earth", earth);
+
+		Element metal = GetComponentInChildren<Metal> ();
+		elements.Add ("metal", metal);
 	}
 	
 	// Update is called once per frame
