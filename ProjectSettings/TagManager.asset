@@ -10,6 +10,9 @@ TagManager:
   - Ice
   - EarthElement
   - MetalElement
+  - WaterJet
+  - Enemy
+  - Item
   layers:
   - Default
   - TransparentFX

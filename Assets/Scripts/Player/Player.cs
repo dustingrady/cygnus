@@ -10,6 +10,9 @@ public class Player : MonoBehaviour {
 	public Element rightElement;
 	public Dictionary<string, Element> elements;
 
+    Inventory inventory;
+
+
 	void Start () {
 		// Initialize a dictionary of elements that can be found in the world
 		elements = new Dictionary<string, Element> ();
@@ -24,6 +27,8 @@ public class Player : MonoBehaviour {
 
 		Element metal = GetComponentInChildren<Metal> ();
 		elements.Add ("metal", metal);
+
+        inventory = GameObject.Find("Game Manager").GetComponent<Inventory>();
 	}
 	
 	// Update is called once per frame
@@ -37,5 +42,13 @@ public class Player : MonoBehaviour {
 		if (col.gameObject.name == "Lava") {
 			SceneManager.LoadScene (SceneManager.GetActiveScene().name);
 		}
-	}
+
+        if (col.gameObject.tag == "Item")
+        {
+            Debug.Log("Collided with item");
+            string path = "Prefabs/Items/" + col.gameObject.name;
+            GameObject temp = Resources.Load(path) as GameObject;
+            inventory.GetComponent<Inventory>().addItem(temp);
+        }
+    }
 }
