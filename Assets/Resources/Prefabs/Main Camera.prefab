@@ -64,7 +64,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 6.75
+  orthographic size: 6.46875
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -79,6 +79,7 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+  m_StereoMirrorMode: 0
 --- !u!81 &81449311631779986
 AudioListener:
   m_ObjectHideFlags: 1
@@ -86,6 +87,7 @@ AudioListener:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1167467297182356}
   m_Enabled: 1
+  m_ExtensionPropertyValues: []
 --- !u!114 &114779237848586586
 MonoBehaviour:
   m_ObjectHideFlags: 1

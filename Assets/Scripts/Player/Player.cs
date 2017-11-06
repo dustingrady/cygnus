@@ -5,15 +5,22 @@ using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour {
 
-	public int health;
+    [SerializeField]
+    private Stat health;
 	public Element leftElement;
 	public Element rightElement;
+    public Element centerElement;
 	public Dictionary<string, Element> elements;
 
     Inventory inventory;
 
 
-	void Start () {
+    private void Awake()
+    {
+        health.Initalize();
+    }
+
+    void Start () {
 		// Initialize a dictionary of elements that can be found in the world
 		elements = new Dictionary<string, Element> ();
 		Element fire = GetComponentInChildren<Fire> ();
@@ -33,8 +40,14 @@ public class Player : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-			
-	}
+		if (Input.GetKeyDown(KeyCode.Q)) {
+            health.CurrentVal -= 10;
+        }
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            health.CurrentVal += 10;
+        }
+    }
 
 	// Test for the Playground, if you hit Lava reload
 	void OnTriggerEnter2D(Collider2D col) {
