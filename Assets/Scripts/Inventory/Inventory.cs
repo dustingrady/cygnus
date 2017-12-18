@@ -111,7 +111,7 @@ public class Inventory : MonoBehaviour {
 	}
 
 	public void displayInventory() {
-		inventoryUI.transform.localScale = new Vector3 (1f, 1f, 1f);
+		inventoryUI.transform.localScale = new Vector3(1f, 1f, 1f);
 	}
 
 	// Inventory needs to be initalized every time a new scene is loaded
