@@ -26,12 +26,10 @@ public class PlayerShootingClassic : MonoBehaviour {
 
 	void Shoot() {
 		if (transform.localScale.x > 0) {
-			GameObject blt = Instantiate (playerBullet, transform.position, transform.rotation);
+			Instantiate (playerBullet, transform.position, transform.rotation);
 		} else {
-			GameObject blt = Instantiate (playerBullet, transform.position, transform.rotation);
-			blt.GetComponent<PlayerBulletClassic> ().movingRight = false;
+			Instantiate (playerBullet, transform.position, transform.rotation);
 		}
-
 		shootTimer = 0f;
 	}
 }

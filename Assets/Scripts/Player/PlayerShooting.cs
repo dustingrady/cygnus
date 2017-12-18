@@ -6,11 +6,7 @@ public class PlayerShooting : MonoBehaviour {
 	[SerializeField]
 	private GameObject absorber;
 	[SerializeField]
-	private float shootCooldown = 0.25f;
-	[SerializeField]
 	private float absorberSpeed = 10f;
-	[SerializeField]
-	private float fireSpeed = 10f;
 	[SerializeField]
 	private float absorberCooldown = 0.25f;
 	private float absorbTimer = 0f;

@@ -5,15 +5,12 @@ using UnityEngine.Tilemaps;
 
 public class AbsorbLayer : MonoBehaviour
 {
-
-    private Rigidbody2D rb;
     private Tilemap tilemap;
     public GameObject lavaBlockPrefab;
 
     // Use this for initialization
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
         tilemap = GetComponent<Tilemap>();
     }
 

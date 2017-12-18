@@ -9,13 +9,11 @@ public class PlayerAnimation : MonoBehaviour {
 	[SerializeField]
 	private float sprintMulti;
 
-	private PlayerController playerControl;
 	private bool landed;
 	private bool shooting;
 
 	void Start() {
 		playerAnim = GetComponent<Animator> ();
-		playerControl = GetComponent<PlayerController> ();
 
 		PlayerShooting.OnShoot += PlayShoot;
 	}

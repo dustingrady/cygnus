@@ -35,7 +35,9 @@ public class Player : MonoBehaviour {
 		Element metal = GetComponentInChildren<Metal> ();
 		elements.Add ("metal", metal);
 
+		// Inventory references need to be reset each time a scene loads
         inventory = GameObject.Find("Game Manager").GetComponent<Inventory>();
+		inventory.initializeInventory ();
 	}
 	
 	// Update is called once per frame
@@ -48,20 +50,28 @@ public class Player : MonoBehaviour {
             health.CurrentVal += 10;
         }
     }
-
-	// Test for the Playground, if you hit Lava reload
+		
 	void OnTriggerEnter2D(Collider2D col) {
-		Debug.Log (col.gameObject.name);
+		
+		// Test for the Playground, if you hit Lava reload
 		if (col.gameObject.name == "Lava") {
+
+			inventory.emptyInventory ();
 			SceneManager.LoadScene (SceneManager.GetActiveScene().name);
 		}
 
         if (col.gameObject.tag == "Item")
         {
-            Debug.Log("Collided with item");
-            string path = "Prefabs/Items/" + col.gameObject.name;
-            GameObject temp = Resources.Load(path) as GameObject;
-            inventory.GetComponent<Inventory>().addItem(temp);
+            //Debug.Log("Collided with item");
+            //string path = "Items/" + col.gameObject.name;
+			//Item temp = Resources.Load(path) as Item;
+			Item item = col.gameObject.GetComponent<ItemInteraction>().item;
+
+			if (item != null) {
+				inventory.GetComponent<Inventory>().addItem(item);
+			} else {
+				Debug.LogError ("There was no item on that object!");
+			}
         }
     }
 }

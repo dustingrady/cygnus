@@ -5,13 +5,11 @@ using UnityEngine.Tilemaps;
 
 public class FallingPlatform : MonoBehaviour {
 
-	private Rigidbody2D rb;
 	private Tilemap tilemap;
 	public GameObject fallingPrefab;
 
 	// Use this for initialization
 	void Start () {
-		rb = GetComponent<Rigidbody2D>();
 		tilemap = GetComponent<Tilemap>();
 	}
 
