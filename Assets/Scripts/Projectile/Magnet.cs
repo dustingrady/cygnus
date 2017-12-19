@@ -21,9 +21,10 @@ public class Magnet : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D col) {
-		if (col.gameObject.tag != "Player" && col.gameObject.tag != "Metal" ) {
+		if (col.gameObject.tag != "Player" && col.gameObject.tag != "Metal" && col.gameObject.tag != "Item") {
 			DestroyObject (this.gameObject);
-		} else if(col.gameObject.tag == "Metal") {
+		}
+		if(col.gameObject.tag == "MetalElement") {
 			Debug.Log ("Grapple to Target.");
 		}
 	}

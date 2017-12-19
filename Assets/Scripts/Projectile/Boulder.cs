@@ -17,7 +17,7 @@ public class Boulder : MonoBehaviour {
 	}*/
 
 	void OnTriggerEnter2D(Collider2D col) {
-		if (col.gameObject.tag != "Player" && col.gameObject.tag != "Boulder" ) {
+		if (col.gameObject.tag != "Player" && col.gameObject.tag != "Boulder" && col.gameObject.tag != "Item") {
 			DestroyObject (this.gameObject);
 		}
 	}
