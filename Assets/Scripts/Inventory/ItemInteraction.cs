@@ -4,21 +4,14 @@ using UnityEngine;
 
 public class ItemInteraction : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+	// The item that the player collects when they touch the item
+	public Item item; 
 
+	// Destroy the object when a player collects the item
     void OnTriggerEnter2D(Collider2D col)
     {
         if (col.gameObject.tag == "Player")
         {
-            Debug.Log("Ouch");
             Destroy(this.gameObject);
         }
     }

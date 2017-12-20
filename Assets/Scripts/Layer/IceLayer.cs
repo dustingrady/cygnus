@@ -5,14 +5,12 @@ using UnityEngine.Tilemaps;
 
 public class IceLayer : MonoBehaviour {
 
-	private Rigidbody2D rb;
 	private Tilemap tilemap;
 	public GameObject iceReplacement;
 
 	// Use this for initialization
 	void Start()
 	{
-		rb = GetComponent<Rigidbody2D>();
 		tilemap = GetComponent<Tilemap>();
 	}
 
@@ -31,8 +29,6 @@ public class IceLayer : MonoBehaviour {
 		Vector3 hitPosition = Vector3.zero;
 		Vector3 blockPosition = Vector3.zero;
 
-		bool tileDestroyed = false;
-
 		Vector3Int cellPos = tilemap.WorldToCell (col.transform.position);
 
 		List<Vector3> positionChecks = getPositionChecks (col.transform.position);
@@ -46,12 +42,10 @@ public class IceLayer : MonoBehaviour {
 		if (tilemap.GetTile(cellPos) != null)
 		{
 			blockPosition = tilemap.CellToWorld(cellPos) + tilemap.tileAnchor;
-			Debug.Log("Hit Ice");
 			// Get The tile sprite for replacement
 			Sprite replacementSprite = tilemap.GetSprite(cellPos);
 			// Delete tile
 			tilemap.SetTile(cellPos, null);
-			tileDestroyed = true;
 		}
 	}
 

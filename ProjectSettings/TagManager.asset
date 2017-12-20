@@ -13,6 +13,7 @@ TagManager:
   - WaterJet
   - Enemy
   - Item
+  - InventoryUI
   layers:
   - Default
   - TransparentFX

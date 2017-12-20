@@ -7,7 +7,6 @@ public class PlayerController: MonoBehaviour {
 
 	private Rigidbody2D rb;
 	private Collider2D col;
-	private Player playerScript; // Reference to player script where elemental abilities live
 
 	[SerializeField]
 	private float baseSpeed = 250;
@@ -34,7 +33,6 @@ public class PlayerController: MonoBehaviour {
 	void Start () {
 		rb = GetComponent<Rigidbody2D> ();
 		col = GetComponent<BoxCollider2D> ();
-		playerScript = GetComponent<Player> ();
 	}
 
 
