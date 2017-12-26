@@ -54,8 +54,8 @@ public class Player : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D col) {
 		
 		// Test for the Playground, if you hit Lava reload
-		if (col.gameObject.name == "Lava") {
-
+		if (col.gameObject.name == "Lava" || col.gameObject.name == "Fire") {
+			Debug.Log (col.gameObject.name);
 			inventory.emptyInventory ();
 			SceneManager.LoadScene (SceneManager.GetActiveScene().name);
 		}
