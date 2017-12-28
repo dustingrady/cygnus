@@ -14,6 +14,9 @@ public class Player : MonoBehaviour {
 
     Inventory inventory;
 
+	bool onFire = false;
+
+	bool standingInFire = false;
 
     private void Awake()
     {
@@ -49,12 +52,17 @@ public class Player : MonoBehaviour {
         {
             health.CurrentVal += 10;
         }
+
+		if (health.CurrentVal <= 0) {
+			inventory.emptyInventory ();
+			SceneManager.LoadScene (SceneManager.GetActiveScene().name);
+		}
     }
 		
 	void OnTriggerEnter2D(Collider2D col) {
 		
 		// Test for the Playground, if you hit Lava reload
-		if (col.gameObject.name == "Lava" || col.gameObject.name == "Fire") {
+		if (col.gameObject.name == "Lava") {
 			Debug.Log (col.gameObject.name);
 			inventory.emptyInventory ();
 			SceneManager.LoadScene (SceneManager.GetActiveScene().name);
@@ -73,5 +81,56 @@ public class Player : MonoBehaviour {
 				Debug.LogError ("There was no item on that object!");
 			}
         }
+
+		/*
+		 * DAMAGE SECTION
+		 */
+
+		//TODO:
+		//Enemies projectiles
+		//Collision with enemies
+
+		if (col.gameObject.name == "Fire" && !standingInFire) {
+			StartCoroutine(singularDamage(5));
+		}
     }
+
+	void OnTriggerStay2D(Collider2D col)
+	{
+		if (col.gameObject.name == "Fire"  && !standingInFire) {
+			Debug.Log (health.CurrentVal + " " + onFire);
+			StartCoroutine(singularDamage(5));
+		}
+	}
+
+	void OnTriggerExit2D(Collider2D col)
+	{
+		if (col.gameObject.name == "Fire" && !onFire) {
+			StartCoroutine(damageOverTime (5, 1));
+		}
+	}
+
+
+	//FOR FIRE ONLY
+	IEnumerator damageOverTime(int ticks, int damageAmount)
+	{
+		onFire = true;
+
+		int currentTick = 0;
+		while (currentTick < ticks) {
+			health.CurrentVal -= damageAmount;
+			yield return new WaitForSeconds (1);
+			currentTick++;
+		}
+
+		onFire = false;
+	}
+
+	IEnumerator singularDamage(int damageAmount)
+	{
+		standingInFire = true;
+		health.CurrentVal -= damageAmount;
+		yield return new WaitForSeconds (2);
+		standingInFire = false;
+	}
 }
