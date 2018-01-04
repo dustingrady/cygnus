@@ -20,6 +20,10 @@ public class PlayerShooting : MonoBehaviour {
 
 	private Player plr;
 
+	// Left + Right combo for keyboard
+	// Example
+	// KeyCombo leftRight = new KeyCombo(new string[] {"PrimaryFire", "SecondaryFire"});
+
 	GameManager gm;
 	void Start() {
 		gm = GameManager.instance;
@@ -54,25 +58,32 @@ public class PlayerShooting : MonoBehaviour {
 		} else {
 			
 			//If PrimaryAbsorb
-			if (Input.GetButton ("PrimaryFire") && (Input.GetButton ("LeftCtrl")) && absorbTimer > absorberCooldown) {
+			 if (Input.GetButton ("PrimaryFire") && (Input.GetButton ("LeftCtrl")) && absorbTimer > absorberCooldown) {
 				Absorb ("left");
 			}
 
 			//If SecondaryAbsorb
-			if (Input.GetButton ("SecondaryFire") && (Input.GetButton ("LeftCtrl")) && absorbTimer > absorberCooldown) {
+			else if (Input.GetButton ("SecondaryFire") && (Input.GetButton ("LeftCtrl")) && absorbTimer > absorberCooldown) {
 				Absorb ("right");
 			}
 
+			if (Input.GetMouseButton(2)) {
+				if (plr.centerElement != null) {
+					useElement ("both");
+				}
+			}
+				
 			if (Input.GetButton ("PrimaryFire") && !(Input.GetButton ("LeftCtrl"))) {
 				if (plr.leftElement != null) {
 					useElement ("left");
 				}
 			}
-				
+
 			if (Input.GetButton ("SecondaryFire") && !(Input.GetButton ("LeftCtrl"))) {
 				if (plr.rightElement != null)
 					useElement ("right");
 			}
+			
 		}
 	}
 
@@ -116,7 +127,9 @@ public class PlayerShooting : MonoBehaviour {
 			// Convert this into a Vector2
 			Vector2 dir = new Vector2 (dirV3.x, dirV3.y);
 
-			if (hand == "left") {
+			if (hand == "both") {
+				plr.centerElement.UseElement (transform.position, dir);
+			} else if (hand == "left") {
 				plr.leftElement.UseElement (transform.position, dir);
 			} else {
 				plr.rightElement.UseElement (transform.position, dir);

@@ -45,7 +45,8 @@ public class AbsorbLayer : MonoBehaviour
             blockPosition = tilemap.CellToWorld(cellPos) + tilemap.tileAnchor;
 
             // Get The tile sprite for replacement
-            Sprite replacementSprite = tilemap.GetSprite(cellPos);
+            //Sprite replacementSprite = tilemap.GetSprite(cellPos);
+
             // Delete tile
             tilemap.SetTile(cellPos, null);
             tileDestroyed = true;

@@ -29,8 +29,10 @@ public class Inventory : MonoBehaviour {
 			if (Input.GetKeyDown (KeyCode.I)) {
 				if (showInventory == true) {
 					hideInventory ();
+					showInventory = false;
 				} else {
 					displayInventory ();
+					showInventory = true;
 				}
 			}
 		}

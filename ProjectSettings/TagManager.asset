@@ -14,6 +14,7 @@ TagManager:
   - Enemy
   - Item
   - InventoryUI
+  - ElectricElement
   layers:
   - Default
   - TransparentFX

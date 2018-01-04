@@ -6,7 +6,8 @@ public class Earth : Element {
 	public GameObject earth;
 	[SerializeField]
 	private float boulderStrength = 500;
-	private float earthCooldown = 1.0f;
+	[SerializeField]
+	private float earthCooldown = 1.5f;
 	private float timeSinceFire;
 	private bool earthReleased = true;
 

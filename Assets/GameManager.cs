@@ -22,12 +22,13 @@ public class GameManager : MonoBehaviour {
 		} else if (instance != this) {
 			Destroy (gameObject);
 		}
-			
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		CheckControllerStatus ();
+
+		// Testing combos
 	}
 
 
