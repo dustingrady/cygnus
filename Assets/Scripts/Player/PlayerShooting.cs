@@ -90,11 +90,8 @@ public class PlayerShooting : MonoBehaviour {
 	void Absorb(string hand) {
 		// No controller detected, use mouse and keyboard
 		if (!gm.controllerConnected) {
-			// Get the location of the mouse relative to the player
-			Vector3 dirV3 = Camera.main.ScreenToWorldPoint (Input.mousePosition) - transform.position;
-
-			// Convert this into a Vector2
-			Vector2 dir = new Vector2 (dirV3.x, dirV3.y);
+			
+			Vector2 dir = GetCursorDirection();
 
 			// Instantiate the Sorb Orb with a direction and speed
 			GameObject blt = Instantiate (absorber, transform.position, transform.rotation);
@@ -122,10 +119,7 @@ public class PlayerShooting : MonoBehaviour {
 		// No controller detected, use mouse and keyboard
 		if (!gm.controllerConnected) {
 
-			// Get the location of the mouse relative to the player
-			Vector3 dirV3 = Camera.main.ScreenToWorldPoint (Input.mousePosition) - transform.position;
-			// Convert this into a Vector2
-			Vector2 dir = new Vector2 (dirV3.x, dirV3.y);
+			Vector2 dir = GetCursorDirection();
 
 			if (hand == "both") {
 				plr.centerElement.UseElement (transform.position, dir);
@@ -147,5 +141,15 @@ public class PlayerShooting : MonoBehaviour {
 				plr.rightElement.UseElement (transform.position, dir);
 			}
 		}
+	}
+
+
+	public Vector2 GetCursorDirection() {
+		// Get the location of the mouse relative to the player
+		Vector3 dirV3 = Camera.main.ScreenToWorldPoint (Input.mousePosition) - transform.position;
+		// Convert this into a Vector2
+		Vector2 dir = new Vector2 (dirV3.x, dirV3.y);
+
+		return dir;
 	}
 }

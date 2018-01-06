@@ -10,9 +10,15 @@ public class ElementUI : MonoBehaviour {
 	public Image rightElementImg;
 	public Image centerElementImg;
 
+	public GameObject elementPower; // The element power UI element
+
 	void Start () {
 		if (GameObject.FindGameObjectWithTag ("Player") != null) {
 			plr = GameObject.FindGameObjectWithTag ("Player").GetComponent<Player> ();
+		}
+
+		if (GameObject.Find("Element Power") != null) {
+			elementPower = GameObject.Find("Element Power");
 		}
 
 		Transform leftElement = transform.Find ("LeftElement");
@@ -26,11 +32,12 @@ public class ElementUI : MonoBehaviour {
 
 
 		Absorber.OnAbsorb += UpdateElements;
+
+		// Add Cooldown delegate here
 	}
-	
-	// Update is called once per frame
+
 	void Update () {
-		
+		elementPower.transform.position = plr.transform.position - new Vector3 (0f, 0.7f, 0f);
 	}
 
 	void UpdateElements() {

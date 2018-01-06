@@ -6,6 +6,9 @@ public class GameManager : MonoBehaviour {
 
 	public static GameManager instance = null;
 
+	public int totalScrap = 0;
+	public int currentScrap = 0;
+
 	public GameObject player;
 	public bool controllerConnected = false;
 
