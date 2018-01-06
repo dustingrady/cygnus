@@ -18,15 +18,24 @@ public class Earth : Element {
 
 	PlayerShooting plrs;
 
-	public GameObject elementPower; // The element power UI element
+	public PowerMeter powerMeter; // The element power UI element
 
 
 	public override void UseElement(Vector3 pos, Vector2 dir){
 		if (timeSinceFire > earthCooldown) {
-			shotCharging = true;
+			if (shotCharging == false) {
+				// Start charging the projectile
+				shotCharging = true;
 
-			// enable the graphic
-			elementPower.transform.localScale = new Vector3(0.005f, 0.005f, 1f);
+				// Reset value of bar from previous shot
+				powerMeter.SetBarValue(0f);
+
+				// Reset color from previous shot
+				powerMeter.SetBarColor(new Color(0.8f, 0.4f, 0f, 1f));
+
+				// enable the graphic
+				powerMeter.Show();
+			}
 		}
 	}
 
@@ -34,8 +43,10 @@ public class Earth : Element {
 	void Start() {
 		plrs = transform.root.GetComponent<PlayerShooting> ();
 
-		if (GameObject.Find("Element Power") != null) {
-			elementPower = GameObject.Find("Element Power");
+		if (GameObject.FindGameObjectWithTag ("PowerMeter") != null) {
+			powerMeter = GameObject.FindGameObjectWithTag ("PowerMeter").GetComponent<PowerMeter> ();
+		} else {
+			Debug.LogError ("Unable to locate player power meter");
 		}
 	}
 
@@ -45,8 +56,9 @@ public class Earth : Element {
 			if (chargeTime < maxCharge) {
 				chargeTime += Time.deltaTime;
 
-				float chargePercent = Mathf.Round((chargeTime / maxCharge) * 100);
-				elementPower.GetComponent<Text> ().text = chargePercent.ToString();
+				float chargePercent = chargeTime / maxCharge;
+				powerMeter.SetBarValue (chargePercent);
+
 			} else {
 				chargeTime = maxCharge;
 			}
@@ -84,6 +96,7 @@ public class Earth : Element {
 		chargeTime = 0;
 
 		// disable the graphic
-		elementPower.transform.localScale = Vector3.zero;
+		powerMeter.Hide();
+
 	}
 }

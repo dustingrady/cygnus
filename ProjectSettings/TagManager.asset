@@ -15,6 +15,7 @@ TagManager:
   - Item
   - InventoryUI
   - ElectricElement
+  - PowerMeter
   layers:
   - Default
   - TransparentFX
