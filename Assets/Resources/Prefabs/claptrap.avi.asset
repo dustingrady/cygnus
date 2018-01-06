@@ -11,7 +11,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d59a82e861755a45b64d50c718dfc62, type: 3}
   m_Name: claptrap.avi
   m_EditorClassIdentifier: 
-  initialState: 0
   states:
   - text: Welcome to Tobor!
     choices:
@@ -19,13 +18,45 @@ MonoBehaviour:
       nextState: 1
     - response: I'm welcome?
       nextState: 2
+    - response: 
+      nextState: -1
+    - response: 
+      nextState: -1
     runMethod: 
     endTree: 0
   - text: We're gonna be here all day huh?
-    choices: []
+    choices:
+    - response: OK
+      nextState: 3
+    - response: 
+      nextState: -1
+    - response: 
+      nextState: -1
+    - response: 
+      nextState: -1
     runMethod: KillAsshole
-    endTree: 1
+    endTree: 0
   - text: Sure, whatever.
-    choices: []
+    choices:
+    - response: OK
+      nextState: 3
+    - response: 
+      nextState: -1
+    - response: 
+      nextState: -1
+    - response: 
+      nextState: -1
     runMethod: RunAway
+    endTree: 0
+  - text: END
+    choices:
+    - response: OK
+      nextState: 3
+    - response: 
+      nextState: -1
+    - response: 
+      nextState: -1
+    - response: 
+      nextState: -1
+    runMethod: 
     endTree: 1

@@ -23,18 +23,28 @@ public struct TalkState // What the NPC says/does
 [CreateAssetMenu(fileName = "TalkTree", menuName = "Dialogue/TalkTree")]
 public class TalkTree : ScriptableObject
 {
-    public int initialState;
     public TalkState[] states;
-    private int currentState;
+    private int currentState = 0;
 
-    public TalkState Advance(TalkChoice n)
+    public TalkState Advance(int n)
     {
-        currentState = n.nextState;
+        if (n < 0) n = currentState;
+        currentState = states[currentState].choices[n].nextState;
         return states[currentState];
     }
 
     public TalkState State
     {
         get { return states[currentState]; }
+    }
+
+    public int CurrentState
+    {
+        get { return currentState; }
+    }
+
+    public void Reset()
+    {
+        currentState = 0;
     }
 }
