@@ -12,6 +12,10 @@ public class Player : MonoBehaviour {
 	public Element rightElement;
     public Element centerElement;
 
+    bool onFire = false;
+
+    bool standingInFire = false;
+
     Inventory inventory;
 
     private void Awake()
