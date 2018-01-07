@@ -14,7 +14,8 @@ TagManager:
   - Enemy
   - Item
   - InventoryUI
-  - Fire
+  - ElectricElement
+  - PowerMeter
   layers:
   - Default
   - TransparentFX
