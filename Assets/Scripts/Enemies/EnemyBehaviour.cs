@@ -1,34 +1,26 @@
-﻿using System.Collections;
+﻿/*Function: Deals with enemy health/ effects on enemy
+* Status: In progress/ Untested
+* Bugs:
+*/
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyBehavior : MonoBehaviour {
-	private Vector3 startingPos;
-
-	public float delta = 15f; //How far we move left and right
+public class EnemyBehaviour : MonoBehaviour {
 	public float speed = 2.0f; //How fast we move left and right
-	public int health = 100;
+	public int health = 5; //Arbitrary number, as requested
+
 	// Use this for initialization
 	void Start () {
-		startingPos = transform.position; //Initialize startingPos
-	}
-
-	void Update () {
-		Behavior ();
-	}
-
-	void Behavior(){
-		//---------Movement---------
-		Vector3 v = startingPos;
-		v.x += delta * Mathf.Sin (Time.time * speed);
-		transform.position = v;	
-
-		//-------Check if dead-------
-		if (health <= 0) {
-			Destroy(this.gameObject);
-		}
-	}
 		
+	}
+	
+	// Update is called once per frame
+	void Update () {
+		check_Health ();
+	}
+
 	void OnTriggerEnter2D(Collider2D col) {
 		if (col.gameObject.tag == "Fireball") {
 			Debug.Log ("You hit an enemy with a fireball");
@@ -53,5 +45,12 @@ public class EnemyBehavior : MonoBehaviour {
 		speed = 1.0f; //Modify speed
 		health -= 10; //Deal damage
 		Debug.Log ("Enemy Health: " + health);
+	}
+
+	void check_Health(){
+		if (health <= 0) {
+			Destroy(this.gameObject);
+			//Call death animation here
+		}
 	}
 }
