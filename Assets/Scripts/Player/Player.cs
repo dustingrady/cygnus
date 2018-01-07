@@ -39,7 +39,7 @@ public class Player : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D col) {
 		
 		// Test for the Playground, if you hit Lava reload
-		if (col.gameObject.name == "Lava") {
+		if (col.gameObject.name == "Lava" || col.gameObject.tag == "EnemyProjectile") {
 
 			inventory.emptyInventory ();
 			SceneManager.LoadScene (SceneManager.GetActiveScene().name);
@@ -97,4 +97,43 @@ public class Player : MonoBehaviour {
 			}	
 		}
 	}
+
+    void OnTriggerStay2D(Collider2D col)
+    {
+        if (col.gameObject.name == "Fire"  && !standingInFire) {
+            Debug.Log (health.CurrentVal + " " + onFire);
+            StartCoroutine(singularDamage(5));
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D col)
+    {
+        if (col.gameObject.name == "Fire" && !onFire) {
+            StartCoroutine(damageOverTime (5, 1));
+        }
+    }
+
+
+    //FOR FIRE ONLY
+    IEnumerator damageOverTime(int ticks, int damageAmount)
+    {
+        onFire = true;
+
+        int currentTick = 0;
+        while (currentTick < ticks) {
+            health.CurrentVal -= damageAmount;
+            yield return new WaitForSeconds (1);
+            currentTick++;
+        }
+
+        onFire = false;
+    }
+
+    IEnumerator singularDamage(int damageAmount)
+    {
+        standingInFire = true;
+        health.CurrentVal -= damageAmount;
+        yield return new WaitForSeconds (2);
+        standingInFire = false;
+    }
 }
