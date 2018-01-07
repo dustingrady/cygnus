@@ -20,6 +20,10 @@ public class PlayerShooting : MonoBehaviour {
 
 	private Player plr;
 
+	// Left + Right combo for keyboard
+	// Example
+	// KeyCombo leftRight = new KeyCombo(new string[] {"PrimaryFire", "SecondaryFire"});
+
 	GameManager gm;
 	void Start() {
 		gm = GameManager.instance;
@@ -54,36 +58,40 @@ public class PlayerShooting : MonoBehaviour {
 		} else {
 			
 			//If PrimaryAbsorb
-			if (Input.GetButton ("PrimaryFire") && (Input.GetButton ("LeftCtrl")) && absorbTimer > absorberCooldown) {
+			 if (Input.GetButton ("PrimaryFire") && (Input.GetButton ("LeftCtrl")) && absorbTimer > absorberCooldown) {
 				Absorb ("left");
 			}
 
 			//If SecondaryAbsorb
-			if (Input.GetButton ("SecondaryFire") && (Input.GetButton ("LeftCtrl")) && absorbTimer > absorberCooldown) {
+			else if (Input.GetButton ("SecondaryFire") && (Input.GetButton ("LeftCtrl")) && absorbTimer > absorberCooldown) {
 				Absorb ("right");
 			}
 
+			if (Input.GetMouseButton(2)) {
+				if (plr.centerElement != null) {
+					useElement ("both");
+				}
+			}
+				
 			if (Input.GetButton ("PrimaryFire") && !(Input.GetButton ("LeftCtrl"))) {
 				if (plr.leftElement != null) {
 					useElement ("left");
 				}
 			}
-				
+
 			if (Input.GetButton ("SecondaryFire") && !(Input.GetButton ("LeftCtrl"))) {
 				if (plr.rightElement != null)
 					useElement ("right");
 			}
+			
 		}
 	}
 
 	void Absorb(string hand) {
 		// No controller detected, use mouse and keyboard
 		if (!gm.controllerConnected) {
-			// Get the location of the mouse relative to the player
-			Vector3 dirV3 = Camera.main.ScreenToWorldPoint (Input.mousePosition) - transform.position;
-
-			// Convert this into a Vector2
-			Vector2 dir = new Vector2 (dirV3.x, dirV3.y);
+			
+			Vector2 dir = GetCursorDirection();
 
 			// Instantiate the Sorb Orb with a direction and speed
 			GameObject blt = Instantiate (absorber, transform.position, transform.rotation);
@@ -111,12 +119,11 @@ public class PlayerShooting : MonoBehaviour {
 		// No controller detected, use mouse and keyboard
 		if (!gm.controllerConnected) {
 
-			// Get the location of the mouse relative to the player
-			Vector3 dirV3 = Camera.main.ScreenToWorldPoint (Input.mousePosition) - transform.position;
-			// Convert this into a Vector2
-			Vector2 dir = new Vector2 (dirV3.x, dirV3.y);
+			Vector2 dir = GetCursorDirection();
 
-			if (hand == "left") {
+			if (hand == "both") {
+				plr.centerElement.UseElement (transform.position, dir);
+			} else if (hand == "left") {
 				plr.leftElement.UseElement (transform.position, dir);
 			} else {
 				plr.rightElement.UseElement (transform.position, dir);
@@ -134,5 +141,15 @@ public class PlayerShooting : MonoBehaviour {
 				plr.rightElement.UseElement (transform.position, dir);
 			}
 		}
+	}
+
+
+	public Vector2 GetCursorDirection() {
+		// Get the location of the mouse relative to the player
+		Vector3 dirV3 = Camera.main.ScreenToWorldPoint (Input.mousePosition) - transform.position;
+		// Convert this into a Vector2
+		Vector2 dir = new Vector2 (dirV3.x, dirV3.y);
+
+		return dir;
 	}
 }

@@ -9,15 +9,23 @@ public class PlayerController: MonoBehaviour {
 	private Collider2D col;
 
 	[SerializeField]
-	private float baseSpeed = 250;
-	[SerializeField]
 	private float sprintMulti = 1.4f;
-	private float speed;
+	[SerializeField]
+	private float moveForce = 100f;
+	[SerializeField]
+	private float maxSpeed = 5f;
+	[SerializeField]
+	private float baseSpeed = 5f;
+	[SerializeField]
+	private float grappleSpeed = 1f;
 
 	[SerializeField]
 	private float gravity = 20;
 
 	private bool grounded;
+
+	public bool grapplingLeft = false;
+	public bool grapplingRight = false;
 
     [Range(0.01f, 5.0f)]
     public float jumpTravel = 1.8f;
@@ -47,32 +55,61 @@ public class PlayerController: MonoBehaviour {
 		}
 		// ------------- Visualize groundcheck rays -----------------------------
 
-		// Jumping
+		// Jumping while grappled left
+		if (Input.GetButtonDown("Jump") && grapplingLeft) {
+			rb.AddForce(Vector3.left * 100);
+			StartCoroutine("JumpCurve");
+		}
 
-		//Debug.Log(Input.GetButtonDown("Jump") && Grounded());
-		if (Input.GetButtonDown("Jump") && Grounded()) {
+		// Jumping while grappled right
+		else if (Input.GetButtonDown("Jump") && grapplingRight) {
+			rb.AddForce(Vector3.right * 100);
+			StartCoroutine("JumpCurve");
+		}
+
+		// Normal jump
+		else if (Input.GetButtonDown("Jump") && JumpCheck()) {
             StartCoroutine("JumpCurve");
 		}
 
 		// Sprinting
-		if (Input.GetKey (KeyCode.LeftShift) && Grounded()) {
-			speed = baseSpeed * sprintMulti;
-		} else if (Grounded()) {
-			speed = baseSpeed;
+		if (Input.GetKey (KeyCode.LeftShift) && JumpCheck()) {
+			maxSpeed = baseSpeed * sprintMulti;
+		} else if (JumpCheck()) {
+			maxSpeed = baseSpeed;
 		}
+
 	}
 
 
 	void FixedUpdate() {
-		rb.AddForce(Vector3.down * gravity * rb.mass); // Add more weight to the player
-		Move ();
+		if (grapplingLeft || grapplingRight) {
+			GrappleMove ();
+		} else {
+			rb.AddForce (Vector3.down * gravity * rb.mass); // Add more weight to the player
+			Move ();
+		}
 	}
 		
 
 	private void Move() {
-		rb.velocity = new Vector2 (Input.GetAxis ("Horizontal") * speed * Time.deltaTime, rb.velocity.y);
+		float h = Input.GetAxis("Horizontal");
+
+		if (Mathf.Abs (rb.velocity.x) < maxSpeed || Mathf.Sign(h) != Mathf.Sign(rb.velocity.x))
+			rb.AddForce(Vector2.right * h * moveForce);
 	}
 		
+
+	private void GrappleMove() {
+		if (Input.GetKey (KeyCode.W)) {
+			rb.velocity = Vector3.up * grappleSpeed;
+		} else if (Input.GetKey (KeyCode.S)) {
+			rb.velocity = Vector3.down * grappleSpeed;
+		} else {
+			rb.velocity = Vector3.zero;
+		}
+	}
+
 
     private IEnumerator JumpCurve()
     {
@@ -81,28 +118,22 @@ public class PlayerController: MonoBehaviour {
 
 		while (Input.GetButton("Jump") && curveVel > curveCutoff)
         {
-            rb.velocity = new Vector2(rb.velocity.x, curveVel);
+			if (Mathf.Abs(rb.velocity.y) < Mathf.Abs(curveVel)) {
+				rb.velocity = new Vector2(rb.velocity.x, curveVel);
+			}
             time += Time.fixedDeltaTime;
             curveVel = jumpTravel / time;
 			yield return new WaitForFixedUpdate ();
         }
 
-        rb.velocity = new Vector2(rb.velocity.x, Vector2.down.y * 0.01f);
+		if (Mathf.Abs(rb.velocity.y) < Mathf.Abs(curveVel)) {
+			rb.velocity = new Vector2(rb.velocity.x, Vector2.down.y * 0.01f);
+		}
+
     }
 
 
-	public bool Grounded() {
-		if (JumpCasts()) {
-			// On the ground
-			return true;
-		} else {
-			// In the air
-			return false;
-		};
-	}
-
-
-	private bool JumpCasts() {
+	private bool JumpCheck() {
 		Vector3[] castPos = new Vector3[] { transform.position, 
 			new Vector3 (transform.position.x - col.bounds.extents.x + 0.005f, transform.position.y, transform.position.z),
 			new Vector3 (transform.position.x + col.bounds.extents.x - 0.005f, transform.position.y, transform.position.z)
@@ -116,5 +147,28 @@ public class PlayerController: MonoBehaviour {
 		}
 
 		return validJump;
+	}
+
+
+	public void StartGrapple(string side) {
+		if (side == "left") {
+			grapplingLeft = true;
+		} else {
+			grapplingRight = true;
+		}
+
+		rb.gravityScale = 0;
+		rb.velocity = Vector3.zero;
+	}
+
+
+	public void StopGrapple() {
+		grapplingRight = false;
+		grapplingLeft = false;
+		rb.gravityScale = 1;
+	}
+
+	void OnCollisionExit2D(Collision2D col) {
+		StopGrapple ();
 	}
 }
