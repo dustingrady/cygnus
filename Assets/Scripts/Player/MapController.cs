@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MapController : MonoBehaviour
 {
@@ -9,6 +10,9 @@ public class MapController : MonoBehaviour
     private float baseSpeed = 250;
 
     private bool grounded;
+
+    string levelName = "";
+    bool onTop = false;
 
     void Start()
     {
@@ -25,6 +29,15 @@ public class MapController : MonoBehaviour
         {
             transform.localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z);
         }
+
+        if (onTop)
+        {
+            if (Input.GetKeyDown("e"))
+            {
+                Debug.Log("Entering level " + levelName);
+                SceneManager.LoadScene(levelName);
+            }
+        }
     }
 
     void FixedUpdate()
@@ -38,4 +51,18 @@ public class MapController : MonoBehaviour
         rb.velocity = new Vector2(Input.GetAxis("Horizontal") * baseSpeed * Time.deltaTime, Input.GetAxis("Vertical") * baseSpeed * Time.deltaTime);
     }
 
+
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        levelName = col.gameObject.name;
+        Debug.Log("Entering collision with " + col.gameObject.name);
+        onTop = !onTop;
+    }
+
+    void OnTriggerExit2D(Collider2D col)
+    {
+        levelName = "";
+        Debug.Log("Exiting collision with " + col.gameObject.name);
+        onTop = !onTop;
+    }
 }

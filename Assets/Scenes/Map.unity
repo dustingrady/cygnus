@@ -455,7 +455,6 @@ GameObject:
   - component: {fileID: 673806867}
   - component: {fileID: 673806866}
   - component: {fileID: 673806865}
-  - component: {fileID: 673806868}
   m_Layer: 0
   m_Name: Playground
   m_TagString: Untagged
@@ -545,17 +544,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &673806868
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 673806864}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d4aeaac6be55e948bb6c5145a02890d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &681563926
 GameObject:
   m_ObjectHideFlags: 0
@@ -889,7 +877,6 @@ GameObject:
   - component: {fileID: 912188633}
   - component: {fileID: 912188632}
   - component: {fileID: 912188631}
-  - component: {fileID: 912188634}
   m_Layer: 0
   m_Name: Old
   m_TagString: Untagged
@@ -969,17 +956,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &912188634
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 912188630}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d4aeaac6be55e948bb6c5145a02890d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &949970134
 GameObject:
   m_ObjectHideFlags: 0
@@ -1667,7 +1643,6 @@ GameObject:
   - component: {fileID: 1939735585}
   - component: {fileID: 1939735584}
   - component: {fileID: 1939735583}
-  - component: {fileID: 1939735586}
   m_Layer: 0
   m_Name: TestChamber
   m_TagString: Untagged
@@ -1757,17 +1732,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1939735586
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1939735582}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d4aeaac6be55e948bb6c5145a02890d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1956439094
 GameObject:
   m_ObjectHideFlags: 0
@@ -1796,6 +1760,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bc454188a20b614f8bbc0a9a122f56a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  showInventory: 1
   items:
   - {fileID: 0}
   - {fileID: 0}
@@ -1817,6 +1782,26 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  itemQuantity: 0000000000000000000000000000000000000000000000000000000000000000
+  inventoryUI: {fileID: 0}
+  itemImages:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  itemImageQuantities:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &1956439096
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1828,7 +1813,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cae6abb53a0ad1340a97afc2e0f903ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
+  player: {fileID: 681563926}
   controllerConnected: 0
 --- !u!4 &1956439097
 Transform:
