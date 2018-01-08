@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour {
 
-	public bool showInventory = true;
+	public bool showInventory = false;
 
 	public const int inventorySize = 8;
 
@@ -27,13 +27,12 @@ public class Inventory : MonoBehaviour {
 		if (inventoryUI != null) {
 			// Temporary solution to display and hide inventory
 			if (Input.GetKeyDown (KeyCode.I)) {
-				if (showInventory == true) {
+				if (!showInventory) {
 					hideInventory ();
-					showInventory = false;
 				} else {
 					displayInventory ();
-					showInventory = true;
 				}
+				showInventory = !showInventory;
 			}
 		}
 	}
@@ -124,9 +123,7 @@ public class Inventory : MonoBehaviour {
 			itemImages[i] = item.transform.Find ("ItemImage").GetComponentInChildren<Image> ();
 			itemImageQuantities[i] = item.transform.Find ("ItemQuant").GetComponentInChildren<Text> ();
 		}
-
-
-
+		hideInventory();
 	}
 	/*
 	public void enableImage(Image img, Sprite sprt)
