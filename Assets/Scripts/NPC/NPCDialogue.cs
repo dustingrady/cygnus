@@ -9,13 +9,19 @@ public class NPCDialogue : MonoBehaviour {
     public Text npcText;
     public Text[] choices;
     public Image potrait;
+    public delegate void DialogueEnd();
+    public DialogueEnd signal;
 
     public void UpdateDialogue()
     {
         Debug.Log("Dialogue State: " + dialogue.CurrentState);
         TalkState s = dialogue.State;
 
-        if (s.endTree) Destroy(gameObject);
+        if (s.endTree)
+        {
+            signal();
+            Destroy(gameObject);
+        }
         npcText.text = s.text;
         for (int i = 0; i < choices.Length; i++)
         {

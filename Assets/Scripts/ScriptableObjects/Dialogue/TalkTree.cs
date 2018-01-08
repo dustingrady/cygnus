@@ -28,8 +28,8 @@ public class TalkTree : ScriptableObject
 
     public TalkState Advance(int n)
     {
-        if (n < 0) n = currentState;
-        currentState = states[currentState].choices[n].nextState;
+        int next = states[currentState].choices[n].nextState;
+        currentState = next >= 0 ? next : currentState; 
         return states[currentState];
     }
 
