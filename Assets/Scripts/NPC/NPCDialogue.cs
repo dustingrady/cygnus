@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class NPCDialogue : MonoBehaviour {
 
@@ -9,6 +10,7 @@ public class NPCDialogue : MonoBehaviour {
     public Text npcText;
     public Text[] choices;
     public Image potrait;
+    public UnityEvent[] dialogueEvent;
     public delegate void DialogueEnd();
     public DialogueEnd signal;
 
@@ -17,6 +19,10 @@ public class NPCDialogue : MonoBehaviour {
         Debug.Log("Dialogue State: " + dialogue.CurrentState);
         TalkState s = dialogue.State;
 
+        if (dialogueEvent[dialogue.CurrentState] != null)
+        {
+            dialogueEvent[dialogue.CurrentState].Invoke();
+        }
         if (s.endTree)
         {
             signal();
@@ -26,12 +32,12 @@ public class NPCDialogue : MonoBehaviour {
         for (int i = 0; i < choices.Length; i++)
         {
 			// Checks to see if the option is available
-			if (s.choices [i].nextState == -1) {
+			if (s.choices[i].nextState == -1) {
 				// Disabling the button
-				choices [i].transform.parent.gameObject.SetActive (false);
+				choices[i].transform.parent.gameObject.SetActive (false);
 			} else {
 				// Enables the button
-				choices [i].transform.parent.gameObject.SetActive (true);
+				choices[i].transform.parent.gameObject.SetActive (true);
 			}
 
 			// Sets the text of the selection

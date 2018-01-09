@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class NPCTalk : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class NPCTalk : MonoBehaviour
     public TalkTree tree;
     public Sprite portrait;
     public GameObject windowPrefeb;
+    public UnityEvent[] dialogueEvent;
     bool inDialogue = false;
 
     public void EndDialogue()
@@ -26,6 +28,7 @@ public class NPCTalk : MonoBehaviour
             NPCDialogue d = win.GetComponent<NPCDialogue>();
 
             tree.Reset();
+            d.dialogueEvent = dialogueEvent;
             d.signal = EndDialogue;
             d.dialogue = tree;
             d.potrait.sprite = portrait;

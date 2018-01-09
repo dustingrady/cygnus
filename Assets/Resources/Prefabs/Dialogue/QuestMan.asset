@@ -22,7 +22,7 @@ MonoBehaviour:
       nextState: 3
     - response: Leave
       nextState: 4
-    runMethod: 
+    runMethod: {fileID: 11400000, guid: 29e66e8621513a84696032bf2b2a9662, type: 2}
     endTree: 0
   - text: That's not important right now
     choices:
@@ -34,7 +34,7 @@ MonoBehaviour:
       nextState: -1
     - response: 
       nextState: -1
-    runMethod: 
+    runMethod: {fileID: 0}
     endTree: 0
   - text: The inhabitants here are made of metal, so you'll find miscellaneous junk
       everywhere. You can use it for raw material and currency.
@@ -47,7 +47,7 @@ MonoBehaviour:
       nextState: -1
     - response: 
       nextState: -1
-    runMethod: 
+    runMethod: {fileID: 0}
     endTree: 0
   - text: The planet Tobor, home of the sentient robot colony.
     choices:
@@ -59,7 +59,7 @@ MonoBehaviour:
       nextState: -1
     - response: 
       nextState: -1
-    runMethod: 
+    runMethod: {fileID: 0}
     endTree: 0
   - text: END
     choices:
@@ -71,5 +71,5 @@ MonoBehaviour:
       nextState: -1
     - response: 
       nextState: -1
-    runMethod: 
+    runMethod: {fileID: 0}
     endTree: 1
