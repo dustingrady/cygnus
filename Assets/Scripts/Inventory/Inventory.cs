@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour {
 
-	public bool showInventory = false;
+	public bool showInventory = true;
 
 	public int currentScrap = 0;
 	public Text scrapCountDisplay;
@@ -138,10 +138,8 @@ public class Inventory : MonoBehaviour {
 	}
 
 	public void addScrap(int quant) {
-		if (quant > 0) {
-			currentScrap += quant;
-			setScrapText ();
-		}
+		currentScrap += quant;
+		setScrapText ();
 	}
 
 	private void setScrapText() {

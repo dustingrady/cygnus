@@ -8,6 +8,8 @@ public struct TalkChoice // What the player says/does
 {
     public string response;
     public int nextState;
+	public DialogueAction[] dialogActions;
+	public DialogueCondition dialogCondition;
 }
 
 [System.Serializable]

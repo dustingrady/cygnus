@@ -9,67 +9,105 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5d59a82e861755a45b64d50c718dfc62, type: 3}
-  m_Name: QuestMan
+  m_Name: QuestBot
   m_EditorClassIdentifier: 
   states:
   - text: TOBOR, to get off this planet you'll need 10 scrap.
     choices:
     - response: Who are you?
       nextState: 1
+      dialogActions: []
+      dialogCondition: {fileID: 0}
     - response: What's scrap?
       nextState: 2
+      dialogActions: []
+      dialogCondition: {fileID: 0}
     - response: Where are we anyway?
       nextState: 3
+      dialogActions: []
+      dialogCondition: {fileID: 0}
     - response: Leave
       nextState: 4
-    runMethod: {fileID: 11400000, guid: 29e66e8621513a84696032bf2b2a9662, type: 2}
+      dialogActions: []
+      dialogCondition: {fileID: 0}
     endTree: 0
   - text: That's not important right now
     choices:
     - response: OK
       nextState: 0
+      dialogActions: []
+      dialogCondition: {fileID: 0}
     - response: 
       nextState: -1
+      dialogActions: []
+      dialogCondition: {fileID: 0}
     - response: 
       nextState: -1
+      dialogActions: []
+      dialogCondition: {fileID: 0}
     - response: 
       nextState: -1
-    runMethod: {fileID: 0}
+      dialogActions: []
+      dialogCondition: {fileID: 0}
     endTree: 0
   - text: The inhabitants here are made of metal, so you'll find miscellaneous junk
       everywhere. You can use it for raw material and currency.
     choices:
     - response: OK
       nextState: 0
+      dialogActions: []
+      dialogCondition: {fileID: 0}
+    - response: I have enough scrap!
+      nextState: 4
+      dialogActions:
+      - {fileID: 11400000, guid: 8873fd14a8c771042bcb3b6f2902c8e8, type: 2}
+      - {fileID: 11400000, guid: 344b9e42f32e93948aebc93dbec28b55, type: 2}
+      dialogCondition: {fileID: 11400000, guid: c25755cd3ea458f43b492e1367368b17,
+        type: 2}
     - response: 
       nextState: -1
+      dialogActions: []
+      dialogCondition: {fileID: 0}
     - response: 
       nextState: -1
-    - response: 
-      nextState: -1
-    runMethod: {fileID: 0}
+      dialogActions: []
+      dialogCondition: {fileID: 0}
     endTree: 0
   - text: The planet Tobor, home of the sentient robot colony.
     choices:
     - response: OK
       nextState: 0
+      dialogActions: []
+      dialogCondition: {fileID: 0}
     - response: 
       nextState: -1
+      dialogActions: []
+      dialogCondition: {fileID: 0}
     - response: 
       nextState: -1
+      dialogActions: []
+      dialogCondition: {fileID: 0}
     - response: 
       nextState: -1
-    runMethod: {fileID: 0}
+      dialogActions: []
+      dialogCondition: {fileID: 0}
     endTree: 0
   - text: END
     choices:
     - response: 
       nextState: -1
+      dialogActions: []
+      dialogCondition: {fileID: 0}
     - response: 
       nextState: -1
+      dialogActions: []
+      dialogCondition: {fileID: 0}
     - response: 
       nextState: -1
+      dialogActions: []
+      dialogCondition: {fileID: 0}
     - response: 
       nextState: -1
-    runMethod: {fileID: 0}
+      dialogActions: []
+      dialogCondition: {fileID: 0}
     endTree: 1

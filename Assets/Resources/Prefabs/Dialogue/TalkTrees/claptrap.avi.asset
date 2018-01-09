@@ -16,47 +16,75 @@ MonoBehaviour:
     choices:
     - response: What's a tobor?
       nextState: 1
+      dialogActions: []
+      dialogCondition: {fileID: 0}
     - response: I'm welcome?
       nextState: 2
+      dialogActions: []
+      dialogCondition: {fileID: 0}
     - response: 
       nextState: -1
+      dialogActions: []
+      dialogCondition: {fileID: 0}
     - response: 
       nextState: -1
-    runMethod: 
+      dialogActions: []
+      dialogCondition: {fileID: 0}
     endTree: 0
   - text: We're gonna be here all day huh?
     choices:
     - response: OK
       nextState: 3
+      dialogActions: []
+      dialogCondition: {fileID: 0}
     - response: 
       nextState: -1
+      dialogActions: []
+      dialogCondition: {fileID: 0}
     - response: 
       nextState: -1
+      dialogActions: []
+      dialogCondition: {fileID: 0}
     - response: 
       nextState: -1
-    runMethod: KillAsshole
+      dialogActions: []
+      dialogCondition: {fileID: 0}
     endTree: 0
   - text: Sure, whatever.
     choices:
     - response: OK
       nextState: 3
+      dialogActions: []
+      dialogCondition: {fileID: 0}
     - response: 
       nextState: -1
+      dialogActions: []
+      dialogCondition: {fileID: 0}
     - response: 
       nextState: -1
+      dialogActions: []
+      dialogCondition: {fileID: 0}
     - response: 
       nextState: -1
-    runMethod: RunAway
+      dialogActions: []
+      dialogCondition: {fileID: 0}
     endTree: 0
   - text: END
     choices:
     - response: OK
       nextState: 3
+      dialogActions: []
+      dialogCondition: {fileID: 0}
     - response: 
       nextState: -1
+      dialogActions: []
+      dialogCondition: {fileID: 0}
     - response: 
       nextState: -1
+      dialogActions: []
+      dialogCondition: {fileID: 0}
     - response: 
       nextState: -1
-    runMethod: 
+      dialogActions: []
+      dialogCondition: {fileID: 0}
     endTree: 1

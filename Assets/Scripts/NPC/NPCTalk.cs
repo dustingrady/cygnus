@@ -6,7 +6,6 @@ using UnityEngine.Events;
 
 public class NPCTalk : MonoBehaviour
 {
-
     public GameObject uiRoot;
     public TalkTree tree;
     public Sprite portrait;
@@ -32,6 +31,8 @@ public class NPCTalk : MonoBehaviour
             d.signal = EndDialogue;
             d.dialogue = tree;
             d.potrait.sprite = portrait;
+			d.npc = this.gameObject;
+
             d.UpdateDialogue();
         }
     }

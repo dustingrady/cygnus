@@ -18,6 +18,7 @@ TagManager:
   - PowerMeter
   - EnemyProjectile
   - Scrap
+  - DialogueWindow
   layers:
   - Default
   - TransparentFX

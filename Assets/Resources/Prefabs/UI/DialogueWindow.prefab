@@ -128,7 +128,7 @@ GameObject:
   - component: {fileID: 114647329051598584}
   m_Layer: 5
   m_Name: DialogueWindow
-  m_TagString: Untagged
+  m_TagString: DialogueWindow
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -470,6 +470,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogue: {fileID: 0}
+  npc: {fileID: 0}
   npcText: {fileID: 114706451262946976}
   choices:
   - {fileID: 114485866434024830}
@@ -477,6 +478,7 @@ MonoBehaviour:
   - {fileID: 114856606287610028}
   - {fileID: 114599353896895504}
   potrait: {fileID: 114856447977813996}
+  dialogueEvent: []
 --- !u!114 &114648915345404610
 MonoBehaviour:
   m_ObjectHideFlags: 1

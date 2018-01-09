@@ -570,6 +570,12 @@ CompositeCollider2D:
   m_CompositePaths:
     m_Paths: []
   m_VertexDistance: 0.0005
+--- !u!114 &768845716 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114350798903818514, guid: 608ad0959d3dbec4c8725e70a7bf36f2,
+    type: 2}
+  m_PrefabInternal: {fileID: 798983451}
+  m_Script: {fileID: 11500000, guid: 8c4b4b9309c162042808142e83df5092, type: 3}
 --- !u!1 &783398115
 GameObject:
   m_ObjectHideFlags: 0
@@ -639,6 +645,16 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114592790742227914, guid: 608ad0959d3dbec4c8725e70a7bf36f2,
+        type: 2}
+      propertyPath: dialogueEvent.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114592790742227914, guid: 608ad0959d3dbec4c8725e70a7bf36f2,
+        type: 2}
+      propertyPath: dialogueEvent.Array.data[4].m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4744158376406788, guid: 608ad0959d3dbec4c8725e70a7bf36f2, type: 2}
       propertyPath: m_LocalPosition.x
       value: -13.646
@@ -679,6 +695,61 @@ Prefab:
     - target: {fileID: 1392115875226822, guid: 608ad0959d3dbec4c8725e70a7bf36f2, type: 2}
       propertyPath: m_Name
       value: QuestBot
+      objectReference: {fileID: 0}
+    - target: {fileID: 114592790742227914, guid: 608ad0959d3dbec4c8725e70a7bf36f2,
+        type: 2}
+      propertyPath: dialogueEvent.Array.data[0].m_TypeName
+      value: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      objectReference: {fileID: 0}
+    - target: {fileID: 114592790742227914, guid: 608ad0959d3dbec4c8725e70a7bf36f2,
+        type: 2}
+      propertyPath: dialogueEvent.Array.data[1].m_TypeName
+      value: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      objectReference: {fileID: 0}
+    - target: {fileID: 114592790742227914, guid: 608ad0959d3dbec4c8725e70a7bf36f2,
+        type: 2}
+      propertyPath: dialogueEvent.Array.data[2].m_TypeName
+      value: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      objectReference: {fileID: 0}
+    - target: {fileID: 114592790742227914, guid: 608ad0959d3dbec4c8725e70a7bf36f2,
+        type: 2}
+      propertyPath: dialogueEvent.Array.data[3].m_TypeName
+      value: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      objectReference: {fileID: 0}
+    - target: {fileID: 114592790742227914, guid: 608ad0959d3dbec4c8725e70a7bf36f2,
+        type: 2}
+      propertyPath: dialogueEvent.Array.data[4].m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 768845716}
+    - target: {fileID: 114592790742227914, guid: 608ad0959d3dbec4c8725e70a7bf36f2,
+        type: 2}
+      propertyPath: dialogueEvent.Array.data[4].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: TurnRed
+      objectReference: {fileID: 0}
+    - target: {fileID: 114592790742227914, guid: 608ad0959d3dbec4c8725e70a7bf36f2,
+        type: 2}
+      propertyPath: dialogueEvent.Array.data[4].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114592790742227914, guid: 608ad0959d3dbec4c8725e70a7bf36f2,
+        type: 2}
+      propertyPath: dialogueEvent.Array.data[4].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 114592790742227914, guid: 608ad0959d3dbec4c8725e70a7bf36f2,
+        type: 2}
+      propertyPath: dialogueEvent.Array.data[4].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114592790742227914, guid: 608ad0959d3dbec4c8725e70a7bf36f2,
+        type: 2}
+      propertyPath: dialogueEvent.Array.data[4].m_TypeName
+      value: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 608ad0959d3dbec4c8725e70a7bf36f2, type: 2}
@@ -4496,7 +4567,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4062297412796568, guid: cf06be31013f6c346ab2e54dfe3dcbf4, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -9.36
+      value: -9.41
       objectReference: {fileID: 0}
     - target: {fileID: 4062297412796568, guid: cf06be31013f6c346ab2e54dfe3dcbf4, type: 2}
       propertyPath: m_LocalPosition.y
@@ -5650,6 +5721,11 @@ Prefab:
         type: 2}
       propertyPath: m_LocalScale.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224969651122399120, guid: 267853b8c8fcb2444be28e5a0e114a23,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: -64.40039
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 267853b8c8fcb2444be28e5a0e114a23, type: 2}
