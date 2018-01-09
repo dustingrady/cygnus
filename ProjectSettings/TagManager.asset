@@ -16,6 +16,8 @@ TagManager:
   - InventoryUI
   - ElectricElement
   - PowerMeter
+  - EnemyProjectile
+  - Scrap
   layers:
   - Default
   - TransparentFX

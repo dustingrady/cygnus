@@ -15,5 +15,8 @@ EditorBuildSettings:
     path: Assets/Scenes/Playground.unity
     guid: 9f7fdc90b96bcaa49992a1ee89f1e1c1
   - enabled: 1
-    path: Assets/Scenes/TestChamber.unity
-    guid: 514592acec2a09444b4eb7e6ea7a76ad
+    path: Assets/Scenes/Ship.unity
+    guid: 2ed83c074c0112d49a2ac82da66fcec3
+  - enabled: 1
+    path: Assets/Scenes/Intro.unity
+    guid: cfbc1e560ca52dc4aa261c2a24b5a50a

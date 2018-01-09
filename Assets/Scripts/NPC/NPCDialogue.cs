@@ -25,6 +25,16 @@ public class NPCDialogue : MonoBehaviour {
         npcText.text = s.text;
         for (int i = 0; i < choices.Length; i++)
         {
+			// Checks to see if the option is available
+			if (s.choices [i].nextState == -1) {
+				// Disabling the button
+				choices [i].transform.parent.gameObject.SetActive (false);
+			} else {
+				// Enables the button
+				choices [i].transform.parent.gameObject.SetActive (true);
+			}
+
+			// Sets the text of the selection
             choices[i].text = s.choices[i].response;
         }
     }

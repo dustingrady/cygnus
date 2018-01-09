@@ -100,6 +100,11 @@ public class Player : MonoBehaviour {
 				}
 			}	
 		}
+			
+		if (col.gameObject.tag == "Scrap") {
+			inventory.addScrap (1);
+			Destroy (col.gameObject);
+		}
 	}
 
     void OnTriggerStay2D(Collider2D col)

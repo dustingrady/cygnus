@@ -7,6 +7,9 @@ public class Inventory : MonoBehaviour {
 
 	public bool showInventory = false;
 
+	public int currentScrap = 0;
+	public Text scrapCountDisplay;
+
 	public const int inventorySize = 8;
 
 	// Inventory items and quantities
@@ -19,6 +22,7 @@ public class Inventory : MonoBehaviour {
 	public Text[] itemImageQuantities = new Text[inventorySize];
 
 	// Collect the item images when the inventory is loaded
+	// Needs to happen with each scene change
 	public void Start() {
 		initializeInventory ();
 	}
@@ -123,8 +127,27 @@ public class Inventory : MonoBehaviour {
 			itemImages[i] = item.transform.Find ("ItemImage").GetComponentInChildren<Image> ();
 			itemImageQuantities[i] = item.transform.Find ("ItemQuant").GetComponentInChildren<Text> ();
 		}
+
+		Transform UITransform = inventoryUI.transform.root.Find ("ScrapElement");
+		Transform scrapTransform = UITransform.Find ("ScrapCount");
+		scrapCountDisplay = scrapTransform.GetComponent<Text> ();
+
+		setScrapText ();
+
 		hideInventory();
 	}
+
+	public void addScrap(int quant) {
+		if (quant > 0) {
+			currentScrap += quant;
+			setScrapText ();
+		}
+	}
+
+	private void setScrapText() {
+		scrapCountDisplay.text = currentScrap.ToString ();
+	}
+
 	/*
 	public void enableImage(Image img, Sprite sprt)
 	{
