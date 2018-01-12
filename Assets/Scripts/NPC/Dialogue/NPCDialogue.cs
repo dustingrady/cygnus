@@ -17,7 +17,6 @@ public class NPCDialogue : MonoBehaviour {
 
     public void UpdateDialogue()
     {
-        Debug.Log("Dialogue State: " + dialogue.CurrentState);
         TalkState s = dialogue.State;
 
         if (dialogueEvent[dialogue.CurrentState] != null)

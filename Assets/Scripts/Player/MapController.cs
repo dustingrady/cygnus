@@ -7,12 +7,21 @@ public class MapController : MonoBehaviour
 {
     private Rigidbody2D rb;
 
-    private float baseSpeed = 250;
+    private float baseSpeed = 100;
 
     private bool grounded;
 
     string levelName = "";
     bool onTop = false;
+
+	void Awake() {
+		string prevLoc = GameManager.instance.previousLocation;
+		GameObject loc = GameObject.Find (prevLoc);
+
+		if (loc != null) {
+			transform.position = loc.transform.position;
+		}
+	}
 
     void Start()
     {
@@ -23,18 +32,18 @@ public class MapController : MonoBehaviour
     {
         if (Input.GetAxis("Horizontal") > 0)
         {
-            transform.localScale = new Vector3(1, transform.localScale.y, transform.localScale.z);
+			transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z);
         }
         else if (Input.GetAxis("Horizontal") < 0)
         {
-            transform.localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z);
+			transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
         }
 
         if (onTop)
         {
             if (Input.GetKeyDown("e"))
             {
-                Debug.Log("Entering level " + levelName);
+				GameManager.instance.previousLocation = SceneManager.GetActiveScene ().name;
                 SceneManager.LoadScene(levelName);
             }
         }
@@ -55,14 +64,12 @@ public class MapController : MonoBehaviour
     void OnTriggerEnter2D(Collider2D col)
     {
         levelName = col.gameObject.name;
-        Debug.Log("Entering collision with " + col.gameObject.name);
         onTop = !onTop;
     }
 
     void OnTriggerExit2D(Collider2D col)
     {
         levelName = "";
-        Debug.Log("Exiting collision with " + col.gameObject.name);
         onTop = !onTop;
     }
 }

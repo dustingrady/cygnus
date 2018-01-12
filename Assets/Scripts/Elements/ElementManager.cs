@@ -38,50 +38,40 @@ public class ElementManager : MonoBehaviour {
 	public void AssignToHand(string hand, string itemTag) {
 		if (itemTag == "FireElement") {
 			if (hand == "left") {
-				Debug.Log ("Added fire to player's left hand");
 				plr.leftElement = elements["fire"];
 			} else {
-				Debug.Log ("Added fire to player's right hand");
 				plr.rightElement = elements["fire"];
 			}
 		}
 
 		if (itemTag == "WaterElement" || itemTag == "Ice") {
 			if (hand == "left") {
-				Debug.Log ("Added water to player's left hand");
 				plr.leftElement = elements["water"];
 			} else {
-				Debug.Log ("Added water to player's right hand");
 				plr.rightElement = elements["water"];
 			}
 		}
 
 		if (itemTag == "EarthElement") {
 			if (hand == "left") {
-				Debug.Log ("Added earth to player's left hand");
 				plr.leftElement = elements["earth"];
 			} else {
-				Debug.Log ("Added earth to player's right hand");
 				plr.rightElement = elements["earth"];
 			}
 		}
 
 		if (itemTag == "MetalElement") {
 			if (hand == "left") {
-				Debug.Log ("Added metal to player's left hand");
 				plr.leftElement = elements["metal"];
 			} else {
-				Debug.Log ("Added metal to player's right hand");
 				plr.rightElement = elements["metal"];
 			}
 		}
 
 		if (itemTag == "ElectricElement") {
 			if (hand == "left") {
-				Debug.Log ("Added electricity to player's left hand");
 				plr.leftElement = elements["electric"];
 			} else {
-				Debug.Log ("Added electricity to player's right hand");
 				plr.rightElement = elements["electric"];
 			}
 		}
@@ -105,14 +95,12 @@ public class ElementManager : MonoBehaviour {
 
 		// Fire and water crossover
 		else if ((le == "electric" && re == "metal") || (le == "metal" && re == "electric")) {
-			Debug.Log ("Adding Magnetic as combo");
 			plr.centerElement = elements["magnetic"];
 
 		}
 
 		// Fire and earth crossover
 		else if ((le == "fire" && re == "earth") || (le == "earth" && re == "fire")) {
-			Debug.Log ("Adding Magma as combo");
 			plr.centerElement = null;
 		}
 

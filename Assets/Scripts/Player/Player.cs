@@ -16,7 +16,7 @@ public class Player : MonoBehaviour {
 
     bool standingInFire = false;
 
-    Inventory inventory;
+    public Inventory inventory;
 
     private void Awake()
     {

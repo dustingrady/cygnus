@@ -6,8 +6,10 @@ using UnityEngine.SceneManagement;
 public class BackToMap : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D col)
-    {
-        if(col.gameObject.tag == "Player")
-            SceneManager.LoadScene("Map");
-    }
+	{
+		if (col.gameObject.tag == "Player") {
+			GameManager.instance.previousLocation = SceneManager.GetActiveScene ().name;
+			SceneManager.LoadScene ("Map");
+		}
+	}
 }

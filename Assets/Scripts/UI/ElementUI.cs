@@ -26,6 +26,11 @@ public class ElementUI : MonoBehaviour {
 		Transform centerElement = transform.Find ("CenterElement");
 		centerElementImg = centerElement.Find ("Icon").GetComponent<Image> ();
 
+		if (GameManager.instance.hasGloves == false) {
+			leftElement.transform.localScale = Vector3.zero;
+			rightElement.transform.localScale = Vector3.zero;
+			centerElement.transform.localScale = Vector3.zero;
+		}
 
 		Absorber.OnAbsorb += UpdateElements;
 

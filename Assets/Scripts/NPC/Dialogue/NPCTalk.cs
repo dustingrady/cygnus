@@ -36,4 +36,8 @@ public class NPCTalk : MonoBehaviour
             d.UpdateDialogue();
         }
     }
+
+	void OnTriggerEnter2D(Collider2D col) {
+		StartDialogue ();
+	}
 }

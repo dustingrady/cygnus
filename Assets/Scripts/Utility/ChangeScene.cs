@@ -8,7 +8,10 @@ public class ChangeScene : MonoBehaviour {
 	[SerializeField]
 	string sceneName;
 
-	void OnTriggerEnter2D() {
-		SceneManager.LoadScene (sceneName);
+	void OnTriggerEnter2D(Collider2D col) {
+		if (col.transform.CompareTag("Player")) {
+			GameManager.instance.previousLocation = SceneManager.GetActiveScene ().name;
+			SceneManager.LoadScene (sceneName);	
+		}
 	}
 }
