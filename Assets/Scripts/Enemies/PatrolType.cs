@@ -2,7 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PatrollingEnemy : MonoBehaviour {
+public class PatrolType : Enemy {
+	float hitpoints;
+	string type;
+
+	string[] listOfTypes = {"fire", "water", "earth", "metal"};
+
 	private bool chasingPlayer;
 	private float delta = 5.0f; //How far we move left and right
 	private float patrolSpeed = 1.5f; //How fast we move left and right
@@ -23,15 +28,40 @@ public class PatrollingEnemy : MonoBehaviour {
 		playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
 	}
 
-	private void Start(){
+	void Start()
+	{
+		//change this temp to randomize type. Random.range for int is exclusive for last interger.
+		int temp = Random.Range (0, 4);
+		type = listOfTypes [temp];
+		Debug.Log (temp + " " + listOfTypes [temp]);
+
+		hitpoints = Mathf.Floor(Random.Range (10f, 21f));
+
 		rb = GetComponent<Rigidbody2D> ();
 		rb.constraints = RigidbodyConstraints2D.FreezeRotation;
 
 		patrolSpeed = Mathf.Sign (Random.Range (-1, 1)) * patrolSpeed;
 	}
-		
 
-	void Update () {
+	public override void takeDamage(float amount)
+	{
+		StartCoroutine (damage (amount));
+	}
+
+	public string getEnemyType()
+	{
+		return type;
+	}
+
+	public float getEnemyHitPoints()
+	{
+		return hitpoints;
+	}
+
+	void Update()
+	{
+		if (hitpoints <= 0)
+			Destroy (this.gameObject);
 		switch (chasingPlayer) {
 		case true:
 			chase_Player ();
@@ -41,6 +71,7 @@ public class PatrollingEnemy : MonoBehaviour {
 			break;
 		}
 	}
+
 
 	//Normal patrolling behaviour. Using sin function for side to side patrolling (may change)
 	void patrol_Area(){
@@ -62,7 +93,7 @@ public class PatrollingEnemy : MonoBehaviour {
 				StartCoroutine (idle ());
 				patrolSpeed *= -1;
 			}
-				
+
 		}
 
 		if(Distance() <= chaseRadius){
@@ -87,7 +118,7 @@ public class PatrollingEnemy : MonoBehaviour {
 
 			float dv = transform.position.x - oldpos.x;
 
-			Debug.Log ((transform.position.x - oldpos.x) + " " + transform.localScale.x);
+			//Debug.Log ((transform.position.x - oldpos.x) + " " + transform.localScale.x);
 			if (Mathf.Sign (dv) == Mathf.Sign (transform.localScale.x)) {
 				this.transform.localScale = new Vector3 (transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
 			}
@@ -121,4 +152,12 @@ public class PatrollingEnemy : MonoBehaviour {
 		pause = false;
 	}
 
+	IEnumerator damage(float amount)
+	{
+		SpriteRenderer sr = GetComponent<SpriteRenderer> ();
+		sr.color = Color.red;
+		sr.color = Color.white;
+		hitpoints -= amount;
+		yield return new WaitForSeconds (1);
+	}
 }

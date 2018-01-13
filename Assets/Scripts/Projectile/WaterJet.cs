@@ -18,7 +18,9 @@ public class WaterJet : MonoBehaviour {
 	*/
 
 	void OnTriggerEnter2D(Collider2D col) {
-		if (col.gameObject.tag != "Player" && col.gameObject.tag != "WaterElement" ) {
+		if (col.gameObject.tag != "Player" 
+			&& col.gameObject.tag != "WaterElement" 
+			&& col.name != "Bounds") {
 			DestroyObject (this.gameObject);
 		}
 	}

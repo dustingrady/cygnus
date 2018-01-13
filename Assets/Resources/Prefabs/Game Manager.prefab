@@ -84,6 +84,9 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  toolTip: {fileID: 0}
+  toolTipText: {fileID: 0}
+  canvas: {fileID: 0}
 --- !u!114 &114829494124899724
 MonoBehaviour:
   m_ObjectHideFlags: 1

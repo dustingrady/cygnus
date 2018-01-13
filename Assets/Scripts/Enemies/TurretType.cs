@@ -1,12 +1,13 @@
-﻿/*Function: Controls enemy movement/ interaction with player
-* Status: Working/ Tested
-*/
-
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TurretEnemy : MonoBehaviour {
+public class TurretType : Enemy {
+	float hitpoints;
+	string type;
+
+	string[] listOfTypes = {"fire", "water", "earth", "metal"};
+
 	private Transform playerTransform;
 	private Transform enemyTransform;
 	private float turretRadius = 10.0f; //How far our turret enemies can see
@@ -19,17 +20,41 @@ public class TurretEnemy : MonoBehaviour {
 		es = gameObject.GetComponent<EnemyShooting>();
 	}
 
-	// Use this for initialization
-	void Start () {
+	public override void takeDamage(float amount)
+	{
+		StartCoroutine (damage (amount));
+	}
+
+	public string getEnemyType()
+	{
+		return type;
+	}
+
+	public float getEnemyHitPoints()
+	{
+		return hitpoints;
+	}
+
+	void Start()
+	{
+		//change this temp to randomize type. Random.range for int is exclusive for last interger.
+		int temp = Random.Range (0, 4);
+		type = listOfTypes [temp];
+
+		hitpoints = Mathf.Floor(Random.Range (5f, 11f));
+
+
 		Rigidbody2D rb = GetComponent<Rigidbody2D> ();
 		line = this.gameObject.GetComponent<LineRenderer>();
 		rb.constraints = RigidbodyConstraints2D.FreezeAll;
 
-
 	}
-	
-	// Update is called once per frame
-	void Update () {
+
+	void Update()
+	{
+		if (hitpoints <= 0)
+			Destroy (this.gameObject);
+
 		guard_Area ();
 	}
 
@@ -49,5 +74,10 @@ public class TurretEnemy : MonoBehaviour {
 	private float Distance(){
 		return Vector3.Distance(enemyTransform.position, playerTransform.position);
 	}
-		
+
+	IEnumerator damage(float amount)
+	{
+		hitpoints -= amount;
+		yield return new WaitForSeconds (1);
+	}
 }

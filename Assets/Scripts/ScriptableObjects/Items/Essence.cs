@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,9 +9,16 @@ public class Essence : Item {
 
 	public ElementType type;
 	public int strength;
+	public string description;
 
-    public override void useItem()
-    {
-        Debug.Log("Used " + this.name);
-    }
+	public override void useItem()
+	{
+		Debug.Log("Used " + this.name);
+	}
+
+	public override string itemDescription()
+	{
+		return description;
+	}
+
 }

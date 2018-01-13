@@ -12,9 +12,11 @@ public class Player : MonoBehaviour {
 	public Element rightElement;
     public Element centerElement;
 
-    bool onFire = false;
+	bool onFire = false;
 
-    bool standingInFire = false;
+	bool standingInFire = false;
+
+	bool takingDamage = false;
 
     public Inventory inventory;
 
@@ -38,6 +40,11 @@ public class Player : MonoBehaviour {
         {
             health.CurrentVal += 10;
         }
+
+		if (health.CurrentVal <= 0) {
+			inventory.emptyInventory ();
+			SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
+		}
     }
 		
 	void OnTriggerEnter2D(Collider2D col) {
@@ -105,6 +112,17 @@ public class Player : MonoBehaviour {
 			inventory.addScrap (1);
 			Destroy (col.gameObject);
 		}
+
+		if (col.gameObject.tag == "Enemy" && !takingDamage) {
+			StartCoroutine (enemyOnContact (20));
+		}
+	}
+
+	void OnCollisionStay2D(Collision2D col)
+	{
+		if (col.gameObject.tag == "Enemy" && !takingDamage) {
+			StartCoroutine (enemyOnContact (20));
+		}
 	}
 
     void OnTriggerStay2D(Collider2D col)
@@ -145,4 +163,22 @@ public class Player : MonoBehaviour {
         yield return new WaitForSeconds (2);
         standingInFire = false;
     }
+
+	//Damage from enemy's projectiles
+	IEnumerator enemyProjectiles(int damageAmount)
+	{
+		takingDamage = true;
+		health.CurrentVal -= damageAmount;
+		yield return new WaitForSeconds (2);
+		takingDamage = false;
+	}
+
+	//Damage from contact with enemies
+	IEnumerator enemyOnContact(int damageAmount)
+	{
+		takingDamage = true;
+		health.CurrentVal -= damageAmount;
+		yield return new WaitForSeconds (1);
+		takingDamage = false;
+	}
 }
