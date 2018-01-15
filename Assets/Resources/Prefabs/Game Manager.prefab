@@ -9,18 +9,18 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1927597138097862}
+  m_RootGameObject: {fileID: 1876656586735846}
   m_IsPrefabParent: 1
---- !u!1 &1927597138097862
+--- !u!1 &1876656586735846
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4343225661686404}
-  - component: {fileID: 114829494124899724}
-  - component: {fileID: 114424844717071260}
+  - component: {fileID: 4669343797345350}
+  - component: {fileID: 114954801635025596}
+  - component: {fileID: 114604237502649308}
   m_Layer: 9
   m_Name: Game Manager
   m_TagString: Untagged
@@ -28,12 +28,12 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4343225661686404
+--- !u!4 &4669343797345350
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1927597138097862}
+  m_GameObject: {fileID: 1876656586735846}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.69, y: -3.51, z: -0.32701778}
   m_LocalScale: {x: 6, y: 6, z: 1}
@@ -41,12 +41,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114424844717071260
+--- !u!114 &114604237502649308
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1927597138097862}
+  m_GameObject: {fileID: 1876656586735846}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3bc454188a20b614f8bbc0a9a122f56a, type: 3}
@@ -87,12 +87,12 @@ MonoBehaviour:
   toolTip: {fileID: 0}
   toolTipText: {fileID: 0}
   canvas: {fileID: 0}
---- !u!114 &114829494124899724
+--- !u!114 &114954801635025596
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1927597138097862}
+  m_GameObject: {fileID: 1876656586735846}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cae6abb53a0ad1340a97afc2e0f903ac, type: 3}
@@ -101,10 +101,8 @@ MonoBehaviour:
   totalScrap: 0
   currentScrap: 0
   quests: []
-  questsBase:
-  - {fileID: 11400000, guid: fbd1e966bc9382b4e889f8ffdbb15bab, type: 2}
-  - {fileID: 11400000, guid: 00ffdc07928da7746b790da46047a380, type: 2}
+  questsBase: []
   player: {fileID: 0}
   controllerConnected: 0
-  hasGloves: 0
+  hasGloves: 1
   previousLocation: 

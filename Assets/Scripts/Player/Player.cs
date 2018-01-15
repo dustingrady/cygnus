@@ -50,12 +50,14 @@ public class Player : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D col) {
 		
 		// Test for the Playground, if you hit Lava or enemy projectile reload
-		if (col.gameObject.name == "Lava" || col.gameObject.tag == "EnemyProjectile" || col.gameObject.tag == "BossSpecial") {
+		if (col.gameObject.name == "Lava" || col.gameObject.name == "Water" || col.gameObject.tag == "BossSpecial") {
 			inventory.emptyInventory ();
 			SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
-		} else if (col.gameObject.tag == "BossBullet") {
+		}
+
+		if (col.gameObject.tag == "BossBullet") {
 			Debug.Log ("ouch, a fuckin bossbullet");
-			StartCoroutine(singularDamage(30));
+			StartCoroutine(enemyProjectiles(30));
 		}
 
 		if (col.gameObject.tag == "Item") {
@@ -71,6 +73,14 @@ public class Player : MonoBehaviour {
 				Debug.LogError ("There was no item on that object!");
 			}
         }
+
+		if (col.gameObject.name == "Fire" && !standingInFire) {
+			StartCoroutine (singularDamage (5));
+		}
+
+		if ((col.gameObject.tag == "EnemyProjectile" && !takingDamage)) {
+			StartCoroutine (enemyProjectiles(10));
+		}
     }
 
 	void OnCollisionEnter2D(Collision2D col) {

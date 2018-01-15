@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 124687458973839612}
   - component: {fileID: 81449311631779986}
   - component: {fileID: 114874070924036074}
-  - component: {fileID: 114779237848586586}
+  - component: {fileID: 114633165578553426}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -37,8 +37,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1167467297182356}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.55, y: -5.13, z: -10}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.8102846, y: -3.0099983, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -60,11 +60,11 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
-  far clip plane: 1000
-  field of view: 60
+  near clip plane: 0.1
+  far clip plane: 5000
+  field of view: 40
   orthographic: 1
-  orthographic size: 6.75
+  orthographic size: 7.36
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -87,7 +87,7 @@ AudioListener:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1167467297182356}
   m_Enabled: 1
---- !u!114 &114779237848586586
+--- !u!114 &114633165578553426
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -95,16 +95,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 1167467297182356}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12f96e13cbb12b0438661cbd84f0a88a, type: 3}
+  m_Script: {fileID: 11500000, guid: 72ece51f2901e7445ab60da3685d6b5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  xMax: 43
-  yMax: 5.2
-  xMin: -14
-  yMin: -5.2
-  horizontalMoveSpace: 0.05
-  verticalMoveSpace: 0.05
-  smoothing: 0.2
+  m_ShowDebugText: 0
+  m_ShowCameraFrustum: 1
+  m_IgnoreTimeScale: 0
+  m_WorldUpOverride: {fileID: 0}
+  m_UpdateMethod: 2
+  m_DefaultBlend:
+    m_Style: 1
+    m_Time: 2
+  m_CustomBlends: {fileID: 0}
+  m_CameraCutEvent:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: Cinemachine.CinemachineBrain+BrainEvent, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  m_CameraActivatedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: Cinemachine.CinemachineBrain+VcamEvent, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114874070924036074
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -123,7 +135,7 @@ MonoBehaviour:
   targetDimension: 1
   targetCameraHalfWidth: 2
   targetCameraHalfHeight: 7.36
-  pixelPerfect: 1
+  pixelPerfect: 0
   retroSnap: 0
   assetsPixelsPerUnit: 16
   showHUD: 0
