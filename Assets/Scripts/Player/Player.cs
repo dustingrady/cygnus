@@ -49,14 +49,16 @@ public class Player : MonoBehaviour {
 		
 	void OnTriggerEnter2D(Collider2D col) {
 		
-		// Test for the Playground, if you hit Lava reload
-		if (col.gameObject.name == "Lava" || col.gameObject.tag == "EnemyProjectile") {
-
+		// Test for the Playground, if you hit Lava or enemy projectile reload
+		if (col.gameObject.name == "Lava" || col.gameObject.tag == "EnemyProjectile" || col.gameObject.tag == "BossSpecial") {
 			inventory.emptyInventory ();
-			SceneManager.LoadScene (SceneManager.GetActiveScene().name);
+			SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
+		} else if (col.gameObject.tag == "BossBullet") {
+			Debug.Log ("ouch, a fuckin bossbullet");
+			StartCoroutine(singularDamage(30));
 		}
 
-        if (col.gameObject.tag == "Item") {
+		if (col.gameObject.tag == "Item") {
 			
             //string path = "Items/" + col.gameObject.name;
 			//Item temp = Resources.Load(path) as Item;
@@ -125,20 +127,18 @@ public class Player : MonoBehaviour {
 		}
 	}
 
-    void OnTriggerStay2D(Collider2D col)
-    {
-        if (col.gameObject.name == "Fire"  && !standingInFire) {
-            Debug.Log (health.CurrentVal + " " + onFire);
-            StartCoroutine(singularDamage(5));
-        }
-    }
+	void OnTriggerStay2D(Collider2D col){
+		if ((col.gameObject.name == "Fire" && !standingInFire) || (col.gameObject.tag == "LavaPlatform" && !standingInFire)) {
+			StartCoroutine(singularDamage(5));
 
-    void OnTriggerExit2D(Collider2D col)
-    {
-        if (col.gameObject.name == "Fire" && !onFire) {
-            StartCoroutine(damageOverTime (5, 1));
-        }
-    }
+		}
+	}
+
+	void OnTriggerExit2D(Collider2D col){
+		if ((col.gameObject.name == "Fire" && !onFire) || (col.gameObject.tag == "LavaPlatform" && !onFire)) {
+			StartCoroutine(damageOverTime (5, 1));
+		}
+	}
 
 
     //FOR FIRE ONLY
