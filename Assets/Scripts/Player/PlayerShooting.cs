@@ -58,12 +58,14 @@ public class PlayerShooting : MonoBehaviour {
 		} else {
 			
 			//If PrimaryAbsorb
-			 if (Input.GetButton ("PrimaryFire") && (Input.GetButton ("LeftCtrl")) && absorbTimer > absorberCooldown) {
+			 if (Input.GetButton ("PrimaryFire") && (Input.GetButton ("LeftCtrl")) && absorbTimer > absorberCooldown
+				&& gm.hasGloves) {
 				Absorb ("left");
 			}
 
 			//If SecondaryAbsorb
-			else if (Input.GetButton ("SecondaryFire") && (Input.GetButton ("LeftCtrl")) && absorbTimer > absorberCooldown) {
+			else if (Input.GetButton ("SecondaryFire") && (Input.GetButton ("LeftCtrl")) && absorbTimer > absorberCooldown
+				&& gm.hasGloves) {
 				Absorb ("right");
 			}
 

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController: MonoBehaviour {
 
@@ -41,6 +42,22 @@ public class PlayerController: MonoBehaviour {
 	void Start () {
 		rb = GetComponent<Rigidbody2D> ();
 		col = GetComponent<BoxCollider2D> ();
+
+		string currentScene = SceneManager.GetActiveScene ().name;
+
+		if (GameManager.instance.previousLocation != null) {
+			string prevLoc = GameManager.instance.previousLocation;
+			GameObject loc = GameObject.Find (prevLoc + "_spawn");
+			if (loc != null) {
+				transform.position = loc.transform.position;
+
+				// Really dumb
+				if (currentScene != "Ship") {
+					Camera.main.transform.position = new Vector3 (transform.position.x, 
+						transform.position.y, Camera.main.transform.position.z);
+				}
+			}
+		}
 	}
 
 

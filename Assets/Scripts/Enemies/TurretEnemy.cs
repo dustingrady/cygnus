@@ -11,6 +11,7 @@ public class TurretEnemy : MonoBehaviour {
 	private Transform enemyTransform;
 	private float turretRadius = 10.0f; //How far our turret enemies can see
 	private EnemyShooting es;
+	LineRenderer line;
 
 
 	void Awake(){
@@ -21,7 +22,10 @@ public class TurretEnemy : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		Rigidbody2D rb = GetComponent<Rigidbody2D> ();
+		line = this.gameObject.GetComponent<LineRenderer>();
 		rb.constraints = RigidbodyConstraints2D.FreezeAll;
+
+
 	}
 	
 	// Update is called once per frame
@@ -31,7 +35,13 @@ public class TurretEnemy : MonoBehaviour {
 
 	void guard_Area(){
 		if (Vector3.Distance (transform.position, playerTransform.position) < turretRadius) { //If player is in range of turret
+			//line.positionCount (2);
+			line.enabled = true;
+			line.SetPosition (0, transform.position);
+			line.SetPosition (1, playerTransform.position);
 			es.shoot_At_Player (); //Shoot um up
+		} else {
+			line.enabled = false;
 		}
 	}
 
@@ -39,4 +49,5 @@ public class TurretEnemy : MonoBehaviour {
 	private float Distance(){
 		return Vector3.Distance(enemyTransform.position, playerTransform.position);
 	}
+		
 }

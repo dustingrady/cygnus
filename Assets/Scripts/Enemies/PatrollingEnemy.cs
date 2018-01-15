@@ -1,10 +1,4 @@
-﻿/*Function: Controls enemy movement/ interaction with player
-* Status: In progress
-* Bugs: 
-* -Enemy refuses to be locked to y axis, resulting in some bouncing
-*/
-
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,19 +12,24 @@ public class PatrollingEnemy : MonoBehaviour {
 	private Transform enemyTransform;
 	private Transform playerTransform;
 	private Vector3 enemyStartingPos;
-	private EnemyShooting es;
+
+	Rigidbody2D rb;
+
+	bool pause = false;
 
 	private void Awake(){
 		enemyStartingPos = transform.position; //Initialize startingPos
 		enemyTransform = this.transform; //Reference to current enemy (for testing)
 		playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-		es = gameObject.GetComponent<EnemyShooting>();
 	}
 
 	private void Start(){
-		Rigidbody2D rb = GetComponent<Rigidbody2D> ();
+		rb = GetComponent<Rigidbody2D> ();
 		rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+
+		patrolSpeed = Mathf.Sign (Random.Range (-1, 1)) * patrolSpeed;
 	}
+		
 
 	void Update () {
 		switch (chasingPlayer) {
@@ -46,8 +45,25 @@ public class PatrollingEnemy : MonoBehaviour {
 	//Normal patrolling behaviour. Using sin function for side to side patrolling (may change)
 	void patrol_Area(){
 		Vector3 v = enemyStartingPos;
-		v.x += delta * Mathf.Sin (Time.time * patrolSpeed);
-		transform.position = v;	
+		//v.x += delta * Mathf.Sin (Time.time * patrolSpeed);
+
+		//transform.position = v;	
+
+		if ((Mathf.Abs(transform.position.x - v.x) < delta) && !pause) {
+
+			transform.Translate (new Vector2 (patrolSpeed, 0) * Time.deltaTime);
+
+			if (Mathf.Sign (patrolSpeed) != Mathf.Sign (transform.localScale.x)) {
+				this.transform.localScale = new Vector3 (transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
+			}
+
+			if (Mathf.Abs (Mathf.Abs (transform.position.x - v.x) - delta) <= 0.5)
+			{
+				StartCoroutine (idle ());
+				patrolSpeed *= -1;
+			}
+				
+		}
 
 		if(Distance() <= chaseRadius){
 			chasingPlayer = true;
@@ -63,23 +79,46 @@ public class PatrollingEnemy : MonoBehaviour {
 
 		if (Vector3.Distance (transform.position, playerTransform.position) > 1f) { //Move towards player until we are 1 unit away (to avoid collision)
 			//transform.InverseTransformDirection(playerTransform.position);
-			transform.position = Vector3.MoveTowards(transform.position, playerTransform.position, chaseSpeed * Time.deltaTime);
-		
-		
+			//transform.position = Vector3.MoveTowards(transform.position, playerTransform.position, chaseSpeed * Time.deltaTime);
+
+			Vector3 oldpos = transform.position;
+
+			transform.position = new Vector3(Mathf.MoveTowards(transform.position.x, playerTransform.position.x, chaseSpeed * Time.deltaTime), transform.position.y, transform.position.z);
+
+			float dv = transform.position.x - oldpos.x;
+
+			Debug.Log ((transform.position.x - oldpos.x) + " " + transform.localScale.x);
+			if (Mathf.Sign (dv) == Mathf.Sign (transform.localScale.x)) {
+				this.transform.localScale = new Vector3 (transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
+			}
+
+			/*
 			if(transform.position.x < playerTransform.position.x){
 				transform.rotation = Quaternion.identity;
 			}
 			else{
 				transform.rotation = Quaternion.Euler (0, 180, 0);
 			}
-		
-		
+			*/
 		} 
-		es.shoot_At_Player ();
 	}
 
 	//Return distance between player and enemy
 	private float Distance(){
 		return Vector3.Distance(enemyTransform.position, playerTransform.position);
 	}
+
+	void OnTriggerEnter2D(Collider2D col)
+	{
+		if (col.gameObject.tag == "TurnAround")
+			patrolSpeed *= -1;
+	}
+
+	IEnumerator idle()
+	{
+		pause = true;
+		yield return new WaitForSeconds (1);
+		pause = false;
+	}
+
 }

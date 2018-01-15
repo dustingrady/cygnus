@@ -12,11 +12,13 @@ public class Player : MonoBehaviour {
 	public Element rightElement;
     public Element centerElement;
 
-    bool onFire = false;
+	bool onFire = false;
 
-    bool standingInFire = false;
+	bool standingInFire = false;
 
-    Inventory inventory;
+	bool takingDamage = false;
+
+    public Inventory inventory;
 
     private void Awake()
     {
@@ -38,18 +40,25 @@ public class Player : MonoBehaviour {
         {
             health.CurrentVal += 10;
         }
+
+		if (health.CurrentVal <= 0) {
+			inventory.emptyInventory ();
+			SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
+		}
     }
 		
 	void OnTriggerEnter2D(Collider2D col) {
 		
-		// Test for the Playground, if you hit Lava reload
-		if (col.gameObject.name == "Lava" || col.gameObject.tag == "EnemyProjectile") {
-
+		// Test for the Playground, if you hit Lava or enemy projectile reload
+		if (col.gameObject.name == "Lava" || col.gameObject.tag == "EnemyProjectile" || col.gameObject.tag == "BossSpecial") {
 			inventory.emptyInventory ();
-			SceneManager.LoadScene (SceneManager.GetActiveScene().name);
+			SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
+		} else if (col.gameObject.tag == "BossBullet") {
+			Debug.Log ("ouch, a fuckin bossbullet");
+			StartCoroutine(singularDamage(30));
 		}
 
-        if (col.gameObject.tag == "Item") {
+		if (col.gameObject.tag == "Item") {
 			
             //string path = "Items/" + col.gameObject.name;
 			//Item temp = Resources.Load(path) as Item;
@@ -100,22 +109,36 @@ public class Player : MonoBehaviour {
 				}
 			}	
 		}
+			
+		if (col.gameObject.tag == "Scrap") {
+			inventory.addScrap (1);
+			Destroy (col.gameObject);
+		}
+
+		if (col.gameObject.tag == "Enemy" && !takingDamage) {
+			StartCoroutine (enemyOnContact (20));
+		}
 	}
 
-    void OnTriggerStay2D(Collider2D col)
-    {
-        if (col.gameObject.name == "Fire"  && !standingInFire) {
-            Debug.Log (health.CurrentVal + " " + onFire);
-            StartCoroutine(singularDamage(5));
-        }
-    }
+	void OnCollisionStay2D(Collision2D col)
+	{
+		if (col.gameObject.tag == "Enemy" && !takingDamage) {
+			StartCoroutine (enemyOnContact (20));
+		}
+	}
 
-    void OnTriggerExit2D(Collider2D col)
-    {
-        if (col.gameObject.name == "Fire" && !onFire) {
-            StartCoroutine(damageOverTime (5, 1));
-        }
-    }
+	void OnTriggerStay2D(Collider2D col){
+		if ((col.gameObject.name == "Fire" && !standingInFire) || (col.gameObject.tag == "LavaPlatform" && !standingInFire)) {
+			StartCoroutine(singularDamage(5));
+
+		}
+	}
+
+	void OnTriggerExit2D(Collider2D col){
+		if ((col.gameObject.name == "Fire" && !onFire) || (col.gameObject.tag == "LavaPlatform" && !onFire)) {
+			StartCoroutine(damageOverTime (5, 1));
+		}
+	}
 
 
     //FOR FIRE ONLY
@@ -140,4 +163,22 @@ public class Player : MonoBehaviour {
         yield return new WaitForSeconds (2);
         standingInFire = false;
     }
+
+	//Damage from enemy's projectiles
+	IEnumerator enemyProjectiles(int damageAmount)
+	{
+		takingDamage = true;
+		health.CurrentVal -= damageAmount;
+		yield return new WaitForSeconds (2);
+		takingDamage = false;
+	}
+
+	//Damage from contact with enemies
+	IEnumerator enemyOnContact(int damageAmount)
+	{
+		takingDamage = true;
+		health.CurrentVal -= damageAmount;
+		yield return new WaitForSeconds (1);
+		takingDamage = false;
+	}
 }

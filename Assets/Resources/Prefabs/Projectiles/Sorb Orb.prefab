@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 212286387466361608}
   - component: {fileID: 58124193017206446}
   - component: {fileID: 114110758105778246}
+  - component: {fileID: 114659213949383844}
   m_Layer: 0
   m_Name: Sorb Orb
   m_TagString: Untagged
@@ -68,10 +69,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbe510caa3fd63547b8305972ed6c760, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shotFromLeft: 0
-  shotFromRight: 0
   speed: 0
   direction: {x: 0, y: 0, z: 0}
+--- !u!114 &114659213949383844
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1477703447882114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53e93d77993026a45a82f043f901898a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &212286387466361608
 SpriteRenderer:
   m_ObjectHideFlags: 1

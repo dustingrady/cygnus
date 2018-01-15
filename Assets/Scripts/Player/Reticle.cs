@@ -28,15 +28,5 @@ public class Reticle : MonoBehaviour {
 			Vector3 dir = new Vector3 (x, -y, 0).normalized;
 			transform.position = transform.parent.position + (dir * reticleDistance);
 		}
-
-		/* Old stuff, could be useful
-		// Get the location of the mouse relative to the player
-		Vector3 dir = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.root.position;
-
-		// Update the position of the reticle
-		Vector3 offset = new Vector3(dir.x, dir.y, 1).normalized * reticleDistance;
-		transform.position = transform.parent.position + offset;
-		*/
-
 	}
 }

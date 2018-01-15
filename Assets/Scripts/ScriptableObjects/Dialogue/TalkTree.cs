@@ -8,6 +8,8 @@ public struct TalkChoice // What the player says/does
 {
     public string response;
     public int nextState;
+	public DialogueAction[] dialogActions;
+	public DialogueCondition dialogCondition;
 }
 
 [System.Serializable]
@@ -15,7 +17,6 @@ public struct TalkState // What the NPC says/does
 {
     public string text;
     public TalkChoice[] choices;
-    public string runMethod;
     public bool endTree;
 }
 
@@ -28,8 +29,8 @@ public class TalkTree : ScriptableObject
 
     public TalkState Advance(int n)
     {
-        if (n < 0) n = currentState;
-        currentState = states[currentState].choices[n].nextState;
+        int next = states[currentState].choices[n].nextState;
+        currentState = next >= 0 ? next : currentState;
         return states[currentState];
     }
 

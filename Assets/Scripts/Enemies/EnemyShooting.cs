@@ -8,7 +8,7 @@ public class EnemyShooting : MonoBehaviour {
 	private Transform enemyTransform;
 
 	private int count = 0;
-	private int cooldown = 300;
+	private int cooldown = 50;
 
 	void Awake(){
 		enemyTransform = this.transform; //Reference to current enemy (for testing)

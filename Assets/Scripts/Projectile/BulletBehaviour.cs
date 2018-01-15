@@ -27,4 +27,10 @@ public class BulletBehaviour : MonoBehaviour {
 		transform.position += transform.right * bulletSpeed * Time.deltaTime;
 		Destroy (this.gameObject, 10.0f);
 	}
+
+	void OnTriggerEnter2D(Collider2D col){
+		if (col.gameObject.tag != "Enemy" && this.gameObject.tag != "BossSpecial") { //Destroy bullet if it hits anything other than the enemy itself
+			Destroy (this.gameObject);
+		}
+	}
 }

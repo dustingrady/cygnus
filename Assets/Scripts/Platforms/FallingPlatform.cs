@@ -7,6 +7,10 @@ public class FallingPlatform : MonoBehaviour {
 
 	private Tilemap tilemap;
 	public GameObject fallingPrefab;
+	List<Tile> prevTile = new List<Tile>();
+	List<Vector3> tilesHit;
+	TileBase previousTile;
+	Vector3 prevBlock;
 
 	// Use this for initialization
 	void Start () {
@@ -25,7 +29,7 @@ public class FallingPlatform : MonoBehaviour {
 		Vector3 hitPosition = Vector3.zero;
 		Vector3 blockPosition = Vector3.zero;
 
-		List<Vector3> tilesHit = new List<Vector3>();
+		tilesHit = new List<Vector3>();
 		//Tile tileHit;
 
 		bool tileDestroyed = false;
@@ -42,6 +46,9 @@ public class FallingPlatform : MonoBehaviour {
 				Sprite replacementSprite = tilemap.GetSprite (cellPos);
 				fallingPrefab.GetComponent<SpriteRenderer> ().sprite = replacementSprite;
 
+				//prevTile.Add (tilemap.GetTile (cellPos));
+				previousTile = tilemap.GetTile (cellPos);
+				prevBlock = blockPosition;
 				// Delete tile
 				tilemap.SetTile (cellPos, null);
 				tileDestroyed = true;
@@ -52,7 +59,14 @@ public class FallingPlatform : MonoBehaviour {
 		if (tileDestroyed) {
 			foreach (var location in tilesHit) {
 				Instantiate (fallingPrefab, location, Quaternion.identity);
+				StartCoroutine (replaceTile (location));
 			}
 		}
+	}
+
+	IEnumerator replaceTile(Vector3 v)
+	{
+		yield return new WaitForSeconds (5);
+		tilemap.SetTile (tilemap.WorldToCell(v), previousTile);
 	}
 }
