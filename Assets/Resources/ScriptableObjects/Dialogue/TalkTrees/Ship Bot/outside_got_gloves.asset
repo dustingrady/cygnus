@@ -1,0 +1,72 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d59a82e861755a45b64d50c718dfc62, type: 3}
+  m_Name: outside_got_gloves
+  m_EditorClassIdentifier: 
+  states:
+  - text: Great, you found the gloves.  Now shoot an absorber pellet (ctrl + left
+      click) at the water to take in the element into your left hand.
+    choices:
+    - response: Then what?
+      nextState: 1
+      dialogActions: []
+      dialogCondition: {fileID: 0}
+    - response: 
+      nextState: -1
+      dialogActions: []
+      dialogCondition: {fileID: 0}
+    - response: 
+      nextState: -1
+      dialogActions: []
+      dialogCondition: {fileID: 0}
+    - response: 
+      nextState: -1
+      dialogActions: []
+      dialogCondition: {fileID: 0}
+    endTree: 0
+  - text: Shoot water (left click) at our ship to put it out.
+    choices:
+    - response: OK
+      nextState: 2
+      dialogActions: []
+      dialogCondition: {fileID: 0}
+    - response: 
+      nextState: -1
+      dialogActions: []
+      dialogCondition: {fileID: 0}
+    - response: 
+      nextState: -1
+      dialogActions: []
+      dialogCondition: {fileID: 0}
+    - response: 
+      nextState: -1
+      dialogActions: []
+      dialogCondition: {fileID: 0}
+    endTree: 0
+  - text: END
+    choices:
+    - response: 
+      nextState: -1
+      dialogActions: []
+      dialogCondition: {fileID: 0}
+    - response: 
+      nextState: -1
+      dialogActions: []
+      dialogCondition: {fileID: 0}
+    - response: 
+      nextState: -1
+      dialogActions: []
+      dialogCondition: {fileID: 0}
+    - response: 
+      nextState: -1
+      dialogActions: []
+      dialogCondition: {fileID: 0}
+    endTree: 1

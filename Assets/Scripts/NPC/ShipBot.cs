@@ -11,6 +11,7 @@ public class ShipBot : MonoBehaviour {
 	public NPCTalk talker;
 	public TalkTree outsideDialogue;
 	public TalkTree gloveDialogue;
+	public TalkTree inside_fireOut;
 
 	bool movingToShip;
 
@@ -39,13 +40,33 @@ public class ShipBot : MonoBehaviour {
 				gameObject.SetActive (false);
 			}
 		}
+
+		// Ship Scene
+		if (SceneManager.GetActiveScene ().name == "Ship") {
+			if (gm.CheckQuestComplete (1) == true) {
+				talker.tree = inside_fireOut;
+			}
+		}
 	}
 
 
 	void Update() {
+
+		// When fire is put out, move to ship
 		if (movingToShip) {
-			transform.position = new Vector3 (transform.position.x - Time.deltaTime * 4, transform.position.y, transform.position.z);
+			if (transform.position.x > -16) {
+				// Move towards the ship
+				transform.position = new Vector3 (transform.position.x - Time.deltaTime * 4, transform.position.y, transform.position.z);
+			} else {
+				Destroy (this.gameObject);
+			}
 		}
+	}
+
+
+	void OnDestroy() {
+		// Removing shipbot reference when the scene is changed
+		GameManager.QuestCompleted -= StartMoveToShip;
 	}
 
 
@@ -58,17 +79,13 @@ public class ShipBot : MonoBehaviour {
 	}
 
 
+	// Used when the fire is put out
 	void StartMoveToShip(int id) {
 		if (id == 1) {
 			Debug.Log ("Moving to ship");
-			//StartCoroutine("MoveToShip");
+			// Disable trigger
+			GetComponent<BoxCollider2D>().enabled = false;
+			movingToShip = true;
 		}
-	}
-
-	public IEnumerator MoveToShip() {
-		Debug.Log ("Moving the bot!");
-		movingToShip = true;
-		yield return new WaitForSeconds (5f);
-		movingToShip = false;
 	}
 }

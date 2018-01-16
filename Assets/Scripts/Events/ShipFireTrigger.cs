@@ -10,4 +10,10 @@ public class ShipFireTrigger : MonoBehaviour {
 			Destroy (this.gameObject);
 		}
 	}
+
+	void Awake() {
+		if (GameManager.instance.CheckQuestComplete (1)) {
+			Destroy (this.gameObject);
+		}
+	}
 }

@@ -122,11 +122,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4608127868454306, guid: ff841feaeecac0b438209f7448fdc8ba, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -3.8102846
+      value: -3.2134228
       objectReference: {fileID: 0}
     - target: {fileID: 4608127868454306, guid: ff841feaeecac0b438209f7448fdc8ba, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -3.0099983
+      value: -5.5961995
       objectReference: {fileID: 0}
     - target: {fileID: 4608127868454306, guid: ff841feaeecac0b438209f7448fdc8ba, type: 2}
       propertyPath: m_LocalPosition.z
@@ -152,6 +152,16 @@ Prefab:
       propertyPath: m_RootOrder
       value: 15
       objectReference: {fileID: 0}
+    - target: {fileID: 114427273307188610, guid: ff841feaeecac0b438209f7448fdc8ba,
+        type: 2}
+      propertyPath: m_Lens.OrthographicSize
+      value: 5.99
+      objectReference: {fileID: 0}
+    - target: {fileID: 114427273307188610, guid: ff841feaeecac0b438209f7448fdc8ba,
+        type: 2}
+      propertyPath: m_Follow
+      value: 
+      objectReference: {fileID: 2127124781}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ff841feaeecac0b438209f7448fdc8ba, type: 2}
   m_IsPrefabParent: 0
@@ -4055,6 +4065,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneName: Ship
+--- !u!1 &883277116 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1831419977624324, guid: ff841feaeecac0b438209f7448fdc8ba,
+    type: 2}
+  m_PrefabInternal: {fileID: 22820872}
+--- !u!114 &883277119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 883277116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2fba25a5cd15594e8f050a11e386c80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ConfineMode: 0
+  m_BoundingVolume: {fileID: 0}
+  m_BoundingShape2D: {fileID: 384886545}
+  m_ConfineScreenEdges: 1
+  m_Damping: 0
 --- !u!1 &934275029
 GameObject:
   m_ObjectHideFlags: 0
@@ -7701,15 +7732,15 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4062297412796568, guid: cf06be31013f6c346ab2e54dfe3dcbf4, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -3.8102846
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4062297412796568, guid: cf06be31013f6c346ab2e54dfe3dcbf4, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -3.0099983
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4062297412796568, guid: cf06be31013f6c346ab2e54dfe3dcbf4, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4062297412796568, guid: cf06be31013f6c346ab2e54dfe3dcbf4, type: 2}
       propertyPath: m_LocalRotation.x
@@ -8171,6 +8202,12 @@ Prefab:
       propertyPath: uiRoot
       value: 
       objectReference: {fileID: 651414427}
+    - target: {fileID: 114664401510809586, guid: 608ad0959d3dbec4c8725e70a7bf36f2,
+        type: 2}
+      propertyPath: inside_fireOut
+      value: 
+      objectReference: {fileID: 11400000, guid: 473c85f373e5db84a89c748bbe159886,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 608ad0959d3dbec4c8725e70a7bf36f2, type: 2}
   m_IsPrefabParent: 0
@@ -8665,6 +8702,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114954801635025596, guid: 7ec1878d15ce676448a31ba7dbcb3a6f,
+        type: 2}
+      propertyPath: questsBase.Array.size
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4343225661686404, guid: 7ec1878d15ce676448a31ba7dbcb3a6f, type: 2}
       propertyPath: m_LocalPosition.x
       value: -0.69
@@ -8701,6 +8743,23 @@ Prefab:
         type: 2}
       propertyPath: hasGloves
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114954801635025596, guid: 7ec1878d15ce676448a31ba7dbcb3a6f,
+        type: 2}
+      propertyPath: questsBase.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 00ffdc07928da7746b790da46047a380,
+        type: 2}
+    - target: {fileID: 114954801635025596, guid: 7ec1878d15ce676448a31ba7dbcb3a6f,
+        type: 2}
+      propertyPath: questsBase.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: fbd1e966bc9382b4e889f8ffdbb15bab,
+        type: 2}
+    - target: {fileID: 114954801635025596, guid: 7ec1878d15ce676448a31ba7dbcb3a6f,
+        type: 2}
+      propertyPath: hasGloves
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7ec1878d15ce676448a31ba7dbcb3a6f, type: 2}
@@ -136288,3 +136347,8 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &2127124781 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4786540018449206, guid: 064bb79712746ca4fb4eeb186b912e89,
+    type: 2}
+  m_PrefabInternal: {fileID: 164018142}

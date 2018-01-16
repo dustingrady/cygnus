@@ -35,6 +35,13 @@ public class GameManager : MonoBehaviour {
 			Destroy (gameObject);
 		}
 
+		// Fill questBase from Resources Folder
+		Object[] loadedQuests = Resources.LoadAll("ScriptableObjects/Quests", typeof(Quest));
+
+		foreach(Object quest in loadedQuests) {
+			questsBase.Add ((Quest)quest);
+		}
+
 		// Fill the quests from the questBase
 		foreach (Quest quest in questsBase) {
 			Quest q = Instantiate (quest);
