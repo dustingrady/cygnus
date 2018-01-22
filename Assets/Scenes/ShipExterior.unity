@@ -7732,15 +7732,15 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4062297412796568, guid: cf06be31013f6c346ab2e54dfe3dcbf4, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -3.2134256
       objectReference: {fileID: 0}
     - target: {fileID: 4062297412796568, guid: cf06be31013f6c346ab2e54dfe3dcbf4, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -6.0699997
       objectReference: {fileID: 0}
     - target: {fileID: 4062297412796568, guid: cf06be31013f6c346ab2e54dfe3dcbf4, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -10
       objectReference: {fileID: 0}
     - target: {fileID: 4062297412796568, guid: cf06be31013f6c346ab2e54dfe3dcbf4, type: 2}
       propertyPath: m_LocalRotation.x
@@ -7775,7 +7775,7 @@ Prefab:
     - target: {fileID: 20854867546697684, guid: cf06be31013f6c346ab2e54dfe3dcbf4,
         type: 2}
       propertyPath: orthographic size
-      value: 10
+      value: 5.99
       objectReference: {fileID: 0}
     - target: {fileID: 114779237848586586, guid: cf06be31013f6c346ab2e54dfe3dcbf4,
         type: 2}
@@ -8705,7 +8705,7 @@ Prefab:
     - target: {fileID: 114954801635025596, guid: 7ec1878d15ce676448a31ba7dbcb3a6f,
         type: 2}
       propertyPath: questsBase.Array.size
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4343225661686404, guid: 7ec1878d15ce676448a31ba7dbcb3a6f, type: 2}
       propertyPath: m_LocalPosition.x

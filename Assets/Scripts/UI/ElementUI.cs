@@ -17,19 +17,8 @@ public class ElementUI : MonoBehaviour {
 			plr = GameObject.FindGameObjectWithTag ("Player").GetComponent<Player> ();
 		}
 
-		Transform leftElement = transform.Find ("LeftElement");
-		leftElementImg = leftElement.Find ("Icon").GetComponent<Image> ();
-
-		Transform rightElement = transform.Find ("RightElement");
-		rightElementImg = rightElement.Find ("Icon").GetComponent<Image> ();
-
-		Transform centerElement = transform.Find ("CenterElement");
-		centerElementImg = centerElement.Find ("Icon").GetComponent<Image> ();
-
 		if (GameManager.instance.hasGloves == false) {
-			leftElement.transform.localScale = Vector3.zero;
-			rightElement.transform.localScale = Vector3.zero;
-			centerElement.transform.localScale = Vector3.zero;
+			DisableElements ();
 		}
 
 		Absorber.OnAbsorb += UpdateElements;
@@ -58,5 +47,37 @@ public class ElementUI : MonoBehaviour {
 				centerElementImg.enabled = false;
 			}
 		}
+	}
+
+
+	public void EnableElements() {
+		Transform leftElement = transform.Find ("LeftElement");
+		leftElementImg = leftElement.Find ("Icon").GetComponent<Image> ();
+
+		Transform rightElement = transform.Find ("RightElement");
+		rightElementImg = rightElement.Find ("Icon").GetComponent<Image> ();
+
+		Transform centerElement = transform.Find ("CenterElement");
+		centerElementImg = centerElement.Find ("Icon").GetComponent<Image> ();
+
+		leftElement.transform.localScale = Vector3.one;
+		rightElement.transform.localScale = Vector3.one;
+		centerElement.transform.localScale = Vector3.one;
+	}
+
+
+	public void DisableElements() {
+		Transform leftElement = transform.Find ("LeftElement");
+		leftElementImg = leftElement.Find ("Icon").GetComponent<Image> ();
+
+		Transform rightElement = transform.Find ("RightElement");
+		rightElementImg = rightElement.Find ("Icon").GetComponent<Image> ();
+
+		Transform centerElement = transform.Find ("CenterElement");
+		centerElementImg = centerElement.Find ("Icon").GetComponent<Image> ();
+
+		leftElement.transform.localScale = Vector3.zero;
+		rightElement.transform.localScale = Vector3.zero;
+		centerElement.transform.localScale = Vector3.zero;
 	}
 }
