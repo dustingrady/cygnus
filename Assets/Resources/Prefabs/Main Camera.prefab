@@ -139,6 +139,7 @@ MonoBehaviour:
   retroSnap: 0
   assetsPixelsPerUnit: 16
   showHUD: 0
+  cam: {fileID: 20854867546697684}
 --- !u!124 &124687458973839612
 Behaviour:
   m_ObjectHideFlags: 1

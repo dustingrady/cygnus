@@ -6,6 +6,8 @@ public class GameManager : MonoBehaviour {
 
 	public static GameManager instance = null;
 
+	private const int targetFramerate = 60;
+
 	public int totalScrap = 0;
 	public int currentScrap = 0;
 
@@ -20,6 +22,12 @@ public class GameManager : MonoBehaviour {
 	public bool hasGloves = false;
 
 	public string previousLocation;
+
+	void Start() {
+		// Set the target framerate
+		QualitySettings.vSyncCount = 0;
+		Application.targetFrameRate = targetFramerate;
+	}
 
 	void Awake () {
 		// Allow the game manage to survive scene transition

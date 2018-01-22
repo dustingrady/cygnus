@@ -32,8 +32,7 @@ MonoBehaviour:
       dialogActions: []
       dialogCondition: {fileID: 0}
     endTree: 0
-  - text: Did you hit your head in the landing?  I'm Boty McBotface, thanks for that
-      by the way.
+  - text: Did you hit your head in the crash?  I'm Piptip, your assistant.
     choices:
     - response: OK
       nextState: 0

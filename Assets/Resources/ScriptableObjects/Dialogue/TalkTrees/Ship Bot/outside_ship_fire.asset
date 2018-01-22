@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: outside_ship_fire
   m_EditorClassIdentifier: 
   states:
-  - text: In order to put out that fire, we need some <em>water!</em>
+  - text: In order to put out that fire, we need some water!
     choices:
     - response: Where can I find water?
       nextState: 1

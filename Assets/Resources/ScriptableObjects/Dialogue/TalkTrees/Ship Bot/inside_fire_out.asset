@@ -12,11 +12,13 @@ MonoBehaviour:
   m_Name: inside_fire_out
   m_EditorClassIdentifier: 
   states:
-  - text: Well, we're not on fire.  Now what?
+  - text: Well, we're not on fire.  Unfortunately that's the end of this demo, hopefully
+      the team will get to finish making the game!
     choices:
-    - response: I dunno.
+    - response: I hope so too!
       nextState: 1
-      dialogActions: []
+      dialogActions:
+      - {fileID: 11400000, guid: 344b9e42f32e93948aebc93dbec28b55, type: 2}
       dialogCondition: {fileID: 0}
     - response: 
       nextState: -1
