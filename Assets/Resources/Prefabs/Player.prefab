@@ -47,6 +47,7 @@ GameObject:
   - component: {fileID: 114110853166902702}
   - component: {fileID: 114933354917239262}
   - component: {fileID: 114615267831157814}
+  - component: {fileID: 114370683111062774}
   - component: {fileID: 114393056398288730}
   - component: {fileID: 114731807252025408}
   - component: {fileID: 114227402303746726}
@@ -290,6 +291,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerAnim: {fileID: 0}
   sprintMulti: 1.3
+--- !u!114 &114370683111062774
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1477869712044170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c497c30520d2244fa50c96f93e828c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  elementType: 
+  sprite: {fileID: 21300000, guid: cda39d3b5ba668c4fbddf94656736712, type: 3}
+  lava: {fileID: 1131285947081636, guid: 479e4879d1da51a4e97004151dc848f3, type: 2}
 --- !u!114 &114393056398288730
 MonoBehaviour:
   m_ObjectHideFlags: 1
