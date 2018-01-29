@@ -304,7 +304,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   elementType: 
   sprite: {fileID: 21300000, guid: cda39d3b5ba668c4fbddf94656736712, type: 3}
-  lava: {fileID: 1131285947081636, guid: 479e4879d1da51a4e97004151dc848f3, type: 2}
+  lavaJet: {fileID: 1824831328528082, guid: e7559ebb17cef314296a6fa774b95a46, type: 2}
+  lavaJetCooldown: 0.1
+  jetStrength: 500
 --- !u!114 &114393056398288730
 MonoBehaviour:
   m_ObjectHideFlags: 1
