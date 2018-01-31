@@ -133,8 +133,10 @@ public class PlayerController2: MonoBehaviour {
 		float h = Input.GetAxis("Horizontal");
         float speed = Mathf.Abs(rb.velocity.x);
 
+        Debug.Log(speed);
+
 		if (speed < maxSpeed || Mathf.Sign(h) != Mathf.Sign(rb.velocity.x))
-			rb.AddForce(Vector2.right * h * (moveForce - speed));
+			rb.AddForce(Vector2.right * h * (moveForce - speed * 10.0f));
 	}
 		
 
