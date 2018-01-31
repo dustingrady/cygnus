@@ -23,6 +23,7 @@ TagManager:
   - BossSpecial
   - TurnAround
   - LavaPlatform
+  - Lava
   layers:
   - Default
   - TransparentFX
