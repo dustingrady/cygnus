@@ -1,6 +1,6 @@
 ﻿/*Function: Perform's various boss type attacks
 * Status: In progress/ Testing
-* Bugs: Special attack spawns a regular shot too
+* Bugs: Special attack spawns a regular shot too (what bug?)
 */
 
 using System.Collections;
@@ -16,7 +16,7 @@ public class BossShooting : MonoBehaviour {
 	private Transform enemyTransform;
 	private int baseAttackCount = 0;
 	private int specialAttackCount = 0;
-	private int cooldown = 300;
+	private int cooldown = 150;
 	private int moveCount = 0; //What move are we on again?
 
 	void Awake(){
@@ -48,7 +48,7 @@ public class BossShooting : MonoBehaviour {
 
 	/*Special attack (in progress)*/
 	private void Special_Attack(){
-		if(specialAttackCount >= cooldown){
+		if(specialAttackCount >= (cooldown + 50)){
 			GameObject bullet = (GameObject)Instantiate (specialAttackPrefab, enemyTransform.position, enemyTransform.rotation);
 			Destroy (bullet, 10.0f);
 			specialAttackCount = 0;

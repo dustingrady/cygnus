@@ -42,7 +42,6 @@ public class MetalLayer : MonoBehaviour {
 
 			if (Vector3Int.FloorToInt (oldPos) != Vector3Int.FloorToInt (cellPos)) {
 				oldPos = cellPos;
-				Debug.Log (oldPos.x + " " + oldPos.y + " " + oldPos.z);
 				hitpoints = maxHitPoints;
 				hitpoints--;
 			} else if(Vector3Int.FloorToInt (oldPos) == Vector3Int.FloorToInt (cellPos)){
@@ -50,8 +49,7 @@ public class MetalLayer : MonoBehaviour {
 					hitpoints--;
 				}
 			}
-
-			Debug.Log ("oldPos: " + oldPos + " cellPos: " + cellPos + " hitpoints: " + hitpoints); 
+				
 
 			if (tilemap.GetTile(cellPos) != null && hitpoints == 0)
 			{

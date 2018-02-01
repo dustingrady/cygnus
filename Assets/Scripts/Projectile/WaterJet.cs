@@ -25,15 +25,6 @@ public class WaterJet : MonoBehaviour {
 		}
 	}*/
 
-	void OnCollisionStay2D(Collision2D col)
-	{
-		//if (col.gameObject.tag != "Player" 
-		//	&& col.gameObject.tag != "WaterElement" 
-		//	&& col.gameObject.name != "Bounds") {
-			DestroyObject (this.gameObject);
-		//}
-	}
-
 	void OnCollisionEnter2D(Collision2D col)
 	{
 		if (col.gameObject.tag == "Enemy") {
@@ -44,8 +35,7 @@ public class WaterJet : MonoBehaviour {
 			if (col.gameObject.GetComponent<TurretType> () != null && col.gameObject.GetComponent<TurretType> ().getEnemyType() == "fire") {
 				col.gameObject.GetComponent<TurretType> ().takeDamage (1);
 			}
-
-			DestroyObject (this.gameObject);
 		}
+		DestroyObject (this.gameObject, 0.01f);
 	}
 }

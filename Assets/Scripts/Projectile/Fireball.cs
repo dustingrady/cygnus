@@ -27,13 +27,6 @@ public class Fireball : MonoBehaviour {
 		}
 	}*/
 
-	void OnCollisionStay2D(Collision2D col)
-	{
-		//if (col.gameObject.tag != "Player" && col.gameObject.tag != "Fireball" ) {
-			DestroyObject (this.gameObject);
-		//}
-	}
-
 	void OnCollisionEnter2D(Collision2D col)
 	{
 		if (col.gameObject.tag == "Enemy") {
@@ -44,8 +37,8 @@ public class Fireball : MonoBehaviour {
 			if (col.gameObject.GetComponent<TurretType> () != null && col.gameObject.GetComponent<TurretType> ().getEnemyType() == "metal") {
 				col.gameObject.GetComponent<TurretType> ().takeDamage (5);
 			}
-			DestroyObject (this.gameObject);
-		}
 
+		}
+		DestroyObject (this.gameObject, 0.01f);
 	}
 }

@@ -38,7 +38,6 @@ public class FireLayer : MonoBehaviour {
 				hitPosition.x = hit.point.x;
 				hitPosition.y = hit.point.y;
 				tilemap.SetTile(tilemap.WorldToCell(hitPosition), null);
-				Destroy (col.gameObject);
 			}
 		}
 	}
