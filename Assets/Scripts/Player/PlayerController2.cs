@@ -43,9 +43,6 @@ public class PlayerController2: MonoBehaviour {
         None
     }
 
-    public bool grapplingLeft = false;
-    public bool grapplingRight = false;
-
     GrappleState grapple = GrappleState.None;
 
     void Start () {
@@ -81,19 +78,6 @@ public class PlayerController2: MonoBehaviour {
 		}
         // ------------- Visualize groundcheck rays -----------------------------
 
-        /*
-		// Jumping while grappled left
-		if (Input.GetButtonDown("Jump") && grapplingLeft) {
-			rb.AddForce(Vector3.left * 100);
-			StartCoroutine("JumpCurve");
-		}
-
-		// Jumping while grappled right
-		else if (Input.GetButtonDown("Jump") && grapplingRight) {
-			rb.AddForce(Vector3.right * 100);
-			StartCoroutine("JumpCurve");
-		}
-        */
         if (Input.GetButtonDown("Jump") && grapple != GrappleState.None)
         {
             rb.AddForce((grapple == GrappleState.Left ? Vector3.left : Vector3.right) * 100);
@@ -116,11 +100,7 @@ public class PlayerController2: MonoBehaviour {
 
 
 	void FixedUpdate() {
-        /*
-		if (grapplingLeft || grapplingRight) {
-			GrappleMove ();
-		}*/
-        if (grapple != GrappleState.None) {
+       if (grapple != GrappleState.None) {
             GrappleMove();
         } else {
             rb.AddForce(Vector3.down * gravity * rb.mass); // Add more weight to the player
@@ -130,13 +110,24 @@ public class PlayerController2: MonoBehaviour {
 		
 
 	private void Move() {
-		float h = Input.GetAxis("Horizontal");
+		float h = 0;
+
+		if (GameManager.instance.controllerConnected) {
+			h = Input.GetAxis ("Horizontal");
+		} else {
+			if (Input.GetKey (KeyCode.A)) {
+				h = -1f;
+			} else if (Input.GetKey (KeyCode.D)) {
+				h = 1f;
+			}
+		}
         float speed = Mathf.Abs(rb.velocity.x);
 
-        Debug.Log(speed);
+		//float speedPercentage = speed / maxSpeed;
 
-		if (speed < maxSpeed || Mathf.Sign(h) != Mathf.Sign(rb.velocity.x))
-			rb.AddForce(Vector2.right * h * (moveForce - speed * 10.0f));
+		if (speed < maxSpeed || Mathf.Sign (h) != Mathf.Sign (rb.velocity.x)) {
+			rb.AddForce (Vector2.right * h * (moveForce - speed * 10.0f));
+		}
 	}
 		
 
@@ -190,20 +181,12 @@ public class PlayerController2: MonoBehaviour {
 
 
 	public void StartGrapple(string side) {
-		if (side == "left") {
-			grapplingLeft = true;
-		} else {
-			grapplingRight = true;
-		}
-
 		rb.gravityScale = 0;
 		rb.velocity = Vector3.zero;
 	}
 
 
 	public void StopGrapple() {
-		grapplingRight = false;
-		grapplingLeft = false;
 		rb.gravityScale = 1;
 	}
 
@@ -213,9 +196,7 @@ public class PlayerController2: MonoBehaviour {
             grapple = value;
             if (value == GrappleState.None)
             {
-                grapplingRight = false;
-                grapplingLeft = false;
-                rb.gravityScale = 1;
+				gameObject.GetComponent<Rigidbody2D>().gravityScale = 1;
             }
             else
             {

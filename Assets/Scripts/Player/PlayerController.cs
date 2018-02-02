@@ -182,7 +182,7 @@ public class PlayerController: MonoBehaviour {
 	public void StopGrapple() {
 		grapplingRight = false;
 		grapplingLeft = false;
-		rb.gravityScale = 1;
+		gameObject.GetComponent<Rigidbody2D>().gravityScale = 1;
 	}
 
 	void OnCollisionExit2D(Collision2D col) {
