@@ -6,8 +6,9 @@ using UnityEngine.Tilemaps;
 public class MetalLayer : MonoBehaviour {
 
 	private Tilemap tilemap;
-	private const int maxHitPoints = 3;
+	private const int maxHitPoints = 1;
 	public int hitpoints = maxHitPoints;
+	public GameObject meltedMetal;
 	Vector3 oldPos = Vector3.zero;
 
 	// Use this for initialization
@@ -17,7 +18,6 @@ public class MetalLayer : MonoBehaviour {
 
 
 	void OnTriggerEnter2D(Collider2D col){
-		//THIS IS TEST ELEMENT TAG. IT SHOULD BE WHATEVER LAVA ELEMENT IS WHEN IT'S IMPLEMENTED
 		if (col.gameObject.tag == "Lava"){
 			DestroyBlock(col);
 		}
@@ -26,9 +26,7 @@ public class MetalLayer : MonoBehaviour {
 
 	void DestroyBlock(Collider2D col){
 		Vector3 blockPosition = Vector3.zero;
-
 		Vector3Int cellPos = tilemap.WorldToCell (col.transform.position);
-
 		List<Vector3> positionChecks = getPositionChecks (col.transform.position);
 
 		foreach (Vector3 pos in positionChecks) {
@@ -36,6 +34,9 @@ public class MetalLayer : MonoBehaviour {
 				cellPos = tilemap.WorldToCell (pos);
 			}
 		}
+
+		GameObject melt = Instantiate (meltedMetal, cellPos, Quaternion.identity);	//Replace the tile
+		Destroy(melt, 2);
 			
 		//check if player is hitting the same tile. if they move on to a new tile, the old tile will regenerate to full health. Decrement health of tile when player hit same tile 3 times.
 		//hacky way of getting around the fact that the health value applied to the whole layer.

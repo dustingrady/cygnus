@@ -6,31 +6,23 @@ using UnityEngine.Tilemaps;
 public class IceLayer : MonoBehaviour {
 
 	private Tilemap tilemap;
-	public GameObject iceReplacement;
+	public GameObject meltedIce;
 
 	// Use this for initialization
-	void Start()
-	{
+	void Start(){
 		tilemap = GetComponent<Tilemap>();
 	}
 
 
-	void OnTriggerEnter2D(Collider2D col)
-	{
-		if (col.gameObject.tag == "FireElement")
-		{
+	void OnTriggerEnter2D(Collider2D col){
+		if (col.gameObject.tag == "FireElement"){
 			DestroyBlock(col);
 		}
 	}
 
-
-	void DestroyBlock(Collider2D col)
-	{
-		Vector3 hitPosition = Vector3.zero;
+	void DestroyBlock(Collider2D col){
 		Vector3 blockPosition = Vector3.zero;
-
 		Vector3Int cellPos = tilemap.WorldToCell (col.transform.position);
-
 		List<Vector3> positionChecks = getPositionChecks (col.transform.position);
 
 		foreach (Vector3 pos in positionChecks) {
@@ -38,6 +30,9 @@ public class IceLayer : MonoBehaviour {
 				cellPos = tilemap.WorldToCell (pos);
 			}
 		}
+
+		GameObject melt = Instantiate (meltedIce, cellPos, Quaternion.identity);	//Replace the tile
+		Destroy(melt, 2);
 
 		if (tilemap.GetTile(cellPos) != null)
 		{
