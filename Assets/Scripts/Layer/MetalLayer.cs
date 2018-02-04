@@ -8,12 +8,13 @@ public class MetalLayer : MonoBehaviour {
 	private Tilemap tilemap;
 	private const int maxHitPoints = 1;
 	public int hitpoints = maxHitPoints;
-	public GameObject meltedMetal;
+	private GameObject meltedMetal;
 	Vector3 oldPos = Vector3.zero;
 
 	// Use this for initialization
 	void Start(){
 		tilemap = GetComponent<Tilemap>();
+		meltedMetal = (GameObject)Resources.Load("Prefabs/Particles/MeltedMetal");	
 	}
 
 

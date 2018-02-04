@@ -6,11 +6,12 @@ using UnityEngine.Tilemaps;
 public class IceLayer : MonoBehaviour {
 
 	private Tilemap tilemap;
-	public GameObject meltedIce;
+	private GameObject meltedIce;
 
 	// Use this for initialization
 	void Start(){
 		tilemap = GetComponent<Tilemap>();
+		meltedIce = (GameObject)Resources.Load("Prefabs/Particles/MeltedIce");	
 	}
 
 
