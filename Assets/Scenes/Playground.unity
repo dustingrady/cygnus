@@ -7220,6 +7220,7 @@ GameObject:
   - component: {fileID: 736197249}
   - component: {fileID: 736197250}
   - component: {fileID: 736197251}
+  - component: {fileID: 736197252}
   m_Layer: 8
   m_Name: Metal
   m_TagString: MetalElement
@@ -7973,6 +7974,18 @@ CompositeCollider2D:
       - {x: -20, y: -5.96875}
       - {x: -17, y: -5.96875}
   m_VertexDistance: 0.0005
+--- !u!114 &736197252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 736197244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a20dff7240ea0fa43a77178ad4fc6203, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitpoints: 3
 --- !u!1 &771886272
 GameObject:
   m_ObjectHideFlags: 0
@@ -8841,11 +8854,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4062297412796568, guid: cf06be31013f6c346ab2e54dfe3dcbf4, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -11.908266
+      value: -11.93
       objectReference: {fileID: 0}
     - target: {fileID: 4062297412796568, guid: cf06be31013f6c346ab2e54dfe3dcbf4, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -4.9635496
+      value: -9.21
       objectReference: {fileID: 0}
     - target: {fileID: 4062297412796568, guid: cf06be31013f6c346ab2e54dfe3dcbf4, type: 2}
       propertyPath: m_LocalPosition.z

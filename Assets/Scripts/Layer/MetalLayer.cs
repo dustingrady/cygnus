@@ -11,24 +11,20 @@ public class MetalLayer : MonoBehaviour {
 	Vector3 oldPos = Vector3.zero;
 
 	// Use this for initialization
-	void Start()
-	{
+	void Start(){
 		tilemap = GetComponent<Tilemap>();
 	}
 
 
-	void OnTriggerEnter2D(Collider2D col)
-	{
+	void OnTriggerEnter2D(Collider2D col){
 		//THIS IS TEST ELEMENT TAG. IT SHOULD BE WHATEVER LAVA ELEMENT IS WHEN IT'S IMPLEMENTED
-		if (col.gameObject.tag == "FireElement")
-		{
+		if (col.gameObject.tag == "Lava"){
 			DestroyBlock(col);
 		}
 	}
 
 
-	void DestroyBlock(Collider2D col)
-	{
+	void DestroyBlock(Collider2D col){
 		Vector3 blockPosition = Vector3.zero;
 
 		Vector3Int cellPos = tilemap.WorldToCell (col.transform.position);
@@ -45,7 +41,7 @@ public class MetalLayer : MonoBehaviour {
 		//hacky way of getting around the fact that the health value applied to the whole layer.
 		if (Vector3Int.FloorToInt (oldPos) != Vector3Int.FloorToInt (cellPos)) {
 			oldPos = cellPos;
-			Debug.Log (oldPos.x + " " + oldPos.y + " " + oldPos.z);
+			//Debug.Log (oldPos.x + " " + oldPos.y + " " + oldPos.z);
 			hitpoints = maxHitPoints;
 			hitpoints--;
 		} else if(Vector3Int.FloorToInt (oldPos) == Vector3Int.FloorToInt (cellPos)){
@@ -54,10 +50,9 @@ public class MetalLayer : MonoBehaviour {
 			}
 		}
 
-		Debug.Log ("oldPos: " + oldPos + " cellPos: " + cellPos + " hitpoints: " + hitpoints); 
+		//Debug.Log ("oldPos: " + oldPos + " cellPos: " + cellPos + " hitpoints: " + hitpoints); 
 
-		if (tilemap.GetTile(cellPos) != null && hitpoints == 0)
-		{
+		if (tilemap.GetTile(cellPos) != null && hitpoints == 0){
 			hitpoints = maxHitPoints;
 			blockPosition = tilemap.CellToWorld(cellPos) + tilemap.tileAnchor;
 
