@@ -16,7 +16,52 @@ public class MetalLayer : MonoBehaviour {
 		tilemap = GetComponent<Tilemap>();
 	}
 
+	void OnCollisionEnter2D(Collision2D col)
+	{
+		if (col.gameObject.tag == "FireElement")
+		{
+			destroyBlock(col);
+		}
+	}
 
+	void destroyBlock(Collision2D col)
+	{
+		Debug.Log ("Metal layer collision" + " " + col.contacts.Length);
+		Vector3 hitPosition = Vector3.zero;
+		Vector3Int cellPos = tilemap.WorldToCell (col.transform.position);
+		if (tilemap != null && col.gameObject.name != "Player")
+		{
+			foreach (ContactPoint2D hit in col.contacts)
+			{
+				hitPosition.x = hit.point.x;
+				hitPosition.y = hit.point.y;
+				cellPos = tilemap.WorldToCell (hitPosition);
+				//tilemap.SetTile(tilemap.WorldToCell(hitPosition), null);
+				//Destroy (col.gameObject);
+			}
+
+			if (Vector3Int.FloorToInt (oldPos) != Vector3Int.FloorToInt (cellPos)) {
+				oldPos = cellPos;
+				hitpoints = maxHitPoints;
+				hitpoints--;
+			} else if(Vector3Int.FloorToInt (oldPos) == Vector3Int.FloorToInt (cellPos)){
+				if (hitpoints > 0) {
+					hitpoints--;
+				}
+			}
+				
+
+			if (tilemap.GetTile(cellPos) != null && hitpoints == 0)
+			{
+				hitpoints = maxHitPoints;
+
+				// Delete tile
+				tilemap.SetTile(cellPos, null);
+			}
+		}
+	}
+
+	/*
 	void OnTriggerEnter2D(Collider2D col)
 	{
 		//THIS IS TEST ELEMENT TAG. IT SHOULD BE WHATEVER LAVA ELEMENT IS WHEN IT'S IMPLEMENTED
@@ -102,5 +147,6 @@ public class MetalLayer : MonoBehaviour {
 
 		return positionChecks;
 	}
+	*/
 }
 

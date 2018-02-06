@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 114405505984313422}
   - component: {fileID: 58292931804492600}
   - component: {fileID: 50463785379703982}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BossSpecialAttack
   m_TagString: BossSpecial
   m_Icon: {fileID: 0}
