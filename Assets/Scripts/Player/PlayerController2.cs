@@ -157,10 +157,7 @@ public class PlayerController2: MonoBehaviour {
 			yield return new WaitForFixedUpdate ();
         }
 
-		if (Mathf.Abs(rb.velocity.y) < Mathf.Abs(curveVel)) {
-			rb.velocity = new Vector2(rb.velocity.x, Vector2.down.y * 0.01f);
-		}
-
+		rb.velocity = new Vector2 (rb.velocity.x, Mathf.Lerp (rb.velocity.y, Vector3.down.y, 0.5f));
     }
 
 
@@ -209,5 +206,9 @@ public class PlayerController2: MonoBehaviour {
 	void OnCollisionExit2D(Collision2D col) {
         //StopGrapple ();
         Grapple = GrappleState.None;
+	}
+
+	void OnCollisionEnter2D(Collision2D col) {
+		StopCoroutine("JumpCurve");
 	}
 }
