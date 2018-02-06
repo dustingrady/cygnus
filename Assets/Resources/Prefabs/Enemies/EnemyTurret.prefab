@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 50915553845113340}
   - component: {fileID: 61512180357011006}
   - component: {fileID: 120086377043348790}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: EnemyTurret
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -39,7 +39,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1685124298241452}
   m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
-  m_LocalPosition: {x: 24.49, y: -3.95, z: 0}
+  m_LocalPosition: {x: 24.491058, y: 3.086362, z: 0}
   m_LocalScale: {x: 0.75, y: 0.75, z: 0.75}
   m_Children: []
   m_Father: {fileID: 0}
@@ -56,7 +56,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 1000
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1

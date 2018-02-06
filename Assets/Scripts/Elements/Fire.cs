@@ -9,6 +9,9 @@ public class Fire : Element {
 	private float timeSinceFire;
 	private bool fireReleased = true;
 
+	// Checks for controller release
+	PlayerShooting plrs;
+
 	public override void UseElement(Vector3 pos, Vector2 dir){
 		if (timeSinceFire > fireballCooldown && fireReleased) {
 			GameObject fb = Instantiate (fireball, pos, Quaternion.identity);
@@ -18,12 +21,22 @@ public class Fire : Element {
 		}
 	}
 
+	void Start() {
+		plrs = transform.root.GetComponent<PlayerShooting> ();
+	}
+
 	void Update() {
 		timeSinceFire += Time.deltaTime;
 
 		// UGLY
-		if (Input.GetMouseButtonUp (0) == true || Input.GetMouseButtonUp (1) == true ) {
-			fireReleased = true;
+		if (GameManager.instance.controllerConnected) {
+			if (!plrs.leftFireDown && !plrs.rightFireDown) {
+				fireReleased = true;
+			}
+		} else {
+			if (Input.GetMouseButtonUp (0) == true || Input.GetMouseButtonUp (1) == true) {
+				fireReleased = true;
+			}
 		}
 	}
 }

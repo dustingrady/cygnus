@@ -10,7 +10,6 @@ public class Steam : Element {
 	private float burstCooldown = 1.5f;
 	private float timeSinceFire;
 	private bool btnReleased = true;
-	private GameObject plr;
 
 	public override void UseElement(Vector3 pos, Vector2 dir){
 		if (timeSinceFire > burstCooldown && btnReleased) {
@@ -23,24 +22,17 @@ public class Steam : Element {
 			
 			steamObject.GetComponent<ParticleSystem> ().Play ();
 
-			// Destroy the system after it finishes
-			//Destroy(steamObject, 1f);
-
-			Debug.Log ("Fire off steam");
-			plr.GetComponent<Rigidbody2D> ().AddForce (-dir.normalized * burstStrength);
+			transform.root.GetComponent<Rigidbody2D> ().AddForce (-dir.normalized * burstStrength);
 			timeSinceFire = 0;
 			btnReleased = false;
 		}
 	}
 
-	void Start() {
-		plr = GameObject.FindGameObjectWithTag ("Player");
-	}
-
 	void Update() {
 		timeSinceFire += Time.deltaTime;
 
-		if (Input.GetMouseButtonUp (2) == true) {
+		if (Input.GetMouseButtonUp (2) == true
+			|| Input.GetButtonUp("RightStick")) {
 			btnReleased = true;
 		}
 	}
