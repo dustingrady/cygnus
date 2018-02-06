@@ -144,7 +144,7 @@ public class PatrolType : Enemy {
 		if (col.gameObject.tag == "TurnAround")
 			patrolSpeed *= -1;
 	}
-
+		
 	IEnumerator idle()
 	{
 		pause = true;

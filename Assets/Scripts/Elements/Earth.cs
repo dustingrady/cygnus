@@ -16,12 +16,19 @@ public class Earth : Element {
 	private float timeSinceFire;
 	private bool shotCharging = false;
 
+	// Checks for controller release
+	private bool leftFireDown = false;
+	private bool rightFireDown = false;
+
 	PlayerShooting plrs;
 
 	public PowerMeter powerMeter; // The element power UI element
 
 
 	public override void UseElement(Vector3 pos, Vector2 dir){
+		leftFireDown = plrs.leftFireDown;
+		rightFireDown = plrs.rightFireDown;
+
 		if (timeSinceFire > earthCooldown) {
 			if (shotCharging == false) {
 				// Start charging the projectile
@@ -66,7 +73,7 @@ public class Earth : Element {
 			timeSinceFire += Time.deltaTime;
 		}
 
-		if ((Input.GetMouseButtonUp (0) == true || Input.GetMouseButtonUp (1) == true) && shotCharging) {
+		if (ShotRelease() && shotCharging) {
 			FireBoulder ();
 		}
 	}
@@ -98,5 +105,18 @@ public class Earth : Element {
 		// disable the graphic
 		powerMeter.Hide();
 
+	}
+
+	bool ShotRelease() {
+		if (GameManager.instance.controllerConnected) {
+			if (plrs.leftFireDown == false && leftFireDown == true
+			    || plrs.rightFireDown == false && rightFireDown == true) {
+				return true;
+			}
+		} else if ((Input.GetMouseButtonUp (0) == true || Input.GetMouseButtonUp (1) == true)) {
+			return true;
+		}
+
+		return false;
 	}
 }

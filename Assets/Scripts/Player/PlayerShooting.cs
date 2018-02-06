@@ -11,8 +11,8 @@ public class PlayerShooting : MonoBehaviour {
 	private float absorberCooldown = 0.25f;
 	private float absorbTimer = 0f;
 
-	private bool secondaryBtnRelease = true;
-	private bool primaryBtnRelease = true;
+	public bool leftFireDown = false;
+	public bool rightFireDown = false;
 
 	// Event broadcast
 	public delegate void ShootAction();
@@ -34,36 +34,52 @@ public class PlayerShooting : MonoBehaviour {
 		absorbTimer += Time.deltaTime;
 
 		if (gm.controllerConnected) {
-			if (Input.GetAxisRaw ("SecondaryFireGamePad") <= 0.1) {
-				secondaryBtnRelease = true;
-			}
-			if (Input.GetAxisRaw ("PrimaryFireGamePad") <= 0.1) {
-				primaryBtnRelease = true;
+			if (Input.GetAxis ("SecondaryFireGamePad") < 0.1f) {
+				leftFireDown = false;
 			}
 
-			if (Input.GetAxis ("PrimaryFireGamePad") > 0.5f && primaryBtnRelease) {
-				Debug.Log ("Triggered primary fire on controller!");
-				// Shoot goes here
+			if (Input.GetAxis ("PrimaryFireGamePad") < 0.1) {
+				rightFireDown = false;
 			}
 
-			if (Input.GetAxis ("SecondaryFireGamePad") > 0.5f && absorbTimer > absorberCooldown && secondaryBtnRelease) {
-				secondaryBtnRelease = false;
+			if (Input.GetButton ("LeftBumper") && absorbTimer > absorberCooldown && gm.hasGloves) {
+				Absorb ("left");
+			}
+			else if (Input.GetButton ("RightBumper") && absorbTimer > absorberCooldown && gm.hasGloves) {
 				Absorb ("right");
+			}
+				
+			if (Input.GetAxis ("SecondaryFireGamePad") > 0.5f) {
+				leftFireDown = true;
+				if (plr.leftElement != null) {
+					useElement ("left");
+				}
+			}
+
+			if (Input.GetAxis ("PrimaryFireGamePad") > 0.5f) {
+				rightFireDown = true;
+				if (plr.rightElement != null) {
+					useElement ("right");
+				}
 
 				// Broadcast the shoot event to anyone who cares (PlayerAnimations)
 				if (OnShoot != null) {
 					OnShoot ();
 				}
 			}
+
+			if (Input.GetButton("RightStick")) {
+				if (plr.centerElement != null) {
+					useElement ("both");
+				}
+			}
+
 		} else {
-			
-			//If PrimaryAbsorb
 			 if (Input.GetButton ("PrimaryFire") && (Input.GetButton ("LeftCtrl")) && absorbTimer > absorberCooldown
 				&& gm.hasGloves) {
 				Absorb ("left");
 			}
-
-			//If SecondaryAbsorb
+				
 			else if (Input.GetButton ("SecondaryFire") && (Input.GetButton ("LeftCtrl")) && absorbTimer > absorberCooldown
 				&& gm.hasGloves) {
 				Absorb ("right");
@@ -82,76 +98,51 @@ public class PlayerShooting : MonoBehaviour {
 			}
 
 			if (Input.GetButton ("SecondaryFire") && !(Input.GetButton ("LeftCtrl"))) {
-				if (plr.rightElement != null)
+				if (plr.rightElement != null) {
 					useElement ("right");
+				}
 			}
 			
 		}
 	}
 
 	void Absorb(string hand) {
-		// No controller detected, use mouse and keyboard
-		if (!gm.controllerConnected) {
-			
-			Vector2 dir = GetCursorDirection();
 
-			// Instantiate the Sorb Orb with a direction and speed
-			GameObject blt = Instantiate (absorber, transform.position, transform.rotation);
-			blt.GetComponent<Absorber> ().Initialize (dir, absorberSpeed, hand);
+		Vector2 dir = GetCursorDirection ();
 
-			// restart the clock on the shoot cooldown
-			absorbTimer = 0f;
-		} else {
-			Debug.Log ("shooting absorb with controller");
-			float x = Input.GetAxis ("RightHorizontal");
-			float y = Input.GetAxis ("RightVertical");
+		// Instantiate the Sorb Orb with a direction and speed
+		GameObject blt = Instantiate (absorber, transform.position, transform.rotation);
+		blt.GetComponent<Absorber> ().Initialize (dir, absorberSpeed, hand);
 
-			Vector2 dir = new Vector2 (x, -y).normalized;
-
-			// Instantiate the Sorb Orb with a direction and speed
-			GameObject blt = Instantiate (absorber, transform.position, transform.rotation);
-			blt.GetComponent<Absorber> ().Initialize (dir, absorberSpeed, hand);
-
-			// restart the clock on the shoot cooldown
-			absorbTimer = 0f;	
-		}
+		// restart the clock on the shoot cooldown
+		absorbTimer = 0f;	
 	}
 
 	void useElement(string hand) {
-		// No controller detected, use mouse and keyboard
-		if (!gm.controllerConnected) {
+		Vector2 dir = GetCursorDirection ();
 
-			Vector2 dir = GetCursorDirection();
-
-			if (hand == "both") {
-				plr.centerElement.UseElement (transform.position, dir);
-			} else if (hand == "left") {
-				plr.leftElement.UseElement (transform.position, dir);
-			} else {
-				plr.rightElement.UseElement (transform.position, dir);
-			}
+		if (hand == "left") {
+			plr.leftElement.UseElement (transform.position, dir);
+		} else if (hand == "right") {
+			plr.rightElement.UseElement (transform.position, dir);
 		} else {
-			Debug.Log ("shooting absorb with controller");
-			float x = Input.GetAxis ("RightHorizontal");
-			float y = Input.GetAxis ("RightVertical");
-
-			Vector2 dir = new Vector2 (x, -y).normalized;
-
-			if (hand == "left") {
-				plr.leftElement.UseElement (transform.position, dir);
-			} else {
-				plr.rightElement.UseElement (transform.position, dir);
-			}
+			plr.centerElement.UseElement (transform.position, dir);
 		}
 	}
 
 
 	public Vector2 GetCursorDirection() {
-		// Get the location of the mouse relative to the player
-		Vector3 dirV3 = Camera.main.ScreenToWorldPoint (Input.mousePosition) - transform.position;
-		// Convert this into a Vector2
-		Vector2 dir = new Vector2 (dirV3.x, dirV3.y);
+		if (GameManager.instance.controllerConnected) {
+			GameObject ret = GameObject.Find ("Reticle");
+			Vector3 dirV3 = ret.transform.position - transform.position;
+			Vector2 dir = new Vector2 (dirV3.x, dirV3.y);
 
-		return dir;
+			return dir;
+		} else {
+			Vector3 dirV3 = Camera.main.ScreenToWorldPoint (Input.mousePosition) - transform.position;
+			Vector2 dir = new Vector2 (dirV3.x, dirV3.y);
+
+			return dir;
+		}
 	}
 }

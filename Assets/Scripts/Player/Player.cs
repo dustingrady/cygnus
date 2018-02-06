@@ -7,7 +7,7 @@ using UnityEngine.Tilemaps;
 public class Player : MonoBehaviour {
 
     [SerializeField]
-    private Stat health;
+    public Stat health;
 	public Element leftElement;
 	public Element rightElement;
     public Element centerElement;
@@ -47,41 +47,11 @@ public class Player : MonoBehaviour {
 		}
     }
 		
-	void OnTriggerEnter2D(Collider2D col) {
-		
-		// Test for the Playground, if you hit Lava or enemy projectile reload
-		if (col.gameObject.name == "Lava" || col.gameObject.name == "Water" || col.gameObject.tag == "BossSpecial") {
-			inventory.emptyInventory ();
-			SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
-		}
-
-		if (col.gameObject.tag == "BossBullet") {
-			Debug.Log ("ouch, a fuckin bossbullet");
-			StartCoroutine(enemyProjectiles(30));
-		}
-
-		if (col.gameObject.tag == "Item") {
-			
-            //string path = "Items/" + col.gameObject.name;
-			//Item temp = Resources.Load(path) as Item;
-
-			Item item = col.gameObject.GetComponent<ItemInteraction>().item;
-
-			if (item != null) {
-				inventory.GetComponent<Inventory>().addItem(item);
-			} else {
-				Debug.LogError ("There was no item on that object!");
-			}
-        }
-
-		if (col.gameObject.name == "Fire" && !standingInFire) {
-			StartCoroutine (singularDamage (5));
-		}
-
-		if ((col.gameObject.tag == "EnemyProjectile" && !takingDamage)) {
-			StartCoroutine (enemyProjectiles(10));
-		}
-    }
+	/*
+	 * 
+	 * START OF COLLISION STUFF
+	 * 
+	*/
 
 	void OnCollisionEnter2D(Collision2D col) {
 		if (centerElement != null) {
@@ -104,16 +74,18 @@ public class Player : MonoBehaviour {
 
 					// If a tile is found, the player is hugging the left or right wall, start grapple
 					if (tilemap.GetTile (tilemap.WorldToCell (leftBounds)) != null) {
-						GetComponent<PlayerController> ().StartGrapple ("right");
+                        //GetComponent<PlayerController> ().StartGrapple ("right");
+                        GetComponent<PlayerController2>().Grapple = PlayerController2.GrappleState.Right;
 
-						// Disable the magnetic pull
-						centerElement.gameObject.GetComponent<Magnetic>().pulling = false;
+                        // Disable the magnetic pull
+                        centerElement.gameObject.GetComponent<Magnetic>().pulling = false;
 
 					} else if (tilemap.GetTile (tilemap.WorldToCell (rightBounds)) != null) {
-						GetComponent<PlayerController> ().StartGrapple ("left");
+                        //GetComponent<PlayerController> ().StartGrapple ("left");
+                        GetComponent<PlayerController2>().Grapple = PlayerController2.GrappleState.Left;
 
-						// Disable the magnetic pull
-						centerElement.gameObject.GetComponent<Magnetic>().pulling = false;
+                        // Disable the magnetic pull
+                        centerElement.gameObject.GetComponent<Magnetic>().pulling = false;
 					}
 
 				}
@@ -128,6 +100,11 @@ public class Player : MonoBehaviour {
 		if (col.gameObject.tag == "Enemy" && !takingDamage) {
 			StartCoroutine (enemyOnContact (20));
 		}
+
+
+		if (col.gameObject.name == "Fire" && !standingInFire) {
+			StartCoroutine (singularDamage (5));
+		}
 	}
 
 	void OnCollisionStay2D(Collision2D col)
@@ -135,20 +112,83 @@ public class Player : MonoBehaviour {
 		if (col.gameObject.tag == "Enemy" && !takingDamage) {
 			StartCoroutine (enemyOnContact (20));
 		}
+
+		if ((col.gameObject.name == "Fire" && !standingInFire)) {
+			StartCoroutine(singularDamage(5));
+		}
+	}
+
+	void OnCollisionExit2D(Collision2D col)
+	{
+		if ((col.gameObject.name == "Fire" && !onFire)) {
+			StartCoroutine(damageOverTime (5, 1));
+		}
+	}
+
+
+	/*
+	 * 
+	 * END OF COLLISION STUFF 
+	 * 
+	 */
+
+
+
+	/* 
+	 *
+	 * START OF TRIGGER STUFF 
+	 *
+	 */
+
+	void OnTriggerEnter2D(Collider2D col) {
+
+		// Test for the Playground, if you hit Lava or enemy projectile reload
+		if (col.gameObject.name == "Lava" || col.gameObject.name == "Water" || col.gameObject.tag == "BossSpecial") {
+			inventory.emptyInventory ();
+			SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
+		}
+
+		if (col.gameObject.tag == "BossBullet") {
+			Debug.Log ("ouch, a fuckin bossbullet");
+			StartCoroutine(enemyProjectiles(30));
+		}
+
+		if (col.gameObject.tag == "Item") {
+
+			//string path = "Items/" + col.gameObject.name;
+			//Item temp = Resources.Load(path) as Item;
+
+			Item item = col.gameObject.GetComponent<ItemInteraction>().item;
+
+			if (item != null) {
+				inventory.GetComponent<Inventory>().addItem(item);
+			} else {
+				Debug.LogError ("There was no item on that object!");
+			}
+		}
+
+		if ((col.gameObject.tag == "EnemyProjectile" && !takingDamage)) {
+			StartCoroutine (enemyProjectiles(10));
+		}
 	}
 
 	void OnTriggerStay2D(Collider2D col){
-		if ((col.gameObject.name == "Fire" && !standingInFire) || (col.gameObject.tag == "LavaPlatform" && !standingInFire)) {
+		if ((col.gameObject.tag == "LavaPlatform" && !standingInFire)) {
 			StartCoroutine(singularDamage(5));
-
 		}
 	}
 
 	void OnTriggerExit2D(Collider2D col){
-		if ((col.gameObject.name == "Fire" && !onFire) || (col.gameObject.tag == "LavaPlatform" && !onFire)) {
+		if ((col.gameObject.tag == "LavaPlatform" && !onFire)) {
 			StartCoroutine(damageOverTime (5, 1));
 		}
 	}
+
+	/* 
+	 *
+	 * END OF TRIGGER STUFF 
+	 *
+	 */
 
 
     //FOR FIRE ONLY

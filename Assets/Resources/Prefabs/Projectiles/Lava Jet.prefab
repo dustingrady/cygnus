@@ -26,7 +26,7 @@ GameObject:
   - component: {fileID: 50090709219221480}
   - component: {fileID: 96830994580507146}
   - component: {fileID: 82793196868419776}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Lava Jet
   m_TagString: Lava
   m_Icon: {fileID: 0}
@@ -75,7 +75,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.03, y: 0}
