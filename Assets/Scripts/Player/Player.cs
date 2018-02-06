@@ -7,7 +7,7 @@ using UnityEngine.Tilemaps;
 public class Player : MonoBehaviour {
 
     [SerializeField]
-    private Stat health;
+    public Stat health;
 	public Element leftElement;
 	public Element rightElement;
     public Element centerElement;
@@ -74,16 +74,18 @@ public class Player : MonoBehaviour {
 
 					// If a tile is found, the player is hugging the left or right wall, start grapple
 					if (tilemap.GetTile (tilemap.WorldToCell (leftBounds)) != null) {
-						GetComponent<PlayerController> ().StartGrapple ("right");
+                        //GetComponent<PlayerController> ().StartGrapple ("right");
+                        GetComponent<PlayerController2>().Grapple = PlayerController2.GrappleState.Right;
 
-						// Disable the magnetic pull
-						centerElement.gameObject.GetComponent<Magnetic>().pulling = false;
+                        // Disable the magnetic pull
+                        centerElement.gameObject.GetComponent<Magnetic>().pulling = false;
 
 					} else if (tilemap.GetTile (tilemap.WorldToCell (rightBounds)) != null) {
-						GetComponent<PlayerController> ().StartGrapple ("left");
+                        //GetComponent<PlayerController> ().StartGrapple ("left");
+                        GetComponent<PlayerController2>().Grapple = PlayerController2.GrappleState.Left;
 
-						// Disable the magnetic pull
-						centerElement.gameObject.GetComponent<Magnetic>().pulling = false;
+                        // Disable the magnetic pull
+                        centerElement.gameObject.GetComponent<Magnetic>().pulling = false;
 					}
 
 				}

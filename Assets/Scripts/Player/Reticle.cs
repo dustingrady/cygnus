@@ -5,10 +5,12 @@ using UnityEngine;
 public class Reticle : MonoBehaviour {
 	public float reticleDistance = 1.5f;
 	GameManager gm;
+	GameObject plr;
 
 	void Start () {
 		// Get the game manager so we can check to see if a controller is connected
-		gm = GameManager.instance;	
+		gm = GameManager.instance;
+		plr = GameObject.FindGameObjectWithTag ("Player");
 	}
 
 	void Update () {
@@ -25,8 +27,16 @@ public class Reticle : MonoBehaviour {
 			float x = Input.GetAxis ("RightHorizontal");
 			float y = Input.GetAxis ("RightVertical");
 
-			Vector3 dir = new Vector3 (x, -y, 0).normalized;
-			transform.position = transform.parent.position + (dir * reticleDistance);
+			if (Mathf.Abs (x) > 0.4 || Mathf.Abs (y) > 0.4) {
+				Vector3 dir = new Vector3 (x, -y, 0).normalized;
+				transform.position = plr.transform.position + (dir * reticleDistance);
+
+				gameObject.GetComponent<SpriteRenderer> ().enabled = true;
+			} else {
+				transform.position = plr.transform.position;
+
+				gameObject.GetComponent<SpriteRenderer> ().enabled = false;
+			}
 		}
 	}
 }

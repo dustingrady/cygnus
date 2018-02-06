@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PlayerController: MonoBehaviour {
+public class PlayerController2: MonoBehaviour {
 
 	private Rigidbody2D rb;
 	private Collider2D col;
@@ -25,9 +25,6 @@ public class PlayerController: MonoBehaviour {
 
 	private bool grounded;
 
-	public bool grapplingLeft = false;
-	public bool grapplingRight = false;
-
     [Range(0.01f, 5.0f)]
     public float jumpTravel = 1.8f;
 
@@ -39,7 +36,16 @@ public class PlayerController: MonoBehaviour {
 
 	public LayerMask groundMask;
 
-	void Start () {
+    public enum GrappleState
+    {
+        Left,
+        Right,
+        None
+    }
+
+    GrappleState grapple = GrappleState.None;
+
+    void Start () {
 		rb = GetComponent<Rigidbody2D> ();
 		col = GetComponent<BoxCollider2D> ();
 
@@ -70,22 +76,16 @@ public class PlayerController: MonoBehaviour {
 		foreach (Vector3 pos in castPos) {
 			Debug.DrawRay (pos, Vector3.down, Color.red);
 		}
-		// ------------- Visualize groundcheck rays -----------------------------
+        // ------------- Visualize groundcheck rays -----------------------------
 
-		// Jumping while grappled left
-		if (Input.GetButtonDown("Jump") && grapplingLeft) {
-			rb.AddForce(Vector3.left * 100);
-			StartCoroutine("JumpCurve");
-		}
+        if (Input.GetButtonDown("Jump") && grapple != GrappleState.None)
+        {
+            rb.AddForce((grapple == GrappleState.Left ? Vector3.left : Vector3.right) * 100);
+            StartCoroutine("JumpCurve");
+        }
 
-		// Jumping while grappled right
-		else if (Input.GetButtonDown("Jump") && grapplingRight) {
-			rb.AddForce(Vector3.right * 100);
-			StartCoroutine("JumpCurve");
-		}
-
-		// Normal jump
-		else if (Input.GetButtonDown("Jump") && JumpCheck()) {
+        // Normal jump
+        else if (Input.GetButtonDown("Jump") && JumpCheck()) {
             StartCoroutine("JumpCurve");
 		}
 
@@ -100,20 +100,34 @@ public class PlayerController: MonoBehaviour {
 
 
 	void FixedUpdate() {
-		if (grapplingLeft || grapplingRight) {
-			GrappleMove ();
-		} else {
-			rb.AddForce (Vector3.down * gravity * rb.mass); // Add more weight to the player
-			Move ();
-		}
+       if (grapple != GrappleState.None) {
+            GrappleMove();
+        } else {
+            rb.AddForce(Vector3.down * gravity * rb.mass); // Add more weight to the player
+            Move();
+        }
 	}
 		
 
 	private void Move() {
-		float h = Input.GetAxis("Horizontal");
+		float h = 0;
 
-		if (Mathf.Abs (rb.velocity.x) < maxSpeed || Mathf.Sign(h) != Mathf.Sign(rb.velocity.x))
-			rb.AddForce(Vector2.right * h * moveForce);
+		if (GameManager.instance.controllerConnected) {
+			h = Input.GetAxis ("Horizontal");
+		} else {
+			if (Input.GetKey (KeyCode.A)) {
+				h = -1f;
+			} else if (Input.GetKey (KeyCode.D)) {
+				h = 1f;
+			}
+		}
+        float speed = Mathf.Abs(rb.velocity.x);
+
+		//float speedPercentage = speed / maxSpeed;
+
+		if (speed < maxSpeed || Mathf.Sign (h) != Mathf.Sign (rb.velocity.x)) {
+			rb.AddForce (Vector2.right * h * (moveForce - speed * 10.0f));
+		}
 	}
 		
 
@@ -143,10 +157,7 @@ public class PlayerController: MonoBehaviour {
 			yield return new WaitForFixedUpdate ();
         }
 
-		if (Mathf.Abs(rb.velocity.y) < Mathf.Abs(curveVel)) {
-			rb.velocity = new Vector2(rb.velocity.x, Vector2.down.y * 0.01f);
-		}
-
+		rb.velocity = new Vector2 (rb.velocity.x, Mathf.Lerp (rb.velocity.y, Vector3.down.y, 0.5f));
     }
 
 
@@ -156,36 +167,48 @@ public class PlayerController: MonoBehaviour {
 			new Vector3 (transform.position.x + col.bounds.extents.x - 0.005f, transform.position.y, transform.position.z)
 		};
 
-		bool validJump = false;
 		foreach (Vector3 pos in castPos) {
 			if (Physics2D.Raycast (pos, Vector2.down, col.bounds.extents.y + 0.2f, groundMask).collider != null) {
-				validJump = true;
+                return true;
 			}
 		}
 
-		return validJump;
+        return false;
 	}
 
 
 	public void StartGrapple(string side) {
-		if (side == "left") {
-			grapplingLeft = true;
-		} else {
-			grapplingRight = true;
-		}
-
 		rb.gravityScale = 0;
 		rb.velocity = Vector3.zero;
 	}
 
 
 	public void StopGrapple() {
-		grapplingRight = false;
-		grapplingLeft = false;
-		gameObject.GetComponent<Rigidbody2D>().gravityScale = 1;
+		rb.gravityScale = 1;
 	}
 
+    public GrappleState Grapple{
+        set
+        {
+            grapple = value;
+            if (value == GrappleState.None)
+            {
+				gameObject.GetComponent<Rigidbody2D>().gravityScale = 1;
+            }
+            else
+            {
+                rb.gravityScale = 0;
+                rb.velocity = Vector3.zero;
+            }
+        }
+    }
+
 	void OnCollisionExit2D(Collision2D col) {
-		StopGrapple ();
+        //StopGrapple ();
+        Grapple = GrappleState.None;
+	}
+
+	void OnCollisionEnter2D(Collision2D col) {
+		StopCoroutine("JumpCurve");
 	}
 }
