@@ -28,8 +28,6 @@ public class BulletBehaviour : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D col){
-		if (col.gameObject.tag != "Enemy" && this.gameObject.tag != "BossSpecial" && col.gameObject.name != "Background") { //Destroy bullet if it hits anything other than the enemy itself
 			Destroy (this.gameObject);
-		}
 	}
 }

@@ -25,6 +25,9 @@ public class ElementManager : MonoBehaviour {
 		Element steam = GetComponent<Steam> ();
 		elements.Add ("steam", steam);
 
+		Element lava = GetComponent<Lava>();
+		elements.Add("lava", lava);
+
 		Element electric = GetComponent<Electricity> ();
 		elements.Add ("electric", electric);
 
@@ -93,7 +96,7 @@ public class ElementManager : MonoBehaviour {
 
 		}
 
-		// Fire and water crossover
+		// Metal and electric crossover
 		else if ((le == "electric" && re == "metal") || (le == "metal" && re == "electric")) {
 			plr.centerElement = elements["magnetic"];
 
@@ -101,7 +104,7 @@ public class ElementManager : MonoBehaviour {
 
 		// Fire and earth crossover
 		else if ((le == "fire" && re == "earth") || (le == "earth" && re == "fire")) {
-			plr.centerElement = null;
+			plr.centerElement = elements["lava"];
 		}
 
 		// No crossover
