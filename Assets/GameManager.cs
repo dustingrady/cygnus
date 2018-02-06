@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour {
 	public bool controllerConnected = false;
 
 	public bool hasGloves = false;
+	public bool loadGame = false;
 
 	public string previousLocation;
 

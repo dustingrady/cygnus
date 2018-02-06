@@ -7,7 +7,7 @@ using UnityEngine.Tilemaps;
 public class Player : MonoBehaviour {
 
     [SerializeField]
-    private Stat health;
+    public Stat health;
 	public Element leftElement;
 	public Element rightElement;
     public Element centerElement;
