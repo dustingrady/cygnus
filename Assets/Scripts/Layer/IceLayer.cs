@@ -17,8 +17,6 @@ public class IceLayer : MonoBehaviour {
 	void OnCollisionEnter2D(Collision2D col){
 		if (col.gameObject.tag == "FireElement"){
 			destroyBlock(col);
-			GameObject melt = Instantiate (meltedIce, col.transform.position, Quaternion.identity);	//Replace the tile
-			Destroy(melt, 2);
 		}
 	}
 
@@ -26,11 +24,12 @@ public class IceLayer : MonoBehaviour {
 		Debug.Log ("Ice layer collision" + " " + col.contacts.Length);
 		Vector3 hitPosition = Vector3.zero;
 		if (tilemap != null && col.gameObject.name != "Player"){
-			foreach (ContactPoint2D hit in col.contacts)
-			{
+			foreach (ContactPoint2D hit in col.contacts){
 				hitPosition.x = hit.point.x;
 				hitPosition.y = hit.point.y;
 				tilemap.SetTile(tilemap.WorldToCell(hitPosition), null);
+				GameObject melt = Instantiate (meltedIce, tilemap.GetCellCenterWorld(tilemap.WorldToCell(hitPosition)), Quaternion.identity);	//Replace the tile
+				Destroy(melt, 2);
 			}
 		}
 	}

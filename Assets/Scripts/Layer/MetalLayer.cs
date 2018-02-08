@@ -20,8 +20,8 @@ public class MetalLayer : MonoBehaviour {
 	void OnCollisionEnter2D(Collision2D col){
 		if (col.gameObject.tag == "Lava"){
 			destroyBlock(col);
-			GameObject melt = Instantiate (meltedMetal, col.transform.position, Quaternion.identity);	//Replace the tile
-			Destroy(melt, 2);
+			//GameObject melt = Instantiate (meltedMetal, col.transform.position, Quaternion.identity);	//Replace the tile
+			//Destroy(melt, 2);
 		}
 	}
 
@@ -54,6 +54,8 @@ public class MetalLayer : MonoBehaviour {
 
 				// Delete tile
 				tilemap.SetTile(cellPos, null);
+				GameObject melt = Instantiate (meltedMetal, tilemap.GetCellCenterWorld(tilemap.WorldToCell(hitPosition)), Quaternion.identity);	//Replace the tile
+				Destroy(melt, 2);
 			}
 		}
 	}
