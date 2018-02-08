@@ -14,7 +14,7 @@ public class BossEnemy : MonoBehaviour {
 	private Transform enemyTransform;
 	private BossShooting bs;
 	private Vector2 enemyStartingPos;
-	private float turretRadius = 10.0f; //How far our turret enemies can see
+	private float turretRadius = 15.0f; //How far our turret enemies can see
 
 	void Awake(){
 		//health.Initalize;
@@ -32,6 +32,7 @@ public class BossEnemy : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		Guard_Area ();
+		Check_Health ();
 	}
 
 	void Guard_Area(){
@@ -56,7 +57,11 @@ public class BossEnemy : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D col){
 		if (col.gameObject.tag == "WaterElement") {
 			health -= 2;
-			Check_Health ();
+		}
+
+		if (col.gameObject.tag == "Deflected") {
+			health -= 50;
+			Destroy (col.gameObject);
 		}
 	}
 }

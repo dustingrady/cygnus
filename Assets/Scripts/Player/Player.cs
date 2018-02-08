@@ -100,11 +100,7 @@ public class Player : MonoBehaviour {
 		if (col.gameObject.tag == "Enemy" && !takingDamage) {
 			StartCoroutine (enemyOnContact (20));
 		}
-
-
-		if (col.gameObject.name == "Fire" && !standingInFire) {
-			StartCoroutine (singularDamage (5));
-		}
+			
 	}
 
 	void OnCollisionStay2D(Collision2D col)
@@ -112,19 +108,8 @@ public class Player : MonoBehaviour {
 		if (col.gameObject.tag == "Enemy" && !takingDamage) {
 			StartCoroutine (enemyOnContact (20));
 		}
-
-		if ((col.gameObject.name == "Fire" && !standingInFire)) {
-			StartCoroutine(singularDamage(5));
-		}
+			
 	}
-
-	void OnCollisionExit2D(Collision2D col)
-	{
-		if ((col.gameObject.name == "Fire" && !onFire)) {
-			StartCoroutine(damageOverTime (5, 1));
-		}
-	}
-
 
 	/*
 	 * 
@@ -170,16 +155,28 @@ public class Player : MonoBehaviour {
 		if ((col.gameObject.tag == "EnemyProjectile" && !takingDamage)) {
 			StartCoroutine (enemyProjectiles(10));
 		}
+
+		if (col.gameObject.name == "Fire" && !standingInFire) {
+			StartCoroutine (singularDamage (5));
+		}
 	}
 
 	void OnTriggerStay2D(Collider2D col){
 		if ((col.gameObject.tag == "LavaPlatform" && !standingInFire)) {
 			StartCoroutine(singularDamage(5));
 		}
+
+		if ((col.gameObject.name == "Fire" && !standingInFire)) {
+			StartCoroutine(singularDamage(5));
+		}
 	}
 
 	void OnTriggerExit2D(Collider2D col){
 		if ((col.gameObject.tag == "LavaPlatform" && !onFire)) {
+			StartCoroutine(damageOverTime (5, 1));
+		}
+
+		if ((col.gameObject.name == "Fire" && !onFire)) {
 			StartCoroutine(damageOverTime (5, 1));
 		}
 	}

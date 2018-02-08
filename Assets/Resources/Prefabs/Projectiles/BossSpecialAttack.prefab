@@ -20,10 +20,11 @@ GameObject:
   m_Component:
   - component: {fileID: 4825327928547420}
   - component: {fileID: 212604452837259108}
+  - component: {fileID: 114608575616182606}
   - component: {fileID: 114405505984313422}
   - component: {fileID: 58292931804492600}
   - component: {fileID: 50463785379703982}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: BossSpecialAttack
   m_TagString: BossSpecial
   m_Icon: {fileID: 0}
@@ -84,9 +85,20 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1027033272120046}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 17808f92e42fb404287d7cb83be8facf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114608575616182606
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1027033272120046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b82aa7669b4d4bb4393e038bf33e4091, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!212 &212604452837259108

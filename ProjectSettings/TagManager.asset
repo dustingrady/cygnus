@@ -24,6 +24,8 @@ TagManager:
   - TurnAround
   - LavaPlatform
   - Lava
+  - Shield
+  - Deflected
   layers:
   - Default
   - TransparentFX
