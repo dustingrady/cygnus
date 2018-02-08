@@ -14,9 +14,6 @@ public class Electricity : Element {
 		// Change the angle to match the direction.
 		float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
 		electProbe.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-
-		//GameObject fb = Instantiate (waterJet, pos, Quaternion.identity);
-		//fb.GetComponent<WaterJet> ().Initialize (dir, jetStrength);
 	}
 
 	void Start() {

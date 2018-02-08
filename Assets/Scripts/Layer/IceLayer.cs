@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class IceLayer : MonoBehaviour {
+public class IceLayer : Layer {
 
-	private Tilemap tilemap;
 	private GameObject meltedIce;
 
 	// Use this for initialization
@@ -13,24 +12,10 @@ public class IceLayer : MonoBehaviour {
 		tilemap = GetComponent<Tilemap>();
 		meltedIce = (GameObject)Resources.Load("Prefabs/Particles/MeltedIce");	
 	}
-		
-	void OnCollisionEnter2D(Collision2D col){
-		if (col.gameObject.tag == "FireElement"){
-			destroyBlock(col);
-		}
-	}
 
-	void destroyBlock(Collision2D col){
-		Debug.Log ("Ice layer collision" + " " + col.contacts.Length);
-		Vector3 hitPosition = Vector3.zero;
-		if (tilemap != null && col.gameObject.name != "Player"){
-			foreach (ContactPoint2D hit in col.contacts){
-				hitPosition.x = hit.point.x;
-				hitPosition.y = hit.point.y;
-				tilemap.SetTile(tilemap.WorldToCell(hitPosition), null);
-				GameObject melt = Instantiate (meltedIce, tilemap.GetCellCenterWorld(tilemap.WorldToCell(hitPosition)), Quaternion.identity);	//Replace the tile
-				Destroy(melt, 2);
-			}
+	void OnTriggerEnter2D(Collider2D col){
+		if (col.gameObject.tag == "FireElement"){
+			DestroyBlock(col, anim : meltedIce);
 		}
 	}
 }

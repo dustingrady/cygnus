@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class FireLayer : MonoBehaviour {
+public class FireLayer : Layer {
 
-	private Tilemap tilemap;
 	public GameObject fireReplacement;
 	//TODO
 	/*
@@ -16,24 +15,12 @@ public class FireLayer : MonoBehaviour {
 	void Start(){
 		tilemap = GetComponent<Tilemap>();
 	}
-
-
-	void OnCollisionEnter2D(Collision2D col){
-		if (col.gameObject.tag == "WaterElement"){
-			destroyBlock(col);
+		
+	void OnTriggerEnter2D(Collider2D col) {
+		if (col.gameObject.tag == "WaterElement") {
+			DestroyBlock(col);
 		}
 	}
 
-	void destroyBlock(Collision2D col){
-		Debug.Log ("Fire layer collision" + " " + col.contacts.Length);
-		Vector3 hitPosition = Vector3.zero;
-		if (tilemap != null && col.gameObject.name != "Player"){
-			foreach (ContactPoint2D hit in col.contacts){
-				hitPosition.x = hit.point.x;
-				hitPosition.y = hit.point.y;
-				tilemap.SetTile(tilemap.WorldToCell(hitPosition), null);
-			}
-		}
-	}
 }
 

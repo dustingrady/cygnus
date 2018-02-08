@@ -236,14 +236,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26f4f264f143da64c9ccd149b39e909a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sprintMulti: 1.3
-  moveForce: 150
+  sprintMulti: 1.4
+  moveForce: 100
   maxSpeed: 7
   baseSpeed: 5
-  grappleSpeed: 3
+  grappleSpeed: 2
   gravity: 20
-  grapplingLeft: 0
-  grapplingRight: 0
   jumpTravel: 1.8
   jumpSpeed: 3
   curveCutoff: 3
@@ -302,11 +300,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c497c30520d2244fa50c96f93e828c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  elementType: 
+  elementType: lava
   sprite: {fileID: 21300000, guid: cda39d3b5ba668c4fbddf94656736712, type: 3}
   lavaJet: {fileID: 1824831328528082, guid: e7559ebb17cef314296a6fa774b95a46, type: 2}
-  lavaJetCooldown: 0.1
-  jetStrength: 500
+  lavaJetCooldown: 0.05
+  jetStrength: 400
+  variability: 0.25
 --- !u!114 &114393056398288730
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -338,6 +337,8 @@ MonoBehaviour:
   absorber: {fileID: 1477703447882114, guid: 25d2d4fa29e80c34a871134809ff6635, type: 2}
   absorberSpeed: 10
   absorberCooldown: 0.25
+  leftFireDown: 0
+  rightFireDown: 0
 --- !u!114 &114615267831157814
 MonoBehaviour:
   m_ObjectHideFlags: 1

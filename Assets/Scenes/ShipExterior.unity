@@ -7722,7 +7722,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b41ed0873fbe21e40aa615d95aa83556, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iceReplacement: {fileID: 0}
 --- !u!1001 &969582748
 Prefab:
   m_ObjectHideFlags: 0
@@ -7858,7 +7857,7 @@ TilemapRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 1327541eeebcb934e8a2bddf1611ab72, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

@@ -10,7 +10,13 @@ public class LavaStream : MonoBehaviour {
 		gameObject.GetComponent<Rigidbody2D> ().AddForce (this.direction*speed);
 	}
 
-	void OnCollisionEnter2D(Collision2D col) {
-			DestroyObject (this.gameObject, 0.01f);
+	void OnTriggerEnter2D(Collider2D col) {
+		if (col.gameObject.tag != "Player"
+			&& col.gameObject.tag != "WaterElement"
+			&& col.name != "Bounds") {
+
+			DestroyObject (this.gameObject);
+
+		}
 	}
 }

@@ -75,14 +75,14 @@ public class Player : MonoBehaviour {
 					// If a tile is found, the player is hugging the left or right wall, start grapple
 					if (tilemap.GetTile (tilemap.WorldToCell (leftBounds)) != null) {
                         //GetComponent<PlayerController> ().StartGrapple ("right");
-                        GetComponent<PlayerController2>().Grapple = PlayerController2.GrappleState.Right;
+                        GetComponent<PlayerController>().Grapple = PlayerController.GrappleState.Right;
 
                         // Disable the magnetic pull
                         centerElement.gameObject.GetComponent<Magnetic>().pulling = false;
 
 					} else if (tilemap.GetTile (tilemap.WorldToCell (rightBounds)) != null) {
                         //GetComponent<PlayerController> ().StartGrapple ("left");
-                        GetComponent<PlayerController2>().Grapple = PlayerController2.GrappleState.Left;
+                        GetComponent<PlayerController>().Grapple = PlayerController.GrappleState.Left;
 
                         // Disable the magnetic pull
                         centerElement.gameObject.GetComponent<Magnetic>().pulling = false;

@@ -7,11 +7,17 @@ public class Lava : Element {
 	[SerializeField]
 	private float lavaJetCooldown = 0.5f;
 	[SerializeField]
-	private float jetStrength = 500;
+	private float jetStrength = 400f;
+	[SerializeField]
+	private float variability = 0.2f; // Increases the potential offset for the direction
 	private float timeSinceFire;
 
 	public override void UseElement(Vector3 pos, Vector2 dir){
 		if (timeSinceFire > lavaJetCooldown) {
+			// Generate some small random floats to offset the projectile
+			Vector2 dirOffset = new Vector2(Random.Range(-variability, variability), Random.Range(-variability, variability));
+			dir = dir.normalized + dirOffset;
+
 			GameObject fb = Instantiate (lavaJet, pos, Quaternion.identity);
 			fb.GetComponent<LavaStream> ().Initialize (dir, jetStrength);
 			timeSinceFire = 0;

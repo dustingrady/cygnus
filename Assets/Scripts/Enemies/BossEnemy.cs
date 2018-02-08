@@ -52,21 +52,11 @@ public class BossEnemy : MonoBehaviour {
 			Instantiate (bossRagdoll, this.transform.position, Quaternion.identity);	//Instantiate dead boss
 		}
 	}
-
-	void OnCollisionEnter2D(Collision2D col)
-	{
-		if (col.gameObject.tag == "WaterElement") {
-			health -= 2;
-			Check_Health ();
-		}
-	}
-
-	/*
+		
 	void OnTriggerEnter2D(Collider2D col){
 		if (col.gameObject.tag == "WaterElement") {
 			health -= 2;
 			Check_Health ();
 		}
 	}
-*/
 }

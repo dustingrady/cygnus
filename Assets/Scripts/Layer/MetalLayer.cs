@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class MetalLayer : MonoBehaviour {
+public class MetalLayer : Layer {
 
-	private Tilemap tilemap;
 	private const int maxHitPoints = 1;
 	public int hitpoints = maxHitPoints;
 	private GameObject meltedMetal;
-	Vector3 oldPos = Vector3.zero;
 
 	// Use this for initialization
 	void Start(){
@@ -17,14 +15,19 @@ public class MetalLayer : MonoBehaviour {
 		meltedMetal = (GameObject)Resources.Load("Prefabs/Particles/MeltedMetal");	
 	}
 
-	void OnCollisionEnter2D(Collision2D col){
+	void OnTriggerEnter2D(Collider2D col){
 		if (col.gameObject.tag == "Lava"){
-			destroyBlock(col);
-			//GameObject melt = Instantiate (meltedMetal, col.transform.position, Quaternion.identity);	//Replace the tile
-			//Destroy(melt, 2);
+			hitpoints--;
+
+			if (hitpoints <= 0) {
+				DestroyBlock(col, anim : meltedMetal);
+			}
 		}
 	}
 
+
+	// Keep old destroy for HP code
+	/*
 	void destroyBlock(Collision2D col){
 		Debug.Log ("Metal layer collision" + " " + col.contacts.Length);
 		Vector3 hitPosition = Vector3.zero;
@@ -59,5 +62,6 @@ public class MetalLayer : MonoBehaviour {
 			}
 		}
 	}
+	*/
 }
 
