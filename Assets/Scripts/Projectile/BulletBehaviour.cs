@@ -28,7 +28,7 @@ public class BulletBehaviour : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D col){
-		if (col.gameObject.tag == "MetalElement" || col.gameObject.tag == "Player")
+		if (col.gameObject.tag == "MetalElement" || col.gameObject.tag == "Player" || col.gameObject.tag == "Shield" || col.gameObject.tag == "EarthElement")
 			Destroy (this.gameObject);
 	}
 }

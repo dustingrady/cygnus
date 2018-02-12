@@ -14,7 +14,7 @@ public class BossEnemy : MonoBehaviour {
 	private Transform enemyTransform;
 	private BossShooting bs;
 	private Vector2 enemyStartingPos;
-	private float turretRadius = 15.0f; //How far our turret enemies can see
+	private float turretRadius = 30.0f; //How far our turret enemies can see
 
 	void Awake(){
 		//health.Initalize;

@@ -30,7 +30,7 @@ public class BossShooting : MonoBehaviour {
 	/*Determine which attack to use*/
 	public void Determine_Attack(){
 		moveCount++;
-		if (moveCount % 5 == 0) {
+		if (moveCount % 4 == 0) {
 			Special_Attack ();
 		} 
 		Base_Attack ();
