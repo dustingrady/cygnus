@@ -144,6 +144,15 @@ public class PatrolType : Enemy {
 		if (col.gameObject.tag == "TurnAround")
 			patrolSpeed *= -1;
 	}
+
+	//particle collision for electricity
+	void OnParticleCollision(GameObject other)
+	{
+		if (other.tag == "ElectricElement" && this.type == "metal") {
+			Debug.Log ("Particle collision");
+			hitpoints -= 0.1f;
+		}
+	}
 		
 	IEnumerator idle()
 	{

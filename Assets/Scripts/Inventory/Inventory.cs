@@ -44,6 +44,11 @@ public class Inventory : MonoBehaviour {
 	public void Start() {
 		initializeInventory ();
 		cam = GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<Camera> ();
+		/*canvas = GameObject.Find ("UI").GetComponent<Canvas>();
+		toolTip = GameObject.Find("Tooltip");
+		toolTipText = GameObject.Find ("TooltipText").GetComponent<Text>();
+		toolTip.SetActive (false);
+		*/
 	}
 
 	public void Update() {
@@ -73,8 +78,10 @@ public class Inventory : MonoBehaviour {
 				items [i] = item;
 				itemQuantity [i]++;
 				return;
-			} 
+			}
+
         }
+
         Debug.Log(item.name + " added");
     }
 

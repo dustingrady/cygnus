@@ -7,8 +7,8 @@ public class Metal : Element {
 	private GameObject shieldInstance;
 	private PlayerShooting plrs;
 
-	private const float maxStrength = 5;
-	private float shieldStrength = 5;
+	private const float maxStrength = 3;
+	private float shieldStrength = maxStrength;
 
 	[SerializeField]
 	private float distance = 1f;

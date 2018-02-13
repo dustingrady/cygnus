@@ -75,6 +75,15 @@ public class TurretType : Enemy {
 		return Vector3.Distance(enemyTransform.position, playerTransform.position);
 	}
 
+	//particle collision for electricity
+	void OnParticleCollision(GameObject other)
+	{
+		if (other.tag == "ElectricElement" && this.type == "metal") {
+			Debug.Log ("Particle collision");
+			hitpoints -= 0.1f;
+		}
+	}
+
 	IEnumerator damage(float amount)
 	{
 		hitpoints -= amount;

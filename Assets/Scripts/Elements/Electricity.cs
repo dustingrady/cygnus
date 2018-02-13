@@ -26,8 +26,8 @@ public class Electricity : Element {
 		} else {
 			em.rateOverTime = 0;
 		}
-
-
+			
 		electricOn = false;
 	}
+
 }
