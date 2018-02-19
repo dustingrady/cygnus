@@ -14,7 +14,8 @@ public class Fire : Element {
 
 	public override void UseElement(Vector3 pos, Vector2 dir){
 		if (timeSinceFire > fireballCooldown && fireReleased) {
-			GameObject fb = Instantiate (fireball, pos, Quaternion.identity);
+			Vector3 spawnPos = new Vector3 (dir.normalized.x, dir.normalized.y, 0) * 0.8f;
+			GameObject fb = Instantiate (fireball, pos + spawnPos, Quaternion.identity);
 			fb.GetComponent<Fireball> ().Initialize (dir, 14);
 			timeSinceFire = 0;
 			fireReleased = false;

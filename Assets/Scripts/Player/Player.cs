@@ -20,12 +20,8 @@ public class Player : MonoBehaviour {
 
     public Inventory inventory;
 
-    private void Awake()
-    {
-        health.Initalize();
-    }
-
-    void Start () {
+    void Awake () {
+		health.Initalize();
 		// Inventory references need to be reset each time a scene loads
         inventory = GameObject.Find("Game Manager").GetComponent<Inventory>();
 		inventory.initializeInventory ();
