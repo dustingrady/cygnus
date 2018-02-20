@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Steam : Element {
 	public GameObject burst;
@@ -11,7 +12,17 @@ public class Steam : Element {
 	private float timeSinceFire;
 	private bool btnReleased = true;
 
+	public Image icon;
+
 	public override void UseElement(Vector3 pos, Vector2 dir){
+		GameObject ui = GameObject.Find ("UI");
+		Transform centerElement = ui.transform.Find ("CenterElement");
+
+		if (Input.GetMouseButtonDown (2) && centerElement.Find ("Icon").transform.Find("IconCD").GetComponent<Image> ().sprite == this.sprite) {
+			icon = centerElement.Find ("Icon").transform.Find("IconCD").GetComponent<Image> ();
+		} 
+
+
 		if (timeSinceFire > burstCooldown && btnReleased) {
 			GameObject steamObject = Instantiate (burst, pos, Quaternion.identity);
 
@@ -30,6 +41,9 @@ public class Steam : Element {
 
 	void Update() {
 		timeSinceFire += Time.deltaTime;
+		if (icon != null) {
+			icon.fillAmount = timeSinceFire / burstCooldown;
+		}
 
 		if (Input.GetMouseButtonUp (2) == true
 			|| Input.GetButtonUp("RightStick")) {

@@ -1,11 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Metal : Element {
 	public GameObject metalShield;
 	private GameObject shieldInstance;
 	private PlayerShooting plrs;
+
+	public Image icon;
 
 	private const float maxStrength = 3;
 	private float shieldStrength = maxStrength;
@@ -15,7 +18,7 @@ public class Metal : Element {
 	private bool metalReleased = true;
 
 	private bool destroyed = false;
-	private float cooldown = 250;
+	private float cooldown = 5;
 	private float cdCounter = 0;
 	// Checks for controller release
 	private bool leftFireDown = false;
@@ -28,11 +31,24 @@ public class Metal : Element {
 		if (metalReleased && !destroyed) {
 			shieldInstance = Instantiate (metalShield, pos, Quaternion.identity);
 			metalReleased = false;
+
+
+			GameObject ui = GameObject.Find ("UI");
+			Transform leftElement = ui.transform.Find ("LeftElement");
+			Transform rightElement = ui.transform.Find ("RightElement");
+
+			if (Input.GetMouseButtonDown (0) && leftElement.Find ("Icon").transform.Find("IconCD").GetComponent<Image> ().sprite == this.sprite) {
+				icon = leftElement.Find ("Icon").transform.Find("IconCD").GetComponent<Image> ();
+			} 
+			if (Input.GetMouseButtonDown (1) && rightElement.Find ("Icon").transform.Find("IconCD").GetComponent<Image> ().sprite == this.sprite) {
+				icon = rightElement.Find ("Icon").transform.Find("IconCD").GetComponent<Image> ();
+			}
 		}
 	}
 
 	void Start() {
 		plrs = transform.root.GetComponent<PlayerShooting> ();
+		Debug.Log (this.sprite);
 	}
 
 	void Update() {
@@ -60,7 +76,9 @@ public class Metal : Element {
 		}
 
 		if (destroyed) {
-			cdCounter ++;
+			cdCounter += Time.deltaTime;
+			icon.fillAmount = cdCounter / cooldown;
+			Debug.Log (icon.fillAmount);
 		}
 
 		if (cdCounter >= cooldown) {
@@ -78,7 +96,6 @@ public class Metal : Element {
 		} else if ((Input.GetMouseButtonUp (0) == true || Input.GetMouseButtonUp (1) == true)) {
 			return true;
 		}
-
 		return false;
 	}
 
