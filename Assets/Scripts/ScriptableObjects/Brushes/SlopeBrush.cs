@@ -4,27 +4,35 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEditor;
 
+public enum Slope : int {
+    Positive,
+    Negative
+}
+
 [CustomGridBrush(true, false, false, "Slope Brush")]
 public class SlopeBrush : GridBrush {
-    /*
+    GameObject[] slopes;
+    public Slope direction;
+
+    private void OnEnable()
+    {
+        direction = Slope.Positive;
+        slopes = new GameObject[2] {
+            Resources.Load<GameObject>("ScriptableObjects/Slopes/PosSlopeTile"),
+            Resources.Load<GameObject>("ScriptableObjects/Slopes/NegSlopeTile")
+        };
+    }
+
     public override void Paint(GridLayout gridLayout, GameObject brushTarget, Vector3Int position)
     {
-        base.Paint(gridLayout, brushTarget, position);
-        var tilemap = brushTarget.GetComponent<Tilemap>();
-        var collider = tilemap.
-    }
-    */
+        var paintTile = (Tile)cells[0].tile;
+        var paintObject = Instantiate(slopes[(int)direction], new Vector3(position.x + 0.5f, position.y + 0.5f, Vector3.zero.z), Quaternion.identity, brushTarget.transform);
+        var sprite = paintObject.GetComponent<SpriteRenderer>();
 
-    public override void Pick(GridLayout gridLayout, GameObject brushTarget, BoundsInt position, Vector3Int pickStart)
-    {
-        base.Pick(gridLayout, brushTarget, position, pickStart);
-
-        foreach (var cell in cells) {
-            var cellTile = (Tile)cell.tile;
-            //cellTile.colliderType = Tile.ColliderType.Sprite;
-        }
+        paintObject.tag = brushTarget.tag;
+        sprite.sprite = paintTile.sprite;
     }
 }
 
 [CustomEditor(typeof(SlopeBrush))]
-public class SlopeBrushEditor : GridBrushEditor { }
+public class SlopeBrushEditor : GridBrushEditor {}
