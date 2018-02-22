@@ -11,12 +11,17 @@ public class LavaStream : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D col) {
-		if (col.gameObject.tag != "Player"
-			&& col.gameObject.tag != "WaterElement"
-			&& col.name != "Bounds") {
+		if (col.gameObject.tag == "Enemy") {
+			if (col.gameObject.GetComponent<PatrolType> () != null && col.gameObject.GetComponent<PatrolType> ().getEnemyType () == "earth") {
+				col.gameObject.GetComponent<PatrolType> ().takeDamage (10);
+			}
 
-			DestroyObject (this.gameObject);
+			if (col.gameObject.GetComponent<TurretType> () != null && col.gameObject.GetComponent<TurretType> ().getEnemyType () == "earth") {
+				col.gameObject.GetComponent<TurretType> ().takeDamage (5);
+			}
 
 		}
+
+		DestroyObject (this.gameObject, 0.01f);
 	}
 }

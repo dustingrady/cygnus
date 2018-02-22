@@ -9,6 +9,7 @@ public class ParticleShellsRemoval : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		particles = GetComponent<ParticleSystem> ();
+
 	}
 	
 	// Update is called once per frame

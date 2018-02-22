@@ -14,10 +14,14 @@ public class TurretType : Enemy {
 	private EnemyShooting es;
 	LineRenderer line;
 
+	GameObject sparks;
+	bool stunned = false;
+	int tolerance = 0;
 
 	void Awake(){
 		playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
 		es = gameObject.GetComponent<EnemyShooting>();
+		sparks = Resources.Load ("Prefabs/Particles/Sparks") as GameObject;
 	}
 
 	public override void takeDamage(float amount)
@@ -52,10 +56,23 @@ public class TurretType : Enemy {
 
 	void Update()
 	{
+		if (tolerance == 20) {
+			stunned = true;
+			Instantiate (sparks, this.transform.position, Quaternion.identity);
+			line.enabled = false;
+			StartCoroutine (stunDuration ());
+		}
+
+		if (tolerance == 200) {
+			tolerance = 0;
+		}
+
 		if (hitpoints <= 0)
 			Destroy (this.gameObject);
-
-		guard_Area ();
+		
+		if (stunned == false) {
+			guard_Area ();
+		}
 	}
 
 	void guard_Area(){
@@ -78,6 +95,10 @@ public class TurretType : Enemy {
 	//particle collision for electricity
 	void OnParticleCollision(GameObject other)
 	{
+		if (other.tag == "ElectricElement" && this.type != "earth") {
+			tolerance++;
+		}
+			
 		if (other.tag == "ElectricElement" && this.type == "metal") {
 			Debug.Log ("Particle collision");
 			hitpoints -= 0.1f;
@@ -88,5 +109,11 @@ public class TurretType : Enemy {
 	{
 		hitpoints -= amount;
 		yield return new WaitForSeconds (1);
+	}
+
+	IEnumerator stunDuration()
+	{
+		yield return new WaitForSeconds (2);
+		stunned = false;
 	}
 }

@@ -31,9 +31,7 @@ public class Fireball : MonoBehaviour {
 			}
 
 		}
-
-		if (col.gameObject.tag != "Player" && col.gameObject.tag != "Fireball") {
-			DestroyObject (this.gameObject);
-		}
+			
+		DestroyObject (this.gameObject, 0.01f);
 	}
 }

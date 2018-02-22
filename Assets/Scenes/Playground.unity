@@ -125,7 +125,7 @@ GameObject:
   - component: {fileID: 23066972}
   - component: {fileID: 23066971}
   - component: {fileID: 23066970}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Essence of Fire (16)
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -279,7 +279,7 @@ GameObject:
   - component: {fileID: 83737235}
   - component: {fileID: 83737234}
   - component: {fileID: 83737233}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Essence of Water (2)
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -391,7 +391,7 @@ GameObject:
   - component: {fileID: 89870822}
   - component: {fileID: 89870821}
   - component: {fileID: 89870820}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Essence of Fire (13)
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -712,7 +712,7 @@ GameObject:
   - component: {fileID: 115689172}
   - component: {fileID: 115689170}
   - component: {fileID: 115689171}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Essence of Fire
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -829,7 +829,7 @@ GameObject:
   - component: {fileID: 142456270}
   - component: {fileID: 142456269}
   - component: {fileID: 142456268}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Essence of Water (23)
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -941,7 +941,7 @@ GameObject:
   - component: {fileID: 148361024}
   - component: {fileID: 148361023}
   - component: {fileID: 148361022}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Essence of Water (3)
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -4498,7 +4498,7 @@ GameObject:
   - component: {fileID: 164705616}
   - component: {fileID: 164705615}
   - component: {fileID: 164705614}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Essence of Water (21)
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -4672,7 +4672,7 @@ GameObject:
   - component: {fileID: 188697745}
   - component: {fileID: 188697744}
   - component: {fileID: 188697743}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Essence of Water (17)
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -4905,7 +4905,7 @@ GameObject:
   - component: {fileID: 265473615}
   - component: {fileID: 265473614}
   - component: {fileID: 265473613}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Greater Essence of Fire (2)
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -5017,7 +5017,7 @@ GameObject:
   - component: {fileID: 292482000}
   - component: {fileID: 292481999}
   - component: {fileID: 292481998}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Essence of Fire (3)
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -5129,7 +5129,7 @@ GameObject:
   - component: {fileID: 300616346}
   - component: {fileID: 300616345}
   - component: {fileID: 300616344}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Essence of Water (1)
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -5241,7 +5241,7 @@ GameObject:
   - component: {fileID: 308210518}
   - component: {fileID: 308210517}
   - component: {fileID: 308210516}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Essence of Fire (23)
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -5353,7 +5353,7 @@ GameObject:
   - component: {fileID: 341264841}
   - component: {fileID: 341264840}
   - component: {fileID: 341264839}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Essence of Fire (7)
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -5465,7 +5465,7 @@ GameObject:
   - component: {fileID: 357821991}
   - component: {fileID: 357821990}
   - component: {fileID: 357821989}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Greater Essence of Fire
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -5577,7 +5577,7 @@ GameObject:
   - component: {fileID: 411800052}
   - component: {fileID: 411800051}
   - component: {fileID: 411800050}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Greater Essence of Fire (8)
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -5689,7 +5689,7 @@ GameObject:
   - component: {fileID: 425180146}
   - component: {fileID: 425180145}
   - component: {fileID: 425180144}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Essence of Water (4)
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -5801,7 +5801,7 @@ GameObject:
   - component: {fileID: 434458214}
   - component: {fileID: 434458213}
   - component: {fileID: 434458212}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Essence of Water (12)
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -5934,7 +5934,7 @@ GameObject:
   - component: {fileID: 487360957}
   - component: {fileID: 487360956}
   - component: {fileID: 487360955}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Greater Essence of Fire (3)
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -6046,7 +6046,7 @@ GameObject:
   - component: {fileID: 498155864}
   - component: {fileID: 498155863}
   - component: {fileID: 498155862}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Essence of Water (16)
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -6158,7 +6158,7 @@ GameObject:
   - component: {fileID: 512636408}
   - component: {fileID: 512636407}
   - component: {fileID: 512636406}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Essence of Fire (9)
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -6276,7 +6276,7 @@ GameObject:
   - component: {fileID: 572067878}
   - component: {fileID: 572067877}
   - component: {fileID: 572067876}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Essence of Fire (8)
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -6388,7 +6388,7 @@ GameObject:
   - component: {fileID: 606014998}
   - component: {fileID: 606014997}
   - component: {fileID: 606014996}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Essence of Fire (11)
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -6500,7 +6500,7 @@ GameObject:
   - component: {fileID: 657131950}
   - component: {fileID: 657131949}
   - component: {fileID: 657131948}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Greater Essence of Fire (5)
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -6669,7 +6669,7 @@ GameObject:
   - component: {fileID: 674027100}
   - component: {fileID: 674027099}
   - component: {fileID: 674027098}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Essence of Fire (4)
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -6781,7 +6781,7 @@ GameObject:
   - component: {fileID: 685454637}
   - component: {fileID: 685454636}
   - component: {fileID: 685454635}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Essence of Water (15)
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -7044,7 +7044,7 @@ GameObject:
   - component: {fileID: 714936577}
   - component: {fileID: 714936576}
   - component: {fileID: 714936575}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Essence of Water (19)
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -7156,7 +7156,7 @@ GameObject:
   - component: {fileID: 731129874}
   - component: {fileID: 731129873}
   - component: {fileID: 731129872}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Essence of Fire (21)
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -7268,7 +7268,7 @@ GameObject:
   - component: {fileID: 734227880}
   - component: {fileID: 734227879}
   - component: {fileID: 734227878}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Essence of Fire (22)
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -8160,7 +8160,7 @@ GameObject:
   - component: {fileID: 771886276}
   - component: {fileID: 771886275}
   - component: {fileID: 771886274}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Greater Essence of Fire (9)
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -8272,7 +8272,7 @@ GameObject:
   - component: {fileID: 778490759}
   - component: {fileID: 778490758}
   - component: {fileID: 778490757}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Essence of Water (10)
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -8446,7 +8446,7 @@ GameObject:
   - component: {fileID: 822094612}
   - component: {fileID: 822094611}
   - component: {fileID: 822094610}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Essence of Water (11)
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -8558,7 +8558,7 @@ GameObject:
   - component: {fileID: 904213249}
   - component: {fileID: 904213248}
   - component: {fileID: 904213247}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Essence of Fire (17)
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -8906,7 +8906,7 @@ GameObject:
   - component: {fileID: 961533859}
   - component: {fileID: 961533858}
   - component: {fileID: 961533857}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Greater Essence of Fire (10)
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -9016,11 +9016,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4062297412796568, guid: cf06be31013f6c346ab2e54dfe3dcbf4, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -11.90822
+      value: -11.908203
       objectReference: {fileID: 0}
     - target: {fileID: 4062297412796568, guid: cf06be31013f6c346ab2e54dfe3dcbf4, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -4.9546194
+      value: -4.9512997
       objectReference: {fileID: 0}
     - target: {fileID: 4062297412796568, guid: cf06be31013f6c346ab2e54dfe3dcbf4, type: 2}
       propertyPath: m_LocalPosition.z
@@ -9066,7 +9066,7 @@ GameObject:
   - component: {fileID: 981149225}
   - component: {fileID: 981149224}
   - component: {fileID: 981149223}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Greater Essence of Fire (4)
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -9178,7 +9178,7 @@ GameObject:
   - component: {fileID: 1025946350}
   - component: {fileID: 1025946349}
   - component: {fileID: 1025946348}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Essence of Water (5)
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -9290,7 +9290,7 @@ GameObject:
   - component: {fileID: 1092406308}
   - component: {fileID: 1092406307}
   - component: {fileID: 1092406306}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Essence of Fire (14)
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -10407,7 +10407,7 @@ GameObject:
   - component: {fileID: 1105990525}
   - component: {fileID: 1105990524}
   - component: {fileID: 1105990523}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Essence of Fire (1)
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -10519,7 +10519,7 @@ GameObject:
   - component: {fileID: 1134336189}
   - component: {fileID: 1134336188}
   - component: {fileID: 1134336187}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Essence of Water (6)
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -10631,7 +10631,7 @@ GameObject:
   - component: {fileID: 1142860437}
   - component: {fileID: 1142860436}
   - component: {fileID: 1142860435}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Essence of Fire (5)
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -10743,7 +10743,7 @@ GameObject:
   - component: {fileID: 1174885996}
   - component: {fileID: 1174885995}
   - component: {fileID: 1174885994}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Greater Essence of Fire (1)
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -10855,7 +10855,7 @@ GameObject:
   - component: {fileID: 1190052640}
   - component: {fileID: 1190052639}
   - component: {fileID: 1190052638}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Essence of Fire (12)
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -10967,7 +10967,7 @@ GameObject:
   - component: {fileID: 1297592324}
   - component: {fileID: 1297592323}
   - component: {fileID: 1297592322}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Essence of Water (8)
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -11079,7 +11079,7 @@ GameObject:
   - component: {fileID: 1319245817}
   - component: {fileID: 1319245816}
   - component: {fileID: 1319245815}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Essence of Water (22)
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -11291,7 +11291,7 @@ GameObject:
   - component: {fileID: 1421407205}
   - component: {fileID: 1421407204}
   - component: {fileID: 1421407203}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Essence of Fire (18)
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -11465,7 +11465,7 @@ GameObject:
   - component: {fileID: 1446026327}
   - component: {fileID: 1446026326}
   - component: {fileID: 1446026325}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Greater Essence of Fire (7)
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -11577,7 +11577,7 @@ GameObject:
   - component: {fileID: 1465616162}
   - component: {fileID: 1465616161}
   - component: {fileID: 1465616160}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Essence of Water (13)
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -12462,7 +12462,7 @@ GameObject:
   - component: {fileID: 1628899802}
   - component: {fileID: 1628899801}
   - component: {fileID: 1628899800}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Essence of Water (9)
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -12574,7 +12574,7 @@ GameObject:
   - component: {fileID: 1646988689}
   - component: {fileID: 1646988688}
   - component: {fileID: 1646988687}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Essence of Fire (2)
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -12946,7 +12946,7 @@ GameObject:
   - component: {fileID: 1684727240}
   - component: {fileID: 1684727238}
   - component: {fileID: 1684727239}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Essence of Water
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -13064,7 +13064,7 @@ GameObject:
   - component: {fileID: 1728869120}
   - component: {fileID: 1728869119}
   - component: {fileID: 1728869118}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Essence of Fire (20)
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -13176,7 +13176,7 @@ GameObject:
   - component: {fileID: 1784223715}
   - component: {fileID: 1784223714}
   - component: {fileID: 1784223713}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Greater Essence of Fire (11)
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -13355,7 +13355,7 @@ GameObject:
   - component: {fileID: 1813724495}
   - component: {fileID: 1813724494}
   - component: {fileID: 1813724493}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Essence of Fire (15)
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -13467,7 +13467,7 @@ GameObject:
   - component: {fileID: 1831457260}
   - component: {fileID: 1831457259}
   - component: {fileID: 1831457258}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Essence of Fire (19)
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -13579,7 +13579,7 @@ GameObject:
   - component: {fileID: 1839984044}
   - component: {fileID: 1839984043}
   - component: {fileID: 1839984042}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Essence of Fire (6)
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -13691,7 +13691,7 @@ GameObject:
   - component: {fileID: 1842541135}
   - component: {fileID: 1842541134}
   - component: {fileID: 1842541133}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Essence of Water (20)
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -13896,7 +13896,7 @@ GameObject:
   - component: {fileID: 1879125021}
   - component: {fileID: 1879125020}
   - component: {fileID: 1879125019}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Greater Essence of Fire (6)
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -15906,7 +15906,7 @@ GameObject:
   - component: {fileID: 1926573145}
   - component: {fileID: 1926573144}
   - component: {fileID: 1926573143}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Essence of Fire (10)
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -16018,7 +16018,7 @@ GameObject:
   - component: {fileID: 1960329265}
   - component: {fileID: 1960329264}
   - component: {fileID: 1960329263}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Essence of Water (14)
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -16135,7 +16135,7 @@ GameObject:
   - component: {fileID: 2008927763}
   - component: {fileID: 2008927762}
   - component: {fileID: 2008927761}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Essence of Water (18)
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -16247,7 +16247,7 @@ GameObject:
   - component: {fileID: 2013142888}
   - component: {fileID: 2013142887}
   - component: {fileID: 2013142886}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Essence of Water (7)
   m_TagString: Item
   m_Icon: {fileID: 0}
