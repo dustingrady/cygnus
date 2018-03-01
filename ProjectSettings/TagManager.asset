@@ -27,6 +27,7 @@ TagManager:
   - Shield
   - Deflected
   - Tooltip
+  - Hidden
   layers:
   - Default
   - TransparentFX

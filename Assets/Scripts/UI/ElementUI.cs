@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class ElementUI : MonoBehaviour {
 
+
 	private Player plr;
 	public Image leftElementImg;
 	public Image leftElementImgCd;

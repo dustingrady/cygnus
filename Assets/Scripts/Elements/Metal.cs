@@ -48,7 +48,6 @@ public class Metal : Element {
 
 	void Start() {
 		plrs = transform.root.GetComponent<PlayerShooting> ();
-		Debug.Log (this.sprite);
 	}
 
 	void Update() {

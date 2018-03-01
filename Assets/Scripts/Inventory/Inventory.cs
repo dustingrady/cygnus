@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour {
 
+
 	public bool showInventory = true;
 
 	public int currentScrap = 0;
