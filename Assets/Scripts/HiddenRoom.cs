@@ -17,12 +17,14 @@ public class HiddenRoom : MonoBehaviour {
 
 	void Update()
 	{
-		if (fading) {
+		if (fading && !room.GetComponent<TilemapRenderer> ().enabled) {
 			Transform[] t = blockade.transform.GetComponentsInChildren<Transform> ();
 			for (int i = 1; i <= blockade.transform.childCount; i++) {
-				m = t [i].gameObject.GetComponent<Renderer> ().material;
-				if (m.color.a >= 0) {
-					m.color = new Color (m.color.r, m.color.g, m.color.b, Mathf.Lerp (m.color.a, 0, Time.deltaTime * 4f));
+				if (t [i] != null) {
+					m = t [i].gameObject.GetComponent<Renderer> ().material;
+					if (m.color.a >= 0) {
+						m.color = new Color (m.color.r, m.color.g, m.color.b, Mathf.Lerp (m.color.a, 0, Time.deltaTime * 4f));
+					}
 				}
 			}
 
