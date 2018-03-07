@@ -124,7 +124,7 @@ public class Player : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D col) {
 
 		// Test for the Playground, if you hit Lava or enemy projectile reload
-		if (col.gameObject.name == "Lava" || col.gameObject.name == "Water" || col.gameObject.tag == "BossSpecial") {
+		if (col.gameObject.name == "Lava" || col.gameObject.tag == "BossSpecial") {
 			inventory.emptyInventory ();
 			SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
 		}
@@ -162,7 +162,7 @@ public class Player : MonoBehaviour {
 			StartCoroutine(singularDamage(5));
 		}
 
-		if ((col.gameObject.name == "Fire" && !standingInFire)) {
+		if ((col.gameObject.tag == "FireElement" && !standingInFire)) {
 			StartCoroutine(singularDamage(5));
 		}
 	}

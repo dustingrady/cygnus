@@ -4,22 +4,14 @@ using UnityEngine;
 
 public class EnemyShooting : MonoBehaviour {
 	[SerializeField]
-	private GameObject bulletPrefab;//TESTING
+	private GameObject bulletPrefab;
 	private Transform enemyTransform;
 
 	private int count = 0;
 	private int cooldown = 50;
 
 	void Awake(){
-		enemyTransform = this.transform; //Reference to current enemy (for testing)
-	}
-
-	void Start () {
-
-	}
-	
-	void Update () {
-		
+		enemyTransform = this.transform; //Reference to current enemy
 	}
 
 	public void shoot_At_Player(){

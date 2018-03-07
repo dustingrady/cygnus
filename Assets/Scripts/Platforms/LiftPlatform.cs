@@ -48,6 +48,18 @@ public class LiftPlatform : MonoBehaviour {
 	void OnCollisionExit2D(Collision2D col) {
 		// Detatch the player
 		col.transform.parent = null;
+
+		Vector2 platformVel = Vector2.zero;
+
+		if (movingToStart) {
+			platformVel = new Vector2 (-speed * 4, 0);
+		} else if (movingToTarget) {
+			platformVel = new Vector2 (speed * 4, 0);
+		} 
+
+		Rigidbody2D plrRb = col.gameObject.GetComponent<Rigidbody2D> ();
+		plrRb.velocity = plrRb.velocity + platformVel;
+
 	}
 
 	void MoveToTarget() {
