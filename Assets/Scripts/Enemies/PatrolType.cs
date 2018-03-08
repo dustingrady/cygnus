@@ -37,6 +37,10 @@ public class PatrolType : Enemy {
 	Rigidbody2D rb;
 	bool pause = false;
 
+	GameObject sparks;
+	bool stunned = false;
+	int tolerance = 0;
+
 	private void Awake(){
 		enemyStartingPos = transform.position; //Initialize startingPos
 		enemyTransform = this.transform; //Reference to current enemy (for testing)
@@ -44,6 +48,8 @@ public class PatrolType : Enemy {
 		edrp = gameObject.GetComponent<EnemyDrop> ();
 		edmg = gameObject.GetComponent<EnemyDamage> ();
 		playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+
+		sparks = Resources.Load ("Prefabs/Particles/Sparks") as GameObject;
 	}
 
 	void Start(){
@@ -63,13 +69,26 @@ public class PatrolType : Enemy {
 			edrp.determine_Drop (getEnemyType(), this.transform.position);
 			Destroy (this.gameObject);
 		}
-		switch (chasingPlayer) {
-		case true:
-			chase_Player ();
-			break;
-		case false:
-			patrol_Area ();
-			break;
+
+		if (tolerance == 20) {
+			stunned = true;
+			Instantiate (sparks, this.transform.position, Quaternion.identity);
+			StartCoroutine (stunDuration ());
+		}
+
+		if (tolerance == 200) {
+			tolerance = 0;
+		}
+
+		if (stunned == false) {
+			switch (chasingPlayer) {
+			case true:
+				chase_Player ();
+				break;
+			case false:
+				patrol_Area ();
+				break;
+			}
 		}
 	}
 
@@ -148,9 +167,15 @@ public class PatrolType : Enemy {
 	}
 
 	//particle collision for electricity
-	void OnParticleCollision(GameObject other){
-		if (other.tag == "ElectricElement") {
-			takeDamage (0.5f);
+	void OnParticleCollision(GameObject other)
+	{
+		if (other.tag == "ElectricElement" && this.type != "earth") {
+			tolerance++;
+		}
+
+		if (other.tag == "ElectricElement" && this.type == "metal") {
+			Debug.Log ("Particle collision");
+			hitpoints -= 0.1f;
 		}
 	}
 
@@ -189,5 +214,11 @@ public class PatrolType : Enemy {
 
 	public float getEnemyHitPoints(){
 		return hitpoints;
+	}
+
+	IEnumerator stunDuration()
+	{
+		yield return new WaitForSeconds (2);
+		stunned = false;
 	}
 }

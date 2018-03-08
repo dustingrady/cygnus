@@ -169,6 +169,27 @@ public class PlayerController: MonoBehaviour {
 	}
 
 
+	private bool CheckClearance()
+	{
+		LayerMask playerMask = ~(1 << LayerMask.NameToLayer ("Player"));
+		Vector3[] castPos = new Vector3[] { transform.position,
+			new Vector3 (transform.position.x - col.bounds.extents.x + 0.005f, transform.position.y, transform.position.z),
+			new Vector3 (transform.position.x + col.bounds.extents.x - 0.005f, transform.position.y, transform.position.z)
+		};
+
+		foreach (Vector3 pos in castPos)
+		{
+			if (Physics2D.Raycast(pos, Vector2.up, col.bounds.extents.y + 0.2f, playerMask).collider != null)
+			{
+				Debug.Log ("Hit my head!");
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+
 	private bool JumpCheck() {
 		Vector3[] castPos = new Vector3[] { transform.position, 
 			new Vector3 (transform.position.x - col.bounds.extents.x + 0.005f, transform.position.y, transform.position.z),
@@ -218,9 +239,13 @@ public class PlayerController: MonoBehaviour {
 
 	// This can prematurely end a jump when it doesn't make sense to
 	// We could do a raycast check on the head, I may do that later, but not... now!
-	/*
+    //
+    // Okay Daniel,
+    // I fixed it.
+    //
+    // -- Jahn
 	void OnCollisionEnter2D(Collision2D col) {
-		StopCoroutine("JumpCurve");
+        if (!CheckClearance())
+		    StopCoroutine("JumpCurve");
 	}
-	*/
 }

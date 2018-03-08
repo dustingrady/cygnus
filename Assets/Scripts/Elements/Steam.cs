@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Steam : Element {
 	public GameObject burst;
@@ -11,7 +12,17 @@ public class Steam : Element {
 	private float timeSinceFire;
 	private bool btnReleased = true;
 
+	public Image icon;
+
 	public override void UseElement(Vector3 pos, Vector2 dir){
+		GameObject ui = GameObject.Find ("UI");
+		Transform centerElement = ui.transform.Find ("CenterElement");
+
+		if (Input.GetMouseButtonDown (2) && centerElement.Find ("Icon").transform.Find("IconCD").GetComponent<Image> ().sprite == this.sprite) {
+			icon = centerElement.Find ("Icon").transform.Find("IconCD").GetComponent<Image> ();
+		} 
+
+
 		if (timeSinceFire > burstCooldown && btnReleased) {
 			GameObject steamObject = Instantiate (burst, pos, Quaternion.identity);
 
@@ -19,7 +30,7 @@ public class Steam : Element {
 			float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
 			steamObject.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 			//steamObject.transform.parent = transform.root;
-			
+
 			steamObject.GetComponent<ParticleSystem> ().Play ();
 
 			transform.root.GetComponent<Rigidbody2D> ().AddForce (-dir.normalized * burstStrength);
@@ -30,6 +41,9 @@ public class Steam : Element {
 
 	void Update() {
 		timeSinceFire += Time.deltaTime;
+		if (icon != null) {
+			icon.fillAmount = timeSinceFire / burstCooldown;
+		}
 
 		if (Input.GetMouseButtonUp (2) == true
 			|| Input.GetButtonUp("RightStick")) {
