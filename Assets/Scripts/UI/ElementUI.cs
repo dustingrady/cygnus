@@ -96,7 +96,7 @@ public class ElementUI : MonoBehaviour {
 	public void DisableElements() {
 		Transform leftElement = transform.Find ("LeftElement");
 		leftElementImg = leftElement.Find ("Icon").GetComponent<Image> ();
-		leftElementImgCd = leftElement.Find ("Icon").Find ("Iconback").GetComponent<Image> ();
+		leftElementImgCd = leftElement.Find ("Icon").Find ("IconCD").GetComponent<Image> ();
 
 		Transform rightElement = transform.Find ("RightElement");
 		rightElementImg = rightElement.Find ("Icon").GetComponent<Image> ();
