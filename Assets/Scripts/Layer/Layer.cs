@@ -22,15 +22,7 @@ public class Layer : MonoBehaviour {
 
 		bool tileDestroyed = false;
 
-		Vector3Int cellPos = tilemap.WorldToCell (col.transform.position);
-
-		List<Vector3> positionChecks = getPositionChecks (col.transform.position);
-
-		foreach (Vector3 pos in positionChecks) {
-			if (tilemap.GetTile(tilemap.WorldToCell (pos)) != null) {
-				cellPos = tilemap.WorldToCell (pos);
-			}
-		}
+		Vector3Int cellPos = GetCollidedTile (col.transform.position);
 
 		if (tilemap.GetTile(cellPos) != null)
 		{
@@ -45,6 +37,63 @@ public class Layer : MonoBehaviour {
 			Destroy(go, 2);
 		}
 	}
+
+	protected Vector3Int GetCollidedTile(Vector3 position) {
+		Vector3Int cellPos = tilemap.WorldToCell (position);
+
+		List<Vector3> positionChecks = getPositionChecks (position);
+
+		foreach (Vector3 pos in positionChecks) {
+			if (tilemap.GetTile(tilemap.WorldToCell (pos)) != null) {
+				cellPos = tilemap.WorldToCell (pos);
+			}
+		}
+
+		return cellPos;
+
+	}
+
+	protected List<Vector3Int> GetConnectedBlocks(Vector3Int cellPos) {
+		List<Vector3Int> validPos = new List<Vector3Int> ();
+
+		for (int i = -1; i < 2; i++) {
+			for (int j = -1; j < 2; j++) {
+				Vector3Int curPos = new Vector3Int (cellPos.x + i, cellPos.y + j, cellPos.z);
+				Debug.Log (curPos);
+				if (tilemap.GetTile(curPos) != null) {
+					validPos.Add (curPos);
+				}
+			}
+		}
+
+		return validPos;
+	}
+
+
+	protected void DestroyBlocks(List<Vector3Int> positions, GameObject anim = null)
+	{
+		Vector3 hitPosition = Vector3.zero;
+		Vector3 blockPosition = Vector3.zero;
+
+		bool tileDestroyed = false;
+
+		foreach (Vector3Int cellPos in positions) {
+			if (tilemap.GetTile(cellPos) != null)
+			{
+				blockPosition = tilemap.CellToWorld(cellPos) + tilemap.tileAnchor;
+				// Delete tile
+				tilemap.SetTile(cellPos, null);
+				tileDestroyed = true;
+			}
+
+			if (anim != null) {
+				GameObject go = Instantiate (anim, blockPosition, Quaternion.identity);	//Replace the tile
+				Destroy(go, 2);
+			}	
+		}
+	}
+
+
 		
 	// Collects vectors of all positions slightly above, below, and to the left and right of the given point
 	protected List<Vector3> getPositionChecks(Vector3 pos) {

@@ -19,6 +19,8 @@ public class PlayerController: MonoBehaviour {
 	private float baseSpeed = 5f;
 	[SerializeField]
 	private float grappleSpeed = 1f;
+	[SerializeField]
+	private float slopeFriction = 0.8f;
 
 	[SerializeField]
 	private float gravity = 20;
@@ -106,6 +108,14 @@ public class PlayerController: MonoBehaviour {
 			rb.AddForce(Vector3.down * gravity * rb.mass); // Add more weight to the player
 			Move();
 		}
+
+		if (JumpCheck ()) {
+			RaycastHit2D hit = Physics2D.Raycast (transform.position, Vector2.down, 1f, groundMask);
+
+			if (hit.collider != null && Mathf.Abs (hit.normal.x) > 0.1f) {
+				rb.velocity = new Vector2 (rb.velocity.x - (hit.normal.x * slopeFriction), rb.velocity.y);
+			}
+		}
 	}
 
 
@@ -123,9 +133,7 @@ public class PlayerController: MonoBehaviour {
 		}
 		float speed = Mathf.Abs(rb.velocity.x);
 
-		//float speedPercentage = speed / maxSpeed;
-
-		if (speed < maxSpeed || Mathf.Sign (h) != Mathf.Sign (rb.velocity.x)) {
+		if (Mathf.Abs(speed) < maxSpeed) {
 			rb.AddForce (Vector2.right * h * (moveForce - speed * 10.0f));
 		}
 	}
@@ -158,6 +166,27 @@ public class PlayerController: MonoBehaviour {
 		}
 
 		rb.velocity = new Vector2 (rb.velocity.x, Mathf.Lerp (rb.velocity.y, Vector3.down.y, 0.5f));
+	}
+
+
+	private bool CheckClearance()
+	{
+		LayerMask playerMask = ~(1 << LayerMask.NameToLayer ("Player"));
+		Vector3[] castPos = new Vector3[] { transform.position,
+			new Vector3 (transform.position.x - col.bounds.extents.x + 0.005f, transform.position.y, transform.position.z),
+			new Vector3 (transform.position.x + col.bounds.extents.x - 0.005f, transform.position.y, transform.position.z)
+		};
+
+		foreach (Vector3 pos in castPos)
+		{
+			if (Physics2D.Raycast(pos, Vector2.up, col.bounds.extents.y + 0.2f, playerMask).collider != null)
+			{
+				Debug.Log ("Hit my head!");
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 
@@ -210,9 +239,13 @@ public class PlayerController: MonoBehaviour {
 
 	// This can prematurely end a jump when it doesn't make sense to
 	// We could do a raycast check on the head, I may do that later, but not... now!
-	/*
+    //
+    // Okay Daniel,
+    // I fixed it.
+    //
+    // -- Jahn
 	void OnCollisionEnter2D(Collision2D col) {
-		StopCoroutine("JumpCurve");
+        if (!CheckClearance())
+		    StopCoroutine("JumpCurve");
 	}
-	*/
 }

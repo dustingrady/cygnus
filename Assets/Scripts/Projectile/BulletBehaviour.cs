@@ -21,14 +21,14 @@ public class BulletBehaviour : MonoBehaviour {
 		transform.LookAt (playerTransform.position); //Face the player
 		transform.Rotate (new Vector3(0,-90,0),Space.Self); //Correct original rotation
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 		transform.position += transform.right * bulletSpeed * Time.deltaTime;
 	}
 
 	void OnTriggerEnter2D(Collider2D col){
-		if (col.gameObject.tag == "MetalElement" || col.gameObject.tag == "Player")
+		if (col.gameObject.tag == "MetalElement" || col.gameObject.tag == "Player" || col.gameObject.tag == "Shield" || col.gameObject.tag == "EarthElement")
 			Destroy (this.gameObject);
 	}
 }
