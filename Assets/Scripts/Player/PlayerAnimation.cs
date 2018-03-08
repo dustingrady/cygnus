@@ -8,13 +8,15 @@ public class PlayerAnimation : MonoBehaviour {
 	private Animator playerAnim;
 	[SerializeField]
 	private float sprintMulti;
+	private PlayerShooting plrShoot;
 
 	private bool landed;
 	private bool shooting;
+	private bool facingLeft = false;
 
 	void Start() {
 		playerAnim = GetComponent<Animator> ();
-
+		plrShoot = GetComponent<PlayerShooting> ();
 		PlayerShooting.OnShoot += PlayShoot;
 	}
 
@@ -51,8 +53,10 @@ public class PlayerAnimation : MonoBehaviour {
 		// Change the player's facing direction based on directional movement
 		if (Input.GetAxis ("Horizontal") > 0) {
 			transform.localScale = new Vector3 (1, transform.localScale.y, transform.localScale.z);
+			facingLeft = false;
 		} else if (Input.GetAxis ("Horizontal") < 0) {
 			transform.localScale = new Vector3 (-1, transform.localScale.y, transform.localScale.z);
+			facingLeft = true;
 		}
 
 
@@ -65,6 +69,16 @@ public class PlayerAnimation : MonoBehaviour {
 			if (shooting != true)
 				playerAnim.SetInteger ("State", 0);
 		}
+
+		// Determine the player aiming direction
+		Vector3 aim = plrShoot.GetCursorDirection().normalized;
+
+		if (facingLeft) {
+			aim.x *= -1;
+		}
+
+		playerAnim.SetFloat ("dir_x", aim.x);
+		playerAnim.SetFloat ("dir_y", aim.y);
 	}
 
 	void OnCollisionEnter2D(Collision2D collision) {

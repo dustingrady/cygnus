@@ -4578,7 +4578,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b41ed0873fbe21e40aa615d95aa83556, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iceReplacement: {fileID: 0}
 --- !u!1 &951070067
 GameObject:
   m_ObjectHideFlags: 0
@@ -5421,6 +5420,8 @@ MonoBehaviour:
   absorber: {fileID: 1477703447882114, guid: 25d2d4fa29e80c34a871134809ff6635, type: 2}
   absorberSpeed: 10
   absorberCooldown: 0.25
+  leftFireDown: 0
+  rightFireDown: 0
 --- !u!114 &1265600696
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5473,8 +5474,6 @@ MonoBehaviour:
   baseSpeed: 5
   grappleSpeed: 3
   gravity: 20
-  grapplingLeft: 0
-  grapplingRight: 0
   jumpTravel: 1.8
   jumpSpeed: 3
   curveCutoff: 3

@@ -19,6 +19,8 @@ public class PlayerController: MonoBehaviour {
 	private float baseSpeed = 5f;
 	[SerializeField]
 	private float grappleSpeed = 1f;
+	[SerializeField]
+	private float slopeFriction = 0.8f;
 
 	[SerializeField]
 	private float gravity = 20;
@@ -106,6 +108,14 @@ public class PlayerController: MonoBehaviour {
 			rb.AddForce(Vector3.down * gravity * rb.mass); // Add more weight to the player
 			Move();
 		}
+
+		if (JumpCheck ()) {
+			RaycastHit2D hit = Physics2D.Raycast (transform.position, Vector2.down, 1f, groundMask);
+
+			if (hit.collider != null && Mathf.Abs (hit.normal.x) > 0.1f) {
+				rb.velocity = new Vector2 (rb.velocity.x - (hit.normal.x * slopeFriction), rb.velocity.y);
+			}
+		}
 	}
 
 
@@ -123,9 +133,7 @@ public class PlayerController: MonoBehaviour {
 		}
 		float speed = Mathf.Abs(rb.velocity.x);
 
-		//float speedPercentage = speed / maxSpeed;
-
-		if (speed < maxSpeed || Mathf.Sign (h) != Mathf.Sign (rb.velocity.x)) {
+		if (Mathf.Abs(speed) < maxSpeed) {
 			rb.AddForce (Vector2.right * h * (moveForce - speed * 10.0f));
 		}
 	}

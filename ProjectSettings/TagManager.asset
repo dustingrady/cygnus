@@ -26,6 +26,7 @@ TagManager:
   - Lava
   - Shield
   - Deflected
+  - LifeElement
   layers:
   - Default
   - TransparentFX
