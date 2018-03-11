@@ -10,24 +10,33 @@ public class NPCTalk : MonoBehaviour
     public TalkTree tree;
     public Sprite portrait;
     public GameObject windowPrefeb;
-    public UnityEvent[] dialogueEvent;
     bool inDialogue = false;
 
     public void EndDialogue()
     {
         inDialogue = false;
+
+		// Re-enable shooting now that dialog ended
+		EnableShooting();
     }
 
     public void StartDialogue()
     {
         if (!inDialogue)
         {
+			// Disable shooting component from player
+			DisableShooting();
+
             inDialogue = true;
-            GameObject win = Instantiate(windowPrefeb, uiRoot.transform);
+			GameObject win = Instantiate(windowPrefeb, uiRoot.transform);
+			win.transform.SetAsFirstSibling ();
+
+			// Position the window closer to the top of the screen
+			win.transform.position = win.transform.position + new Vector3(0, Camera.main.pixelHeight/4f, 0);
+
             NPCDialogue d = win.GetComponent<NPCDialogue>();
 
             tree.Reset();
-            d.dialogueEvent = dialogueEvent;
             d.signal = EndDialogue;
             d.dialogue = tree;
             d.potrait.sprite = portrait;
@@ -37,7 +46,17 @@ public class NPCTalk : MonoBehaviour
         }
     }
 
+	private void DisableShooting() {
+		GameObject.FindGameObjectWithTag ("Player").GetComponent<PlayerShooting> ().enabled = false;
+	}
+
+	private void EnableShooting() {
+		GameObject.FindGameObjectWithTag ("Player").GetComponent<PlayerShooting> ().enabled = true;
+	}
+
 	void OnTriggerEnter2D(Collider2D col) {
-		StartDialogue ();
+		if (col.gameObject.CompareTag("Player")) {
+			StartDialogue ();
+		}
 	}
 }

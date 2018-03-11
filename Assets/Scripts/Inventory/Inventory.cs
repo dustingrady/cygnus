@@ -168,8 +168,8 @@ public class Inventory : MonoBehaviour {
 			toolTipText.text = "<b>" + items[temp].name + "</b>\n";
 			toolTipText.text += items [temp].itemDescription ();
 
-			float x = inventoryUI.transform.GetChild (0).position.x - inventoryUI.transform.GetComponent<RectTransform>().sizeDelta.x*1.5f;
-			float y = inventoryUI.transform.GetChild (0).position.y - inventoryUI.transform.GetComponent<RectTransform>().sizeDelta.y/2;
+			float x = inventoryUI.transform.GetChild (0).position.x + inventoryUI.transform.GetComponent<RectTransform>().sizeDelta.x*1.5f;
+			float y = inventoryUI.transform.GetChild (0).position.y + inventoryUI.transform.GetComponent<RectTransform>().sizeDelta.y/2;
 
 			toolTip.transform.position = new Vector2 (x, y);
 		}
@@ -177,7 +177,6 @@ public class Inventory : MonoBehaviour {
 
 	public void hideToolTip(){
 		toolTip.SetActive (false);
-		Debug.Log ("Mouse is not over slot ");
 	}
 
 	public void moveItem(GameObject slot){

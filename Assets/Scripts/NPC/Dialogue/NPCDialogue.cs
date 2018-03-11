@@ -11,7 +11,6 @@ public class NPCDialogue : MonoBehaviour {
     public Text npcText;
     public Text[] choices;
     public Image potrait;
-    public UnityEvent[] dialogueEvent;
     public delegate void DialogueEnd();
     public DialogueEnd signal;
 
@@ -19,19 +18,13 @@ public class NPCDialogue : MonoBehaviour {
     {
         TalkState s = dialogue.State;
 
-        if (dialogueEvent[dialogue.CurrentState] != null)
-        {
-            dialogueEvent[dialogue.CurrentState].Invoke();
-        }
-
-
         if (s.endTree)
         {
             signal();
             Destroy(gameObject);
         }
         npcText.text = s.text;
-        for (int i = 0; i < choices.Length; i++)
+        for (int i = 0; i < s.choices.Length; i++)
         {
 			// Checking for dialogue condition
 			// Default to true
@@ -40,9 +33,6 @@ public class NPCDialogue : MonoBehaviour {
 			DialogueCondition dc = s.choices[i].dialogCondition;
 			if (dc != null) {
 				showOption = dc.Check (npc);
-
-				Debug.Log ("Found a condition!");
-				Debug.Log (showOption);
 			}
 				
 			// Checks to see if the option is available

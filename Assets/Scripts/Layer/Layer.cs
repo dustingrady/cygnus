@@ -59,7 +59,7 @@ public class Layer : MonoBehaviour {
 		for (int i = -1; i < 2; i++) {
 			for (int j = -1; j < 2; j++) {
 				Vector3Int curPos = new Vector3Int (cellPos.x + i, cellPos.y + j, cellPos.z);
-				Debug.Log (curPos);
+				//Debug.Log (curPos);
 				if (tilemap.GetTile(curPos) != null) {
 					validPos.Add (curPos);
 				}

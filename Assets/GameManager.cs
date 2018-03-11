@@ -83,7 +83,7 @@ public class GameManager : MonoBehaviour {
 		Quest q = quests.Find (x => x.id == id);
 
 		if (q == null) {
-			Debug.LogError("Quest " + id + " not found!"); 
+			Debug.LogError("Quest " + id + " not found!");
 		} 
 
 		return q.completed;

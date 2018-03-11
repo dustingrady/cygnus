@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 212502395997121034}
   - component: {fileID: 60835084324767558}
   - component: {fileID: 114914581866567744}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Metal Shield
   m_TagString: Shield
   m_Icon: {fileID: 0}

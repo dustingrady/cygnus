@@ -27,6 +27,7 @@ TagManager:
   - Shield
   - Deflected
   - LifeElement
+  - Tooltip
   layers:
   - Default
   - TransparentFX
@@ -40,7 +41,7 @@ TagManager:
   - Player
   - EnemyProjectile
   - Enemy
-  - 
+  - Defense
   - 
   - 
   - 

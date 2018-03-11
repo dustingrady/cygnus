@@ -39,13 +39,14 @@ GameObject:
   - component: {fileID: 222626769232579648}
   - component: {fileID: 114055475624921548}
   - component: {fileID: 114648915345404610}
+  - component: {fileID: 114651368248533310}
   m_Layer: 5
   m_Name: Choice4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1222341844100156
 GameObject:
   m_ObjectHideFlags: 1
@@ -108,13 +109,14 @@ GameObject:
   - component: {fileID: 222140005284935984}
   - component: {fileID: 114194740625082018}
   - component: {fileID: 114772020410897370}
+  - component: {fileID: 114192440989109942}
   m_Layer: 5
   m_Name: Choice2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1579963195461924
 GameObject:
   m_ObjectHideFlags: 0
@@ -178,13 +180,14 @@ GameObject:
   - component: {fileID: 222020888809506530}
   - component: {fileID: 114599210281612140}
   - component: {fileID: 114728643194318608}
+  - component: {fileID: 114027700424331454}
   m_Layer: 5
   m_Name: Choice3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1853198870314802
 GameObject:
   m_ObjectHideFlags: 0
@@ -196,13 +199,14 @@ GameObject:
   - component: {fileID: 222402014692018330}
   - component: {fileID: 114209604270990292}
   - component: {fileID: 114025737911251946}
+  - component: {fileID: 114172984196195316}
   m_Layer: 5
   m_Name: Choice1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &114025737911251946
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -255,6 +259,18 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114027700424331454
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1781252789323266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90d4f845c9682884c929b4888454e24e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  replacement: {fileID: 21300000, guid: 7fab4fbb5754718419d74607c21b903f, type: 3}
 --- !u!114 &114055475624921548
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -309,6 +325,30 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114172984196195316
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1853198870314802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90d4f845c9682884c929b4888454e24e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  replacement: {fileID: 21300000, guid: 7fab4fbb5754718419d74607c21b903f, type: 3}
+--- !u!114 &114192440989109942
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1458441050006372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90d4f845c9682884c929b4888454e24e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  replacement: {fileID: 21300000, guid: 7fab4fbb5754718419d74607c21b903f, type: 3}
 --- !u!114 &114194740625082018
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -478,7 +518,6 @@ MonoBehaviour:
   - {fileID: 114856606287610028}
   - {fileID: 114599353896895504}
   potrait: {fileID: 114856447977813996}
-  dialogueEvent: []
 --- !u!114 &114648915345404610
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -531,6 +570,18 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114651368248533310
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1190808977484124}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90d4f845c9682884c929b4888454e24e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  replacement: {fileID: 21300000, guid: 7fab4fbb5754718419d74607c21b903f, type: 3}
 --- !u!114 &114706451262946976
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -939,7 +990,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 150}
+  m_AnchoredPosition: {x: -18.263313, y: 0.5045705}
   m_SizeDelta: {x: 750, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224541044598493950

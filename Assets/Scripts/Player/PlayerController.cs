@@ -181,7 +181,6 @@ public class PlayerController: MonoBehaviour {
 		{
 			if (Physics2D.Raycast(pos, Vector2.up, col.bounds.extents.y + 0.2f, playerMask).collider != null)
 			{
-				Debug.Log ("Hit my head!");
 				return false;
 			}
 		}

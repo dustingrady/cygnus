@@ -13,7 +13,6 @@ public class PowerMeter : MonoBehaviour {
 		plr = GameObject.FindGameObjectWithTag ("Player").GetComponent<Player> ();
 		bar = GetComponent<Image> ();
 		Hide ();
-
 	}
 
 	void Update () {
