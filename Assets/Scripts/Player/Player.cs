@@ -142,7 +142,16 @@ public class Player : MonoBehaviour {
 			Item item = col.gameObject.GetComponent<ItemInteraction>().item;
 
 			if (item != null) {
-				inventory.GetComponent<Inventory>().addItem(item);
+				//inventory.GetComponent<Inventory>().addItem(item);
+				Debug.Log(inventory.GetComponent<Inventory> ().checkSlot(item));
+				if (inventory.GetComponent<Inventory> ().checkSlot (item)) 
+				{
+					inventory.GetComponent<Inventory> ().stackItem (item);
+				} 
+				else if (!inventory.GetComponent<Inventory> ().checkSlot (item)) 
+				{
+					inventory.GetComponent<Inventory> ().addItem (item);
+				}
 			} else {
 				Debug.LogError ("There was no item on that object!");
 			}

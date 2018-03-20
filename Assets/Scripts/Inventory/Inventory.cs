@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Inventory : MonoBehaviour {
 
@@ -22,14 +23,14 @@ public class Inventory : MonoBehaviour {
 	public Text[] itemImageQuantities = new Text[inventorySize];
 
 
-	public GameObject toolTip;
-	public Text toolTipText;
+	GameObject toolTip;
+	Text toolTipText;
 
 	bool hovering = false;
 
 	Camera cam;
 
-	public Canvas canvas;
+	Canvas canvas;
 
 	GameObject test;
 	Item tempHover;
@@ -38,12 +39,37 @@ public class Inventory : MonoBehaviour {
 	int oldSlotQuantity;
 	Sprite switching;
 	bool onTopOfSlot = false;
+	bool levelloaded = false;
 
+
+	public void Awake()
+	{
+		if(canvas == null)
+			canvas = GameObject.Find ("UI").GetComponent<Canvas> ();
+		if(toolTip == null)
+			toolTip = GameObject.Find ("Tooltip");
+		if(toolTipText == null)
+			toolTipText = GameObject.Find ("TooltipText").GetComponent<Text> ();
+		Debug.Log (canvas + " " + toolTip + " " + toolTipText);
+	}
+
+	public void OnLevelWasLoaded()
+	{
+		canvas = GameObject.Find ("UI").GetComponent<Canvas> ();
+		toolTip = GameObject.Find ("Tooltip");
+		toolTipText = GameObject.Find ("TooltipText").GetComponent<Text> ();
+		Debug.Log (canvas + " " + toolTip + " " + toolTipText);
+		levelloaded = true;
+	}
+		
 	// Collect the item images when the inventory is loaded
 	// Needs to happen with each scene change
 	public void Start() {
 		initializeInventory ();
 		cam = GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<Camera> ();
+		if (toolTip.activeInHierarchy == true) {
+			toolTip.SetActive (false);
+		}
 	}
 
 	public void Update() {
@@ -58,25 +84,56 @@ public class Inventory : MonoBehaviour {
 				showInventory = !showInventory;
 			}
 		}
+
+		if (levelloaded) {
+			if (toolTip.activeInHierarchy == true) {
+				toolTip.SetActive (false);
+			}
+			levelloaded = false;
+		}
 	}
 
 	public void addItem(Item item)
     {
         for(int i = 0; i < items.Length; i++)
         {
-			if (items [i] == item) 
+			/*if (items [i] == item) 
 			{
 				itemQuantity [i]++;
 				return;
-			}
-			else if (items [i] == null) {
+			}*/
+			if (items [i] == null) {
 				items [i] = item;
 				itemQuantity [i]++;
+				Debug.Log(item.name + " added");
 				return;
 			} 
         }
-        Debug.Log(item.name + " added");
     }
+
+	public void stackItem(Item item)
+	{
+		for (int i = 0; i < items.Length; i++) 
+		{
+			if (items [i] == item) {
+				Debug.Log (items [i] + " " + i);
+				itemQuantity [i]++;
+				Debug.Log (item.name + " stacked");
+				return;
+			}
+		}
+	}
+
+	public bool checkSlot(Item item)
+	{
+		for(int i = 0; i < items.Length; i++)
+		{
+			if (items [i] == item) {
+				return true;
+			} 
+		}
+		return false;
+	}
 
 	public void removeItem(Item item)
     {
@@ -168,8 +225,8 @@ public class Inventory : MonoBehaviour {
 			toolTipText.text = "<b>" + items[temp].name + "</b>\n";
 			toolTipText.text += items [temp].itemDescription ();
 
-			float x = inventoryUI.transform.GetChild (0).position.x + inventoryUI.transform.GetComponent<RectTransform>().sizeDelta.x*1.5f;
-			float y = inventoryUI.transform.GetChild (0).position.y + inventoryUI.transform.GetComponent<RectTransform>().sizeDelta.y/2;
+			float x = inventoryUI.transform.GetChild (4).position.x;//+ inventoryUI.transform.GetComponent<RectTransform>().sizeDelta.x*1.5;
+			float y = inventoryUI.transform.GetChild (4).position.y + inventoryUI.transform.GetComponent<RectTransform>().sizeDelta.y/3;//+ inventoryUI.transform.GetComponent<RectTransform>().sizeDelta.y/2;
 
 			toolTip.transform.position = new Vector2 (x, y);
 		}
@@ -237,11 +294,11 @@ public class Inventory : MonoBehaviour {
 
 	public void checkSlot(GameObject slot)
 	{
+		newSlot = int.Parse (slot.gameObject.name.Substring (4, 1));
 		if (hovering) {
-			newSlot = int.Parse (slot.gameObject.name.Substring (4, 1));
 			onTopOfSlot = true;
-			Debug.Log ("New slot: " + newSlot);
 		}
+		//Debug.Log ("New slot: " + newSlot);
 	}
 
 	public void checkExit(GameObject slot)
