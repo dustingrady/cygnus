@@ -50,6 +50,8 @@ public class Inventory : MonoBehaviour {
 			toolTip = GameObject.Find ("Tooltip");
 		if(toolTipText == null)
 			toolTipText = GameObject.Find ("TooltipText").GetComponent<Text> ();
+
+		cam = GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<Camera> ();
 		Debug.Log (canvas + " " + toolTip + " " + toolTipText);
 	}
 
@@ -58,6 +60,7 @@ public class Inventory : MonoBehaviour {
 		canvas = GameObject.Find ("UI").GetComponent<Canvas> ();
 		toolTip = GameObject.Find ("Tooltip");
 		toolTipText = GameObject.Find ("TooltipText").GetComponent<Text> ();
+		cam = GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<Camera> ();
 		Debug.Log (canvas + " " + toolTip + " " + toolTipText);
 		levelloaded = true;
 	}
@@ -66,7 +69,7 @@ public class Inventory : MonoBehaviour {
 	// Needs to happen with each scene change
 	public void Start() {
 		initializeInventory ();
-		cam = GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<Camera> ();
+
 		if (toolTip.activeInHierarchy == true) {
 			toolTip.SetActive (false);
 		}
@@ -105,7 +108,7 @@ public class Inventory : MonoBehaviour {
 			if (items [i] == null) {
 				items [i] = item;
 				itemQuantity [i]++;
-				Debug.Log(item.name + " added");
+				//Debug.Log(item.name + " added");
 				return;
 			} 
         }
@@ -118,7 +121,7 @@ public class Inventory : MonoBehaviour {
 			if (items [i] == item) {
 				Debug.Log (items [i] + " " + i);
 				itemQuantity [i]++;
-				Debug.Log (item.name + " stacked");
+				//Debug.Log (item.name + " stacked");
 				return;
 			}
 		}
@@ -133,6 +136,22 @@ public class Inventory : MonoBehaviour {
 			} 
 		}
 		return false;
+	}
+
+	public void updateStack(Item item)
+	{
+		for (int i = 0; i < items.Length; i++)
+		{
+			if (items[i] == item)
+			{
+				itemQuantity [i]--;
+				if (itemQuantity [i] == 0) {
+					items [i] = null;
+					itemImageQuantities [i].enabled = false;
+					itemImages [i].enabled = false;
+				}
+			}
+		}
 	}
 
 	public void removeItem(Item item)

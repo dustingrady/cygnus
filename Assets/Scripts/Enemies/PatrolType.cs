@@ -41,9 +41,12 @@ public class PatrolType : Enemy {
 	bool stunned = false;
 	int tolerance = 0;
 
+	private Drop dr;
+
 	private void Awake(){
 		enemyStartingPos = transform.position; //Initialize startingPos
 		enemyTransform = this.transform; //Reference to current enemy (for testing)
+		dr = gameObject.GetComponent<Drop>();
 		es = gameObject.GetComponent<EnemyShooting>();
 		edrp = gameObject.GetComponent<EnemyDrop> ();
 		edmg = gameObject.GetComponent<EnemyDamage> ();
@@ -66,7 +69,10 @@ public class PatrolType : Enemy {
 		
 	void Update(){
 		if (hitpoints <= 0) {
+			int chance = Random.Range (0, 11);
+			Debug.Log (chance);
 			edrp.determine_Drop (getEnemyType(), this.transform.position);
+			dr.dropItem (chance);
 			Destroy (this.gameObject);
 		}
 

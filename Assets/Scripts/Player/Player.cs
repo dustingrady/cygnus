@@ -143,7 +143,7 @@ public class Player : MonoBehaviour {
 
 			if (item != null) {
 				//inventory.GetComponent<Inventory>().addItem(item);
-				Debug.Log(inventory.GetComponent<Inventory> ().checkSlot(item));
+				//Debug.Log(inventory.GetComponent<Inventory> ().checkSlot(item));
 				if (inventory.GetComponent<Inventory> ().checkSlot (item)) 
 				{
 					inventory.GetComponent<Inventory> ().stackItem (item);
