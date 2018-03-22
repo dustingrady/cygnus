@@ -25,7 +25,8 @@ public class RogueType : Enemy {
 
 	private Rigidbody2D rb;
 	private bool pause = false;
-
+	private bool hidden = true;
+	private GameObject smokePuff;
 	private GameObject sparks;
 	private bool stunned = false;
 	private int tolerance = 0;
@@ -44,15 +45,15 @@ public class RogueType : Enemy {
 		edrp = gameObject.GetComponent<EnemyDrop> ();
 		edmg = gameObject.GetComponent<EnemyDamage> ();
 		playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-
 		sparks = Resources.Load ("Prefabs/Particles/Sparks") as GameObject;
+		smokePuff = (GameObject)Resources.Load("Prefabs/Particles/SmokePuff");	
 	}
 
 	void Start(){
 		rb = GetComponent<Rigidbody2D> ();
 		rb.constraints = RigidbodyConstraints2D.FreezeRotation;
 		sr = gameObject.GetComponent<SpriteRenderer> ();
-		sr.color = new Color (1f, 1f, 1f, .2f); //Sneaky sneak
+		hide_Self(hidden);
 		patrolSpeed = Mathf.Sign (Random.Range (-1, 1)) * patrolSpeed;
 	}
 
@@ -96,6 +97,7 @@ public class RogueType : Enemy {
 
 	//Normal patrolling behaviour. Using sin function for side to side patrolling (may change)
 	void patrol_Area(){
+		hide_Self(false);
 		Vector3 v = enemyStartingPos;
 		if ((Mathf.Abs(transform.position.x - v.x) < delta) && !pause) {
 			transform.Translate (new Vector2 (patrolSpeed, 0) * Time.deltaTime);
@@ -111,6 +113,7 @@ public class RogueType : Enemy {
 		}
 
 		if(Distance() <= chaseRadius){
+			reveal_Self(true); 
 			chasingPlayer = true;
 		}
 	}
@@ -123,7 +126,6 @@ public class RogueType : Enemy {
 		}
 
 		if (Vector3.Distance (transform.position, playerTransform.position) > followDistance) { //Move towards player until we are 1 unit away (to avoid collision)
-			sr.color = new Color (1f, 1f, 1f, 1f); //Enemy reveals itself before chasing
 			Vector3 oldpos = transform.position;
 			transform.position = new Vector3(Mathf.MoveTowards(transform.position.x, playerTransform.position.x, chaseSpeed * Time.deltaTime), transform.position.y, transform.position.z);
 			float dv = transform.position.x - oldpos.x;
@@ -146,6 +148,24 @@ public class RogueType : Enemy {
 	//Return distance between player and enemy
 	private float Distance(){
 		return Vector3.Distance(enemyTransform.position, playerTransform.position);
+	}
+
+	/*Reveal self once player is in range*/
+	void reveal_Self(bool x){
+		if (x) {
+			sr.color = new Color (1f, 1f, 1f, 1f); //Change alpha to 1
+			GameObject smoke = Instantiate (smokePuff, transform.position, Quaternion.identity); //Instantiate smoke screen
+			Destroy (smoke, 2);
+			hidden = false;
+		}
+	}
+
+	/*Hide self once chase has ended*/
+	void hide_Self(bool x){
+		if(!x){
+			sr.color = new Color (1f, 1f, 1f, .2f); //Sneaky sneak
+			hidden = true;
+		}
 	}
 
 	void OnTriggerEnter2D(Collider2D col){

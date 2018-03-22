@@ -15,8 +15,7 @@ public class Layer : MonoBehaviour {
 		tilemap = GetComponent<Tilemap>();
 	}
 
-	protected void DestroyBlock(Collider2D col, GameObject anim = null)
-	{
+	protected void DestroyBlock(Collider2D col, GameObject anim = null){
 		Vector3 hitPosition = Vector3.zero;
 		Vector3 blockPosition = Vector3.zero;
 
@@ -24,8 +23,7 @@ public class Layer : MonoBehaviour {
 
 		Vector3Int cellPos = GetCollidedTile (col.transform.position);
 
-		if (tilemap.GetTile(cellPos) != null)
-		{
+		if (tilemap.GetTile(cellPos) != null){
 			blockPosition = tilemap.CellToWorld(cellPos) + tilemap.tileAnchor;
 			// Delete tile
 			tilemap.SetTile(cellPos, null);
@@ -70,8 +68,7 @@ public class Layer : MonoBehaviour {
 	}
 
 
-	protected void DestroyBlocks(List<Vector3Int> positions, GameObject anim = null)
-	{
+	protected void DestroyBlocks(List<Vector3Int> positions, GameObject anim = null){
 		Vector3 hitPosition = Vector3.zero;
 		Vector3 blockPosition = Vector3.zero;
 
