@@ -3,17 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class FlyingEnemy : Enemy {
-	[SerializeField]
-	private float hitpoints;
-	string type;
-	string[] listOfTypes = {"fire", "water", "earth", "metal", "electric"};
-	List<string> damagingElements = new List<string> (new string[] {
-		"FireElement",
-		"WaterElement",
-		"EarthElement",
-		"MetalElement",
-		"ElectricElement"
-	});
 
 	private bool chasingPlayer;
 	private float delta = 5.0f; //How far we move left and right
@@ -28,6 +17,11 @@ public class FlyingEnemy : Enemy {
 	private Transform playerTransform;
 	private Vector3 enemyStartingPos;
 
+	// When the enemy is shot, they persue the player for atleast two seconds
+	private bool enraged = false;
+	// Reference to coroutine, to refresh it
+	private IEnumerator enragedCoroutine;
+
 	Rigidbody2D rb;
 	bool pause = false;
 
@@ -41,11 +35,6 @@ public class FlyingEnemy : Enemy {
 	}
 
 	void Start(){
-		//change this temp to randomize type. Random.range for int is exclusive for last interger.
-		int temp = Random.Range (0, 5);
-		type = listOfTypes [temp];
-		Debug.Log (temp + " " + listOfTypes [temp]);
-
 		rb = GetComponent<Rigidbody2D> ();
 		rb.constraints = RigidbodyConstraints2D.FreezeRotation;
 
@@ -90,7 +79,7 @@ public class FlyingEnemy : Enemy {
 
 	//Off with his head!
 	void chase_Player(){
-		if(Distance() > escapeRadius){
+		if(Distance() > escapeRadius && enraged == false){
 			enemyStartingPos = transform.position; //Where enemy will resume if player escapes
 			chasingPlayer = false;
 		}
@@ -122,7 +111,15 @@ public class FlyingEnemy : Enemy {
 			patrolSpeed *= -1;
 		}
 		if (damagingElements.Contains (col.gameObject.tag)) {
-			takeDamage (edmg.determine_Damage (col, getEnemyType ()));
+			takeDamage (edmg.determine_Damage (col.gameObject.tag, getEnemyType ()));
+
+			// Stop the enrage coroutine and start another
+			if (enragedCoroutine != null) {
+				StopCoroutine (enragedCoroutine);
+			}
+
+			enragedCoroutine = Enrage (2.0f);
+			StartCoroutine (enragedCoroutine);
 		}
 	}
 
@@ -130,19 +127,6 @@ public class FlyingEnemy : Enemy {
 	void OnParticleCollision(GameObject other){
 		if (other.tag == "ElectricElement") {
 			takeDamage (0.5f);
-		}
-	}
-
-	IEnumerator flash(){
-		SpriteRenderer sr = GetComponent<SpriteRenderer> ();
-		int elapsed = 0;
-		int flashes = 3;
-		while(elapsed < flashes){
-			sr.color = Color.red;
-			yield return new WaitForSeconds(0.10f);
-			sr.color = Color.white;
-			yield return new WaitForSeconds(0.10f);
-			elapsed++;
 		}
 	}
 
@@ -162,11 +146,14 @@ public class FlyingEnemy : Enemy {
 		StartCoroutine (damage (amount));
 	}
 
-	public string getEnemyType(){
-		return type;
-	}
+	IEnumerator Enrage(float duration) {
+		enraged = true;
+		chasingPlayer = true;
+		Debug.Log ("now enraged");
 
-	public float getEnemyHitPoints(){
-		return hitpoints;
+		yield return new WaitForSeconds (duration);
+
+		enraged = false;
+		Debug.Log ("no longer enraged");
 	}
 }

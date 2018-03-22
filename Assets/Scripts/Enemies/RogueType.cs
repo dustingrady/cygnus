@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PatrolType : Enemy {
+public class RogueType : Enemy {
 
 	private bool chasingPlayer;
 	private float delta = 5.0f; //How far we move left and right
-	private float patrolSpeed = 1.5f; //How fast we move left and right
-	private float chaseSpeed = 4f;
-	private float chaseRadius = 6.0f; //How far we can see player
-	private float escapeRadius = 12.0f; //How far player must be away to break the chase
+	private float patrolSpeed = 0.5f; //How fast we move left and right
+	private float chaseSpeed = 4.5f;
+	private float chaseRadius = 3.0f; //How far we can see player
+	private float escapeRadius = 10.0f; //How far player must be away to break the chase
 	private float followDistance = 1.25f; //How close to the player the enemy will get
 
 	[SerializeField] 
@@ -30,6 +30,8 @@ public class PatrolType : Enemy {
 	private bool stunned = false;
 	private int tolerance = 0;
 
+	private SpriteRenderer sr;
+
 	// When the enemy is shot, they persue the player for atleast two seconds
 	private bool enraged = false;
 	// Reference to coroutine, to refresh it
@@ -49,9 +51,11 @@ public class PatrolType : Enemy {
 	void Start(){
 		rb = GetComponent<Rigidbody2D> ();
 		rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+		sr = gameObject.GetComponent<SpriteRenderer> ();
+		sr.color = new Color (1f, 1f, 1f, .2f); //Sneaky sneak
 		patrolSpeed = Mathf.Sign (Random.Range (-1, 1)) * patrolSpeed;
 	}
-		
+
 	void Update(){
 		if (hitpoints <= 0) {
 			edrp.determine_Drop (getEnemyType(), this.transform.position);
@@ -64,7 +68,7 @@ public class PatrolType : Enemy {
 			StartCoroutine (stunDuration ());
 		}
 
-		if (tolerance == 200) {
+		if (tolerance == 150) {
 			tolerance = 0;
 		}
 
@@ -87,8 +91,6 @@ public class PatrolType : Enemy {
 		Vector3 dirVec = (player - transform.position).normalized;
 		float up = Vector3.Dot(transform.up, dirVec) * 90f;
 		float down = Vector3.Dot(-transform.up, dirVec) * 90f;
-		//Debug.Log ("up: " + up + " min: " + min);
-		//Debug.Log ("down: " + down + " max: " + max);
 		return up > min && up < max;
 	}
 
@@ -121,6 +123,7 @@ public class PatrolType : Enemy {
 		}
 
 		if (Vector3.Distance (transform.position, playerTransform.position) > followDistance) { //Move towards player until we are 1 unit away (to avoid collision)
+			sr.color = new Color (1f, 1f, 1f, 1f); //Enemy reveals itself before chasing
 			Vector3 oldpos = transform.position;
 			transform.position = new Vector3(Mathf.MoveTowards(transform.position.x, playerTransform.position.x, chaseSpeed * Time.deltaTime), transform.position.y, transform.position.z);
 			float dv = transform.position.x - oldpos.x;
@@ -169,11 +172,11 @@ public class PatrolType : Enemy {
 		}
 
 		if (other.tag == "ElectricElement" && elementType == Elements.metal) {
-			Debug.Log ("Particle collision");
+			//Debug.Log ("Particle collision");
 			hitpoints -= 0.1f;
 		}
 	}
-		
+
 	IEnumerator idle(){
 		pause = true;
 		yield return new WaitForSeconds (1);
@@ -198,11 +201,11 @@ public class PatrolType : Enemy {
 	IEnumerator Enrage(float duration) {
 		enraged = true;
 		chasingPlayer = true;
-		Debug.Log ("now enraged");
+		//Debug.Log ("now enraged");
 
 		yield return new WaitForSeconds (duration);
 
 		enraged = false;
-		Debug.Log ("no longer enraged");
+		//Debug.Log ("no longer enraged");
 	}
 }

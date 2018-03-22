@@ -137,7 +137,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edb497888d2c6d34d83a014241c71908, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  elementType: 0
+  assignRandomType: 0
   hitpoints: 80
+  energy: 100
   canShoot: 0
   arcLimit: 1
 --- !u!212 &212506304645966160

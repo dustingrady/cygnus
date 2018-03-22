@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4425156461378900}
   - component: {fileID: 60959107212543062}
-  m_Layer: 9
+  m_Layer: 13
   m_Name: Bounds
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -64,7 +64,7 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 30.502012, y: 10.52086}
+    - - {x: 51.464542, y: 10.567136}
       - {x: -31.893854, y: 10.579203}
       - {x: -31.83912, y: -11.255514}
-      - {x: 30.472704, y: -11.608139}
+      - {x: 51.564445, y: -11.682407}
