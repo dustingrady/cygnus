@@ -50,7 +50,7 @@ public class TurretType : Enemy {
 	bool within_LoS(){
 		Vector2 start = transform.position;
 		Vector2 direction = playerTransform.position - transform.position;
-		float distance = 1000f; //Distance in which raycast will check
+		float distance = turretRadius; //Distance in which raycast will check
 		//Debug.DrawRay(start, direction, Color.red,2f,false);
 		RaycastHit2D sightTest = Physics2D.Raycast (start, direction, distance, enemySight);
 		if (sightTest) {
@@ -59,6 +59,7 @@ public class TurretType : Enemy {
 				return true;
 			}
 		}
+		line.enabled = false;
 		return false;
 	}
 
