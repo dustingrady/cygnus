@@ -5,13 +5,17 @@ using UnityEngine.UI;
 
 public class Steam : Element {
 	public GameObject burst;
-	[SerializeField]
-	private float burstStrength = 2000f;
+	private float burstStrength = 5f;
+	private const float maxForce = 40f;
+	private const float flightTime = 2;
+	private float flightTimer = 0;
 	[SerializeField]
 	private float burstCooldown = 1.5f;
 	private float timeSinceFire;
 	private bool btnReleased = true;
 
+	Vector2 direction = Vector2.zero;
+	GameObject steamObject;
 	public Image icon;
 
 	public override void UseElement(Vector3 pos, Vector2 dir){
@@ -24,30 +28,73 @@ public class Steam : Element {
 
 
 		if (timeSinceFire > burstCooldown && btnReleased) {
-			GameObject steamObject = Instantiate (burst, pos, Quaternion.identity);
+			steamObject = Instantiate (burst, pos, Quaternion.identity);
 
 			// Change the angle to match the direction.
 			float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
 			steamObject.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 			//steamObject.transform.parent = transform.root;
+			direction = dir;
 
 			steamObject.GetComponent<ParticleSystem> ().Play ();
+			//transform.root.GetComponent<Rigidbody2D> ().AddForce (-dir.normalized * burstStrength);
 
-			transform.root.GetComponent<Rigidbody2D> ().AddForce (-dir.normalized * burstStrength);
-			timeSinceFire = 0;
 			btnReleased = false;
 		}
 	}
 
 	void Update() {
+		direction = GetCursorDirection ();
+
 		timeSinceFire += Time.deltaTime;
 		if (icon != null) {
 			icon.fillAmount = timeSinceFire / burstCooldown;
 		}
 
+		if (!btnReleased) {
+			float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+			if (steamObject != null) {
+				steamObject.transform.rotation = Quaternion.AngleAxis (angle, Vector3.forward);
+				steamObject.transform.position = transform.root.position;
+			}
+
+			//Debug.Log (transform.root.GetComponent<ConstantForce2D> ().force.magnitude + " " +flightTimer);
+			if (transform.root.GetComponent<ConstantForce2D> ().force.magnitude <= maxForce) {
+				transform.root.GetComponent<ConstantForce2D> ().force += (-direction.normalized * burstStrength);
+			} else if (transform.root.GetComponent<ConstantForce2D> ().force.magnitude >= maxForce) {
+				transform.root.GetComponent<ConstantForce2D> ().force = new Vector2(transform.root.GetComponent<ConstantForce2D> ().force.x *(-direction.normalized.x), transform.root.GetComponent<ConstantForce2D> ().force.y *(-direction.normalized.y));
+			}
+			if(flightTimer < flightTime)
+				flightTimer += Time.deltaTime;
+		}
+			
+		if (btnReleased || flightTimer >= flightTime) {
+			transform.root.GetComponent<ConstantForce2D> ().force = Vector2.zero;
+			if(steamObject != null)
+				steamObject.GetComponent<ParticleSystem> ().Stop ();
+		}
 		if (Input.GetMouseButtonUp (2) == true
 			|| Input.GetButtonUp("RightStick")) {
-			btnReleased = true;
+			if (timeSinceFire >= burstCooldown) {
+				btnReleased = true;
+				timeSinceFire = 0;
+				flightTimer = 0;
+			}
+		}
+	}
+
+	public Vector2 GetCursorDirection() {
+		if (GameManager.instance.controllerConnected) {
+			GameObject ret = GameObject.Find ("Reticle");
+			Vector3 dirV3 = ret.transform.position - transform.position;
+			Vector2 dir = new Vector2 (dirV3.x, dirV3.y);
+
+			return dir;
+		} else {
+			Vector3 dirV3 = Camera.main.ScreenToWorldPoint (Input.mousePosition) - transform.position;
+			Vector2 dir = new Vector2 (dirV3.x, dirV3.y);
+
+			return dir;
 		}
 	}
 }

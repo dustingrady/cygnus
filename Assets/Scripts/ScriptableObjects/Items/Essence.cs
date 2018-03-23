@@ -1,4 +1,4 @@
-﻿﻿using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +10,7 @@ public class Essence : Item {
 	public ElementType type;
 	public int strength;
 	public string description;
+	private bool consumable = false;
 
 	public override void useItem()
 	{
@@ -21,4 +22,14 @@ public class Essence : Item {
 		return description;
 	}
 
+
+	public override float useConsumable ()
+	{
+		return 0;
+	}
+
+	public override bool checkType()
+	{
+		return consumable;
+	}
 }
