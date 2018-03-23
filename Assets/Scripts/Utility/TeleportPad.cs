@@ -36,8 +36,10 @@ public class TeleportPad : MonoBehaviour {
 	void OnTriggerStay2D(Collider2D col)
 	{
 		if (col.tag == "Player") {
-			teleportTimer += Time.deltaTime;
-			player = col.gameObject;
+			if (destinationPad != null) {
+				teleportTimer += Time.deltaTime;
+				player = col.gameObject;
+			}
 		}
 	}
 

@@ -129,9 +129,13 @@ public class Player : MonoBehaviour {
 			SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
 		}
 
+		if (col.gameObject.tag == "Acid") {
+			StartCoroutine (acidContact (1));
+		}
+
 		if (col.gameObject.tag == "BossBullet") {
 			Debug.Log ("ouch, a fuckin bossbullet");
-			StartCoroutine(enemyProjectiles(30));
+			StartCoroutine(enemyProjectiles(1));
 		}
 
 		if (col.gameObject.tag == "Item") {
@@ -173,6 +177,8 @@ public class Player : MonoBehaviour {
 
 		if ((col.gameObject.tag == "FireElement" && !standingInFire)) {
 			StartCoroutine(singularDamage(5));
+		} if (col.gameObject.tag == "Acid") {
+			StartCoroutine (acidContact (1));
 		}
 	}
 
@@ -232,5 +238,11 @@ public class Player : MonoBehaviour {
 		health.CurrentVal -= damageAmount;
 		yield return new WaitForSeconds (1);
 		takingDamage = false;
+	}
+
+	IEnumerator acidContact(int damageAmount) 
+	{
+		health.CurrentVal -= damageAmount;
+		yield return new WaitForSeconds (0.3f);
 	}
 }
