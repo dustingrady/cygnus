@@ -69,7 +69,7 @@ public class TurretType : Enemy {
 	}
 
 	void guard_Area(){
-		if (Vector3.Distance (transform.position, playerTransform.position) < turretRadius) { //If player is in range (distance) of turret
+		if (Distance () < turretRadius) { //If player is in range (distance) of turret
 			//Debug.Log("Range: " + within_Arc(playerTransform.position)); //Testing
 			if (arcLimit && within_Arc (playerTransform.position) && within_LoS()) {
 				line.enabled = true;
@@ -86,7 +86,7 @@ public class TurretType : Enemy {
 
 	//Return distance between player and enemy
 	private float Distance(){
-		return Vector3.Distance(enemyTransform.position, playerTransform.position);
+		return Vector3.Distance(transform.position, playerTransform.position);
 	}
 
 	void OnTriggerEnter2D(Collider2D col){

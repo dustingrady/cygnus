@@ -125,7 +125,7 @@ public class RogueType : Enemy {
 			chasingPlayer = false;
 		}
 
-		if (Vector3.Distance (transform.position, playerTransform.position) > followDistance) { //Move towards player until we are 1 unit away (to avoid collision)
+		if (Distance () > followDistance) { //Move towards player until we are 1 unit away (to avoid collision)
 			Vector3 oldpos = transform.position;
 			transform.position = new Vector3(Mathf.MoveTowards(transform.position.x, playerTransform.position.x, chaseSpeed * Time.deltaTime), transform.position.y, transform.position.z);
 			float dv = transform.position.x - oldpos.x;
@@ -147,7 +147,7 @@ public class RogueType : Enemy {
 
 	//Return distance between player and enemy
 	private float Distance(){
-		return Vector3.Distance(enemyTransform.position, playerTransform.position);
+		return Vector3.Distance(transform.position, playerTransform.position);
 	}
 
 	/*Reveal self once player is in range*/

@@ -126,7 +126,7 @@ public class PatrolType : Enemy {
 			chasingPlayer = false;
 		}
 
-		if (Vector3.Distance (transform.position, playerTransform.position) > followDistance) { //Move towards player until we are 1 unit away (to avoid collision)
+		if (Distance () > followDistance) { //Move towards player until we are 1 unit away (to avoid collision)
 			Vector3 oldpos = transform.position;
 			transform.position = new Vector3(Mathf.MoveTowards(transform.position.x, playerTransform.position.x, chaseSpeed * Time.deltaTime), transform.position.y, transform.position.z);
 			float dv = transform.position.x - oldpos.x;
@@ -148,13 +148,19 @@ public class PatrolType : Enemy {
 
 	//Return distance between player and enemy
 	private float Distance(){
-		return Vector3.Distance(enemyTransform.position, playerTransform.position);
+		return Vector3.Distance(transform.position, playerTransform.position);
 	}
 
 	void OnTriggerEnter2D(Collider2D col){
 		if (col.gameObject.tag == "TurnAround") {
 			patrolSpeed *= -1;
 		}
+		//---------------------------------------------------
+		if (col.gameObject.tag != "Ground") {
+			patrolSpeed *= -1;
+		}
+		//---------------------------------------------------
+
 		if (damagingElements.Contains (col.gameObject.tag)) {
 			takeDamage (edmg.determine_Damage (col.gameObject.tag, getEnemyType ()));
 

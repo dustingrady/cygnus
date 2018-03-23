@@ -84,7 +84,7 @@ public class FlyingEnemy : Enemy {
 			chasingPlayer = false;
 		}
 		//Follow player in x-axis
-		if (Vector3.Distance (transform.position, playerTransform.position) > 3f) { //Move towards player until we are n unit(s) away (to avoid collision)
+		if (Distance () > 3f) { //Move towards player until we are n unit(s) away (to avoid collision)
 			Vector3 oldpos = transform.position;
 			transform.position = new Vector3(Mathf.MoveTowards(transform.position.x, playerTransform.position.x, chaseSpeed * Time.deltaTime), transform.position.y, transform.position.z);
 			float dx = transform.position.x - oldpos.x;
@@ -103,7 +103,7 @@ public class FlyingEnemy : Enemy {
 
 	//Return distance between player and enemy
 	private float Distance(){
-		return Vector3.Distance(enemyTransform.position, playerTransform.position);
+		return Vector3.Distance(transform.position, playerTransform.position);
 	}
 
 	void OnTriggerEnter2D(Collider2D col){
