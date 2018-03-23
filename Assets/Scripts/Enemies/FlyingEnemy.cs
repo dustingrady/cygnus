@@ -16,6 +16,7 @@ public class FlyingEnemy : Enemy {
 	private Transform enemyTransform;
 	private Transform playerTransform;
 	private Vector3 enemyStartingPos;
+	public LayerMask enemySight;
 
 	// When the enemy is shot, they persue the player for atleast two seconds
 	private bool enraged = false;
@@ -56,6 +57,20 @@ public class FlyingEnemy : Enemy {
 		}
 	}
 
+	bool within_LoS(){
+		Vector2 start = transform.position;
+		Vector2 direction = playerTransform.position - transform.position;
+		float distance = chaseRadius; //Distance in which raycast will check
+		//Debug.DrawRay(start, direction, Color.red,2f,false);
+		RaycastHit2D sightTest = Physics2D.Raycast (start, direction, distance, enemySight);
+		if (sightTest) {
+			if (sightTest.collider.CompareTag("Player")) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	//Normal patrolling behaviour. Using sin function for side to side patrolling (may change)
 	void patrol_Area(){
 		Vector3 v = enemyStartingPos;
@@ -72,14 +87,14 @@ public class FlyingEnemy : Enemy {
 			}
 		}
 
-		if(Distance() <= chaseRadius){
+		if(Distance() <= chaseRadius && within_LoS()){
 			chasingPlayer = true;
 		}
 	}
 
 	//Off with his head!
 	void chase_Player(){
-		if(Distance() > escapeRadius && enraged == false){
+		if(Distance() > escapeRadius && enraged == false || !within_LoS()){
 			enemyStartingPos = transform.position; //Where enemy will resume if player escapes
 			chasingPlayer = false;
 		}
@@ -98,7 +113,9 @@ public class FlyingEnemy : Enemy {
 			//Debug.Log ("Y distance trigger"); //Testing
 			transform.position = new Vector3(transform.position.x, Mathf.MoveTowards(transform.position.y, playerTransform.position.y, chaseSpeed * Time.deltaTime), transform.position.z);
 		}
-		es.shoot_At_Player ();
+		if (within_LoS ()) {
+			es.shoot_At_Player ();
+		}
 	}
 
 	//Return distance between player and enemy
