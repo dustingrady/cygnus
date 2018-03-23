@@ -7,6 +7,7 @@ public abstract class Item : ScriptableObject {
 	public Sprite sprite;
 	public abstract void useItem();
 	public abstract float useConsumable ();
+	public abstract string consumeCombo ();
 	public abstract string itemDescription ();
 	public abstract bool checkType();
 }

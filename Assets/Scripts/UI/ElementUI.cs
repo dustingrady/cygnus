@@ -33,7 +33,7 @@ public class ElementUI : MonoBehaviour {
 	}
 
 
-	void UpdateElements() {
+	public void UpdateElements() {
 		if (plr.leftElement != null) {
 			leftElementImg.sprite = plr.leftElement.sprite;
 			leftElementImgCd.sprite =  plr.leftElement.sprite;

@@ -28,6 +28,11 @@ public class Essence : Item {
 		return 0;
 	}
 
+	public override string consumeCombo ()
+	{
+		return "";
+	}
+
 	public override bool checkType()
 	{
 		return consumable;

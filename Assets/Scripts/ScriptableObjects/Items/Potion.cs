@@ -23,6 +23,11 @@ public class Potion : Item {
 		return healAmount;
 	}
 
+	public override string consumeCombo()
+	{
+		return "";
+	}
+
 	public override bool checkType()
 	{
 		return consumable;
