@@ -35,9 +35,12 @@ public class PatrolType : Enemy {
 	// Reference to coroutine, to refresh it
 	private IEnumerator enragedCoroutine;
 
+	private Drop dr;
+
 	private void Awake(){
 		enemyStartingPos = transform.position; //Initialize startingPos
 		enemyTransform = this.transform; //Reference to current enemy (for testing)
+		dr = gameObject.GetComponent<Drop>();
 		es = gameObject.GetComponent<EnemyShooting>();
 		edrp = gameObject.GetComponent<EnemyDrop> ();
 		edmg = gameObject.GetComponent<EnemyDamage> ();
@@ -54,7 +57,10 @@ public class PatrolType : Enemy {
 		
 	void Update(){
 		if (hitpoints <= 0) {
+			int chance = Random.Range (0, 11);
+			Debug.Log (chance);
 			edrp.determine_Drop (getEnemyType(), this.transform.position);
+			dr.dropItem (chance);
 			Destroy (this.gameObject);
 		}
 
