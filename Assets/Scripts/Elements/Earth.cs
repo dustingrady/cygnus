@@ -85,7 +85,7 @@ public class Earth : Element {
 		Vector2 dir = plrs.GetCursorDirection ();
 		Vector3 pos = plrs.transform.position;
 
-		Debug.Log ("Firing a boulder");
+		//Debug.Log ("Firing a boulder");
 
 		// Get the scale of the boulder based on the charge time - 1 being full charge
 		float scale = Mathf.Clamp((chargeTime / maxCharge), 0.3f, 1.0f);

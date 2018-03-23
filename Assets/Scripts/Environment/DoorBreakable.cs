@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class DoorBreakable : Door {
+	private float timeToDestroy = 3.0f;
 
 	public override void Open() {
 		Rigidbody2D[] chillins = GetComponentsInChildren<Rigidbody2D> ();
@@ -10,6 +11,13 @@ public class DoorBreakable : Door {
 			chillin.bodyType = RigidbodyType2D.Dynamic;
 			chillin.AddForce (new Vector2 (Random.Range (-1000, 1000), 0));
 			chillin.gameObject.transform.parent = null;
+		}
+	}
+		
+
+	void OnTriggerEnter2D(Collider2D col) {
+		if (col.tag == "EarthElement") {	
+			Open ();
 		}
 	}
 }
