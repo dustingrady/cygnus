@@ -12,10 +12,8 @@ public class WaterJet : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D col)
 	{
-		if (col.gameObject.tag != "Player"
-		    && col.gameObject.tag != "WaterElement"
-		    && col.name != "Bounds") {
-
+		if (col.gameObject.tag != "Player" && col.gameObject.tag != "WaterElement") {
+			/*
 			if (col.gameObject.tag == "Enemy") {
 				if (col.gameObject.GetComponent<PatrolType> () != null && col.gameObject.GetComponent<PatrolType> ().getEnemyType () == "fire") {
 					col.gameObject.GetComponent<PatrolType> ().takeDamage (2);
@@ -25,7 +23,7 @@ public class WaterJet : MonoBehaviour {
 					col.gameObject.GetComponent<TurretType> ().takeDamage (1);
 				}
 			}
-		
+		*/
 			DestroyObject (this.gameObject);
 		
 		}

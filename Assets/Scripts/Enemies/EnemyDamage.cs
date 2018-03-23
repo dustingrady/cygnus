@@ -3,30 +3,30 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyDamage : MonoBehaviour {
-	public Dictionary<string, string> weaknesses;
-	public Dictionary<string, string> resistances;
+	public Dictionary<Elements, string> weaknesses;
+	public Dictionary<Elements, string> resistances;
 
 	void Start(){
 		//x is weak to y
-		weaknesses = new Dictionary<string,string> ();
-		weaknesses.Add("fire", "WaterElement");
-		weaknesses.Add("water", "ElectricElement");
-		weaknesses.Add("earth", "WaterElement");
-		weaknesses.Add("metal", "FireElement");
-		weaknesses.Add("electric", "EarthElement");
+		weaknesses = new Dictionary<Elements, string> ();
+		weaknesses.Add(Elements.fire, "WaterElement");
+		weaknesses.Add(Elements.water, "ElectricElement");
+		weaknesses.Add(Elements.earth, "WaterElement");
+		weaknesses.Add(Elements.metal, "FireElement");
+		weaknesses.Add(Elements.electric, "EarthElement");
 
 		//x is resistant to y
-		resistances = new Dictionary<string,string> ();
-		resistances.Add ("fire", "MetalElement"); 
-		resistances.Add ("water", "FireElement");
-		resistances.Add ("earth", "ElectricElement");
-		resistances.Add ("metal", "MetalElement"); 
-		resistances.Add ("electric", "WaterElement");
+		resistances = new Dictionary<Elements, string> ();
+		resistances.Add (Elements.fire, "MetalElement"); 
+		resistances.Add (Elements.water, "FireElement");
+		resistances.Add (Elements.earth, "ElectricElement");
+		resistances.Add (Elements.metal, "MetalElement"); 
+		resistances.Add (Elements.electric, "WaterElement");
 	}
 		
-	public float determine_Damage(Collider2D col, string type){
+	public float determine_Damage(string attackType, Elements enemyType){
 		float dmg = 0f; //Base damage
-		switch (col.gameObject.tag) {
+		switch (attackType) {
 		case "FireElement":
 			dmg = 15f;
 			break;
@@ -41,10 +41,10 @@ public class EnemyDamage : MonoBehaviour {
 			break;
 		}
 
-		if (weaknesses [type] == col.gameObject.tag) {
+		if (weaknesses [enemyType] == attackType) {
 			dmg *= 2f;
 		}
-		if(resistances[type] == col.gameObject.tag){
+		if(resistances[enemyType] == attackType){
 			dmg *= 0.5f;
 		}
 

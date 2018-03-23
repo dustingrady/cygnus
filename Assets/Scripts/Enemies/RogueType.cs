@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PatrolType : Enemy {
+public class RogueType : Enemy {
 
 	private bool chasingPlayer;
 	private float delta = 5.0f; //How far we move left and right
-	private float patrolSpeed = 1.5f; //How fast we move left and right
-	private float chaseSpeed = 4f;
-	private float chaseRadius = 6.0f; //How far we can see player
-	private float escapeRadius = 12.0f; //How far player must be away to break the chase
+	private float patrolSpeed = 0.5f; //How fast we move left and right
+	private float chaseSpeed = 4.5f;
+	private float chaseRadius = 3.0f; //How far we can see player
+	private float escapeRadius = 10.0f; //How far player must be away to break the chase
 	private float followDistance = 1.25f; //How close to the player the enemy will get
 
 	[SerializeField] 
@@ -25,10 +25,13 @@ public class PatrolType : Enemy {
 
 	private Rigidbody2D rb;
 	private bool pause = false;
-
+	private bool hidden = true;
+	private GameObject smokePuff;
 	private GameObject sparks;
 	private bool stunned = false;
 	private int tolerance = 0;
+
+	private SpriteRenderer sr;
 
 	// When the enemy is shot, they persue the player for atleast two seconds
 	private bool enraged = false;
@@ -42,16 +45,18 @@ public class PatrolType : Enemy {
 		edrp = gameObject.GetComponent<EnemyDrop> ();
 		edmg = gameObject.GetComponent<EnemyDamage> ();
 		playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-
 		sparks = Resources.Load ("Prefabs/Particles/Sparks") as GameObject;
+		smokePuff = (GameObject)Resources.Load("Prefabs/Particles/SmokePuff");	
 	}
 
 	void Start(){
 		rb = GetComponent<Rigidbody2D> ();
 		rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+		sr = gameObject.GetComponent<SpriteRenderer> ();
+		hide_Self(hidden);
 		patrolSpeed = Mathf.Sign (Random.Range (-1, 1)) * patrolSpeed;
 	}
-		
+
 	void Update(){
 		if (hitpoints <= 0) {
 			edrp.determine_Drop (getEnemyType(), this.transform.position);
@@ -64,7 +69,7 @@ public class PatrolType : Enemy {
 			StartCoroutine (stunDuration ());
 		}
 
-		if (tolerance == 200) {
+		if (tolerance == 150) {
 			tolerance = 0;
 		}
 
@@ -87,13 +92,12 @@ public class PatrolType : Enemy {
 		Vector3 dirVec = (player - transform.position).normalized;
 		float up = Vector3.Dot(transform.up, dirVec) * 90f;
 		float down = Vector3.Dot(-transform.up, dirVec) * 90f;
-		//Debug.Log ("up: " + up + " min: " + min);
-		//Debug.Log ("down: " + down + " max: " + max);
 		return up > min && up < max;
 	}
 
 	//Normal patrolling behaviour. Using sin function for side to side patrolling (may change)
 	void patrol_Area(){
+		hide_Self(false);
 		Vector3 v = enemyStartingPos;
 		if ((Mathf.Abs(transform.position.x - v.x) < delta) && !pause) {
 			transform.Translate (new Vector2 (patrolSpeed, 0) * Time.deltaTime);
@@ -109,6 +113,7 @@ public class PatrolType : Enemy {
 		}
 
 		if(Distance() <= chaseRadius){
+			reveal_Self(true); 
 			chasingPlayer = true;
 		}
 	}
@@ -145,6 +150,24 @@ public class PatrolType : Enemy {
 		return Vector3.Distance(enemyTransform.position, playerTransform.position);
 	}
 
+	/*Reveal self once player is in range*/
+	void reveal_Self(bool x){
+		if (x) {
+			sr.color = new Color (1f, 1f, 1f, 1f); //Change alpha to 1
+			GameObject smoke = Instantiate (smokePuff, transform.position, Quaternion.identity); //Instantiate smoke screen
+			Destroy (smoke, 2);
+			hidden = false;
+		}
+	}
+
+	/*Hide self once chase has ended*/
+	void hide_Self(bool x){
+		if(!x){
+			sr.color = new Color (1f, 1f, 1f, .2f); //Sneaky sneak
+			hidden = true;
+		}
+	}
+
 	void OnTriggerEnter2D(Collider2D col){
 		if (col.gameObject.tag == "TurnAround") {
 			patrolSpeed *= -1;
@@ -169,11 +192,11 @@ public class PatrolType : Enemy {
 		}
 
 		if (other.tag == "ElectricElement" && elementType == Elements.metal) {
-			Debug.Log ("Particle collision");
+			//Debug.Log ("Particle collision");
 			hitpoints -= 0.1f;
 		}
 	}
-		
+
 	IEnumerator idle(){
 		pause = true;
 		yield return new WaitForSeconds (1);
@@ -198,11 +221,11 @@ public class PatrolType : Enemy {
 	IEnumerator Enrage(float duration) {
 		enraged = true;
 		chasingPlayer = true;
-		Debug.Log ("now enraged");
+		//Debug.Log ("now enraged");
 
 		yield return new WaitForSeconds (duration);
 
 		enraged = false;
-		Debug.Log ("no longer enraged");
+		//Debug.Log ("no longer enraged");
 	}
 }

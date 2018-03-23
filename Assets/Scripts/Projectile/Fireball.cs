@@ -21,6 +21,7 @@ public class Fireball : MonoBehaviour {
 	}
 		
 	void OnTriggerEnter2D(Collider2D col) {
+		/*
 		if (col.gameObject.tag == "Enemy") {
 			if (col.gameObject.GetComponent<PatrolType> () != null && col.gameObject.GetComponent<PatrolType> ().getEnemyType () == "metal") {
 				col.gameObject.GetComponent<PatrolType> ().takeDamage (10);
@@ -31,7 +32,7 @@ public class Fireball : MonoBehaviour {
 			}
 
 		}
-
+		*/
 		if (col.gameObject.tag != "Player" && col.gameObject.tag != "Fireball") {
 			DestroyObject (this.gameObject);
 		}

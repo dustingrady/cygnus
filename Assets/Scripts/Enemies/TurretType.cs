@@ -3,21 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class TurretType : Enemy {
-	[SerializeField]
-	private float hitpoints;
-	[SerializeField]
-	string type;
-
-	string[] listOfTypes = {"fire", "water", "earth", "metal", "electric"};
-	List<string> damagingElements = new List<string> {
-		"FireElement",
-		"WaterElement",
-		"EarthElement",
-		"MetalElement",
-		"ElectricElement"
-	};
-
-
 	[SerializeField] 
 	private bool arcLimit = true; //Limits the enemies ability to shoot to ~180 degrees
 
@@ -28,7 +13,8 @@ public class TurretType : Enemy {
 	private EnemyShooting es;
 	private EnemyDrop edrp;
 	private EnemyDamage edmg;
-	LineRenderer line;
+	private LineRenderer line;
+	public LayerMask enemySight;
 
 	void Awake(){
 		playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
@@ -38,13 +24,6 @@ public class TurretType : Enemy {
 	}
 
 	void Start(){
-		// Randomly assign a type if no type is given
-		if (type == "") {
-			//change this temp to randomize type. Random.range for int is exclusive for last interger.
-			int temp = Random.Range (0, 5);
-			type = listOfTypes [temp];
-		}
-
 		Rigidbody2D rb = GetComponent<Rigidbody2D> ();
 		line = this.gameObject.GetComponent<LineRenderer>();
 		rb.constraints = RigidbodyConstraints2D.FreezeAll;
@@ -65,12 +44,26 @@ public class TurretType : Enemy {
 		Vector3 dirVec = (player - transform.position).normalized;
 		float up = Vector3.Dot(transform.up, dirVec) * 90f;
 		float down = Vector3.Dot(-transform.up, dirVec) * 90f;
-		//Debug.Log ("up: " + up + " min: " + min);
-		//Debug.Log ("down: " + down + " max: " + max);
 		return up > min && up < max;
 	}
 
+	bool within_LoS(){
+		Vector2 start = transform.position;
+		Vector2 direction = playerTransform.position - transform.position;
+		float distance = 1000f; //Distance in which raycast will check
+		//Debug.DrawRay(start, direction, Color.red,2f,false);
+		RaycastHit2D sightTest = Physics2D.Raycast (start, direction, distance, enemySight);
+		if (sightTest) {
+			if (sightTest.collider.CompareTag("Player")) {
+				//Debug.Log ("I found you.");
+				return true;
+			}
+		}
+		return false;
+	}
+
 	void draw_And_Shoot(){
+		//Debug.DrawRay(transform.position, (playerTransform.position - transform.position), Color.red,2f,false);
 		line.enabled = true;
 		line.SetPosition (0, transform.position);
 		line.SetPosition (1, playerTransform.position);
@@ -80,9 +73,9 @@ public class TurretType : Enemy {
 	void guard_Area(){
 		if (Vector3.Distance (transform.position, playerTransform.position) < turretRadius) { //If player is in range (distance) of turret
 			//Debug.Log("Range: " + within_Arc(playerTransform.position)); //Testing
-			if (arcLimit && within_Arc (playerTransform.position)) {
+			if (arcLimit && within_Arc (playerTransform.position) && within_LoS()) {
 				draw_And_Shoot ();
-			} else if(!arcLimit) {
+			} else if(!arcLimit && within_LoS()) {
 				draw_And_Shoot ();
 			}
 		} else {
@@ -97,7 +90,7 @@ public class TurretType : Enemy {
 
 	void OnTriggerEnter2D(Collider2D col){
 		if (damagingElements.Contains (col.gameObject.tag)) {
-			takeDamage (edmg.determine_Damage (col, getEnemyType ()));
+			takeDamage (edmg.determine_Damage (col.gameObject.tag, getEnemyType ()));
 		}
 	}
 
@@ -105,19 +98,6 @@ public class TurretType : Enemy {
 	void OnParticleCollision(GameObject other){
 		if (other.tag == "ElectricElement") {
 			takeDamage (0.5f);
-		}
-	}
-
-	IEnumerator flash(){
-		SpriteRenderer sr = GetComponent<SpriteRenderer> ();
-		int elapsed = 0;
-		int flashes = 3;
-		while(elapsed < flashes){
-			sr.color = Color.red;
-			yield return new WaitForSeconds(0.10f);
-			sr.color = Color.white;
-			yield return new WaitForSeconds(0.10f);
-			elapsed++;
 		}
 	}
 
@@ -129,13 +109,5 @@ public class TurretType : Enemy {
 
 	public override void takeDamage(float amount){
 		StartCoroutine (damage (amount));
-	}
-
-	public string getEnemyType(){
-		return type;
-	}
-
-	public float getEnemyHitPoints(){
-		return hitpoints;
 	}
 }

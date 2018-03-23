@@ -28,6 +28,7 @@ TagManager:
   - Deflected
   - LifeElement
   - Tooltip
+  - SorbOrb
   layers:
   - Default
   - TransparentFX
@@ -42,7 +43,7 @@ TagManager:
   - EnemyProjectile
   - Enemy
   - Defense
-  - 
+  - Bounds
   - 
   - 
   - 

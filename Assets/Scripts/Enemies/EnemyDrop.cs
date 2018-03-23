@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyDrop : MonoBehaviour {
+
 	private GameObject metalDrop, fireDrop, waterDrop, earthDrop, electricDrop;
 
 	void Start(){
@@ -18,20 +19,20 @@ public class EnemyDrop : MonoBehaviour {
 		electricDrop = (GameObject)Resources.Load("Prefabs/Items/Pickups/ElectricDrop");	
 	}
 
-	public void determine_Drop(string type, Vector3 pos){
-		if(type == "metal"){
+	public void determine_Drop(Elements type, Vector3 pos){
+		if(type == Elements.metal){
 			Instantiate (metalDrop, pos, Quaternion.identity);
 		}
-		if(type == "fire"){
+		if(type == Elements.fire){
 			Instantiate (fireDrop, pos, Quaternion.identity);
 		}
-		if(type == "water"){
+		if(type == Elements.water){
 			Instantiate (waterDrop, pos, Quaternion.identity);
 		}
-		if(type == "earth"){
+		if(type == Elements.earth){
 			Instantiate (earthDrop, pos, Quaternion.identity);
 		}
-		if(type == "electric"){
+		if(type == Elements.electric){
 			Instantiate (electricDrop, pos, Quaternion.identity);
 		}
 	}
