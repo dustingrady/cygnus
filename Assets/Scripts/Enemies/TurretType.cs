@@ -55,17 +55,14 @@ public class TurretType : Enemy {
 		RaycastHit2D sightTest = Physics2D.Raycast (start, direction, distance, enemySight);
 		if (sightTest) {
 			if (sightTest.collider.CompareTag("Player")) {
-				//Debug.Log ("I found you.");
 				return true;
 			}
 		}
-		line.enabled = false;
 		return false;
 	}
 
 	void draw_And_Shoot(){
 		//Debug.DrawRay(transform.position, (playerTransform.position - transform.position), Color.red,2f,false);
-		line.enabled = true;
 		line.SetPosition (0, transform.position);
 		line.SetPosition (1, playerTransform.position);
 		es.shoot_At_Player (); //Shoot um up
@@ -75,13 +72,16 @@ public class TurretType : Enemy {
 		if (Vector3.Distance (transform.position, playerTransform.position) < turretRadius) { //If player is in range (distance) of turret
 			//Debug.Log("Range: " + within_Arc(playerTransform.position)); //Testing
 			if (arcLimit && within_Arc (playerTransform.position) && within_LoS()) {
+				line.enabled = true;
 				draw_And_Shoot ();
 			} else if(!arcLimit && within_LoS()) {
+				line.enabled = true;
 				draw_And_Shoot ();
 			}
-		} else {
-			line.enabled = false;
-		}
+			else {
+				line.enabled = false;
+			}
+		} 
 	}
 
 	//Return distance between player and enemy
