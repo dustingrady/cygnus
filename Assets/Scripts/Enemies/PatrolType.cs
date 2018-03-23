@@ -14,14 +14,13 @@ public class PatrolType : Enemy {
 
 	[SerializeField] 
 	private bool canShoot = false;
-	[SerializeField] 
-	private bool arcLimit = true;
 	private EnemyShooting es;
 	private EnemyDrop edrp;
 	private EnemyDamage edmg;
 	private Transform enemyTransform;
 	private Transform playerTransform;
 	private Vector3 enemyStartingPos;
+	public LayerMask enemySight;
 
 	private Rigidbody2D rb;
 	private bool pause = false;
@@ -86,16 +85,18 @@ public class PatrolType : Enemy {
 		}
 	}
 
-	//Check if player is within ~180 degrees of enemy
-	bool within_Arc(Vector3 player){
-		float min = -10f; //Give a bit of tolerance incase turret prefab is placed imprecisely 
-		float max = 190f;
-		Vector3 dirVec = (player - transform.position).normalized;
-		float up = Vector3.Dot(transform.up, dirVec) * 90f;
-		float down = Vector3.Dot(-transform.up, dirVec) * 90f;
-		//Debug.Log ("up: " + up + " min: " + min);
-		//Debug.Log ("down: " + down + " max: " + max);
-		return up > min && up < max;
+	bool within_LoS(){
+		Vector2 start = transform.position;
+		Vector2 direction = playerTransform.position - transform.position;
+		float distance = chaseRadius; //Distance in which raycast will check
+		//Debug.DrawRay(start, direction, Color.red,2f,false);
+		RaycastHit2D sightTest = Physics2D.Raycast (start, direction, distance, enemySight);
+		if (sightTest) {
+			if (sightTest.collider.CompareTag("Player")) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	//Normal patrolling behaviour. Using sin function for side to side patrolling (may change)
@@ -113,15 +114,14 @@ public class PatrolType : Enemy {
 				patrolSpeed *= -1;
 			}
 		}
-
-		if(Distance() <= chaseRadius){
+		if(Distance() <= chaseRadius && within_LoS()){
 			chasingPlayer = true;
 		}
 	}
 
 	//Off with his head!
 	void chase_Player(){
-		if(Distance() > escapeRadius && enraged == false){
+		if(Distance() > escapeRadius && enraged == false || !within_LoS()){
 			enemyStartingPos = transform.position; //Where enemy will resume if player escapes
 			chasingPlayer = false;
 		}
@@ -137,11 +137,9 @@ public class PatrolType : Enemy {
 			}
 		}
 		if (canShoot) {
-			if (arcLimit && within_Arc (playerTransform.position)) {
+			if (within_LoS()) {
 				es.shoot_At_Player ();
-			} else if(!arcLimit) {
-				es.shoot_At_Player ();
-			}
+			} 
 			followDistance = 4.0f; //Don't get so close when shooting
 		}
 	}
@@ -152,14 +150,14 @@ public class PatrolType : Enemy {
 	}
 
 	void OnTriggerEnter2D(Collider2D col){
-		if (col.gameObject.tag == "TurnAround") {
+		if (col.gameObject.tag == "TurnAround") { //Tagable option to have NPC's turn around
 			patrolSpeed *= -1;
 		}
-		//---------------------------------------------------
-		if (col.gameObject.tag != "Ground") {
+		/*----------------------Testing-----------------------------
+		if (col.gameObject.tag == "Water" || col.gameObject.tag == "Lava") { //Prevent enemy from falling into these things
 			patrolSpeed *= -1;
 		}
-		//---------------------------------------------------
+		----------------------Testing-----------------------------*/
 
 		if (damagingElements.Contains (col.gameObject.tag)) {
 			takeDamage (edmg.determine_Damage (col.gameObject.tag, getEnemyType ()));
@@ -168,7 +166,6 @@ public class PatrolType : Enemy {
 			if (enragedCoroutine != null) {
 				StopCoroutine (enragedCoroutine);
 			}
-
 			enragedCoroutine = Enrage (2.0f);
 			StartCoroutine (enragedCoroutine);
 		}
