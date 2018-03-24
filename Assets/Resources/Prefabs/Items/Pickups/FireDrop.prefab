@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 61508917092051738}
   - component: {fileID: 50713302141940616}
   - component: {fileID: 114633323964851548}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: FireDrop
   m_TagString: FireElement
   m_Icon: {fileID: 0}
