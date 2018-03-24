@@ -50,12 +50,11 @@ public class TurretType : Enemy {
 	bool within_LoS(){
 		Vector2 start = transform.position;
 		Vector2 direction = playerTransform.position - transform.position;
-		float distance = 1000f; //Distance in which raycast will check
+		float distance = turretRadius; //Distance in which raycast will check
 		//Debug.DrawRay(start, direction, Color.red,2f,false);
 		RaycastHit2D sightTest = Physics2D.Raycast (start, direction, distance, enemySight);
 		if (sightTest) {
 			if (sightTest.collider.CompareTag("Player")) {
-				//Debug.Log ("I found you.");
 				return true;
 			}
 		}
@@ -64,28 +63,30 @@ public class TurretType : Enemy {
 
 	void draw_And_Shoot(){
 		//Debug.DrawRay(transform.position, (playerTransform.position - transform.position), Color.red,2f,false);
-		line.enabled = true;
 		line.SetPosition (0, transform.position);
 		line.SetPosition (1, playerTransform.position);
 		es.shoot_At_Player (); //Shoot um up
 	}
 
 	void guard_Area(){
-		if (Vector3.Distance (transform.position, playerTransform.position) < turretRadius) { //If player is in range (distance) of turret
+		if (Distance () < turretRadius) { //If player is in range (distance) of turret
 			//Debug.Log("Range: " + within_Arc(playerTransform.position)); //Testing
 			if (arcLimit && within_Arc (playerTransform.position) && within_LoS()) {
+				line.enabled = true;
 				draw_And_Shoot ();
 			} else if(!arcLimit && within_LoS()) {
+				line.enabled = true;
 				draw_And_Shoot ();
 			}
-		} else {
-			line.enabled = false;
-		}
+			else {
+				line.enabled = false;
+			}
+		} 
 	}
 
 	//Return distance between player and enemy
 	private float Distance(){
-		return Vector3.Distance(enemyTransform.position, playerTransform.position);
+		return Vector3.Distance(transform.position, playerTransform.position);
 	}
 
 	void OnTriggerEnter2D(Collider2D col){

@@ -142,7 +142,9 @@ MonoBehaviour:
   hitpoints: 80
   energy: 100
   canShoot: 0
-  arcLimit: 1
+  enemySight:
+    serializedVersion: 2
+    m_Bits: 768
 --- !u!212 &212506304645966160
 SpriteRenderer:
   m_ObjectHideFlags: 1
