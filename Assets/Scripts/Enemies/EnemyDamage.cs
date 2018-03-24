@@ -6,6 +6,11 @@ public class EnemyDamage : MonoBehaviour {
 	public Dictionary<Elements, string> weaknesses;
 	public Dictionary<Elements, string> resistances;
 
+	public float baseFire = 15f;
+	public float baseWater = 10f;
+	public float baseElectric = 0.1f;
+	public float baseEarth = 10f;
+
 	void Start(){
 		//x is weak to y
 		weaknesses = new Dictionary<Elements, string> ();
@@ -23,32 +28,32 @@ public class EnemyDamage : MonoBehaviour {
 		resistances.Add (Elements.metal, "MetalElement"); 
 		resistances.Add (Elements.electric, "WaterElement");
 	}
-		
-	public float determine_Damage(string attackType, Elements enemyType){
+
+	public float determine_Damage(string attackType, Elements enemyType, float direct = 1f){
 		float dmg = 0f; //Base damage
 		switch (attackType) {
 		case "FireElement":
-			dmg = 15f;
+			dmg = baseFire;
 			break;
 		case "WaterElement":
-			dmg = 10f;
+			dmg = baseWater;
 			break;
 		case "EarthElement":
-			dmg = 20f; //Need to figure out how to change this based on boulder size
+			dmg = direct;
 			break;
 		case "ElectricElement":
-			dmg = 0.2f;
+			dmg = baseElectric;
 			break;
 		}
 
-		if (weaknesses [enemyType] == attackType) { //Crit!
+		if (weaknesses [enemyType] == attackType) {
 			dmg *= 2f;
 		}
 		if(resistances[enemyType] == attackType){
 			dmg *= 0.5f;
 		}
 
-		//Debug.Log ("Dealt " + dmg + " dmg to " + type + " type enemy");
+		//Debug.Log ("Dealt " + dmg + " dmg to " + enemyType + " type enemy");
 		return dmg;
 	}
 }

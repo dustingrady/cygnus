@@ -29,19 +29,29 @@ public class Player : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetKeyDown(KeyCode.Q)) {
-            health.CurrentVal -= 10;
-        }
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            health.CurrentVal += 10;
-        }
-
 		if (health.CurrentVal <= 0) {
 			inventory.emptyInventory ();
 			SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
 		}
     }
+
+	public void Knockback (float strength, Vector2 dir) {
+		Rigidbody2D rb = GetComponent<Rigidbody2D> ();
+		rb.AddForce (dir * strength);
+
+		StartCoroutine (flash());
+	}
+
+	void TouchedEnemy(GameObject enemy) {
+		Vector2 dir = Vector2.zero;
+		if (transform.position.x < enemy.transform.position.x) {
+			dir = new Vector2 (-0.5f, 0.5f);
+		} else {
+			dir = new Vector2 (0.5f, 0.5f);
+		}
+
+		Knockback(1200f, dir);
+	}
 		
 	/*
 	 * 
@@ -94,6 +104,9 @@ public class Player : MonoBehaviour {
 		}
 
 		if (col.gameObject.tag == "Enemy" && !takingDamage) {
+			// Trigger knockback and flash
+			TouchedEnemy(col.gameObject);
+
 			StartCoroutine (enemyOnContact (20));
 		}
 			
@@ -163,20 +176,24 @@ public class Player : MonoBehaviour {
 
 		if ((col.gameObject.tag == "EnemyProjectile" && !takingDamage)) {
 			StartCoroutine (enemyProjectiles(10));
+			StartCoroutine (flash());
 		}
 
 		if (col.gameObject.name == "Fire" && !standingInFire) {
 			StartCoroutine (singularDamage (5));
+			StartCoroutine (flash());
 		}
 	}
 
 	void OnTriggerStay2D(Collider2D col){
 		if ((col.gameObject.tag == "LavaPlatform" && !standingInFire)) {
 			StartCoroutine(singularDamage(5));
+			StartCoroutine (flash());
 		}
 
 		if ((col.gameObject.tag == "FireElement" && !standingInFire)) {
 			StartCoroutine(singularDamage(5));
+			StartCoroutine (flash());
 		} if (col.gameObject.tag == "Acid") {
 			StartCoroutine (acidContact (1));
 		}
@@ -244,5 +261,18 @@ public class Player : MonoBehaviour {
 	{
 		health.CurrentVal -= damageAmount;
 		yield return new WaitForSeconds (0.3f);
+	}
+
+	IEnumerator flash(){
+		SpriteRenderer sr = GetComponent<SpriteRenderer> ();
+		int elapsed = 0;
+		int flashes = 3;
+		while(elapsed < flashes){
+			sr.color = new Color(1f, 0.8f, 0.8f);
+			yield return new WaitForSeconds(0.10f);
+			sr.color = Color.white;
+			yield return new WaitForSeconds(0.10f);
+			elapsed++;
+		}
 	}
 }

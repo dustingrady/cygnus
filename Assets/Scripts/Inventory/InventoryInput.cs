@@ -27,7 +27,6 @@ public class InventoryInput : MonoBehaviour {
 		player = GameObject.Find ("Player").GetComponent<Player> ();
 		EM = GameObject.Find ("Elements").GetComponent<ElementManager> ();
 		EU = GameObject.Find ("UI").GetComponent<ElementUI> ();
-		Debug.Log (EM + " " + EU);
 
 		keys = new List<KeyCode> { KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3, KeyCode.Alpha4, 
 			KeyCode.Alpha5, KeyCode.Alpha6, KeyCode.Alpha7, KeyCode.Alpha8

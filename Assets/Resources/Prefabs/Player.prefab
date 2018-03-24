@@ -97,7 +97,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1259700113646964}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.04, y: 0.1, z: 0}
+  m_LocalPosition: {x: -11.82, y: -3.05, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4565867435854406}
@@ -318,7 +318,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1477869712044170}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee6b1a9ee7224d8488fb3f11089de9da, type: 3}
+  m_Script: {fileID: 11500000, guid: 89151eb0dc885fe41a165111e188ad87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   elementType: steam
@@ -370,7 +370,8 @@ MonoBehaviour:
   elementType: earth
   sprite: {fileID: 21300000, guid: 975941dad9157d0498c9087a09d532b0, type: 3}
   earth: {fileID: 1026038261556570, guid: 1fa4fa7bdc9dd4847b3cb8f512410715, type: 2}
-  boulderStrength: 600
+  maxBoulderStrength: 45
+  maxMass: 1.4
   earthCooldown: 1.5
   maxCharge: 2
   powerMeter: {fileID: 0}

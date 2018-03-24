@@ -18,6 +18,8 @@ public class Steam : Element {
 	GameObject steamObject;
 	public Image icon;
 
+	private PowerMeter powerMeter;
+
 	public override void UseElement(Vector3 pos, Vector2 dir){
 		GameObject ui = GameObject.Find ("UI");
 		Transform centerElement = ui.transform.Find ("CenterElement");
@@ -40,6 +42,18 @@ public class Steam : Element {
 			//transform.root.GetComponent<Rigidbody2D> ().AddForce (-dir.normalized * burstStrength);
 
 			btnReleased = false;
+
+			// Set the powermeter color and show the meter
+			powerMeter.SetBarColor(Color.white);
+			powerMeter.Show ();
+		}
+	}
+
+	void Start() {
+		if (GameObject.FindGameObjectWithTag ("PowerMeter") != null) {
+			powerMeter = GameObject.FindGameObjectWithTag ("PowerMeter").GetComponent<PowerMeter> ();
+		} else {
+			Debug.LogError ("Unable to locate player power meter");
 		}
 	}
 
@@ -64,8 +78,14 @@ public class Steam : Element {
 			} else if (transform.root.GetComponent<ConstantForce2D> ().force.magnitude >= maxForce) {
 				transform.root.GetComponent<ConstantForce2D> ().force = new Vector2(transform.root.GetComponent<ConstantForce2D> ().force.x *(-direction.normalized.x), transform.root.GetComponent<ConstantForce2D> ().force.y *(-direction.normalized.y));
 			}
+
 			if(flightTimer < flightTime)
 				flightTimer += Time.deltaTime;
+
+			// Set the bar to the remaining flightTime
+			float percentRemain = (flightTime - flightTimer)/flightTime;
+			powerMeter.SetBarValue(percentRemain);
+
 		}
 			
 		if (btnReleased || flightTimer >= flightTime) {
@@ -73,12 +93,15 @@ public class Steam : Element {
 			if(steamObject != null)
 				steamObject.GetComponent<ParticleSystem> ().Stop ();
 		}
+
 		if (Input.GetMouseButtonUp (2) == true
 			|| Input.GetButtonUp("RightStick")) {
 			if (timeSinceFire >= burstCooldown) {
 				btnReleased = true;
 				timeSinceFire = 0;
 				flightTimer = 0;
+
+				powerMeter.Hide();
 			}
 		}
 	}

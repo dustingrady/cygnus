@@ -52,7 +52,7 @@ public class Inventory : MonoBehaviour {
 			toolTipText = GameObject.Find ("TooltipText").GetComponent<Text> ();
 
 		cam = GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<Camera> ();
-		Debug.Log (canvas + " " + toolTip + " " + toolTipText);
+		//Debug.Log (canvas + " " + toolTip + " " + toolTipText);
 	}
 
 	public void OnLevelWasLoaded()

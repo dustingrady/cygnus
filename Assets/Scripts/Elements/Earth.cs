@@ -6,9 +6,12 @@ using UnityEngine.UI;
 public class Earth : Element {
 	public GameObject earth;
 	[SerializeField]
-	private float boulderStrength = 500;
+	private float maxBoulderStrength = 45f;
+	private float boulderStrength = 0f;
 	[SerializeField]
-	private float earthCooldown = 1.5f;
+	private float maxMass = 1.4f;
+	[SerializeField]
+	private float earthCooldown = 1f;
 	[SerializeField]
 	private float maxCharge = 2f;
 
@@ -85,16 +88,19 @@ public class Earth : Element {
 		Vector2 dir = plrs.GetCursorDirection ();
 		Vector3 pos = plrs.transform.position;
 
-		//Debug.Log ("Firing a boulder");
-
 		// Get the scale of the boulder based on the charge time - 1 being full charge
 		float scale = Mathf.Clamp((chargeTime / maxCharge), 0.3f, 1.0f);
+		float scaleMass = Mathf.Clamp((chargeTime / maxCharge), 0.1f, 1.0f);
+		boulderStrength = maxBoulderStrength * scale;
 
 		GameObject fb = Instantiate (earth, pos, Quaternion.identity);
 
 		fb.transform.localScale = new Vector3 (scale, scale, scale);
 
-		fb.GetComponent<Boulder> ().Initialize (dir, boulderStrength/scale);
+		fb.GetComponent<Boulder> ().Initialize (dir, Mathf.Pow(boulderStrength, 2));
+
+		// Setting the mass of the boulder based on the scale
+		fb.GetComponent<Rigidbody2D>().mass = scaleMass * maxMass;
 
 		// Start the cooldown
 		timeSinceFire = 0;
@@ -110,7 +116,7 @@ public class Earth : Element {
 	bool ShotRelease() {
 		if (GameManager.instance.controllerConnected) {
 			if (plrs.leftFireDown == false && leftFireDown == true
-			    || plrs.rightFireDown == false && rightFireDown == true) {
+				|| plrs.rightFireDown == false && rightFireDown == true) {
 				return true;
 			}
 		} else if ((Input.GetMouseButtonUp (0) == true || Input.GetMouseButtonUp (1) == true)) {

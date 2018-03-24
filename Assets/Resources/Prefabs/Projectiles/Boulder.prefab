@@ -20,12 +20,11 @@ GameObject:
   m_Component:
   - component: {fileID: 4209816640978342}
   - component: {fileID: 212700807135910550}
-  - component: {fileID: 58971450714296256}
   - component: {fileID: 58947342149818206}
   - component: {fileID: 114641319049574636}
   - component: {fileID: 50172384099055682}
   - component: {fileID: 114186789761585048}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Boulder
   m_TagString: EarthElement
   m_Icon: {fileID: 0}
@@ -75,21 +74,6 @@ CircleCollider2D:
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.43
---- !u!58 &58971450714296256
-CircleCollider2D:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1026038261556570}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}

@@ -93,9 +93,13 @@ public class PatrolType : Enemy {
 	}
 
 	bool within_LoS(){
+
 		Vector2 start = transform.position;
 		Vector2 direction = playerTransform.position - transform.position;
 		float distance = chaseRadius; //Distance in which raycast will check
+		if (enraged) {
+			distance = 100f;
+		}
 		//Debug.DrawRay(start, direction, Color.red,2f,false);
 		RaycastHit2D sightTest = Physics2D.Raycast (start, direction, distance, enemySight);
 		if (sightTest) {
@@ -189,6 +193,25 @@ public class PatrolType : Enemy {
 			hitpoints -= 0.1f;
 		}
 	}
+
+	void OnCollisionEnter2D(Collision2D col) {
+		Rigidbody2D collisionRB = col.gameObject.GetComponent<Rigidbody2D> ();
+		if (collisionRB != null) {
+			float colForce = CalculatePhysicalImpact (col.contacts [0].normal, col.relativeVelocity, collisionRB.mass);
+
+			if (colForce > 3) {
+				float dmg = edmg.determine_Damage ("EarthElement", getEnemyType (), colForce);
+				takeDamage (dmg);
+
+				// Stop the enrage coroutine and start another
+				if (enragedCoroutine != null) {
+					StopCoroutine (enragedCoroutine);
+				}
+				enragedCoroutine = Enrage (2.0f);
+				StartCoroutine (enragedCoroutine);
+			}
+		}
+	}
 		
 	IEnumerator idle(){
 		pause = true;
@@ -214,11 +237,9 @@ public class PatrolType : Enemy {
 	IEnumerator Enrage(float duration) {
 		enraged = true;
 		chasingPlayer = true;
-		Debug.Log ("now enraged");
 
 		yield return new WaitForSeconds (duration);
 
 		enraged = false;
-		Debug.Log ("no longer enraged");
 	}
 }

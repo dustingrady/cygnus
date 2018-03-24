@@ -55,5 +55,9 @@ public abstract class Enemy : MonoBehaviour {
 		return hitpoints;
 	}
 
+	public float CalculatePhysicalImpact(Vector2 contactNorm, Vector2 vel, float mass) {
+		return Vector3.Dot (contactNorm, vel) * mass;
+	}
+
 	public abstract void takeDamage(float amount);
 }
