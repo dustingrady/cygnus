@@ -79,32 +79,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1a87723f02d5934eabb6b973d331169, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uiRoot: {fileID: 0}
+  uiRoot: {fileID: 1220740983874966, guid: 267853b8c8fcb2444be28e5a0e114a23, type: 2}
   tree: {fileID: 11400000, guid: fb6d73f9737464b4798a36fa6fe41721, type: 2}
   portrait: {fileID: 21300000, guid: ae0be00169e7b7a43bce92edab3c2d13, type: 3}
   windowPrefeb: {fileID: 1579963195461924, guid: 6eca34c59fda5c649903a517efef9ac6,
     type: 2}
-  dialogueEvent:
-  - m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  - m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  - m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  - m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  - m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114664401510809586
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -121,6 +100,7 @@ MonoBehaviour:
   talker: {fileID: 0}
   outsideDialogue: {fileID: 11400000, guid: 5e84cf38fc1890c42b46ba4576622673, type: 2}
   gloveDialogue: {fileID: 11400000, guid: 370291f14de5af94bb721ad4df247dc5, type: 2}
+  inside_fireOut: {fileID: 11400000, guid: 473c85f373e5db84a89c748bbe159886, type: 2}
 --- !u!212 &212748472686128408
 SpriteRenderer:
   m_ObjectHideFlags: 1
