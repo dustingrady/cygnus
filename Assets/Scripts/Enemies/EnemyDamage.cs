@@ -41,7 +41,7 @@ public class EnemyDamage : MonoBehaviour {
 			break;
 		}
 
-		if (weaknesses [enemyType] == attackType) {
+		if (weaknesses [enemyType] == attackType) { //Crit!
 			dmg *= 2f;
 		}
 		if(resistances[enemyType] == attackType){

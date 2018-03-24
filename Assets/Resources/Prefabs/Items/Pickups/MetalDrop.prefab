@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 61993365062506564}
   - component: {fileID: 50181366325686810}
   - component: {fileID: 114885058933155450}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: MetalDrop
   m_TagString: MetalElement
   m_Icon: {fileID: 0}

@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 61882990368942968}
   - component: {fileID: 50048632813489010}
   - component: {fileID: 114769523933508792}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: ElectricDrop
   m_TagString: ElectricElement
   m_Icon: {fileID: 0}

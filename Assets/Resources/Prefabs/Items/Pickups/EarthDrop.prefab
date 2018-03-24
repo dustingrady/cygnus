@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 61471187276626926}
   - component: {fileID: 50281030365512024}
   - component: {fileID: 114642450211391550}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: EarthDrop
   m_TagString: EarthElement
   m_Icon: {fileID: 0}

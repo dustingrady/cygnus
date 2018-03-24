@@ -29,6 +29,8 @@ TagManager:
   - LifeElement
   - Tooltip
   - SorbOrb
+  - Breakable
+  - Acid
   layers:
   - Default
   - TransparentFX
@@ -44,7 +46,7 @@ TagManager:
   - Enemy
   - Defense
   - Bounds
-  - 
+  - SorbLayer
   - 
   - 
   - 

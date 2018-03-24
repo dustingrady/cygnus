@@ -24,8 +24,10 @@ public class ReverseHidden : MonoBehaviour {
 			}
 			if (m.color.a <= 0.01) {
 				if (room.GetComponent<TilemapCollider2D> () != null) {
-					room.GetComponent<TilemapCollider2D> ().enabled = true;
+					room.GetComponent<TilemapCollider2D> ().enabled = false;
 				}
+				Debug.Log (m.color.a);
+
 				fading = false;
 			}
 		}
