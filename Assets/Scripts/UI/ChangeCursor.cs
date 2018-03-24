@@ -10,21 +10,31 @@ public class ChangeCursor : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 	private Sprite original;
 	private Image cursorImg;
 
+	PlayerShooting plrShooting;
+
 	public void Start() {
 		cursorImg = GameObject.Find ("Reticle").GetComponent<Image>();
 		original = cursorImg.sprite;
+
+		plrShooting = GameObject.FindWithTag ("Player").GetComponent<PlayerShooting>();
 	}
 
 	public void OnPointerEnter(PointerEventData eventData) {
 		cursorImg.sprite = replacement;
+
+		plrShooting.enabled = false;
 	}
 
 	public void OnPointerExit(PointerEventData eventData) {
 		cursorImg.sprite = original;
+
+		plrShooting.enabled = true;
 	}
 
 	public void OnPointerClick(PointerEventData eventData) {
 		cursorImg.sprite = original;
+
+		plrShooting.enabled = true;
 	}
 
 

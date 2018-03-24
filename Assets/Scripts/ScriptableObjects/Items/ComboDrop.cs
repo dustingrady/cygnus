@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName="EssenceItem", menuName="Items/Essence")]
-public class Essence : Item {
-	public enum ElementType {Fire, Water, Earth, Metal};
+[CreateAssetMenu(fileName="ComboItem", menuName="Items/Combo")]
+public class ComboDrop : Item {
 
-	public ElementType type;
-	public int strength;
+	public string comboElement;
 	public string description;
-	private bool consumable = false;
+	private bool consumable = true;
 
 	public override void useItem()
 	{
@@ -30,7 +27,7 @@ public class Essence : Item {
 
 	public override string consumeCombo ()
 	{
-		return "";
+		return comboElement;
 	}
 
 	public override bool checkType()
