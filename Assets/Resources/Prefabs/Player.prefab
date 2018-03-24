@@ -28,6 +28,7 @@ GameObject:
   - component: {fileID: 114231931990252468}
   - component: {fileID: 114482010898966262}
   - component: {fileID: 247480316462970952}
+  - component: {fileID: 247838025441332736}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -97,7 +98,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1259700113646964}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -11.82, y: -3.05, z: 0}
+  m_LocalPosition: {x: -3.45, y: -2.56, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4565867435854406}
@@ -3942,6 +3943,16 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
 --- !u!247 &247480316462970952
+ConstantForce2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1259700113646964}
+  m_Enabled: 1
+  m_Force: {x: 0, y: 0}
+  m_RelativeForce: {x: 0, y: 0}
+  m_Torque: 0
+--- !u!247 &247838025441332736
 ConstantForce2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}

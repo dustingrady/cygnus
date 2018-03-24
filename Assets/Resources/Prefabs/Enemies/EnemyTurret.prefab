@@ -103,6 +103,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b17dded1bf6d6714296cea0180d4eea0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  baseFire: 15
+  baseWater: 10
+  baseElectric: 0.1
+  baseEarth: 10
 --- !u!114 &114330692470991352
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -180,7 +184,7 @@ LineRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 4
   m_Positions:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 1}
