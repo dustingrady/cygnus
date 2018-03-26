@@ -18,11 +18,10 @@ public class FloatingTextController : MonoBehaviour {
 	}
 
 	public static void CreateFloatingText(float dmg, Transform location){
-		//Vector2 topOfPlayer = new Vector2(location.position.x, location.position.y + 1);
-		Vector2 screenPosition = Camera.main.WorldToScreenPoint(new Vector2(location.position.x, location.position.y + 1));
 		FloatingText instance = Instantiate (popupText);
+		Vector2 screenPosition = Camera.main.WorldToScreenPoint(new Vector2(location.position.x, location.position.y+1));
 		instance.transform.SetParent (canvas.transform, false);
-		instance.transform.position = screenPosition;
+		instance.transform.position = (screenPosition);
 		instance.SetText (dmg);
 	}
 }
