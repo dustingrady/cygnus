@@ -12,6 +12,7 @@ public class EnemyDamage : MonoBehaviour {
 	public float baseEarth = 10f;
 
 	void Start(){
+		FloatingTextController.Initialize ();
 		//x is weak to y
 		weaknesses = new Dictionary<Elements, string> ();
 		weaknesses.Add(Elements.fire, "WaterElement");
@@ -52,8 +53,9 @@ public class EnemyDamage : MonoBehaviour {
 		if(resistances[enemyType] == attackType){
 			dmg *= 0.5f;
 		}
-
 		//Debug.Log ("Dealt " + dmg + " dmg to " + enemyType + " type enemy");
+		Debug.Log("Object position: " + this.gameObject.transform.position);
+		FloatingTextController.CreateFloatingText (dmg, this.gameObject.transform); //Testing floating damage
 		return dmg;
 	}
 }
