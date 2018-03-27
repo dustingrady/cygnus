@@ -47,14 +47,16 @@ public class EnemyDamage : MonoBehaviour {
 			break;
 		}
 
+		/*Crit*/
 		if (weaknesses [enemyType] == attackType) {
 			dmg *= 2f;
 		}
+		/*Resist*/
 		if(resistances[enemyType] == attackType){
 			dmg *= 0.5f;
 		}
 		//Debug.Log ("Dealt " + dmg + " dmg to " + enemyType + " type enemy");
-		Debug.Log("Object position: " + this.gameObject.transform.position);
+		//Debug.Log("Object position: " + this.gameObject.transform.position);
 		FloatingTextController.CreateFloatingText (dmg, this.gameObject.transform); //Testing floating damage
 		return dmg;
 	}

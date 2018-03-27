@@ -1016,12 +1016,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee6b1a9ee7224d8488fb3f11089de9da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  elementType: steam
-  sprite: {fileID: 21300000, guid: d57439372e594a947ad0f99a715ea5a9, type: 3}
-  burst: {fileID: 1592261021910876, guid: f1b716cfa500aeb448253fb6c780b6a8, type: 2}
-  burstStrength: 2000
-  burstCooldown: 1.5
-  icon: {fileID: 0}
 --- !u!114 &227407735
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1875,12 +1869,12 @@ Prefab:
     - target: {fileID: 224737888326160916, guid: 267853b8c8fcb2444be28e5a0e114a23,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -16.028631
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224737888326160916, guid: 267853b8c8fcb2444be28e5a0e114a23,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 22.057262
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224166394385784508, guid: 267853b8c8fcb2444be28e5a0e114a23,
         type: 2}
@@ -1900,7 +1894,7 @@ Prefab:
     - target: {fileID: 224166394385784508, guid: 267853b8c8fcb2444be28e5a0e114a23,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -16.028631
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224166394385784508, guid: 267853b8c8fcb2444be28e5a0e114a23,
         type: 2}
@@ -1910,12 +1904,12 @@ Prefab:
     - target: {fileID: 224166394385784508, guid: 267853b8c8fcb2444be28e5a0e114a23,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 32.057262
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224010827024031366, guid: 267853b8c8fcb2444be28e5a0e114a23,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 32.057262
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 267853b8c8fcb2444be28e5a0e114a23, type: 2}
