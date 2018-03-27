@@ -22,17 +22,6 @@ public class Essence : Item {
 		return description;
 	}
 
-
-	public override float useConsumable ()
-	{
-		return 0;
-	}
-
-	public override string consumeCombo ()
-	{
-		return "";
-	}
-
 	public override bool checkType()
 	{
 		return consumable;

@@ -9,9 +9,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a8d6315decddae9468e42dbf995e0794, type: 3}
-  m_Name: 2_Lava Consumable
+  m_Name: Magnet Consumable
   m_EditorClassIdentifier: 
-  sprite: {fileID: 21300000, guid: 6ab9e76c911ac6f42ba4aac60d99f8e2, type: 3}
-  comboElement: lava
-  description: Volatile lava elemental. Grant lVolatile lava elemental. Grant lava
-    combo and it's associate primative elements.
+  sprite: {fileID: 21300000, guid: a0f4bf4bedc2cb64d86a8797568fdfef, type: 3}
+  comboElement: magnet
+  description: Volatile magnet elemental.
