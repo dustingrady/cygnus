@@ -10,18 +10,21 @@ public class FloatingTextController : MonoBehaviour {
 	private static GameObject canvas;
 
 	public static void Initialize(){
-		canvas = GameObject.Find("FloatingDamageCanvas");
+		canvas = GameObject.Find("World Canvas");
 		//canvas = Resources.Load<GameObject>("Prefabs/UI/FloatingDamageCanvas");
 		if (!popupText) {
 			popupText = Resources.Load<FloatingText> ("Prefabs/UI/FloatingDamage");
 		}
 	}
 
-	public static void CreateFloatingText(float dmg, Transform location){
+	public static void CreateFloatingText(string dmg, Transform location, Color clr = default(Color), int size = 20){
 		FloatingText instance = Instantiate (popupText);
-		Vector2 screenPosition = Camera.main.WorldToScreenPoint(new Vector2(location.position.x, location.position.y+1));
 		instance.transform.SetParent (canvas.transform, false);
-		instance.transform.position = (screenPosition);
+		instance.transform.position = (location.position + Vector3.up);
 		instance.SetText (dmg);
+		if (clr != default(Color))
+			instance.SetColor (clr);
+		if (size != null)
+			instance.SetSize (size);
 	}
 }

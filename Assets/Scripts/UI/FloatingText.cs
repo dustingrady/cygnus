@@ -8,16 +8,21 @@ using UnityEngine.UI;
 
 public class FloatingText : MonoBehaviour {
 	public Animator animator;
-	private Text damageText;
 
 	void Start(){
 		AnimatorClipInfo[] clipInfo = animator.GetCurrentAnimatorClipInfo (0); //Get animation info
 		Destroy(gameObject, clipInfo[0].clip.length); //Destroy object after the length of its animation
-		damageText = animator.GetComponent<Text>();
 	}
 
-	public void SetText(float text){
-		//damageText.text = string.Format("{0:N0}", text);
+	public void SetText(string text){
 		animator.GetComponent<Text>().text = string.Format("{0:N0}", text);
+	}
+
+	public void SetColor(Color clr) {
+		animator.GetComponent<Text> ().color = clr;
+	}
+
+	public void SetSize(int size) {
+		animator.GetComponent<Text> ().fontSize = size;
 	}
 }

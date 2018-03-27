@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,7 +8,7 @@ public class EnemyDamage : MonoBehaviour {
 	public Dictionary<Elements, string> resistances;
 
 	public float baseFire = 15f;
-	public float baseWater = 10f;
+	public float baseWater = 4f;
 	public float baseElectric = 0.1f;
 	public float baseEarth = 10f;
 
@@ -40,24 +41,36 @@ public class EnemyDamage : MonoBehaviour {
 			dmg = baseWater;
 			break;
 		case "EarthElement":
-			dmg = direct;
+			dmg = (int)direct;
 			break;
 		case "ElectricElement":
 			dmg = baseElectric;
 			break;
 		}
 
-		/*Crit*/
 		if (weaknesses [enemyType] == attackType) {
 			dmg *= 2f;
 		}
-		/*Resist*/
 		if(resistances[enemyType] == attackType){
 			dmg *= 0.5f;
 		}
 		//Debug.Log ("Dealt " + dmg + " dmg to " + enemyType + " type enemy");
-		//Debug.Log("Object position: " + this.gameObject.transform.position);
-		FloatingTextController.CreateFloatingText (dmg, this.gameObject.transform); //Testing floating damage
+		Debug.Log("Object position: " + this.gameObject.transform.position);
+
+		display_Damage (dmg);
 		return dmg;
+	}
+
+	// Creates the floating text for the enemy damage
+	private void display_Damage(float dmg) {
+
+		// Scale the damage size between 12 and 35 based on how much damage was delt
+		float dmgSize = Mathf.Lerp (12, 38, dmg / 80);
+
+		// Reduce the amount of green to make the color more red based on damage
+		Color baseClr = Color.yellow;
+		baseClr.g -= dmg / 100;
+
+		FloatingTextController.CreateFloatingText (dmg.ToString(), this.gameObject.transform, baseClr, (int)dmgSize);
 	}
 }
