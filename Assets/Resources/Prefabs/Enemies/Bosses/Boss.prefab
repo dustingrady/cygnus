@@ -131,7 +131,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b921e424039c09d409a27dadc7bd580a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 200
+  elementType: 0
+  assignRandomType: 0
+  hitpoints: 2000
+  energy: 100
   bossRagdoll: {fileID: 1228556099721632, guid: 80edcc4e26d8a394cb88d75a3bfaec8f,
     type: 2}
 --- !u!212 &212166130877303934

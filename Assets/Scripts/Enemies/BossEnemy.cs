@@ -8,7 +8,7 @@ using UnityEngine;
 
 public class BossEnemy : Enemy {
 	[SerializeField]
-	private int health;
+	// int health;
 	public GameObject bossRagdoll;
 	private Transform playerTransform;
 	private Transform enemyTransform;
@@ -51,7 +51,7 @@ public class BossEnemy : Enemy {
 
 	/*Are we still alive?*/
 	private void Check_Health(){
-		if(health <= 0){
+		if(hitpoints <= 0){
 			Destroy(this.gameObject);
 			Instantiate (bossRagdoll, this.transform.position, Quaternion.identity);	//Instantiate dead boss
 		}
@@ -69,7 +69,7 @@ public class BossEnemy : Enemy {
 		*/
 
 		if (col.gameObject.tag == "Deflected") {
-			health -= 50;
+			//health -= 50;
 			Destroy (col.gameObject);
 		}
 	}
