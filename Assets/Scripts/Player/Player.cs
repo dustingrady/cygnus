@@ -223,7 +223,7 @@ public class Player : MonoBehaviour {
 
         int currentTick = 0;
         while (currentTick < ticks) {
-            health.CurrentVal -= damageAmount;
+			ReducePlayerHealth (damageAmount);
             yield return new WaitForSeconds (1);
             currentTick++;
         }
@@ -234,7 +234,7 @@ public class Player : MonoBehaviour {
     IEnumerator singularDamage(int damageAmount)
     {
         standingInFire = true;
-        health.CurrentVal -= damageAmount;
+		ReducePlayerHealth (damageAmount);
         yield return new WaitForSeconds (2);
         standingInFire = false;
     }
@@ -243,8 +243,8 @@ public class Player : MonoBehaviour {
 	IEnumerator enemyProjectiles(int damageAmount)
 	{
 		takingDamage = true;
-		health.CurrentVal -= damageAmount;
-		yield return new WaitForSeconds (2);
+		ReducePlayerHealth (damageAmount);
+		yield return new WaitForSeconds (0.5f);
 		takingDamage = false;
 	}
 
@@ -252,14 +252,14 @@ public class Player : MonoBehaviour {
 	IEnumerator enemyOnContact(int damageAmount)
 	{
 		takingDamage = true;
-		health.CurrentVal -= damageAmount;
+		ReducePlayerHealth (damageAmount);
 		yield return new WaitForSeconds (1);
 		takingDamage = false;
 	}
 
 	IEnumerator acidContact(int damageAmount) 
 	{
-		health.CurrentVal -= damageAmount;
+		ReducePlayerHealth(damageAmount);
 		yield return new WaitForSeconds (0.3f);
 	}
 
@@ -274,5 +274,11 @@ public class Player : MonoBehaviour {
 			yield return new WaitForSeconds(0.10f);
 			elapsed++;
 		}
+	}
+
+	void ReducePlayerHealth(int dmg) {
+
+		FloatingTextController.CreateFloatingText (dmg.ToString(), transform, Color.red, 15);
+		health.CurrentVal -= dmg;
 	}
 }
