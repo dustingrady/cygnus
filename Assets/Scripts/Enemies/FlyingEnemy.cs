@@ -5,6 +5,8 @@ using UnityEngine;
 public class FlyingEnemy : Enemy {
 
 	private bool chasingPlayer;
+	private bool stunned = false;
+	private int tolerance = 0;
 	private float delta = 5.0f; //How far we move left and right
 	private float patrolSpeed = 1.5f; //How fast we move left and right
 	private float chaseSpeed = 2.5f;
@@ -13,6 +15,7 @@ public class FlyingEnemy : Enemy {
 	private EnemyShooting es;
 	private EnemyDrop edrp;
 	private EnemyDamage edmg;
+	private GameObject sparks;
 	private Transform enemyTransform;
 	private Transform playerTransform;
 	private Vector3 enemyStartingPos;
@@ -33,6 +36,7 @@ public class FlyingEnemy : Enemy {
 		edrp = gameObject.GetComponent<EnemyDrop> ();
 		edmg = gameObject.GetComponent<EnemyDamage> ();
 		playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+		sparks = Resources.Load ("Prefabs/Particles/Sparks") as GameObject;
 	}
 
 	void Start(){
@@ -47,13 +51,37 @@ public class FlyingEnemy : Enemy {
 			edrp.determine_Drop (getEnemyType (), this.transform.position);
 			Destroy (this.gameObject);
 		}
-		switch (chasingPlayer) {
-		case true:
-			chase_Player ();
-			break;
-		case false:
-			patrol_Area ();
-			break;
+
+		if (stunned == false) {
+			switch (chasingPlayer) {
+			case true:
+				chase_Player ();
+				break;
+			case false:
+				patrol_Area ();
+				break;
+			}
+		}
+
+		if (tolerance == 20) {
+			stunned = true;
+			Instantiate (sparks, this.transform.position, Quaternion.identity);
+			StartCoroutine (stunDuration ());
+		}
+
+		if (tolerance == 200) {
+			tolerance = 0;
+		}
+
+		if (stunned == false) {
+			switch (chasingPlayer) {
+			case true:
+				chase_Player ();
+				break;
+			case false:
+				patrol_Area ();
+				break;
+			}
 		}
 	}
 
@@ -161,6 +189,11 @@ public class FlyingEnemy : Enemy {
 
 	public override void takeDamage(float amount){
 		StartCoroutine (damage (amount));
+	}
+
+	IEnumerator stunDuration(){
+		yield return new WaitForSeconds (2);
+		stunned = false;
 	}
 
 	IEnumerator Enrage(float duration) {

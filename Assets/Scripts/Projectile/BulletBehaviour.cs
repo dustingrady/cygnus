@@ -25,6 +25,7 @@ public class BulletBehaviour : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		transform.position += transform.right * bulletSpeed * Time.deltaTime;
+		Destroy(this.gameObject, 5f);
 	}
 
 	void OnTriggerEnter2D(Collider2D col){

@@ -20,6 +20,8 @@ public class Player : MonoBehaviour {
 
     public Inventory inventory;
 
+	private Vector3 checkpointPos;
+
     void Awake () {
 		health.Initalize();
 		// Inventory references need to be reset each time a scene loads
@@ -30,8 +32,7 @@ public class Player : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (health.CurrentVal <= 0) {
-			inventory.emptyInventory ();
-			SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
+			CheckHealth ();
 		}
     }
 
@@ -59,6 +60,21 @@ public class Player : MonoBehaviour {
 		Debug.Log ("healing for: " + amount);
 	}
 	
+
+	void CheckHealth() {
+		if (health.CurrentVal <= 0) {
+			if (checkpointPos != null) {
+				Debug.Log ("going to checkpoint");
+				health.CurrentVal = 100;
+				transform.position = checkpointPos;
+			} else {
+				inventory.emptyInventory ();
+				Debug.Log ("Resetting scene");
+				SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
+			}
+		}
+	}
+		
 	/*
 	 * 
 	 * START OF COLLISION STUFF
@@ -189,6 +205,13 @@ public class Player : MonoBehaviour {
 			StartCoroutine (singularDamage (5));
 			StartCoroutine (flash());
 		}
+
+		// Collision with checkpoint trigger
+		if (col.CompareTag("Checkpoint")) {
+			Debug.Log ("Found a checkpoint");
+			checkpointPos = col.transform.position;
+			Debug.Log ("Set checkpoint to: " + col.transform.position);
+		}
 	}
 
 	void OnTriggerStay2D(Collider2D col){
@@ -229,7 +252,7 @@ public class Player : MonoBehaviour {
 
         int currentTick = 0;
         while (currentTick < ticks) {
-            health.CurrentVal -= damageAmount;
+			ReducePlayerHealth (damageAmount);
             yield return new WaitForSeconds (1);
             currentTick++;
         }
@@ -240,7 +263,7 @@ public class Player : MonoBehaviour {
     IEnumerator singularDamage(int damageAmount)
     {
         standingInFire = true;
-        health.CurrentVal -= damageAmount;
+		ReducePlayerHealth (damageAmount);
         yield return new WaitForSeconds (2);
         standingInFire = false;
     }
@@ -249,8 +272,8 @@ public class Player : MonoBehaviour {
 	IEnumerator enemyProjectiles(int damageAmount)
 	{
 		takingDamage = true;
-		health.CurrentVal -= damageAmount;
-		yield return new WaitForSeconds (2);
+		ReducePlayerHealth (damageAmount);
+		yield return new WaitForSeconds (0.5f);
 		takingDamage = false;
 	}
 
@@ -258,14 +281,14 @@ public class Player : MonoBehaviour {
 	IEnumerator enemyOnContact(int damageAmount)
 	{
 		takingDamage = true;
-		health.CurrentVal -= damageAmount;
+		ReducePlayerHealth (damageAmount);
 		yield return new WaitForSeconds (1);
 		takingDamage = false;
 	}
 
 	IEnumerator acidContact(int damageAmount) 
 	{
-		health.CurrentVal -= damageAmount;
+		ReducePlayerHealth(damageAmount);
 		yield return new WaitForSeconds (0.3f);
 	}
 
@@ -280,5 +303,11 @@ public class Player : MonoBehaviour {
 			yield return new WaitForSeconds(0.10f);
 			elapsed++;
 		}
+	}
+
+	void ReducePlayerHealth(int dmg) {
+
+		FloatingTextController.CreateFloatingText (dmg.ToString(), transform, Color.red, 15);
+		health.CurrentVal -= dmg;
 	}
 }
