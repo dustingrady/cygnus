@@ -77,7 +77,6 @@ public class Metal : Element {
 		if (destroyed) {
 			cdCounter += Time.deltaTime;
 			icon.fillAmount = cdCounter / cooldown;
-			Debug.Log (icon.fillAmount);
 		}
 
 		if (cdCounter >= cooldown) {
