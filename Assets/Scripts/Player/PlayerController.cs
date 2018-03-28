@@ -98,6 +98,14 @@ public class PlayerController: MonoBehaviour {
 			maxSpeed = baseSpeed;
 		}
 
+
+		// ------------- Visualize groundcheck rays -----------------------------
+		Vector3[] checkcasts = new Vector3[] { transform.position };
+		foreach (Vector3 pos in castPos) {
+			Debug.DrawRay (pos, Vector2.up, Color.red);
+		}
+		// ------------- Visualize groundcheck rays -----------------------------
+
 	}
 
 
@@ -171,10 +179,8 @@ public class PlayerController: MonoBehaviour {
 
 	private bool CheckClearance()
 	{
-		LayerMask playerMask = ~(1 << LayerMask.NameToLayer ("Player"));
-		Vector3[] castPos = new Vector3[] { transform.position,
-			new Vector3 (transform.position.x - col.bounds.extents.x + 0.005f, transform.position.y, transform.position.z),
-			new Vector3 (transform.position.x + col.bounds.extents.x - 0.005f, transform.position.y, transform.position.z)
+		LayerMask playerMask = 1 << LayerMask.NameToLayer ("Ground");
+		Vector3[] castPos = new Vector3[] { transform.position
 		};
 
 		foreach (Vector3 pos in castPos)
@@ -244,7 +250,9 @@ public class PlayerController: MonoBehaviour {
     //
     // -- Jahn
 	void OnCollisionEnter2D(Collision2D col) {
-        if (!CheckClearance())
-		    StopCoroutine("JumpCurve");
+		if (!CheckClearance ()) {
+			Debug.Log ("smacked it");
+			StopCoroutine("JumpCurve");
+		}
 	}
 }
