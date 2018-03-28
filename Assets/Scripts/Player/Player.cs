@@ -20,6 +20,8 @@ public class Player : MonoBehaviour {
 
     public Inventory inventory;
 
+	private Vector3 checkpointPos;
+
     void Awake () {
 		health.Initalize();
 		// Inventory references need to be reset each time a scene loads
@@ -30,8 +32,7 @@ public class Player : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (health.CurrentVal <= 0) {
-			inventory.emptyInventory ();
-			SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
+			CheckHealth ();
 		}
     }
 
@@ -51,6 +52,20 @@ public class Player : MonoBehaviour {
 		}
 
 		Knockback(1200f, dir);
+	}
+
+	void CheckHealth() {
+		if (health.CurrentVal <= 0) {
+			if (checkpointPos != null) {
+				Debug.Log ("going to checkpoint");
+				health.CurrentVal = 100;
+				transform.position = checkpointPos;
+			} else {
+				inventory.emptyInventory ();
+				Debug.Log ("Resetting scene");
+				SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
+			}
+		}
 	}
 		
 	/*
@@ -182,6 +197,13 @@ public class Player : MonoBehaviour {
 		if (col.gameObject.name == "Fire" && !standingInFire) {
 			StartCoroutine (singularDamage (5));
 			StartCoroutine (flash());
+		}
+
+		// Collision with checkpoint trigger
+		if (col.CompareTag("Checkpoint")) {
+			Debug.Log ("Found a checkpoint");
+			checkpointPos = col.transform.position;
+			Debug.Log ("Set checkpoint to: " + col.transform.position);
 		}
 	}
 

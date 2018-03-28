@@ -55,7 +55,6 @@ public class EnemyDamage : MonoBehaviour {
 			dmg *= 0.5f;
 		}
 		//Debug.Log ("Dealt " + dmg + " dmg to " + enemyType + " type enemy");
-		Debug.Log("Object position: " + this.gameObject.transform.position);
 
 		display_Damage (dmg);
 		return dmg;

@@ -11,6 +11,8 @@ public class LiftPlatform : MonoBehaviour {
 	private bool movingToTarget;
 	private bool movingToStart;
 	private bool atStart;
+	[SerializeField]
+	private bool autoReset;
 
 	public float speed;
 
@@ -49,12 +51,21 @@ public class LiftPlatform : MonoBehaviour {
 		// Detatch the player
 		col.transform.parent = null;
 
+		// Player left, go back to start!
+		movingToStart = true;
+
+		// Work out the velocity for the player leaving the platform
 		Vector2 platformVel = Vector2.zero;
 
+		// Get the direction of the movement
+		Vector3 dir = target.transform.position - start.transform.position;
+		dir = dir.normalized;
+
+
 		if (movingToStart) {
-			platformVel = new Vector2 (-speed * 4, 0);
+			platformVel = new Vector2 (-speed * dir.x, -speed * dir.y);
 		} else if (movingToTarget) {
-			platformVel = new Vector2 (speed * 4, 0);
+			platformVel = new Vector2 (speed * dir.x, speed * dir.y);
 		} 
 
 		Rigidbody2D plrRb = col.gameObject.GetComponent<Rigidbody2D> ();
@@ -63,12 +74,12 @@ public class LiftPlatform : MonoBehaviour {
 	}
 
 	void MoveToTarget() {
-        //Varying speed vs constant speed
-        //transform.position = Vector2.Lerp (transform.position, target.transform.position, speed * Time.deltaTime);
-        transform.position = Vector2.MoveTowards(transform.position, target.transform.position, 0.05f * speed);
+		//Varying speed vs constant speed
+		//transform.position = Vector2.Lerp (transform.position, target.transform.position, speed * Time.deltaTime);
+		transform.position = Vector2.MoveTowards(transform.position, target.transform.position, 0.05f * speed);
 
-		// Block has reached the target, move back to start
-		if (Vector2.Distance (transform.position, target.transform.position) < 0.05) {
+		// Check for autoReset, if you get close to the end with it set, go back
+		if (Vector2.Distance (transform.position, target.transform.position) < 0.05 && autoReset) {
 			// Creates the conditions to move back to start
 			atStart = false;
 			movingToStart = true;
@@ -76,11 +87,11 @@ public class LiftPlatform : MonoBehaviour {
 	}
 
 	void MoveToStart() {
-        //Varying speed vs constant speed
-        //transform.position = Vector2.Lerp (transform.position, start.transform.position, speed * Time.deltaTime);
-        transform.position = Vector2.MoveTowards(transform.position, start.transform.position, 0.05f * speed);
+		//Varying speed vs constant speed
+		//transform.position = Vector2.Lerp (transform.position, start.transform.position, speed * Time.deltaTime);
+		transform.position = Vector2.MoveTowards(transform.position, start.transform.position, 0.05f * speed);
 
-        if (Vector2.Distance (transform.position, start.transform.position) < 0.02) {
+		if (Vector2.Distance (transform.position, start.transform.position) < 0.02) {
 			movingToTarget = false;
 			movingToStart = false;
 			atStart = true;
