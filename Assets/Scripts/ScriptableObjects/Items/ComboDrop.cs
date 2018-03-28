@@ -8,26 +8,33 @@ public class ComboDrop : Item {
 	public string comboElement;
 	public string description;
 	private bool consumable = true;
+	ElementManager EM;
+	ElementUI EU;
 
 	public override void useItem()
 	{
-		Debug.Log("Used " + this.name);
+		EM = GameObject.Find ("Elements").GetComponent<ElementManager> ();
+		EU = GameObject.Find ("UI").GetComponent<ElementUI> ();
+
+		if (comboElement == "lava") {
+			EM.AssignToHand ("left", "FireElement");
+			EM.AssignToHand ("right", "EarthElement");
+		}
+		if (comboElement == "steam") {
+			EM.AssignToHand ("left", "WaterElement");
+			EM.AssignToHand ("right", "FireElement");
+		}
+		if (comboElement == "magnet") {
+			EM.AssignToHand ("left", "MetalElement");
+			EM.AssignToHand ("right", "ElectricElement");
+		}
+
+		EU.UpdateElements ();
 	}
 
 	public override string itemDescription()
 	{
 		return description;
-	}
-
-
-	public override float useConsumable ()
-	{
-		return 0;
-	}
-
-	public override string consumeCombo ()
-	{
-		return comboElement;
 	}
 
 	public override bool checkType()

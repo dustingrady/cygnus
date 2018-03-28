@@ -63,7 +63,8 @@ public class PatrolType : Enemy {
 				edrp.determine_Drop (getEnemyType(), this.transform.position);
 
 			if (dr != null) {
-				int chance = Random.Range (0, 11);
+				int chance = Random.Range (0, 101);
+				Debug.Log("Dead Drop Chance: " + chance);
 				dr.dropItem (chance);
 			}
 

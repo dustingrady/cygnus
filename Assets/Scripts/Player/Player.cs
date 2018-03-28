@@ -53,6 +53,13 @@ public class Player : MonoBehaviour {
 
 		Knockback(1200f, dir);
 	}
+	
+	public void healWounds(float amount)
+	{
+		this.health.CurrentVal += amount;
+		Debug.Log ("healing for: " + amount);
+	}
+	
 
 	void CheckHealth() {
 		if (health.CurrentVal <= 0) {
