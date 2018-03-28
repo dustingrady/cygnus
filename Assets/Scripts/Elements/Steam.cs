@@ -73,10 +73,12 @@ public class Steam : Element {
 			}
 
 			//Debug.Log (transform.root.GetComponent<ConstantForce2D> ().force.magnitude + " " +flightTimer);
-			if (transform.root.GetComponent<ConstantForce2D> ().force.magnitude <= maxForce) {
-				transform.root.GetComponent<ConstantForce2D> ().force += (-direction.normalized * burstStrength);
-			} else if (transform.root.GetComponent<ConstantForce2D> ().force.magnitude >= maxForce) {
-				transform.root.GetComponent<ConstantForce2D> ().force = new Vector2(transform.root.GetComponent<ConstantForce2D> ().force.x *(-direction.normalized.x), transform.root.GetComponent<ConstantForce2D> ().force.y *(-direction.normalized.y));
+			if (transform.root.GetComponent<ConstantForce2D> () != null) {
+				if (transform.root.GetComponent<ConstantForce2D> ().force.magnitude <= maxForce) {
+					transform.root.GetComponent<ConstantForce2D> ().force += (-direction.normalized * burstStrength);
+				} else if (transform.root.GetComponent<ConstantForce2D> ().force.magnitude >= maxForce) {
+					transform.root.GetComponent<ConstantForce2D> ().force = new Vector2(transform.root.GetComponent<ConstantForce2D> ().force.x *(-direction.normalized.x), transform.root.GetComponent<ConstantForce2D> ().force.y *(-direction.normalized.y));
+				}
 			}
 
 			if(flightTimer < flightTime)
@@ -89,7 +91,8 @@ public class Steam : Element {
 		}
 			
 		if (btnReleased || flightTimer >= flightTime) {
-			transform.root.GetComponent<ConstantForce2D> ().force = Vector2.zero;
+			if (transform.root.GetComponent<ConstantForce2D> () != null)
+				transform.root.GetComponent<ConstantForce2D> ().force = Vector2.zero;
 			if(steamObject != null)
 				steamObject.GetComponent<ParticleSystem> ().Stop ();
 		}

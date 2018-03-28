@@ -11,6 +11,7 @@ public class DoorBreakable : Door {
 			chillin.bodyType = RigidbodyType2D.Dynamic;
 			chillin.AddForce (new Vector2 (Random.Range (-1000, 1000), 0));
 			chillin.gameObject.transform.parent = null;
+			StartCoroutine ("DestroyChillin", chillin.gameObject);
 		}
 	}
 		
@@ -19,5 +20,10 @@ public class DoorBreakable : Door {
 		if (col.tag == "EarthElement") {	
 			Open ();
 		}
+	}
+
+	IEnumerator DestroyChillin(GameObject chillin) {
+		yield return new WaitForSeconds (2f);
+		Destroy (chillin);
 	}
 }
