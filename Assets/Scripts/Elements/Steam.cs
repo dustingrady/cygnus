@@ -7,10 +7,14 @@ public class Steam : Element {
 	public GameObject burst;
 	private float burstStrength = 5f;
 	private const float maxForce = 40f;
-	private const float flightTime = 2;
-	private float flightTimer = 0;
-	[SerializeField]
-	private float burstCooldown = 1.5f;
+
+	private const float steamCapacity = 20f;
+	private float currentCapacity = steamCapacity;
+	private bool outOfSteam = false;
+	private bool iconCd = false;
+	private bool timerTick = false;
+
+	private float burstCooldown = 10f;
 	private float timeSinceFire;
 	private bool btnReleased = true;
 
@@ -19,17 +23,19 @@ public class Steam : Element {
 	public Image icon;
 
 	private PowerMeter powerMeter;
+	float percentRemain;
+	GameObject ui;
+	Transform centerElement;
+	bool showPower = false;
 
 	public override void UseElement(Vector3 pos, Vector2 dir){
-		GameObject ui = GameObject.Find ("UI");
-		Transform centerElement = ui.transform.Find ("CenterElement");
-
 		if (Input.GetMouseButtonDown (2) && centerElement.Find ("Icon").transform.Find("IconCD").GetComponent<Image> ().sprite == this.sprite) {
 			icon = centerElement.Find ("Icon").transform.Find("IconCD").GetComponent<Image> ();
 		} 
 
 
-		if (timeSinceFire > burstCooldown && btnReleased) {
+		//if (timeSinceFire > burstCooldown && btnReleased) {
+		if(currentCapacity >= 0 && btnReleased && !iconCd){
 			steamObject = Instantiate (burst, pos, Quaternion.identity);
 
 			// Change the angle to match the direction.
@@ -50,6 +56,13 @@ public class Steam : Element {
 	}
 
 	void Start() {
+		ui = GameObject.Find ("UI");
+		centerElement = ui.transform.Find ("CenterElement");
+		if (centerElement.Find ("Icon").transform.Find ("IconCD").GetComponent<Image> ().sprite == this.sprite) {
+			showPower = true;
+		} else
+			showPower = false;
+
 		if (GameObject.FindGameObjectWithTag ("PowerMeter") != null) {
 			powerMeter = GameObject.FindGameObjectWithTag ("PowerMeter").GetComponent<PowerMeter> ();
 		} else {
@@ -59,13 +72,24 @@ public class Steam : Element {
 
 	void Update() {
 		direction = GetCursorDirection ();
+		// Set the bar to the remaining flightTime
+		//float percentRemain = (flightTime - flightTimer)/flightTime;
+		percentRemain = (currentCapacity)/steamCapacity;
+		powerMeter.SetBarValue(percentRemain);
 
-		timeSinceFire += Time.deltaTime;
-		if (icon != null) {
-			icon.fillAmount = timeSinceFire / burstCooldown;
+		if (showPower) {
+			if (percentRemain >= 1f)
+				powerMeter.Hide ();
+			if (percentRemain < 1f)
+				powerMeter.Show ();
 		}
+		/*
+		if (icon != null && iconCd) {
+			icon.fillAmount = timeSinceFire / burstCooldown;
+			Debug.Log ("fill amount: " + icon.fillAmount);
+		}*/
 
-		if (!btnReleased) {
+		if (!btnReleased && currentCapacity >= 0) {
 			float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 			if (steamObject != null) {
 				steamObject.transform.rotation = Quaternion.AngleAxis (angle, Vector3.forward);
@@ -81,30 +105,41 @@ public class Steam : Element {
 				}
 			}
 
-			if(flightTimer < flightTime)
-				flightTimer += Time.deltaTime;
-
-			// Set the bar to the remaining flightTime
-			float percentRemain = (flightTime - flightTimer)/flightTime;
-			powerMeter.SetBarValue(percentRemain);
-
+			currentCapacity -= Time.deltaTime*15;
 		}
 
-		if (btnReleased || flightTimer >= flightTime) {
+		//if (btnReleased || flightTimer >= flightTime) {
+		if(btnReleased || currentCapacity <= 0){
 			if (transform.root.GetComponent<ConstantForce2D> () != null)
 				transform.root.GetComponent<ConstantForce2D> ().force = Vector2.zero;
 			if(steamObject != null)
 				steamObject.GetComponent<ParticleSystem> ().Stop ();
 		}
 
+		if (currentCapacity <= 0) {
+			timerTick = true;
+			iconCd = true;
+		}
+
+		if (timerTick) {
+			timeSinceFire += Time.deltaTime;
+			if (icon != null && iconCd) {
+				icon.fillAmount = timeSinceFire / burstCooldown;
+			}
+		}
+
+		if (currentCapacity <= steamCapacity) {
+			currentCapacity += Mathf.Clamp(Time.deltaTime*5, 0 , steamCapacity);
+		}
+
 		if (Input.GetMouseButtonUp (2) == true
 			|| Input.GetButtonUp("RightStick")) {
+			btnReleased = true;
 			if (timeSinceFire >= burstCooldown) {
-				btnReleased = true;
+				timerTick = false;
 				timeSinceFire = 0;
-				flightTimer = 0;
-
-				powerMeter.Hide();
+				iconCd = false;
+				//powerMeter.Hide();
 			}
 		}
 	}

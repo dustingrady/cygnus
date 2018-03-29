@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Lava : Element {
 	public GameObject lavaJet;
@@ -11,6 +12,7 @@ public class Lava : Element {
 	[SerializeField]
 	private float variability = 0.2f; // Increases the potential offset for the direction
 	private float timeSinceFire;
+	public Image icon;
 
 	public override void UseElement(Vector3 pos, Vector2 dir){
 		if (timeSinceFire > lavaJetCooldown) {
@@ -22,6 +24,16 @@ public class Lava : Element {
 			fb.GetComponent<LavaStream> ().Initialize (dir, jetStrength);
 			timeSinceFire = 0;
 		}
+	}
+
+	void Start(){
+		GameObject ui = GameObject.Find ("UI");
+		Transform centerElement = ui.transform.Find ("CenterElement");
+		icon = centerElement.Find ("Icon").transform.Find("IconCD").GetComponent<Image> ();
+		if (icon.fillAmount < 1f) {
+			icon.fillAmount = 1f;
+		}
+		Debug.Log (icon.fillAmount);
 	}
 
 	void Update() {
