@@ -107,6 +107,7 @@ public class Player : MonoBehaviour {
 
                         // Disable the magnetic pull
                         centerElement.gameObject.GetComponent<Magnetic>().pulling = false;
+						centerElement.gameObject.GetComponent<Magnetic> ().lr.enabled = false;
 
 					} else if (tilemap.GetTile (tilemap.WorldToCell (rightBounds)) != null) {
                         //GetComponent<PlayerController> ().StartGrapple ("left");
@@ -114,6 +115,7 @@ public class Player : MonoBehaviour {
 
                         // Disable the magnetic pull
                         centerElement.gameObject.GetComponent<Magnetic>().pulling = false;
+						centerElement.gameObject.GetComponent<Magnetic> ().lr.enabled = false;
 					}
 
 				}

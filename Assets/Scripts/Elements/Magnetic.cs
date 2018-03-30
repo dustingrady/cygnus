@@ -27,16 +27,16 @@ public class Magnetic : Element {
 
 	public override void UseElement(Vector3 pos, Vector2 dir) {
 
-		RaycastHit2D hit = Physics2D.Raycast (pos, dir, maxRange, 1 << LayerMask.NameToLayer ("Ground"));
-
-		if (hit.collider != null) {
-			if (hit.collider.CompareTag ("MetalElement")) {
-				pullPos = hit.point;
-				pulling = true;
-			}
-		}
 
 		if (fireReleased && !iconCd) {
+			RaycastHit2D hit = Physics2D.Raycast (pos, dir, maxRange, 1 << LayerMask.NameToLayer ("Ground"));
+
+			if (hit.collider != null) {
+				if (hit.collider.CompareTag ("MetalElement")) {
+					pullPos = hit.point;
+					pulling = true;
+				}
+			}
 
 			timeSinceFire = 0;
 			fireReleased = false;
@@ -73,21 +73,21 @@ public class Magnetic : Element {
 			
 		// Find the position difference so you know what direction to apply the force
 		diff = pullPos - plr.transform.position;
-
 		if (lr.enabled) {
 			// Update the line renderer
 			lr.SetPositions (new Vector3[] { plr.transform.position + Vector3.back, pullPos + Vector3.back });
 		}
 
 		// UGLY
-		if (Input.GetMouseButtonUp (2) == true && pulling) {
-				fireReleased = true;
-				pulling = false;
-				timerTick = true;
-				iconCd = true;
+		if (Input.GetMouseButtonUp (2) == true) {
+			Debug.Log ("test");
+			fireReleased = true;
+			pulling = false;
+			timerTick = true;
+			iconCd = true;
 
-				// Disable the line renderer
-				lr.enabled = false;
+			// Disable the line renderer
+			lr.enabled = false;
 		}
 		if (timeSinceFire >= magnetCooldown) {
 			timerTick = false;
