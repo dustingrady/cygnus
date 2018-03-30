@@ -67,7 +67,9 @@ public class Earth : Element {
 				chargeTime += Time.deltaTime;
 
 				float chargePercent = chargeTime / maxCharge;
-				powerMeter.SetBarValue (chargePercent);
+
+                if (active)
+				    powerMeter.SetBarValue (chargePercent);
 
 			} else {
 				chargeTime = maxCharge;
@@ -112,6 +114,7 @@ public class Earth : Element {
 		// disable the graphic
 		powerMeter.Hide();
 
+        Debug.Log("boulder fired");
 	}
 
 	bool ShotRelease() {

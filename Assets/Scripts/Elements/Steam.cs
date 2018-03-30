@@ -67,7 +67,11 @@ public class Steam : Element {
 		// Set the bar to the remaining flightTime
 		//float percentRemain = (flightTime - flightTimer)/flightTime;
 		percentRemain = (currentCapacity)/steamCapacity;
-		powerMeter.SetBarValue(percentRemain);
+
+        if (active)
+        {
+            powerMeter.SetBarValue(percentRemain);
+        }
 
 		if (percentRemain > 1f && showPower == true) {
 			powerMeter.Hide ();
@@ -124,8 +128,11 @@ public class Steam : Element {
 			currentCapacity += Time.deltaTime*5;
 			Mathf.Clamp (currentCapacity, 0, steamCapacity - 2f);
 
-			powerMeter.Show ();
-			showPower = true; // Tracks if the meter is in a show state
+            if (active)
+            {
+                powerMeter.Show();
+                showPower = true; // Tracks if the meter is in a show state
+            }
 		}
 
 		if (Input.GetMouseButtonUp (2) == true

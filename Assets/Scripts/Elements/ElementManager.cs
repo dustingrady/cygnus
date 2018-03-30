@@ -102,8 +102,10 @@ public class ElementManager : MonoBehaviour {
 		// No crossover
 		else {
 			Debug.Log ("Not a valid combo");
-			plr.centerElement = null;
-		}
+            if (plr.centerElement != null)
+                plr.centerElement.active = false;
+            plr.centerElement = null;            
+        }
 
 	}
 }
