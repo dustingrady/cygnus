@@ -21,6 +21,7 @@ public class Sandstorm : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+        Debug.Log(timer + " " + sandForce.forceMagnitude + " " + Storm.isEmitting);
         if (!Storm.isEmitting) {
             
             sandForce.forceMagnitude = 0;

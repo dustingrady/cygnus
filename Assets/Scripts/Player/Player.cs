@@ -168,6 +168,7 @@ public class Player : MonoBehaviour {
 			StartCoroutine (acidContact (1));
 		}
 
+
 		if (col.gameObject.tag == "BossBullet") {
 			Debug.Log ("ouch, a fuckin bossbullet");
 			StartCoroutine(enemyProjectiles(1));
@@ -219,6 +220,10 @@ public class Player : MonoBehaviour {
 			StartCoroutine(singularDamage(5));
 			StartCoroutine (flash());
 		}
+
+        if (col.gameObject.tag == "QuicksandXD" && !standingInFire) {
+            StartCoroutine(singularDamage(25));
+        }
 
 		if ((col.gameObject.tag == "FireElement" && !standingInFire)) {
 			StartCoroutine(singularDamage(5));
