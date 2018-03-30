@@ -28,7 +28,6 @@ GameObject:
   - component: {fileID: 114231931990252468}
   - component: {fileID: 114482010898966262}
   - component: {fileID: 247480316462970952}
-  - component: {fileID: 247838025441332736}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -98,7 +97,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1259700113646964}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.45, y: -2.56, z: 0}
+  m_LocalPosition: {x: -11.18, y: -2.09, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4565867435854406}
@@ -194,6 +193,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   elementType: fire
   sprite: {fileID: 21300000, guid: 0dac77c344d03204ca2628ba17e248d8, type: 3}
+  active: 0
   fireball: {fileID: 1219230856590874, guid: 987ced180638e4447b31321b1fdee309, type: 2}
   fireballCooldown: 0.2
 --- !u!114 &114202497329419866
@@ -244,10 +244,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   elementType: magnetic
   sprite: {fileID: 21300000, guid: b1d19bfea2941eb479f5acef2a05df27, type: 3}
-  magnetStrength: 300
+  active: 0
   lr: {fileID: 0}
-  magnetCooldown: 0.2
   pulling: 0
+  icon: {fileID: 0}
 --- !u!114 &114231931990252468
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -273,11 +273,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   elementType: lava
-  sprite: {fileID: 21300000, guid: cda39d3b5ba668c4fbddf94656736712, type: 3}
+  sprite: {fileID: 21300000, guid: 8aefe60a7c669a943a844a2ab5b1d311, type: 3}
+  active: 0
   lavaJet: {fileID: 1824831328528082, guid: e7559ebb17cef314296a6fa774b95a46, type: 2}
   lavaJetCooldown: 0.05
   jetStrength: 400
   variability: 0.25
+  icon: {fileID: 0}
 --- !u!114 &114393056398288730
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -291,6 +293,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   elementType: metal
   sprite: {fileID: 21300000, guid: 30b22e018b38d3141a3c239d2c5e13dc, type: 3}
+  active: 0
   metalShield: {fileID: 1143730445134482, guid: e4723ad7e383b1242ab15889bac976bf,
     type: 2}
   icon: {fileID: 0}
@@ -324,8 +327,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   elementType: steam
   sprite: {fileID: 21300000, guid: d57439372e594a947ad0f99a715ea5a9, type: 3}
+  active: 0
   burst: {fileID: 1592261021910876, guid: f1b716cfa500aeb448253fb6c780b6a8, type: 2}
-  burstCooldown: 1.5
   icon: {fileID: 0}
 --- !u!114 &114731807252025408
 MonoBehaviour:
@@ -340,6 +343,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   elementType: electric
   sprite: {fileID: 21300000, guid: 952e6f73832413e4ca230e51905821d3, type: 3}
+  active: 0
   electProbe: {fileID: 1651903856275174}
 --- !u!114 &114803906943621392
 MonoBehaviour:
@@ -354,6 +358,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   elementType: water
   sprite: {fileID: 21300000, guid: 81584b6cc3f53064d8d0db89710c83bd, type: 3}
+  active: 0
   waterJet: {fileID: 1696625015924108, guid: fae4fcf11be36124991fe3adf14f05d9, type: 2}
   waterJetCooldown: 0.1
   jetStrength: 500
@@ -370,6 +375,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   elementType: earth
   sprite: {fileID: 21300000, guid: 975941dad9157d0498c9087a09d532b0, type: 3}
+  active: 0
   earth: {fileID: 1026038261556570, guid: 1fa4fa7bdc9dd4847b3cb8f512410715, type: 2}
   maxBoulderStrength: 45
   maxMass: 1.4
@@ -3943,16 +3949,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
 --- !u!247 &247480316462970952
-ConstantForce2D:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1259700113646964}
-  m_Enabled: 1
-  m_Force: {x: 0, y: 0}
-  m_RelativeForce: {x: 0, y: 0}
-  m_Torque: 0
---- !u!247 &247838025441332736
 ConstantForce2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}

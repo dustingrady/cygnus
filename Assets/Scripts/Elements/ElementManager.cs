@@ -5,6 +5,7 @@ using UnityEngine;
 public class ElementManager : MonoBehaviour {
 
 	public Dictionary<string, Element> elements;
+	public Dictionary<string, string> tagToElement;
 	private Player plr;
 
 	void Start () {
@@ -34,48 +35,33 @@ public class ElementManager : MonoBehaviour {
 		Element magnetic = GetComponent<Magnetic> ();
 		elements.Add ("magnetic", magnetic);
 
+		tagToElement = new Dictionary<string, string> () {
+			{ "FireElement", "fire" },
+			{ "WaterElement", "water" },
+			{ "EarthElement", "earth" },
+			{ "MetalElement", "metal" },
+			{ "ElectricElement", "electric" },
+		};
+
 		// Get a reference to the player
 		plr = transform.root.GetComponent<Player>();
 	}
 	
 	public void AssignToHand(string hand, string itemTag) {
-		if (itemTag == "FireElement") {
-			if (hand == "left") {
-				plr.leftElement = elements["fire"];
-			} else {
-				plr.rightElement = elements["fire"];
-			}
-		}
 
-		if (itemTag == "WaterElement" || itemTag == "Ice") {
-			if (hand == "left") {
-				plr.leftElement = elements["water"];
-			} else {
-				plr.rightElement = elements["water"];
-			}
-		}
-
-		if (itemTag == "EarthElement") {
-			if (hand == "left") {
-				plr.leftElement = elements["earth"];
-			} else {
-				plr.rightElement = elements["earth"];
-			}
-		}
-
-		if (itemTag == "MetalElement") {
-			if (hand == "left") {
-				plr.leftElement = elements["metal"];
-			} else {
-				plr.rightElement = elements["metal"];
-			}
-		}
-
-		if (itemTag == "ElectricElement") {
-			if (hand == "left") {
-				plr.leftElement = elements["electric"];
-			} else {
-				plr.rightElement = elements["electric"];
+		foreach (var element in tagToElement) {
+			if (itemTag == element.Key) {
+				if (hand == "left") {
+					if (plr.leftElement != null)
+						plr.leftElement.active = false;			// Disable the previous element
+					plr.leftElement = elements[element.Value];	// Set the new element to the hand
+					plr.leftElement.active = true;				// Enable that new element
+				} else {
+					if (plr.rightElement != null)
+						plr.rightElement.active = false;
+					plr.rightElement = elements[element.Value];
+					plr.rightElement.active = true;
+				}
 			}
 		}
 
@@ -91,20 +77,26 @@ public class ElementManager : MonoBehaviour {
 
 		// Fire and water crossover
 		if ((le == "fire" && re == "water") || (le == "water" && re == "fire")) {
-			Debug.Log ("Adding Steam as combo");
+			if (plr.centerElement != null)
+				plr.centerElement.active = false;			
 			plr.centerElement = elements["steam"];
-
+			plr.centerElement.active = true;
 		}
 
 		// Metal and electric crossover
 		else if ((le == "electric" && re == "metal") || (le == "metal" && re == "electric")) {
+			if (plr.centerElement != null)
+				plr.centerElement.active = false;
 			plr.centerElement = elements["magnetic"];
-
+			plr.centerElement.active = true;
 		}
 
 		// Fire and earth crossover
 		else if ((le == "fire" && re == "earth") || (le == "earth" && re == "fire")) {
+			if (plr.centerElement != null)
+				plr.centerElement.active = false;
 			plr.centerElement = elements["lava"];
+			plr.centerElement.active = true;
 		}
 
 		// No crossover
