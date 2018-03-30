@@ -6363,8 +6363,7 @@ Prefab:
       propertyPath: health.bar
       value: 
       objectReference: {fileID: 1707372293}
-    m_RemovedComponents:
-    - {fileID: 247838025441332736, guid: 064bb79712746ca4fb4eeb186b912e89, type: 2}
+    m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 064bb79712746ca4fb4eeb186b912e89, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &487360953
@@ -9589,7 +9588,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4062297412796568, guid: cf06be31013f6c346ab2e54dfe3dcbf4, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -11.180001
+      value: -11.18
       objectReference: {fileID: 0}
     - target: {fileID: 4062297412796568, guid: cf06be31013f6c346ab2e54dfe3dcbf4, type: 2}
       propertyPath: m_LocalPosition.y
@@ -12005,7 +12004,7 @@ Prefab:
     - target: {fileID: 224010827024031366, guid: 267853b8c8fcb2444be28e5a0e114a23,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 32.22222
       objectReference: {fileID: 0}
     - target: {fileID: 1251655649359126, guid: 267853b8c8fcb2444be28e5a0e114a23, type: 2}
       propertyPath: m_IsActive
@@ -12014,22 +12013,22 @@ Prefab:
     - target: {fileID: 224737888326160916, guid: 267853b8c8fcb2444be28e5a0e114a23,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -16.11111
       objectReference: {fileID: 0}
     - target: {fileID: 224737888326160916, guid: 267853b8c8fcb2444be28e5a0e114a23,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 22.222221
       objectReference: {fileID: 0}
     - target: {fileID: 224166394385784508, guid: 267853b8c8fcb2444be28e5a0e114a23,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -16.11111
       objectReference: {fileID: 0}
     - target: {fileID: 224166394385784508, guid: 267853b8c8fcb2444be28e5a0e114a23,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 32.22222
       objectReference: {fileID: 0}
     - target: {fileID: 224737888326160916, guid: 267853b8c8fcb2444be28e5a0e114a23,
         type: 2}
@@ -12235,7 +12234,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4608127868454306, guid: ff841feaeecac0b438209f7448fdc8ba, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -11.180001
+      value: -11.18
       objectReference: {fileID: 0}
     - target: {fileID: 4608127868454306, guid: ff841feaeecac0b438209f7448fdc8ba, type: 2}
       propertyPath: m_LocalPosition.y

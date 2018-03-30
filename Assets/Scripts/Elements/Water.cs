@@ -12,7 +12,9 @@ public class Water : Element {
 
 	public override void UseElement(Vector3 pos, Vector2 dir){
 		if (timeSinceFire > waterJetCooldown) {
-			GameObject fb = Instantiate (waterJet, pos, Quaternion.identity);
+			Vector3 handPos = new Vector3 (dir.normalized.x, dir.normalized.y, 0) * 0.8f;
+
+			GameObject fb = Instantiate (waterJet, pos + handPos, Quaternion.identity);
 			fb.GetComponent<WaterJet> ().Initialize (dir, jetStrength);
 			timeSinceFire = 0;
 		}

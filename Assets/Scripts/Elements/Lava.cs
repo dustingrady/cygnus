@@ -10,7 +10,7 @@ public class Lava : Element {
 	[SerializeField]
 	private float jetStrength = 400f;
 	[SerializeField]
-	private float variability = 0.2f; // Increases the potential offset for the direction
+	private float variability = 0.25f; // Increases the potential offset for the direction
 	private float timeSinceFire;
 	public Image icon;
 
@@ -20,7 +20,8 @@ public class Lava : Element {
 			Vector2 dirOffset = new Vector2(Random.Range(-variability, variability), Random.Range(-variability, variability));
 			dir = dir.normalized + dirOffset;
 
-			GameObject fb = Instantiate (lavaJet, pos, Quaternion.identity);
+			Vector3 handPos = new Vector3 (dir.normalized.x, dir.normalized.y, 0) * 0.8f;
+			GameObject fb = Instantiate (lavaJet, pos + handPos, Quaternion.identity);
 			fb.GetComponent<LavaStream> ().Initialize (dir, jetStrength);
 			timeSinceFire = 0;
 		}

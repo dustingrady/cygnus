@@ -64,7 +64,7 @@ public class Magnetic : Element {
 	void Update() {
 		if (timerTick) {
 			timeSinceFire += Time.deltaTime;
-			Debug.Log (timeSinceFire);
+			//Debug.Log (timeSinceFire);
 		}
 
 		if (icon != null && iconCd) {

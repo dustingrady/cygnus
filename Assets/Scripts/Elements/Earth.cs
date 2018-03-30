@@ -93,7 +93,8 @@ public class Earth : Element {
 		float scaleMass = Mathf.Clamp((chargeTime / maxCharge), 0.1f, 1.0f);
 		boulderStrength = maxBoulderStrength * scale;
 
-		GameObject fb = Instantiate (earth, pos, Quaternion.identity);
+		Vector3 handPos = new Vector3 (dir.normalized.x, dir.normalized.y, 0) * 0.8f;
+		GameObject fb = Instantiate (earth, pos + handPos, Quaternion.identity);
 
 		fb.transform.localScale = new Vector3 (scale, scale, scale);
 
