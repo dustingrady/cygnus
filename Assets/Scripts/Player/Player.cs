@@ -211,9 +211,7 @@ public class Player : MonoBehaviour {
 
 		// Collision with checkpoint trigger
 		if (col.CompareTag("Checkpoint")) {
-			Debug.Log ("Found a checkpoint");
 			checkpointPos = col.transform.position;
-			Debug.Log ("Set checkpoint to: " + col.transform.position);
 		}
 	}
 
