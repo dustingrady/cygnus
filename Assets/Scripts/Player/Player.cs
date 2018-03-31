@@ -144,6 +144,13 @@ public class Player : MonoBehaviour {
 			
 	}
 
+	void OnParticleCollision(GameObject other){
+		if (other.tag == "Acid") {
+			Debug.Log ("Boom boom");
+			this.health.CurrentVal -= 1f;
+		}
+	}
+
 	/*
 	 * 
 	 * END OF COLLISION STUFF 
