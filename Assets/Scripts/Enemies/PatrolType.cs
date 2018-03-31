@@ -189,9 +189,8 @@ public class PatrolType : Enemy {
 			tolerance++;
 		}
 
-		if (other.tag == "ElectricElement" && elementType == Elements.metal) {
-			Debug.Log ("Particle collision");
-			hitpoints -= 0.1f;
+		if (other.tag == "ElectricElement") {
+			takeDamage (0.5f);
 		}
 	}
 
