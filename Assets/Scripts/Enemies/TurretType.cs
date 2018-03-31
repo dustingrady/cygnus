@@ -15,12 +15,21 @@ public class TurretType : Enemy {
 	private EnemyDamage edmg;
 	private LineRenderer line;
 	public LayerMask enemySight;
+	private GameObject sparks;
+
+	private Drop dr;
 
 	void Awake(){
 		playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
 		es = gameObject.GetComponent<EnemyShooting>();
-		edrp = gameObject.GetComponent<EnemyDrop> ();
 		edmg = gameObject.GetComponent<EnemyDamage> ();
+
+		if (gameObject.GetComponent<Drop>() != null) 
+			dr = gameObject.GetComponent<Drop>();
+		if (gameObject.GetComponent<EnemyDrop> () != null)
+			edrp = gameObject.GetComponent<EnemyDrop> ();
+
+		sparks = Resources.Load ("Prefabs/Particles/Sparks") as GameObject;
 	}
 
 	void Start(){
@@ -31,7 +40,14 @@ public class TurretType : Enemy {
 
 	void Update(){
 		if (hitpoints <= 0) {
-			edrp.determine_Drop (getEnemyType(), this.transform.position);
+			if (edrp != null)
+				edrp.determine_Drop (getEnemyType(), this.transform.position);
+
+			if (dr != null) {
+				int chance = Random.Range (0, 101);
+				Debug.Log ("Dead Drop Chance: " + chance);
+				dr.dropItem (chance);
+			}
 			Destroy (this.gameObject);
 		}
 		guard_Area ();

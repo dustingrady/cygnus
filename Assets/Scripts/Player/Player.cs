@@ -235,7 +235,9 @@ public class Player : MonoBehaviour {
 		if ((col.gameObject.tag == "FireElement" && !standingInFire)) {
 			StartCoroutine(singularDamage(5));
 			StartCoroutine (flash());
-		} if (col.gameObject.tag == "Acid") {
+		} 
+
+		if (col.gameObject.tag == "Acid") {
 			StartCoroutine (acidContact (1));
 		}
 	}
@@ -301,7 +303,7 @@ public class Player : MonoBehaviour {
 	IEnumerator acidContact(int damageAmount) 
 	{
 		ReducePlayerHealth(damageAmount);
-		yield return new WaitForSeconds (0.3f);
+		yield return new WaitForSeconds (1.0f);
 	}
 
 	IEnumerator flash(){
