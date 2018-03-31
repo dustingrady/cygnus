@@ -9,6 +9,9 @@ public class DoorTrigger : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D col) {
 		if (col.gameObject.tag == "Player") {
+			GameObject cm = GameObject.Find("FollowCM");
+			cm.GetComponent<CameraController> ().FocusForTime(door.gameObject, 2.5f);
+
 			door.Open ();
 		}
 	}

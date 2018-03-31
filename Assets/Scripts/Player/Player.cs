@@ -144,6 +144,13 @@ public class Player : MonoBehaviour {
 			
 	}
 
+	void OnParticleCollision(GameObject other){
+		if (other.tag == "Acid") {
+			Debug.Log ("Boom boom");
+			this.health.CurrentVal -= 1f;
+		}
+	}
+
 	/*
 	 * 
 	 * END OF COLLISION STUFF 
@@ -211,9 +218,7 @@ public class Player : MonoBehaviour {
 
 		// Collision with checkpoint trigger
 		if (col.CompareTag("Checkpoint")) {
-			Debug.Log ("Found a checkpoint");
 			checkpointPos = col.transform.position;
-			Debug.Log ("Set checkpoint to: " + col.transform.position);
 		}
 	}
 

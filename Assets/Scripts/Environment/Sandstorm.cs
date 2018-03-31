@@ -14,14 +14,14 @@ public class Sandstorm : MonoBehaviour {
         var force = GameObject.FindWithTag("Sandstorm");
         sandForce = force.GetComponent<AreaEffector2D>();
         sandForce.forceMagnitude = 0;
-        Debug.Log(" Its not hitting this ");
+        //Debug.Log(" Its not hitting this ");
         timer = Random.Range(20.0f, 40.0f);
-        Debug.Log(" It is hitting this " + " " + timer);
+        //Debug.Log(" It is hitting this " + " " + timer);
     }
 
     // Update is called once per frame
     void Update() {
-        Debug.Log(timer + " " + sandForce.forceMagnitude + " " + Storm.isEmitting);
+        //Debug.Log(timer + " " + sandForce.forceMagnitude + " " + Storm.isEmitting);
         if (!Storm.isEmitting) {
             
             sandForce.forceMagnitude = 0;
