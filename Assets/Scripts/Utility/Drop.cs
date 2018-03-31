@@ -27,7 +27,7 @@ public class Drop : MonoBehaviour{
 			if(totalDropWeight <= lootTable [i].highestWeight)
 				totalDropWeight = lootTable [i].highestWeight;
 		}
-		Debug.Log (totalDropWeight);
+
 		drop = Resources.Load ("Prefabs/ItemPrefab") as GameObject;
 	}
 
