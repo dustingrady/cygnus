@@ -36,6 +36,7 @@ public class ReverseHidden : MonoBehaviour {
 	{
 		if (col.tag == "Player") {
 			fading = true;
+			FloatingTextController.CreateFloatingText ("Hidden Room Uncovered!", this.gameObject.transform, Color.blue, 20);
 		}
 	}
 }
