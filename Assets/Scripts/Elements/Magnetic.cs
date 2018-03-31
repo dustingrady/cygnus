@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class Magnetic : Element {
-	float magnetStrength = 1000f;
+	float magnetStrength = 800f;
 
 	public LineRenderer lr;
 

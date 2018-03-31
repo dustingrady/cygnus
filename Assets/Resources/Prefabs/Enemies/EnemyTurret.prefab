@@ -105,7 +105,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseFire: 15
   baseWater: 10
-  baseElectric: 0.1
+  baseElectric: 1
   baseEarth: 10
 --- !u!114 &114330692470991352
 MonoBehaviour:
