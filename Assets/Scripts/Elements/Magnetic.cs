@@ -8,7 +8,7 @@ public class Magnetic : Element {
 
 	public LineRenderer lr;
 
-	private float magnetCooldown = 3f;
+	private float magnetCooldown = 0f;
 	private float timeSinceFire;
 	private bool fireReleased = true;
 	public bool pulling = false;

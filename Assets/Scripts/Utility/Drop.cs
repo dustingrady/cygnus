@@ -20,7 +20,7 @@ public class Drop : MonoBehaviour{
 	public List<lootDrop> lootTable = new List<lootDrop>();
 	GameObject drop;
 	int totalDropWeight = 0;
-	int dropChance = 70;
+	public int dropChance = 70;
 	void Start()
 	{
 		for (int i = 0; i < lootTable.Count; i++) {
