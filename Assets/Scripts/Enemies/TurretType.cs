@@ -69,25 +69,23 @@ public class TurretType : Enemy {
 	}
 
 	void guard_Area(){
-		if (Distance () < turretRadius) { //If player is in range (distance) of turret
-			//Debug.Log("Range: " + within_Arc(playerTransform.position)); //Testing
-			if (arcLimit && within_Arc (playerTransform.position) && within_LoS()) {
-				line.enabled = true;
-				draw_And_Shoot ();
-			} else if(!arcLimit && within_LoS()) {
-				line.enabled = true;
-				draw_And_Shoot ();
-			}
-			else {
-				line.enabled = false;
-			}
-		} 
+		if (arcLimit && within_Arc (playerTransform.position) && within_LoS ()) {
+			line.enabled = true;
+			draw_And_Shoot ();
+		} else if (!arcLimit && within_LoS ()) {
+			line.enabled = true;
+			draw_And_Shoot ();
+		} else {
+			line.enabled = false;
+		}
 	}
 
 	//Return distance between player and enemy
+	/*
 	private float Distance(){
 		return Vector3.Distance(transform.position, playerTransform.position);
 	}
+	*/
 
 	void OnTriggerEnter2D(Collider2D col){
 		if (damagingElements.Contains (col.gameObject.tag)) {
