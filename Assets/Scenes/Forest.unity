@@ -489,6 +489,16 @@ Prefab:
       propertyPath: m_Name
       value: EnemyTurret (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 114100652895319168, guid: ce807cd88989d114d8abfca498b97de9,
+        type: 2}
+      propertyPath: baseWater
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114100652895319168, guid: ce807cd88989d114d8abfca498b97de9,
+        type: 2}
+      propertyPath: baseFire
+      value: 12
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ce807cd88989d114d8abfca498b97de9, type: 2}
   m_IsPrefabParent: 0
@@ -598,6 +608,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lootTable: []
+  dropChance: 70
 --- !u!114 &122204155
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -610,10 +621,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b17dded1bf6d6714296cea0180d4eea0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseFire: 15
-  baseWater: 10
+  baseFire: 12
+  baseWater: 3
   baseElectric: 0.1
-  baseEarth: 10
+  earthMultiplier: 2
 --- !u!114 &122204156
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1510,12 +1521,12 @@ Prefab:
     - target: {fileID: 224737888326160916, guid: 267853b8c8fcb2444be28e5a0e114a23,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -16.11111
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224737888326160916, guid: 267853b8c8fcb2444be28e5a0e114a23,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 22.222221
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224166394385784508, guid: 267853b8c8fcb2444be28e5a0e114a23,
         type: 2}
@@ -1535,7 +1546,7 @@ Prefab:
     - target: {fileID: 224166394385784508, guid: 267853b8c8fcb2444be28e5a0e114a23,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -16.11111
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224166394385784508, guid: 267853b8c8fcb2444be28e5a0e114a23,
         type: 2}
@@ -1545,12 +1556,12 @@ Prefab:
     - target: {fileID: 224166394385784508, guid: 267853b8c8fcb2444be28e5a0e114a23,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 32.22222
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224010827024031366, guid: 267853b8c8fcb2444be28e5a0e114a23,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 32.22222
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1251655649359126, guid: 267853b8c8fcb2444be28e5a0e114a23, type: 2}
       propertyPath: m_IsActive
@@ -3220,6 +3231,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lootTable: []
+  dropChance: 70
 --- !u!114 &1029546400
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3232,10 +3244,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b17dded1bf6d6714296cea0180d4eea0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseFire: 15
-  baseWater: 10
+  baseFire: 12
+  baseWater: 3
   baseElectric: 0.1
-  baseEarth: 10
+  earthMultiplier: 2
 --- !u!114 &1029546401
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14359,14 +14371,6 @@ CompositeCollider2D:
         Y: -10000000
       - X: 170000000
         Y: -10000000
-    - - X: -720000000
-        Y: 440000000
-      - X: -730000000
-        Y: 440000000
-      - X: -730000000
-        Y: -20000000
-      - X: -720000000
-        Y: -20000000
     - - X: -450000000
         Y: 10000000
       - X: -440000000
@@ -14418,6 +14422,14 @@ CompositeCollider2D:
       - X: -470000000
         Y: -20000000
       - X: -450000000
+        Y: -20000000
+    - - X: -720000000
+        Y: 440000000
+      - X: -730000000
+        Y: 440000000
+      - X: -730000000
+        Y: -20000000
+      - X: -720000000
         Y: -20000000
     - - X: -120000000
         Y: 80000000
@@ -14757,10 +14769,6 @@ CompositeCollider2D:
       - {x: 16, y: 45}
       - {x: 16, y: -1}
       - {x: 17, y: -1}
-    - - {x: -72, y: 44}
-      - {x: -73, y: 44}
-      - {x: -73, y: -2}
-      - {x: -72, y: -2}
     - - {x: -45, y: 1}
       - {x: -44, y: 1}
       - {x: -44, y: 2}
@@ -14787,6 +14795,10 @@ CompositeCollider2D:
       - {x: -47, y: 44}
       - {x: -47, y: -2}
       - {x: -45, y: -2}
+    - - {x: -72, y: 44}
+      - {x: -73, y: 44}
+      - {x: -73, y: -2}
+      - {x: -72, y: -2}
     - - {x: -12, y: 8}
       - {x: -17, y: 8}
       - {x: -17, y: 9}
@@ -15062,6 +15074,16 @@ Prefab:
       propertyPath: m_Name
       value: EnemyTurret (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 114100652895319168, guid: ce807cd88989d114d8abfca498b97de9,
+        type: 2}
+      propertyPath: baseWater
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114100652895319168, guid: ce807cd88989d114d8abfca498b97de9,
+        type: 2}
+      propertyPath: baseFire
+      value: 12
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ce807cd88989d114d8abfca498b97de9, type: 2}
   m_IsPrefabParent: 0
@@ -15254,6 +15276,21 @@ Prefab:
       propertyPath: m_Name
       value: EnemyTurret (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 114940006433744980, guid: ce807cd88989d114d8abfca498b97de9,
+        type: 2}
+      propertyPath: elementType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114100652895319168, guid: ce807cd88989d114d8abfca498b97de9,
+        type: 2}
+      propertyPath: baseWater
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114100652895319168, guid: ce807cd88989d114d8abfca498b97de9,
+        type: 2}
+      propertyPath: baseFire
+      value: 12
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ce807cd88989d114d8abfca498b97de9, type: 2}
   m_IsPrefabParent: 0
@@ -15266,11 +15303,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4608127868454306, guid: ff841feaeecac0b438209f7448fdc8ba, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -41.31
+      value: -5.0899997
       objectReference: {fileID: 0}
     - target: {fileID: 4608127868454306, guid: ff841feaeecac0b438209f7448fdc8ba, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 22.09
+      value: 9.95
       objectReference: {fileID: 0}
     - target: {fileID: 4608127868454306, guid: ff841feaeecac0b438209f7448fdc8ba, type: 2}
       propertyPath: m_LocalPosition.z
@@ -52059,11 +52096,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4786540018449206, guid: 064bb79712746ca4fb4eeb186b912e89, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -41.31
+      value: -5.09
       objectReference: {fileID: 0}
     - target: {fileID: 4786540018449206, guid: 064bb79712746ca4fb4eeb186b912e89, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 22.09
+      value: 9.95
       objectReference: {fileID: 0}
     - target: {fileID: 4786540018449206, guid: 064bb79712746ca4fb4eeb186b912e89, type: 2}
       propertyPath: m_LocalPosition.z
@@ -54571,6 +54608,31 @@ Prefab:
       propertyPath: arcLimit
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 120086377043348790, guid: ce807cd88989d114d8abfca498b97de9,
+        type: 2}
+      propertyPath: m_SortingLayerID
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 120086377043348790, guid: ce807cd88989d114d8abfca498b97de9,
+        type: 2}
+      propertyPath: m_SortingLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 120086377043348790, guid: ce807cd88989d114d8abfca498b97de9,
+        type: 2}
+      propertyPath: m_Parameters.generateLightingData
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114100652895319168, guid: ce807cd88989d114d8abfca498b97de9,
+        type: 2}
+      propertyPath: baseWater
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114100652895319168, guid: ce807cd88989d114d8abfca498b97de9,
+        type: 2}
+      propertyPath: baseFire
+      value: 12
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ce807cd88989d114d8abfca498b97de9, type: 2}
   m_IsPrefabParent: 0
@@ -54953,7 +55015,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2098247693}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -41.31, y: 22.09, z: -10}
+  m_LocalPosition: {x: -5.0899997, y: 9.95, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1991160217}

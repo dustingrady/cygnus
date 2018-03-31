@@ -33,6 +33,8 @@ public class TurretType : Enemy {
 	}
 
 	void Start(){
+		base.Start ();
+
 		Rigidbody2D rb = GetComponent<Rigidbody2D> ();
 		line = this.gameObject.GetComponent<LineRenderer>();
 		rb.constraints = RigidbodyConstraints2D.FreezeAll;

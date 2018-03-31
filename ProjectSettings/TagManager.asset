@@ -32,6 +32,8 @@ TagManager:
   - Breakable
   - Acid
   - Checkpoint
+  - QuicksandXD
+  - Sandstorm
   layers:
   - Default
   - TransparentFX

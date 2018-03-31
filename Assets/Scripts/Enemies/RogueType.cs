@@ -49,6 +49,8 @@ public class RogueType : Enemy {
 	}
 
 	void Start(){
+		base.Start ();
+
 		rb = GetComponent<Rigidbody2D> ();
 		rb.constraints = RigidbodyConstraints2D.FreezeRotation;
 		sr = gameObject.GetComponent<SpriteRenderer> ();
