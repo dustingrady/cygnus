@@ -20,14 +20,14 @@ public class Drop : MonoBehaviour{
 	public List<lootDrop> lootTable = new List<lootDrop>();
 	GameObject drop;
 	int totalDropWeight = 0;
-	int dropChance = 70;
+	public int dropChance = 70;
 	void Start()
 	{
 		for (int i = 0; i < lootTable.Count; i++) {
 			if(totalDropWeight <= lootTable [i].highestWeight)
 				totalDropWeight = lootTable [i].highestWeight;
 		}
-		Debug.Log (totalDropWeight);
+
 		drop = Resources.Load ("Prefabs/ItemPrefab") as GameObject;
 	}
 

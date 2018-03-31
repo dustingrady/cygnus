@@ -34,7 +34,6 @@ public class Lava : Element {
 		if (icon.fillAmount < 1f) {
 			icon.fillAmount = 1f;
 		}
-		Debug.Log (icon.fillAmount);
 	}
 
 	void Update() {

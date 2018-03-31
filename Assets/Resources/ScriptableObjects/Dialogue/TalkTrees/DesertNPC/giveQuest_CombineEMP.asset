@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d59a82e861755a45b64d50c718dfc62, type: 3}
+  m_Name: giveQuest_CombineEMP
+  m_EditorClassIdentifier: 
+  states:
+  - text: Awesome! You have the items for the EMP.
+    choices:
+    - response: Sweet!
+      nextState: 1
+      dialogActions: []
+      dialogCondition: {fileID: 0}
+    endTree: 0
+  - text: Let me craft that EMP device right up!
+    choices:
+    - response: Fantastic!
+      nextState: 2
+      dialogActions:
+      - {fileID: 11400000, guid: e60ac4efa655d1041a20c66d413961c6, type: 2}
+      - {fileID: 11400000, guid: 344b9e42f32e93948aebc93dbec28b55, type: 2}
+      dialogCondition: {fileID: 0}
+    endTree: 0
+  - text: This is the endpoint.
+    choices: []
+    endTree: 1

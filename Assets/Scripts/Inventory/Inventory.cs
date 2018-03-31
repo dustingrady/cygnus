@@ -1,8 +1,26 @@
-﻿using System.Collections;
+﻿using System;
+using System.Linq;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+
+[System.Serializable]
+public struct InventoryItem {
+	public int index;
+	public string item;
+	public InventoryItem(int idx, string it) {
+		index = idx;
+		item = it;
+	}
+}
+
+[System.Serializable]
+public struct InventoryData {
+	public List<InventoryItem> items;
+	public int[] quantity;
+}
 
 public class Inventory : MonoBehaviour {
 
@@ -53,6 +71,9 @@ public class Inventory : MonoBehaviour {
 
 		cam = GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<Camera> ();
 		//Debug.Log (canvas + " " + toolTip + " " + toolTipText);
+		
+		SaveMan.SaveGame += OnSaveGame;
+		SaveMan.LoadGame += OnLoadGame;
 	}
 
 	public void OnLevelWasLoaded()
@@ -96,6 +117,30 @@ public class Inventory : MonoBehaviour {
 		}
 	}
 
+	public void OnSaveGame(Dictionary<SaveType, object> dict) {
+		var inv = new InventoryData();
+		//inv.items = (from c in items where c != null select c).ToArray();
+		var item_list = new List<InventoryItem>();
+		for(int i = 0; i < inventorySize; i++) {
+			if(items[i] != null) {
+				item_list.Add(new InventoryItem(i, items[i].name));
+			}
+		}
+		inv.items = item_list;
+		inv.quantity = itemQuantity;
+
+		dict.Add(SaveType.INVENTORY, inv);
+	}
+
+	public void OnLoadGame(Dictionary<SaveType, object> dict) {
+		var inv = (InventoryData)dict[SaveType.INVENTORY];
+		foreach(var pair in inv.items) {
+			Debug.Log("ScriptableObjects/Items/" + pair.item);
+			items[pair.index] = (Item)Instantiate(Resources.Load("ScriptableObjects/Items/" + pair.item));
+		}
+		itemQuantity = inv.quantity;
+	}
+
 	public void addItem(Item item)
     {
         for(int i = 0; i < items.Length; i++)
@@ -112,7 +157,7 @@ public class Inventory : MonoBehaviour {
 				return;
 			} 
         }
-    }
+    }	
 
 	public void stackItem(Item item)
 	{
@@ -245,8 +290,8 @@ public class Inventory : MonoBehaviour {
 
 			//float x = inventoryUI.transform.GetChild (4).position.x;//+ inventoryUI.transform.GetComponent<RectTransform>().sizeDelta.x*1.5;
 			//float y = inventoryUI.transform.GetChild (4).position.y + inventoryUI.transform.GetComponent<RectTransform>().sizeDelta.y/3;//+ inventoryUI.transform.GetComponent<RectTransform>().sizeDelta.y/2;
-			float x = inventoryUI.transform.GetChild (temp).position.x + 170*1/2;
-			float y = ((inventoryUI.transform.GetChild (temp).position.y) + 110*1/2);//+ toolTipText.GetComponent<RectTransform>().rect.height);
+			float x = inventoryUI.transform.GetChild (temp).position.x + 170;
+			float y = ((inventoryUI.transform.GetChild (temp).position.y) + 110);//+ toolTipText.GetComponent<RectTransform>().rect.height);
 			toolTip.transform.position = new Vector2 (x, y);
 			Debug.Log (toolTipText.GetComponent<RectTransform>().rect.width*1/4);
 		}
