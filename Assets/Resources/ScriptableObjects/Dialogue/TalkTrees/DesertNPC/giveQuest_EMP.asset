@@ -12,9 +12,17 @@ MonoBehaviour:
   m_Name: giveQuest_EMP
   m_EditorClassIdentifier: 
   states:
-  - text: 
-    choices: []
+  - text: Bring me the EMP parts and I will craft it for you.
+    choices:
+    - response: Okay.
+      nextState: 1
+      dialogActions: []
+      dialogCondition: {fileID: 0}
     endTree: 0
-  - text: 
-    choices: []
-    endTree: 0
+  - text: This is an end state.
+    choices:
+    - response: Okay.
+      nextState: 2
+      dialogActions: []
+      dialogCondition: {fileID: 0}
+    endTree: 1

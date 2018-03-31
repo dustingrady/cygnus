@@ -10,7 +10,6 @@ public class EMP : Item {
 
     public override void useItem()
     {
-        Debug.Log("You picked up EMP Part 1!");
     }
 
     public override string itemDescription()
