@@ -14,11 +14,20 @@ public class InGameMenuEventTrigger : EventTrigger {
 
 	public override void OnPointerClick(PointerEventData data)
 	{
-		Debug.Log (data);
-	}
+		switch (this.gameObject.name) {
+		case "Resume":
+			gamemanager.GetComponent<InGameMenu> ().resume ();
+			break;
+		case "Save":
+			gamemanager.GetComponent<InGameMenu> ().save ();
+			break;
+		case "Load":
+			gamemanager.GetComponent<InGameMenu> ().Load ();
+			break;
+		case "Quit":
+			gamemanager.GetComponent<InGameMenu> ().Quit ();
+			break;
+		}
 
-	public override void OnMove(AxisEventData data)
-	{
-		Debug.Log ("TEST");
 	}
 }
