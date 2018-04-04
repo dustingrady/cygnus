@@ -15,4 +15,11 @@ public class ItemInteraction : MonoBehaviour {
             Destroy(this.gameObject);
         }
     }
+
+	void OnCollisionEnter2D(Collision2D col)
+	{
+		if (col.gameObject.tag == "Player") {
+			Destroy (this.gameObject);
+		}
+	}
 }
