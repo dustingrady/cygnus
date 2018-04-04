@@ -102,9 +102,10 @@ public class PatrolType : Enemy {
 		//turnAroundTime -= Time.deltaTime; //Testing
 		RaycastHit2D hit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y), new Vector2 (patrolSpeed*-2, -1).normalized, 3, edgeCheck);
 		Debug.DrawRay (transform.position, new Vector3 (patrolSpeed*-2, -1, 0).normalized, Color.green);
+		Debug.Log (patrolSpeed); //Testing
 		if(hit){
-			//Debug.Log(hit.collider); //Testing
 			if(hit.collider.transform.gameObject.name != "Foreground"){ //Can no longer see ground
+				Debug.Log("Hit some " + hit.collider.transform.gameObject.name + " turning around");
 				return false;
 			}
 		}
@@ -150,6 +151,8 @@ public class PatrolType : Enemy {
 
 	//Off with his head!
 	void chase_Player(){
+		patrolSpeed *= -1;
+
 		if((Distance() > escapeRadius && enraged == false) || !within_LoS() || !check_Edge()){
 			enemyStartingPos = transform.position; //Where enemy will resume if player escapes
 			chasingPlayer = false;
