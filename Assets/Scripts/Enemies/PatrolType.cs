@@ -21,6 +21,7 @@ public class PatrolType : Enemy {
 	private Transform playerTransform;
 	private Vector3 enemyStartingPos;
 	public LayerMask enemySight;
+	public LayerMask edgeCheck;
 
 	private Rigidbody2D rb;
 	private bool pause = false;
@@ -60,6 +61,7 @@ public class PatrolType : Enemy {
 	}
 		
 	void Update(){
+		//check_Edge (); //Testing
 		if (hitpoints <= 0) {
 			if (edrp != null)
 				edrp.determine_Drop (getEnemyType(), this.transform.position);
@@ -95,8 +97,21 @@ public class PatrolType : Enemy {
 		}
 	}
 
-	bool within_LoS(){
+	bool check_Edge(){
+		RaycastHit2D hit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y), new Vector2 (patrolSpeed*3, -1).normalized, 25, edgeCheck);
+		Debug.DrawRay (transform.position, new Vector3 (patrolSpeed*-3, -1, 0).normalized, Color.green);
+		if(hit.collider != null){
+			//Debug.Log(hit.collider.transform.gameObject.name); //Testing
+			if(hit.collider.transform.gameObject.name != "Foreground"){
+				//Debug.Log("NOT ok to walk");
+				return false;
+			}
+		}
+		//Debug.Log ("Ok to walk");
+		return true;
+	}
 
+	bool within_LoS(){
 		Vector2 start = transform.position;
 		Vector2 direction = playerTransform.position - transform.position;
 		float distance = chaseRadius; //Distance in which raycast will check
@@ -122,8 +137,8 @@ public class PatrolType : Enemy {
 			if (Mathf.Sign (patrolSpeed) != Mathf.Sign (transform.localScale.x)) {
 				this.transform.localScale = new Vector3 (transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
 			}
-
-			if (Mathf.Abs (Mathf.Abs (transform.position.x - v.x) - delta) <= 0.5){
+			//Debug.Log (check_Edge ()); //Testing
+			if ((Mathf.Abs (Mathf.Abs (transform.position.x - v.x) - delta) <= 1.5f) && !check_Edge()){
 				StartCoroutine (idle ());
 				patrolSpeed *= -1;
 			}
@@ -167,11 +182,6 @@ public class PatrolType : Enemy {
 		if (col.gameObject.tag == "TurnAround") { //Tagable option to have NPC's turn around
 			patrolSpeed *= -1;
 		}
-		/*----------------------Testing-----------------------------
-		if (col.gameObject.tag == "Water" || col.gameObject.tag == "Lava") { //Prevent enemy from falling into these things
-			patrolSpeed *= -1;
-		}
-		----------------------Testing-----------------------------*/
 
 		if (damagingElements.Contains (col.gameObject.tag)) {
 			takeDamage (edmg.determine_Damage (col.gameObject.tag, getEnemyType ()));
