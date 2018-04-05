@@ -11,7 +11,7 @@ public class PatrolType : Enemy {
 	private float chaseRadius = 6.0f; //How far we can see player
 	private float escapeRadius = 12.0f; //How far player must be away to break the chase
 	private float followDistance = 1.25f; //How close to the player the enemy will get
-	private float turnAroundTime = 5.0f; //Amount of time enemy will wait before changing direction
+	private float turnAroundPoll = 0.5f; //Polling value for checking if enemy is stuck
 
 	[SerializeField] 
 	private bool canShoot = false;
@@ -31,7 +31,7 @@ public class PatrolType : Enemy {
 	private bool stunned = false;
 	private int tolerance = 0;
 
-	// When the enemy is shot, they persue the player for atleast two seconds
+	// When the enemy is shot, they persue the player for at least two seconds
 	private bool enraged = false;
 	// Reference to coroutine, to refresh it
 	private IEnumerator enragedCoroutine;
@@ -57,12 +57,11 @@ public class PatrolType : Enemy {
 		base.Start ();
 
 		rb = GetComponent<Rigidbody2D> ();
-		rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+		//rb.constraints = RigidbodyConstraints2D.FreezeRotation;
 		patrolSpeed = Mathf.Sign (Random.Range (-1, 1)) * patrolSpeed;
 	}
 		
 	void Update(){
-		//check_Edge (); //Testing
 		if (hitpoints <= 0) {
 			if (edrp != null)
 				edrp.determine_Drop (getEnemyType(), this.transform.position);
@@ -72,7 +71,6 @@ public class PatrolType : Enemy {
 				Debug.Log("Dead Drop Chance: " + chance);
 				dr.dropItem (chance);
 			}
-
 			Destroy (this.gameObject);
 		}
 
@@ -99,16 +97,25 @@ public class PatrolType : Enemy {
 	}
 
 	bool check_Edge(){
-		RaycastHit2D hit = Physics2D.Raycast (new Vector2 (transform.position.x, transform.position.y), new Vector2 (patrolSpeed*-2, -1).normalized, 3, edgeCheck);
+		RaycastHit2D checkEdge = Physics2D.Raycast (new Vector2 (transform.position.x, transform.position.y), new Vector2 (patrolSpeed*-2, -1).normalized, 3, edgeCheck);
 		Debug.DrawRay (transform.position, new Vector3 (patrolSpeed*-2, -1, 0).normalized, Color.green);
-
-		if(hit){ //Null check
-			if(hit.collider.transform.gameObject.name != "Foreground"){ //Can no longer see ground
-				//Debug.Log("Hit some " + hit.collider.transform.gameObject.name + " turning around");
+		if(checkEdge){ //Null check
+			if(checkEdge.collider.transform.gameObject.name != "Foreground"){ //Can no longer see ground
+				//Debug.Log("Hit some " + checkEdge.collider.transform.gameObject.name + " turning around");
 				return false;
 			}
 		}
 		return true;
+	}
+
+	bool check_Stuck(){
+		RaycastHit2D checkFront = Physics2D.Raycast (new Vector2 (transform.position.x, transform.position.y), new Vector2 (patrolSpeed*-1, 0).normalized, 1, enemySight);
+		Debug.DrawRay (transform.position, new Vector3 (patrolSpeed*-1, 0, 0).normalized, Color.green);
+		//Debug.Log (checkFront.collider); 
+		if(checkFront.collider != null){
+			return true;
+		}
+		return false;
 	}
 
 	bool within_LoS(){
@@ -131,6 +138,7 @@ public class PatrolType : Enemy {
 	//Normal patrolling behaviour. Using sin function for side to side patrolling (may change)
 	void patrol_Area(){
 		Vector3 v = enemyStartingPos;
+
 		if ((Mathf.Abs(transform.position.x - v.x) < delta) && !pause) {
 			transform.Translate (new Vector2 (patrolSpeed, 0) * Time.deltaTime);
 
@@ -144,6 +152,11 @@ public class PatrolType : Enemy {
 		}
 		if((Distance() <= chaseRadius) && within_LoS() && check_Edge()){
 			chasingPlayer = true;
+		}
+
+		if (check_Stuck()) { //Turn around if stuck
+			StartCoroutine(idle());
+			patrolSpeed *= -1;
 		}
 	}
 
@@ -254,7 +267,6 @@ public class PatrolType : Enemy {
 		chasingPlayer = true;
 
 		yield return new WaitForSeconds (duration);
-
 		enraged = false;
 	}
 }

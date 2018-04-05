@@ -100,6 +100,16 @@ public class RogueType : Enemy {
 		return true;
 	}
 
+	bool check_Stuck(){
+		RaycastHit2D checkFront = Physics2D.Raycast (new Vector2 (transform.position.x, transform.position.y), new Vector2 (patrolSpeed*-1, 0).normalized, 1, enemySight);
+		Debug.DrawRay (transform.position, new Vector3 (patrolSpeed*-1, 0, 0).normalized, Color.green);
+		//Debug.Log (checkFront.collider); 
+		if(checkFront.collider != null){
+			return true;
+		}
+		return false;
+	}
+
 	bool within_LoS(){
 		Vector2 start = transform.position;
 		Vector2 direction = playerTransform.position - transform.position;
@@ -134,6 +144,11 @@ public class RogueType : Enemy {
 		if((Distance() <= chaseRadius) && within_LoS() && check_Edge()){
 			reveal_Self(true); 
 			chasingPlayer = true;
+		}
+
+		if (check_Stuck()) { //Turn around if stuck
+			StartCoroutine(idle());
+			patrolSpeed *= -1;
 		}
 	}
 
