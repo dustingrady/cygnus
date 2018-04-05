@@ -21,6 +21,7 @@ public class RogueType : Enemy {
 	private Transform playerTransform;
 	private Vector3 enemyStartingPos;
 	public LayerMask enemySight;
+	public LayerMask edgeCheck;
 
 	private Rigidbody2D rb;
 	private bool pause = false;
@@ -86,6 +87,19 @@ public class RogueType : Enemy {
 		}
 	}
 
+	bool check_Edge(){
+		RaycastHit2D hit = Physics2D.Raycast (new Vector2 (transform.position.x, transform.position.y), new Vector2 (patrolSpeed*-3, -1).normalized, 3, edgeCheck);
+		Debug.DrawRay (transform.position, new Vector3 (patrolSpeed*-3, -1, 0).normalized, Color.green);
+
+		if(hit){ //Null check
+			if(hit.collider.transform.gameObject.name != "Foreground"){ //Can no longer see ground
+				//Debug.Log("Hit some " + hit.collider.transform.gameObject.name + " turning around");
+				return false;
+			}
+		}
+		return true;
+	}
+
 	bool within_LoS(){
 		Vector2 start = transform.position;
 		Vector2 direction = playerTransform.position - transform.position;
@@ -111,13 +125,13 @@ public class RogueType : Enemy {
 				this.transform.localScale = new Vector3 (transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
 			}
 
-			if (Mathf.Abs (Mathf.Abs (transform.position.x - v.x) - delta) <= 0.5){
+			if ((Mathf.Abs (Mathf.Abs (transform.position.x - v.x) - delta) <= 1.5f) || !check_Edge()){
 				StartCoroutine (idle ());
 				patrolSpeed *= -1;
 			}
 		}
 
-		if(Distance() <= chaseRadius && within_LoS()){
+		if((Distance() <= chaseRadius) && within_LoS() && check_Edge()){
 			reveal_Self(true); 
 			chasingPlayer = true;
 		}
@@ -125,12 +139,20 @@ public class RogueType : Enemy {
 
 	//Off with his head!
 	void chase_Player(){
-		if(Distance() > escapeRadius && enraged == false || !within_LoS()){
+		/*Corrects the patrolSpeed of enemy depending on which side the player is on (Fixes raycast error in check_Edge())*/
+		if ((transform.position.x > playerTransform.position.x) && (Mathf.Sign(patrolSpeed)) == -1) {
+			patrolSpeed *= -1;
+		} 
+		if((transform.position.x < playerTransform.position.x) && (Mathf.Sign(patrolSpeed)) == 1) {
+			patrolSpeed *= -1;
+		}
+
+		if((Distance() > escapeRadius && enraged == false) || !within_LoS() || !check_Edge()){
 			enemyStartingPos = transform.position; //Where enemy will resume if player escapes
 			chasingPlayer = false;
 		}
 
-		if (Distance () > followDistance) { //Move towards player until we are 1 unit away (to avoid collision)
+		if ((Distance () > followDistance) && check_Edge()) { //Move towards player until we are n unit(s) away unless that results in going over a ledge
 			Vector3 oldpos = transform.position;
 			transform.position = new Vector3(Mathf.MoveTowards(transform.position.x, playerTransform.position.x, chaseSpeed * Time.deltaTime), transform.position.y, transform.position.z);
 			float dv = transform.position.x - oldpos.x;

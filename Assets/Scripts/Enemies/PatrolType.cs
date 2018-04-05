@@ -99,13 +99,12 @@ public class PatrolType : Enemy {
 	}
 
 	bool check_Edge(){
-		//turnAroundTime -= Time.deltaTime; //Testing
-		RaycastHit2D hit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y), new Vector2 (patrolSpeed*-2, -1).normalized, 3, edgeCheck);
+		RaycastHit2D hit = Physics2D.Raycast (new Vector2 (transform.position.x, transform.position.y), new Vector2 (patrolSpeed*-2, -1).normalized, 3, edgeCheck);
 		Debug.DrawRay (transform.position, new Vector3 (patrolSpeed*-2, -1, 0).normalized, Color.green);
-		Debug.Log (patrolSpeed); //Testing
-		if(hit){
+
+		if(hit){ //Null check
 			if(hit.collider.transform.gameObject.name != "Foreground"){ //Can no longer see ground
-				Debug.Log("Hit some " + hit.collider.transform.gameObject.name + " turning around");
+				//Debug.Log("Hit some " + hit.collider.transform.gameObject.name + " turning around");
 				return false;
 			}
 		}
@@ -131,7 +130,6 @@ public class PatrolType : Enemy {
 
 	//Normal patrolling behaviour. Using sin function for side to side patrolling (may change)
 	void patrol_Area(){
-		//Debug.Log (check_Edge ()); //Testing
 		Vector3 v = enemyStartingPos;
 		if ((Mathf.Abs(transform.position.x - v.x) < delta) && !pause) {
 			transform.Translate (new Vector2 (patrolSpeed, 0) * Time.deltaTime);
@@ -151,7 +149,13 @@ public class PatrolType : Enemy {
 
 	//Off with his head!
 	void chase_Player(){
-		patrolSpeed *= -1;
+		/*Corrects the patrolSpeed of enemy depending on which side the player is on (Fixes raycast error in check_Edge())*/
+		if ((transform.position.x > playerTransform.position.x) && (Mathf.Sign(patrolSpeed)) == -1) {
+			patrolSpeed *= -1;
+		} 
+		if((transform.position.x < playerTransform.position.x) && (Mathf.Sign(patrolSpeed)) == 1) {
+			patrolSpeed *= -1;
+		}
 
 		if((Distance() > escapeRadius && enraged == false) || !within_LoS() || !check_Edge()){
 			enemyStartingPos = transform.position; //Where enemy will resume if player escapes
@@ -182,12 +186,6 @@ public class PatrolType : Enemy {
 	}
 
 	void OnTriggerEnter2D(Collider2D col){
-		/*
-		if (col.gameObject.tag == "TurnAround") { //Tagable option to have NPC's turn around
-			patrolSpeed *= -1;
-		}
-		*/
-
 		if (damagingElements.Contains (col.gameObject.tag)) {
 			takeDamage (edmg.determine_Damage (col.gameObject.tag, getEnemyType ()));
 
