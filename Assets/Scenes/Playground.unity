@@ -5856,6 +5856,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 1287305833275592, guid: 945a895993499134a8860cbedd0298a2,
     type: 2}
+  sp: 0
 --- !u!114 &409653619
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6329,11 +6330,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4786540018449206, guid: 064bb79712746ca4fb4eeb186b912e89, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -7.5300007
+      value: 14.24
       objectReference: {fileID: 0}
     - target: {fileID: 4786540018449206, guid: 064bb79712746ca4fb4eeb186b912e89, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -8.79
+      value: 5.77
       objectReference: {fileID: 0}
     - target: {fileID: 4786540018449206, guid: 064bb79712746ca4fb4eeb186b912e89, type: 2}
       propertyPath: m_LocalPosition.z
@@ -9650,11 +9651,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4062297412796568, guid: cf06be31013f6c346ab2e54dfe3dcbf4, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -7.5103707
+      value: 14.23959
       objectReference: {fileID: 0}
     - target: {fileID: 4062297412796568, guid: cf06be31013f6c346ab2e54dfe3dcbf4, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -4.954711
+      value: 2.9198003
       objectReference: {fileID: 0}
     - target: {fileID: 4062297412796568, guid: cf06be31013f6c346ab2e54dfe3dcbf4, type: 2}
       propertyPath: m_LocalPosition.z
@@ -12468,11 +12469,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4608127868454306, guid: ff841feaeecac0b438209f7448fdc8ba, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -7.530001
+      value: 14.239999
       objectReference: {fileID: 0}
     - target: {fileID: 4608127868454306, guid: ff841feaeecac0b438209f7448fdc8ba, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -8.79
+      value: 5.77
       objectReference: {fileID: 0}
     - target: {fileID: 4608127868454306, guid: ff841feaeecac0b438209f7448fdc8ba, type: 2}
       propertyPath: m_LocalPosition.z
@@ -12563,6 +12564,11 @@ Prefab:
     - target: {fileID: 1685124298241452, guid: ce807cd88989d114d8abfca498b97de9, type: 2}
       propertyPath: m_Name
       value: EnemyTurret (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 114330692470991352, guid: ce807cd88989d114d8abfca498b97de9,
+        type: 2}
+      propertyPath: sp
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ce807cd88989d114d8abfca498b97de9, type: 2}
