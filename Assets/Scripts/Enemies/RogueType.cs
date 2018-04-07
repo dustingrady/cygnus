@@ -87,13 +87,18 @@ public class RogueType : Enemy {
 		}
 	}
 
-	bool check_Edge(){
-		RaycastHit2D hit = Physics2D.Raycast (new Vector2 (transform.position.x, transform.position.y), new Vector2 (patrolSpeed*-3, -1).normalized, 3, edgeCheck);
-		Debug.DrawRay (transform.position, new Vector3 (patrolSpeed*-3, -1, 0).normalized, Color.green);
+	//THIS IS DEBUG RAY
+	void OnDrawGizmosSelected(){
+		Gizmos.color = Color.red;
+		Gizmos.DrawRay (new Vector3(transform.position.x + patrolSpeed*-0.1f, transform.position.y, transform.position.z), Vector3.down*2);
+		Gizmos.DrawRay (new Vector3(transform.position.x, transform.position.y, transform.position.z), new Vector3 (patrolSpeed*-1, 0,0).normalized);
+	}
 
-		if(hit){ //Null check
-			if(hit.collider.transform.gameObject.name != "Foreground"){ //Can no longer see ground
-				//Debug.Log("Hit some " + hit.collider.transform.gameObject.name + " turning around");
+	bool check_Edge(){
+		RaycastHit2D checkEdge = Physics2D.Raycast (new Vector2 (transform.position.x+ patrolSpeed*-0.1f, transform.position.y), new Vector2 (0, -1).normalized, 3, edgeCheck);
+		if(checkEdge){ //Null check
+			if(checkEdge.collider.transform.gameObject.name != "Foreground"){ //Can no longer see ground
+				//Debug.Log("Hit some " + checkEdge.collider.transform.gameObject.name + " turning around");
 				return false;
 			}
 		}
