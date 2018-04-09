@@ -1030,6 +1030,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 224224084049174912}
+  - component: {fileID: 114397327707329852}
   m_Layer: 5
   m_Name: InGameMenu
   m_TagString: Untagged
@@ -1866,8 +1867,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: save
+      - m_Target: {fileID: 114397327707329852}
+        m_MethodName: Save
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2493,6 +2494,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   replacement: {fileID: 21300000, guid: 7fab4fbb5754718419d74607c21b903f, type: 3}
+--- !u!114 &114397327707329852
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1698992571429364}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aec0a3564ec705f45b8988fe7e9eac12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114411313092727648
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3126,7 +3138,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 114397327707329852}
         m_MethodName: Load
         m_Mode: 1
         m_Arguments:
@@ -3533,7 +3545,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 114397327707329852}
         m_MethodName: Quit
         m_Mode: 1
         m_Arguments:
@@ -3639,8 +3651,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: resume
+      - m_Target: {fileID: 114397327707329852}
+        m_MethodName: Resume
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -43,20 +43,24 @@ public class InGameMenu : MonoBehaviour {
 		inGameMenu.transform.localScale = new Vector3 (0, 0, 0);
 	}
 
-	public void resume()
+	public void Resume()
 	{
 		hideMenu ();
 		Time.timeScale = 1;
 		display = false;
 	}
 
-	public void save()
+	public void Save()
 	{
 		Debug.Log ("Saving");
+        Resume();
+        SaveMan.Save();
 	}
 
 	public void Load(){
 		Debug.Log ("Load");
+        Resume();
+        SaveMan.Load();
 	}
 
 	public void Quit()
