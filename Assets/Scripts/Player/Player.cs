@@ -120,6 +120,29 @@ public class Player : MonoBehaviour {
 
 				}
 			}	
+
+			if (col.gameObject.tag == "Item") {
+
+				//string path = "Items/" + col.gameObject.name;
+				//Item temp = Resources.Load(path) as Item;
+
+				Item item = col.gameObject.GetComponent<ItemInteraction>().item;
+
+				if (item != null) {
+					//inventory.GetComponent<Inventory>().addItem(item);
+					//Debug.Log(inventory.GetComponent<Inventory> ().checkSlot(item));
+					if (inventory.GetComponent<Inventory> ().checkSlot (item)) 
+					{
+						inventory.GetComponent<Inventory> ().stackItem (item);
+					} 
+					else if (!inventory.GetComponent<Inventory> ().checkSlot (item)) 
+					{
+						inventory.GetComponent<Inventory> ().addItem (item);
+					}
+				} else {
+					Debug.LogError ("There was no item on that object!");
+				}
+			}
 		}
 			
 		if (col.gameObject.tag == "Scrap") {
@@ -142,6 +165,13 @@ public class Player : MonoBehaviour {
 			StartCoroutine (enemyOnContact (20));
 		}
 			
+	}
+
+	void OnParticleCollision(GameObject other){
+		if (other.tag == "Acid") {
+			Debug.Log ("Boom boom");
+			this.health.CurrentVal -= 1f;
+		}
 	}
 
 	/*
@@ -175,7 +205,7 @@ public class Player : MonoBehaviour {
 			Debug.Log ("ouch, a fuckin bossbullet");
 			StartCoroutine(enemyProjectiles(1));
 		}
-
+		/*
 		if (col.gameObject.tag == "Item") {
 
 			//string path = "Items/" + col.gameObject.name;
@@ -197,7 +227,7 @@ public class Player : MonoBehaviour {
 			} else {
 				Debug.LogError ("There was no item on that object!");
 			}
-		}
+		}*/
 
 		if ((col.gameObject.tag == "EnemyProjectile" && !takingDamage)) {
 			StartCoroutine (enemyProjectiles(10));
@@ -211,9 +241,7 @@ public class Player : MonoBehaviour {
 
 		// Collision with checkpoint trigger
 		if (col.CompareTag("Checkpoint")) {
-			Debug.Log ("Found a checkpoint");
 			checkpointPos = col.transform.position;
-			Debug.Log ("Set checkpoint to: " + col.transform.position);
 		}
 	}
 
@@ -230,7 +258,9 @@ public class Player : MonoBehaviour {
 		if ((col.gameObject.tag == "FireElement" && !standingInFire)) {
 			StartCoroutine(singularDamage(5));
 			StartCoroutine (flash());
-		} if (col.gameObject.tag == "Acid") {
+		} 
+
+		if (col.gameObject.tag == "Acid") {
 			StartCoroutine (acidContact (1));
 		}
 	}
@@ -296,7 +326,7 @@ public class Player : MonoBehaviour {
 	IEnumerator acidContact(int damageAmount) 
 	{
 		ReducePlayerHealth(damageAmount);
-		yield return new WaitForSeconds (0.3f);
+		yield return new WaitForSeconds (1.0f);
 	}
 
 	IEnumerator flash(){

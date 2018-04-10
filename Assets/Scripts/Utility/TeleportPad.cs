@@ -5,7 +5,8 @@ using UnityEngine;
 public class TeleportPad : MonoBehaviour {
 
 	public GameObject destinationPad;
-	float teleportTimer = 0;
+	float teleportTimer = 3;
+	private int textTimer = 3;
 	GameObject player;
 
 	public Texture2D fadeOutTexture;
@@ -19,7 +20,7 @@ public class TeleportPad : MonoBehaviour {
 
 	bool fading = false;
 
-	const float tpCharge = 3.0f;
+	const float tpCharge = 0.0f;
 
 	// Use this for initialization
 	void Start () {
@@ -27,7 +28,7 @@ public class TeleportPad : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		if (teleportTimer >= tpCharge) {
+		if (teleportTimer <= tpCharge) {
 			fading = true;
 			StartCoroutine (teleport (player));
 		}
@@ -37,7 +38,11 @@ public class TeleportPad : MonoBehaviour {
 	{
 		if (col.tag == "Player") {
 			if (destinationPad != null) {
-				teleportTimer += Time.deltaTime;
+				if(textTimer > (int) teleportTimer) {
+					FloatingTextController.CreateFloatingText ("Teleporting in " + textTimer + "!", this.gameObject.transform, Color.blue, 20);
+					textTimer--;
+				}
+				teleportTimer -= Time.deltaTime;
 				player = col.gameObject;
 			}
 		}
@@ -46,7 +51,8 @@ public class TeleportPad : MonoBehaviour {
 	void OnTriggerExit2D(Collider2D col)
 	{
 		if (col.tag == "Player") {
-			teleportTimer = 0;
+			teleportTimer = 3;
+			textTimer = 3;
 		}
 	}
 
@@ -76,7 +82,7 @@ public class TeleportPad : MonoBehaviour {
 
 	IEnumerator fadingTimer()
 	{
-		yield return new WaitForSeconds (tpCharge + 1 / 2);
+		yield return new WaitForSeconds (3 - 1 / 2);
 		fadeDir = 1;
 		fading = false;
 		alpha = 0f;

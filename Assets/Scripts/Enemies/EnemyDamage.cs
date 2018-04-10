@@ -6,11 +6,12 @@ using UnityEngine;
 public class EnemyDamage : MonoBehaviour {
 	public Dictionary<Elements, string> weaknesses;
 	public Dictionary<Elements, string> resistances;
+	public Dictionary<Elements, string> immunities;
 
-	public float baseFire = 15f;
-	public float baseWater = 4f;
+	public float baseFire = 12f;
+	public float baseWater = 3f;
 	public float baseElectric = 0.1f;
-	public float baseEarth = 10f;
+	public float earthMultiplier = 2f;
 
 	void Start(){
 		FloatingTextController.Initialize ();
@@ -27,8 +28,15 @@ public class EnemyDamage : MonoBehaviour {
 		resistances.Add (Elements.fire, "MetalElement"); 
 		resistances.Add (Elements.water, "FireElement");
 		resistances.Add (Elements.earth, "ElectricElement");
-		resistances.Add (Elements.metal, "MetalElement"); 
 		resistances.Add (Elements.electric, "WaterElement");
+
+		//x is immune
+		immunities = new Dictionary<Elements, string> ();
+		immunities.Add (Elements.fire, "FireElement"); 
+		immunities.Add (Elements.water, "WaterElement");
+		immunities.Add (Elements.earth, "EarthElement");
+		immunities.Add (Elements.metal, "MetalElement"); 
+		immunities.Add (Elements.electric, "ElectricElement");
 	}
 
 	public float determine_Damage(string attackType, Elements enemyType, float direct = 1f){
@@ -41,7 +49,7 @@ public class EnemyDamage : MonoBehaviour {
 			dmg = baseWater;
 			break;
 		case "EarthElement":
-			dmg = (int)direct;
+			dmg = (int)(direct * earthMultiplier);
 			break;
 		case "ElectricElement":
 			dmg = baseElectric;
@@ -51,9 +59,16 @@ public class EnemyDamage : MonoBehaviour {
 		if (weaknesses [enemyType] == attackType) {
 			dmg *= 2f;
 		}
+
 		if(resistances[enemyType] == attackType){
 			dmg *= 0.5f;
 		}
+
+		// Immune to damage from it's own element
+		if (immunities [enemyType] == attackType) {
+			dmg = 0;
+		}
+
 		//Debug.Log ("Dealt " + dmg + " dmg to " + enemyType + " type enemy");
 
 		display_Damage (dmg);
@@ -64,12 +79,16 @@ public class EnemyDamage : MonoBehaviour {
 	private void display_Damage(float dmg) {
 
 		// Scale the damage size between 12 and 35 based on how much damage was delt
-		float dmgSize = Mathf.Lerp (12, 38, dmg / 80);
+		float dmgSize = Mathf.Lerp (18, 35, dmg / 80);
 
 		// Reduce the amount of green to make the color more red based on damage
 		Color baseClr = Color.yellow;
 		baseClr.g -= dmg / 100;
 
-		FloatingTextController.CreateFloatingText (dmg.ToString(), this.gameObject.transform, baseClr, (int)dmgSize);
+		if (dmg > 0) {
+			FloatingTextController.CreateFloatingText (dmg.ToString (), this.gameObject.transform, baseClr, (int)dmgSize);
+		} else {
+			FloatingTextController.CreateFloatingText ("immune", this.gameObject.transform, Color.yellow, 20);
+		}
 	}
 }

@@ -21,6 +21,7 @@ public class RogueType : Enemy {
 	private Transform playerTransform;
 	private Vector3 enemyStartingPos;
 	public LayerMask enemySight;
+	public LayerMask edgeCheck;
 
 	private Rigidbody2D rb;
 	private bool pause = false;
@@ -41,7 +42,9 @@ public class RogueType : Enemy {
 		enemyStartingPos = transform.position; //Initialize startingPos
 		enemyTransform = this.transform; //Reference to current enemy (for testing)
 		es = gameObject.GetComponent<EnemyShooting>();
-		edrp = gameObject.GetComponent<EnemyDrop> ();
+		if (gameObject.GetComponent<EnemyDrop> () != null) {
+			edrp = gameObject.GetComponent<EnemyDrop> ();
+		}
 		edmg = gameObject.GetComponent<EnemyDamage> ();
 		playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
 		sparks = Resources.Load ("Prefabs/Particles/Sparks") as GameObject;
@@ -49,6 +52,8 @@ public class RogueType : Enemy {
 	}
 
 	void Start(){
+		base.Start ();
+
 		rb = GetComponent<Rigidbody2D> ();
 		rb.constraints = RigidbodyConstraints2D.FreezeRotation;
 		sr = gameObject.GetComponent<SpriteRenderer> ();
@@ -58,7 +63,8 @@ public class RogueType : Enemy {
 
 	void Update(){
 		if (hitpoints <= 0) {
-			edrp.determine_Drop (getEnemyType(), this.transform.position);
+			if (edrp != null)
+				edrp.determine_Drop (getEnemyType(), this.transform.position);
 			Destroy (this.gameObject);
 		}
 
@@ -82,6 +88,34 @@ public class RogueType : Enemy {
 				break;
 			}
 		}
+	}
+
+	//THIS IS DEBUG RAY
+	void OnDrawGizmosSelected(){
+		Gizmos.color = Color.red;
+		Gizmos.DrawRay (new Vector3(transform.position.x + patrolSpeed*-0.1f, transform.position.y, transform.position.z), Vector3.down*2);
+		Gizmos.DrawRay (new Vector3(transform.position.x, transform.position.y, transform.position.z), new Vector3 (patrolSpeed*-1, 0,0).normalized);
+	}
+
+	bool check_Edge(){
+		RaycastHit2D checkEdge = Physics2D.Raycast (new Vector2 (transform.position.x+ patrolSpeed*-0.1f, transform.position.y), new Vector2 (0, -1).normalized, 3, edgeCheck);
+		if(checkEdge){ //Null check
+			if(checkEdge.collider.transform.gameObject.name != "Foreground"){ //Can no longer see ground
+				//Debug.Log("Hit some " + checkEdge.collider.transform.gameObject.name + " turning around");
+				return false;
+			}
+		}
+		return true;
+	}
+
+	bool check_Stuck(){
+		RaycastHit2D checkFront = Physics2D.Raycast (new Vector2 (transform.position.x, transform.position.y), new Vector2 (patrolSpeed*-1, 0).normalized, 1, enemySight);
+		Debug.DrawRay (transform.position, new Vector3 (patrolSpeed*-1, 0, 0).normalized, Color.green);
+		//Debug.Log (checkFront.collider); 
+		if(checkFront.collider != null){
+			return true;
+		}
+		return false;
 	}
 
 	bool within_LoS(){
@@ -109,26 +143,39 @@ public class RogueType : Enemy {
 				this.transform.localScale = new Vector3 (transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
 			}
 
-			if (Mathf.Abs (Mathf.Abs (transform.position.x - v.x) - delta) <= 0.5){
+			if ((Mathf.Abs (Mathf.Abs (transform.position.x - v.x) - delta) <= 1.5f) || !check_Edge()){
 				StartCoroutine (idle ());
 				patrolSpeed *= -1;
 			}
 		}
 
-		if(Distance() <= chaseRadius && within_LoS()){
+		if((Distance() <= chaseRadius) && within_LoS() && check_Edge()){
 			reveal_Self(true); 
 			chasingPlayer = true;
+		}
+
+		if (check_Stuck()) { //Turn around if stuck
+			StartCoroutine(idle());
+			patrolSpeed *= -1;
 		}
 	}
 
 	//Off with his head!
 	void chase_Player(){
-		if(Distance() > escapeRadius && enraged == false || !within_LoS()){
+		/*Corrects the patrolSpeed of enemy depending on which side the player is on (Fixes raycast error in check_Edge())*/
+		if ((transform.position.x > playerTransform.position.x) && (Mathf.Sign(patrolSpeed)) == -1) {
+			patrolSpeed *= -1;
+		} 
+		if((transform.position.x < playerTransform.position.x) && (Mathf.Sign(patrolSpeed)) == 1) {
+			patrolSpeed *= -1;
+		}
+
+		if((Distance() > escapeRadius && enraged == false) || !within_LoS() || !check_Edge()){
 			enemyStartingPos = transform.position; //Where enemy will resume if player escapes
 			chasingPlayer = false;
 		}
 
-		if (Distance () > followDistance) { //Move towards player until we are 1 unit away (to avoid collision)
+		if ((Distance () > followDistance) && check_Edge()) { //Move towards player until we are n unit(s) away unless that results in going over a ledge
 			Vector3 oldpos = transform.position;
 			transform.position = new Vector3(Mathf.MoveTowards(transform.position.x, playerTransform.position.x, chaseSpeed * Time.deltaTime), transform.position.y, transform.position.z);
 			float dv = transform.position.x - oldpos.x;
@@ -192,9 +239,8 @@ public class RogueType : Enemy {
 			tolerance++;
 		}
 
-		if (other.tag == "ElectricElement" && elementType == Elements.metal) {
-			//Debug.Log ("Particle collision");
-			hitpoints -= 0.1f;
+		if (other.tag == "ElectricElement") {
+			takeDamage (0.5f);
 		}
 	}
 

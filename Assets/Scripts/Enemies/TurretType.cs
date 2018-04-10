@@ -15,15 +15,26 @@ public class TurretType : Enemy {
 	private EnemyDamage edmg;
 	private LineRenderer line;
 	public LayerMask enemySight;
+	private GameObject sparks;
+
+	private Drop dr;
 
 	void Awake(){
 		playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
 		es = gameObject.GetComponent<EnemyShooting>();
-		edrp = gameObject.GetComponent<EnemyDrop> ();
 		edmg = gameObject.GetComponent<EnemyDamage> ();
+
+		if (gameObject.GetComponent<Drop>() != null) 
+			dr = gameObject.GetComponent<Drop>();
+		if (gameObject.GetComponent<EnemyDrop> () != null)
+			edrp = gameObject.GetComponent<EnemyDrop> ();
+
+		sparks = Resources.Load ("Prefabs/Particles/Sparks") as GameObject;
 	}
 
 	void Start(){
+		base.Start ();
+
 		Rigidbody2D rb = GetComponent<Rigidbody2D> ();
 		line = this.gameObject.GetComponent<LineRenderer>();
 		rb.constraints = RigidbodyConstraints2D.FreezeAll;
@@ -31,7 +42,14 @@ public class TurretType : Enemy {
 
 	void Update(){
 		if (hitpoints <= 0) {
-			edrp.determine_Drop (getEnemyType(), this.transform.position);
+			if (edrp != null)
+				edrp.determine_Drop (getEnemyType(), this.transform.position);
+
+			if (dr != null) {
+				int chance = Random.Range (0, 101);
+				Debug.Log ("Dead Drop Chance: " + chance);
+				dr.dropItem (chance);
+			}
 			Destroy (this.gameObject);
 		}
 		guard_Area ();
@@ -69,25 +87,23 @@ public class TurretType : Enemy {
 	}
 
 	void guard_Area(){
-		if (Distance () < turretRadius) { //If player is in range (distance) of turret
-			//Debug.Log("Range: " + within_Arc(playerTransform.position)); //Testing
-			if (arcLimit && within_Arc (playerTransform.position) && within_LoS()) {
-				line.enabled = true;
-				draw_And_Shoot ();
-			} else if(!arcLimit && within_LoS()) {
-				line.enabled = true;
-				draw_And_Shoot ();
-			}
-			else {
-				line.enabled = false;
-			}
-		} 
+		if (arcLimit && within_Arc (playerTransform.position) && within_LoS ()) {
+			line.enabled = true;
+			draw_And_Shoot ();
+		} else if (!arcLimit && within_LoS ()) {
+			line.enabled = true;
+			draw_And_Shoot ();
+		} else {
+			line.enabled = false;
+		}
 	}
 
 	//Return distance between player and enemy
+	/*
 	private float Distance(){
 		return Vector3.Distance(transform.position, playerTransform.position);
 	}
+	*/
 
 	void OnTriggerEnter2D(Collider2D col){
 		if (damagingElements.Contains (col.gameObject.tag)) {

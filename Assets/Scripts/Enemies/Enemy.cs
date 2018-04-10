@@ -15,6 +15,8 @@ public abstract class Enemy : MonoBehaviour {
 		"ElectricElement"
 	};
 
+
+
 	[SerializeField]
 	protected Elements elementType;
 	[SerializeField]
@@ -25,13 +27,29 @@ public abstract class Enemy : MonoBehaviour {
 	[SerializeField]
 	protected int energy = 100;
 
-	public void Start() {
-		
+	protected Color elementTint;
+
+	protected void Start() {
 		// Assigns a random element at the start
 		if (assignRandomType) {
 			int elementCount = System.Enum.GetValues (typeof(Elements)).Length;
 			elementType = (Elements)Random.Range (0, elementCount);
 		}
+
+		// Changes the tint of the sprite on the enemy to match their type
+		Dictionary<Elements, Color> elementColors = new Dictionary<Elements, Color> {
+			{ Elements.fire, new Color (1, 0.7f, 0.7f, 1f) },
+			{ Elements.water, new Color (0.7f, 0.7f, 1f, 1f) },
+			{ Elements.earth, new Color (0.7f, 0.7f, 0.5f, 1f) },
+			{ Elements.metal, new Color (1, 1, 1, 1f) },
+			{ Elements.electric, new Color (1, 1, 0.7f, 1f) }
+		};
+
+		//Debug.Log ("Setting color for an enemy");
+
+		SpriteRenderer sr = GetComponent<SpriteRenderer> ();
+		elementTint = elementColors [elementType];
+		sr.color = elementTint;
 	}
 
 	protected IEnumerator flash(){
@@ -45,6 +63,8 @@ public abstract class Enemy : MonoBehaviour {
 			yield return new WaitForSeconds(0.10f);
 			elapsed++;
 		}
+
+		sr.color = elementTint;
 	}
 
 	public Elements getEnemyType(){

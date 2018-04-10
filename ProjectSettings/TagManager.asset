@@ -32,6 +32,8 @@ TagManager:
   - Breakable
   - Acid
   - Checkpoint
+  - QuicksandXD
+  - Sandstorm
   layers:
   - Default
   - TransparentFX
@@ -48,8 +50,8 @@ TagManager:
   - Defense
   - Bounds
   - SorbLayer
-  - 
-  - 
+  - Snake
+  - Items
   - 
   - 
   - 

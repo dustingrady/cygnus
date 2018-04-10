@@ -34,10 +34,6 @@ public class LoadMan : MonoBehaviour {
     {
         savePath = Application.persistentDataPath + "/save.dat";
         gameManager = GameManager.instance;
-        if (gameManager.loadGame)
-        {
-            LoadData();
-        }
     }
 
     void Update()
@@ -98,7 +94,6 @@ public class LoadMan : MonoBehaviour {
     {
         GameData data = new GameData();
         data.Serialize(savePath, false);
-        gameManager.loadGame = true;
         SceneManager.LoadScene(data.scene_name);
     }
 }
