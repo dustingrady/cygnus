@@ -37,7 +37,7 @@ public class BossEnemy : Enemy {
 		Guard_Area ();
 		Check_Health ();
 	}
-
+		
 	void Guard_Area(){
 		if (Vector3.Distance (transform.position, playerTransform.position) < shootRadius) { //If player is in range
 			bs.Determine_Attack();
