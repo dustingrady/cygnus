@@ -120,6 +120,29 @@ public class Player : MonoBehaviour {
 
 				}
 			}	
+
+			if (col.gameObject.tag == "Item") {
+
+				//string path = "Items/" + col.gameObject.name;
+				//Item temp = Resources.Load(path) as Item;
+
+				Item item = col.gameObject.GetComponent<ItemInteraction>().item;
+
+				if (item != null) {
+					//inventory.GetComponent<Inventory>().addItem(item);
+					//Debug.Log(inventory.GetComponent<Inventory> ().checkSlot(item));
+					if (inventory.GetComponent<Inventory> ().checkSlot (item)) 
+					{
+						inventory.GetComponent<Inventory> ().stackItem (item);
+					} 
+					else if (!inventory.GetComponent<Inventory> ().checkSlot (item)) 
+					{
+						inventory.GetComponent<Inventory> ().addItem (item);
+					}
+				} else {
+					Debug.LogError ("There was no item on that object!");
+				}
+			}
 		}
 			
 		if (col.gameObject.tag == "Scrap") {
@@ -182,7 +205,7 @@ public class Player : MonoBehaviour {
 			Debug.Log ("ouch, a fuckin bossbullet");
 			StartCoroutine(enemyProjectiles(1));
 		}
-
+		/*
 		if (col.gameObject.tag == "Item") {
 
 			//string path = "Items/" + col.gameObject.name;
@@ -204,7 +227,7 @@ public class Player : MonoBehaviour {
 			} else {
 				Debug.LogError ("There was no item on that object!");
 			}
-		}
+		}*/
 
 		if ((col.gameObject.tag == "EnemyProjectile" && !takingDamage)) {
 			StartCoroutine (enemyProjectiles(10));

@@ -18,6 +18,12 @@ public class ElementUI : MonoBehaviour {
 
 	public GameObject powerMeter; // The element power UI element
 
+	Sprite prevLeftE;
+	Sprite prevRightE;
+	Sprite prevCenterE;
+	public bool lhandCD = false;
+	public bool rhandCD = false;
+
 	void Start () {
 		if (GameObject.FindGameObjectWithTag ("Player") != null) {
 			plr = GameObject.FindGameObjectWithTag ("Player").GetComponent<Player> ();
@@ -32,9 +38,29 @@ public class ElementUI : MonoBehaviour {
 		// Add Cooldown visual delegate here
 	}
 
+	void Update()	{
+		//Stop the CD fill when swapped to different element
+		if (prevLeftE != null) {
+			if (prevLeftE != leftElementImg.sprite) {
+				prevLeftE = leftElementImg.sprite;
+				lhandCD = true;
+				leftElementImgCd.fillAmount = 1;
+			}
+		}
+
+		if (prevRightE != null) {
+			if (prevRightE != rightElementImg.sprite) {
+				prevRightE = rightElementImg.sprite;
+				rhandCD = true;
+				rightElementImgCd.fillAmount = 1;
+			}
+		}
+	}
 
 	public void UpdateElements() {
 		if (plr.leftElement != null) {
+			prevLeftE = leftElementImgCd.sprite;
+
 			leftElementImg.sprite = plr.leftElement.sprite;
 			leftElementImgCd.sprite =  plr.leftElement.sprite;
 
@@ -45,6 +71,8 @@ public class ElementUI : MonoBehaviour {
 		}
 
 		if (plr.rightElement != null) {
+			prevRightE = rightElementImgCd.sprite;
+
 			rightElementImg.sprite = plr.rightElement.sprite;
 			rightElementImgCd.sprite = plr.rightElement.sprite;
 
@@ -55,6 +83,8 @@ public class ElementUI : MonoBehaviour {
 		}
 
 		if (plr.centerElement != null) {
+			prevCenterE = centerElementImgCd.sprite;
+
 			centerElementImg.sprite = plr.centerElement.sprite;
 			centerElementImgCd.sprite = plr.centerElement.sprite;
 

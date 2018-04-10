@@ -22,7 +22,8 @@ GameObject:
   - component: {fileID: 212519441536753522}
   - component: {fileID: 114583426450408266}
   - component: {fileID: 61262647101247786}
-  m_Layer: 13
+  - component: {fileID: 50726432871466580}
+  m_Layer: 16
   m_Name: ItemPrefab
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -42,6 +43,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!50 &50726432871466580
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1281107416386152}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!61 &61262647101247786
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -51,7 +72,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0.012541771}
@@ -78,7 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d981f521413c6824aa83edb83957c682, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 11400000, guid: 050aad1d29f06374cb52af1895d6b942, type: 2}
+  item: {fileID: 11400000, guid: 597efc7bf95a3e84db473351ca9d381b, type: 2}
 --- !u!212 &212519441536753522
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -113,7 +134,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300026, guid: f95e0d462dcb49f4c9c6f288fded5615, type: 3}
+  m_Sprite: {fileID: 21300006, guid: f95e0d462dcb49f4c9c6f288fded5615, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
