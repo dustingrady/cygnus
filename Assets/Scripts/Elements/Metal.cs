@@ -8,7 +8,10 @@ public class Metal : Element {
 	private GameObject shieldInstance;
 	private PlayerShooting plrs;
 
-	public Image icon;
+	public Image licon;
+	public Image ricon;
+	bool lbutton = false;
+	bool rbutton = false;
 
 	private const float maxStrength = 3;
 	private float shieldStrength = maxStrength;
@@ -24,6 +27,10 @@ public class Metal : Element {
 	private bool leftFireDown = false;
 	private bool rightFireDown = false;
 
+	ElementUI eUI;
+	Transform leftElement;
+	Transform rightElement;
+
 	public override void UseElement(Vector3 pos, Vector2 dir){
 		leftFireDown = plrs.leftFireDown;
 		rightFireDown = plrs.rightFireDown;
@@ -32,16 +39,18 @@ public class Metal : Element {
 			shieldInstance = Instantiate (metalShield, pos, Quaternion.identity);
 			metalReleased = false;
 
-
 			GameObject ui = GameObject.Find ("UI");
-			Transform leftElement = ui.transform.Find ("LeftElement");
-			Transform rightElement = ui.transform.Find ("RightElement");
+			leftElement = ui.transform.Find ("LeftElement");
+			rightElement = ui.transform.Find ("RightElement");
 
-			if (Input.GetMouseButtonDown (0) && leftElement.Find ("Icon").transform.Find("IconCD").GetComponent<Image> ().sprite == this.sprite) {
-				icon = leftElement.Find ("Icon").transform.Find("IconCD").GetComponent<Image> ();
+			eUI = ui.GetComponent<ElementUI> ();
+
+			if (leftElement.Find ("Icon").transform.Find("IconCD").GetComponent<Image> ().sprite == this.sprite) {
+				licon = leftElement.Find ("Icon").transform.Find("IconCD").GetComponent<Image> ();
 			} 
-			if (Input.GetMouseButtonDown (1) && rightElement.Find ("Icon").transform.Find("IconCD").GetComponent<Image> ().sprite == this.sprite) {
-				icon = rightElement.Find ("Icon").transform.Find("IconCD").GetComponent<Image> ();
+
+			if (rightElement.Find ("Icon").transform.Find("IconCD").GetComponent<Image> ().sprite == this.sprite) {
+				ricon = rightElement.Find ("Icon").transform.Find("IconCD").GetComponent<Image> ();
 			}
 		}
 	}
@@ -76,12 +85,34 @@ public class Metal : Element {
 
 		if (destroyed) {
 			cdCounter += Time.deltaTime;
-			icon.fillAmount = cdCounter / cooldown;
+			if(!eUI.lhandCD && lbutton)
+				licon.fillAmount = cdCounter / cooldown;
+			if (!eUI.rhandCD && rbutton)
+				ricon.fillAmount = cdCounter / cooldown;
+		}
+
+
+		//continue the cd fill when swapped back to element
+		if (destroyed && leftElement != null) {
+			if (leftElement.Find ("Icon").GetComponent<Image> ().sprite == this.sprite) {
+				licon.fillAmount = cdCounter / cooldown;
+			}
+		}
+		//continue the cd fill when swapped back to element
+		if (destroyed && rightElement != null) {
+			if (rightElement.Find ("Icon").GetComponent<Image> ().sprite == this.sprite) {
+				ricon.fillAmount = cdCounter / cooldown;
+			}
 		}
 
 		if (cdCounter >= cooldown) {
+			eUI.lhandCD = false;
+			eUI.rhandCD = false;
 			destroyed = false;
 			cdCounter = 0;
+		}
+		if (eUI != null) {
+			Debug.Log ("Metal update " + eUI.lhandCD + " " + eUI.rhandCD);
 		}
 	}
 
