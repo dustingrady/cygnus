@@ -5,12 +5,13 @@ using UnityEngine;
 public class PatrolType : Enemy {
 
 	private bool chasingPlayer;
-	private float delta = 5.0f; //How far we move left and right
+	private float delta = 10.0f; //How far we move left and right
 	private float patrolSpeed = 1.5f; //How fast we move left and right
 	private float chaseSpeed = 4f;
 	private float chaseRadius = 6.0f; //How far we can see player
 	private float escapeRadius = 12.0f; //How far player must be away to break the chase
 	private float followDistance = 1.25f; //How close to the player the enemy will get
+	private float turnAroundPoll = 0.5f; //Polling value for checking if enemy is stuck
 
 	[SerializeField] 
 	private bool canShoot = false;
@@ -21,6 +22,7 @@ public class PatrolType : Enemy {
 	private Transform playerTransform;
 	private Vector3 enemyStartingPos;
 	public LayerMask enemySight;
+	public LayerMask edgeCheck;
 
 	private Rigidbody2D rb;
 	private bool pause = false;
@@ -29,7 +31,7 @@ public class PatrolType : Enemy {
 	private bool stunned = false;
 	private int tolerance = 0;
 
-	// When the enemy is shot, they persue the player for atleast two seconds
+	// When the enemy is shot, they persue the player for at least two seconds
 	private bool enraged = false;
 	// Reference to coroutine, to refresh it
 	private IEnumerator enragedCoroutine;
@@ -55,7 +57,7 @@ public class PatrolType : Enemy {
 		base.Start ();
 
 		rb = GetComponent<Rigidbody2D> ();
-		rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+		//rb.constraints = RigidbodyConstraints2D.FreezeRotation;
 		patrolSpeed = Mathf.Sign (Random.Range (-1, 1)) * patrolSpeed;
 	}
 		
@@ -65,11 +67,10 @@ public class PatrolType : Enemy {
 				edrp.determine_Drop (getEnemyType(), this.transform.position);
 
 			if (dr != null) {
-				int chance = Random.Range (0, 101);
+				int chance = Random.Range (0, 100);
 				Debug.Log("Dead Drop Chance: " + chance);
 				dr.dropItem (chance);
 			}
-
 			Destroy (this.gameObject);
 		}
 
@@ -95,8 +96,34 @@ public class PatrolType : Enemy {
 		}
 	}
 
-	bool within_LoS(){
+	//THIS IS DEBUG RAY
+	void OnDrawGizmosSelected(){
+		Gizmos.color = Color.red;
+		Gizmos.DrawRay (new Vector3(transform.position.x + patrolSpeed*-0.1f, transform.position.y, transform.position.z), Vector3.down*2);
+		Gizmos.DrawRay (new Vector3(transform.position.x, transform.position.y, transform.position.z), new Vector3 (patrolSpeed*-1, 0,0).normalized);
+	}
 
+	bool check_Edge(){
+		RaycastHit2D checkEdge = Physics2D.Raycast (new Vector2 (transform.position.x+ patrolSpeed*-0.1f, transform.position.y), new Vector2 (0, -1).normalized, 2, edgeCheck);
+		if(checkEdge){ //Null check
+			if(checkEdge.collider.transform.gameObject.name != "Foreground"){ //Can no longer see ground
+				//Debug.Log("Hit some " + checkEdge.collider.transform.gameObject.name + " turning around");
+				return false;
+			}
+		}
+		return true;
+	}
+
+	bool check_Stuck(){
+		RaycastHit2D checkFront = Physics2D.Raycast (new Vector2 (transform.position.x, transform.position.y), new Vector2 (patrolSpeed*-1, 0).normalized, 1, enemySight);
+		//Debug.DrawRay (transform.position, new Vector3 (patrolSpeed*-1, 0, 0).normalized, Color.green);
+		if(checkFront.collider != null){
+			return true;
+		}
+		return false;
+	}
+
+	bool within_LoS(){
 		Vector2 start = transform.position;
 		Vector2 direction = playerTransform.position - transform.position;
 		float distance = chaseRadius; //Distance in which raycast will check
@@ -116,31 +143,44 @@ public class PatrolType : Enemy {
 	//Normal patrolling behaviour. Using sin function for side to side patrolling (may change)
 	void patrol_Area(){
 		Vector3 v = enemyStartingPos;
+
 		if ((Mathf.Abs(transform.position.x - v.x) < delta) && !pause) {
 			transform.Translate (new Vector2 (patrolSpeed, 0) * Time.deltaTime);
 
 			if (Mathf.Sign (patrolSpeed) != Mathf.Sign (transform.localScale.x)) {
 				this.transform.localScale = new Vector3 (transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
 			}
-
-			if (Mathf.Abs (Mathf.Abs (transform.position.x - v.x) - delta) <= 0.5){
+			if ((Mathf.Abs (Mathf.Abs (transform.position.x - v.x) - delta) <= 1.5f) || !check_Edge()){
 				StartCoroutine (idle ());
 				patrolSpeed *= -1;
 			}
 		}
-		if(Distance() <= chaseRadius && within_LoS()){
+		if((Distance() <= chaseRadius) && within_LoS() && check_Edge()){
 			chasingPlayer = true;
+		}
+
+		if (check_Stuck()) { //Turn around if stuck
+			StartCoroutine(idle());
+			patrolSpeed *= -1;
 		}
 	}
 
 	//Off with his head!
 	void chase_Player(){
-		if(Distance() > escapeRadius && enraged == false || !within_LoS()){
+		/*Corrects the patrolSpeed of enemy depending on which side the player is on (Fixes raycast error in check_Edge())*/
+		if ((transform.position.x > playerTransform.position.x) && (Mathf.Sign(patrolSpeed)) == -1) {
+			patrolSpeed *= -1;
+		} 
+		if((transform.position.x < playerTransform.position.x) && (Mathf.Sign(patrolSpeed)) == 1) {
+			patrolSpeed *= -1;
+		}
+
+		if((Distance() > escapeRadius && enraged == false) || !within_LoS() || !check_Edge()){
 			enemyStartingPos = transform.position; //Where enemy will resume if player escapes
 			chasingPlayer = false;
 		}
 
-		if (Distance () > followDistance) { //Move towards player until we are 1 unit away (to avoid collision)
+		if ((Distance () > followDistance) && check_Edge()) { //Move towards player until we are n unit(s) away unless that results in going over a ledge
 			Vector3 oldpos = transform.position;
 			transform.position = new Vector3(Mathf.MoveTowards(transform.position.x, playerTransform.position.x, chaseSpeed * Time.deltaTime), transform.position.y, transform.position.z);
 			float dv = transform.position.x - oldpos.x;
@@ -164,15 +204,6 @@ public class PatrolType : Enemy {
 	}
 
 	void OnTriggerEnter2D(Collider2D col){
-		if (col.gameObject.tag == "TurnAround") { //Tagable option to have NPC's turn around
-			patrolSpeed *= -1;
-		}
-		/*----------------------Testing-----------------------------
-		if (col.gameObject.tag == "Water" || col.gameObject.tag == "Lava") { //Prevent enemy from falling into these things
-			patrolSpeed *= -1;
-		}
-		----------------------Testing-----------------------------*/
-
 		if (damagingElements.Contains (col.gameObject.tag)) {
 			takeDamage (edmg.determine_Damage (col.gameObject.tag, getEnemyType ()));
 
@@ -241,7 +272,6 @@ public class PatrolType : Enemy {
 		chasingPlayer = true;
 
 		yield return new WaitForSeconds (duration);
-
 		enraged = false;
 	}
 }

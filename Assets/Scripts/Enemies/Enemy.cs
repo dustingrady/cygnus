@@ -45,7 +45,7 @@ public abstract class Enemy : MonoBehaviour {
 			{ Elements.electric, new Color (1, 1, 0.7f, 1f) }
 		};
 
-		Debug.Log ("Setting color for an enemy");
+		//Debug.Log ("Setting color for an enemy");
 
 		SpriteRenderer sr = GetComponent<SpriteRenderer> ();
 		elementTint = elementColors [elementType];

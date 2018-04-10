@@ -18,6 +18,12 @@ public class ElementUI : MonoBehaviour {
 
 	public GameObject powerMeter; // The element power UI element
 
+	Sprite prevLeftE;
+	Sprite prevRightE;
+	Sprite prevCenterE;
+	public bool lhandCD = false;
+	public bool rhandCD = false;
+
 	void Start () {
 		if (GameObject.FindGameObjectWithTag ("Player") != null) {
 			plr = GameObject.FindGameObjectWithTag ("Player").GetComponent<Player> ();
@@ -32,9 +38,29 @@ public class ElementUI : MonoBehaviour {
 		// Add Cooldown visual delegate here
 	}
 
+	void Update()	{
+		//Stop the CD fill when swapped to different element
+		if (prevLeftE != null) {
+			if (prevLeftE != leftElementImg.sprite) {
+				prevLeftE = leftElementImg.sprite;
+				lhandCD = true;
+				leftElementImgCd.fillAmount = 1;
+			}
+		}
+
+		if (prevRightE != null) {
+			if (prevRightE != rightElementImg.sprite) {
+				prevRightE = rightElementImg.sprite;
+				rhandCD = true;
+				rightElementImgCd.fillAmount = 1;
+			}
+		}
+	}
 
 	public void UpdateElements() {
 		if (plr.leftElement != null) {
+			prevLeftE = leftElementImgCd.sprite;
+
 			leftElementImg.sprite = plr.leftElement.sprite;
 			leftElementImgCd.sprite =  plr.leftElement.sprite;
 
@@ -45,6 +71,8 @@ public class ElementUI : MonoBehaviour {
 		}
 
 		if (plr.rightElement != null) {
+			prevRightE = rightElementImgCd.sprite;
+
 			rightElementImg.sprite = plr.rightElement.sprite;
 			rightElementImgCd.sprite = plr.rightElement.sprite;
 
@@ -55,6 +83,8 @@ public class ElementUI : MonoBehaviour {
 		}
 
 		if (plr.centerElement != null) {
+			prevCenterE = centerElementImgCd.sprite;
+
 			centerElementImg.sprite = plr.centerElement.sprite;
 			centerElementImgCd.sprite = plr.centerElement.sprite;
 
@@ -76,38 +106,26 @@ public class ElementUI : MonoBehaviour {
 
 	public void EnableElements() {
 		Transform leftElement = transform.Find ("LeftElement");
-		leftElementImg = leftElement.Find ("Icon").GetComponent<Image> ();
-		leftElementImgCd = leftElement.Find ("Icon").Find ("IconCD").GetComponent<Image> ();
-
 		Transform rightElement = transform.Find ("RightElement");
-		rightElementImg = rightElement.Find ("Icon").GetComponent<Image> ();
-		rightElementImgCd = leftElement.Find ("Icon").Find ("IconCD").GetComponent<Image> ();
-
 		Transform centerElement = transform.Find ("CenterElement");
-		centerElementImg = centerElement.Find ("Icon").GetComponent<Image> ();
-		centerElementImgCd = leftElement.Find ("Icon").Find ("IconCD").GetComponent<Image> ();
 
 		leftElement.transform.localScale = Vector3.one;
 		rightElement.transform.localScale = Vector3.one;
 		centerElement.transform.localScale = Vector3.one;
+
+		UpdateElements ();
 	}
 
 
 	public void DisableElements() {
 		Transform leftElement = transform.Find ("LeftElement");
-		leftElementImg = leftElement.Find ("Icon").GetComponent<Image> ();
-		leftElementImgCd = leftElement.Find ("Icon").Find ("IconCD").GetComponent<Image> ();
-
 		Transform rightElement = transform.Find ("RightElement");
-		rightElementImg = rightElement.Find ("Icon").GetComponent<Image> ();
-		rightElementImgCd = leftElement.Find ("Icon").Find ("IconCD").GetComponent<Image> ();
-
 		Transform centerElement = transform.Find ("CenterElement");
-		centerElementImg = centerElement.Find ("Icon").GetComponent<Image> ();
-		centerElementImgCd = leftElement.Find ("Icon").Find ("IconCD").GetComponent<Image> ();
 
 		leftElement.transform.localScale = Vector3.zero;
 		rightElement.transform.localScale = Vector3.zero;
 		centerElement.transform.localScale = Vector3.zero;
+
+		UpdateElements ();
 	}
 }
