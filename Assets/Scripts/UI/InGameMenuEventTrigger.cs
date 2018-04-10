@@ -16,10 +16,10 @@ public class InGameMenuEventTrigger : EventTrigger {
 	{
 		switch (this.gameObject.name) {
 		case "Resume":
-			gamemanager.GetComponent<InGameMenu> ().resume ();
+			gamemanager.GetComponent<InGameMenu> ().Resume ();
 			break;
 		case "Save":
-			gamemanager.GetComponent<InGameMenu> ().save ();
+			gamemanager.GetComponent<InGameMenu> ().Save ();
 			break;
 		case "Load":
 			gamemanager.GetComponent<InGameMenu> ().Load ();

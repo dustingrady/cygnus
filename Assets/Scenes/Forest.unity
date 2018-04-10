@@ -599,22 +599,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c777724c7cd8fb4b85dee74b741c2d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &272051747 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1876656586735846, guid: 7ec1878d15ce676448a31ba7dbcb3a6f,
-    type: 2}
-  m_PrefabInternal: {fileID: 2002107594}
---- !u!114 &272051751
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 272051747}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a340094d092a94f4f93824622f198eec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &275481969
 GameObject:
   m_ObjectHideFlags: 0
@@ -7047,6 +7031,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 1287305833275592, guid: 945a895993499134a8860cbedd0298a2,
     type: 2}
+  sp: 0
 --- !u!114 &1029546402
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7067,6 +7052,9 @@ MonoBehaviour:
   enemySight:
     serializedVersion: 2
     m_Bits: 768
+  edgeCheck:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!212 &1029546403
 SpriteRenderer:
   m_ObjectHideFlags: 0
