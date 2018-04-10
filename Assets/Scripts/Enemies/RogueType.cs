@@ -41,7 +41,9 @@ public class RogueType : Enemy {
 		enemyStartingPos = transform.position; //Initialize startingPos
 		enemyTransform = this.transform; //Reference to current enemy (for testing)
 		es = gameObject.GetComponent<EnemyShooting>();
-		edrp = gameObject.GetComponent<EnemyDrop> ();
+		if (gameObject.GetComponent<EnemyDrop> () != null) {
+			edrp = gameObject.GetComponent<EnemyDrop> ();
+		}
 		edmg = gameObject.GetComponent<EnemyDamage> ();
 		playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
 		sparks = Resources.Load ("Prefabs/Particles/Sparks") as GameObject;
@@ -60,7 +62,8 @@ public class RogueType : Enemy {
 
 	void Update(){
 		if (hitpoints <= 0) {
-			edrp.determine_Drop (getEnemyType(), this.transform.position);
+			if (edrp != null)
+				edrp.determine_Drop (getEnemyType(), this.transform.position);
 			Destroy (this.gameObject);
 		}
 
