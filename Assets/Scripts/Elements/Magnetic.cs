@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class Magnetic : Element {
-	float magnetStrength = 800f;
+	float magnetStrength = 300f;
 
 	public LineRenderer lr;
 
@@ -42,9 +42,13 @@ public class Magnetic : Element {
 			fireReleased = false;
 
 		} else if (pulling && diff.magnitude <= maxRange) {
-
+			// Find the position difference so you know what direction to apply the force
+			diff = pullPos - plr.transform.position;
+			float strength = Mathf.Abs (diff.magnitude - maxRange) / maxRange; 
 			//Make the force stronger depending on how far away from the object the player is located
-			plr.GetComponent<Rigidbody2D> ().AddForce ((magnetStrength / diff.magnitude) * diff.normalized);
+			//plr.GetComponent<Rigidbody2D> ().AddForce ((magnetStrength / diff.magnitude) * diff.normalized);
+			plr.GetComponent<Rigidbody2D> ().AddForce ((magnetStrength/diff.magnitude) * strength*diff.normalized);
+			Debug.Log (strength + " " + magnetStrength/diff.magnitude);
 
 			// Enable the line renderer
 			lr.enabled = true;
@@ -71,8 +75,6 @@ public class Magnetic : Element {
 			icon.fillAmount = timeSinceFire / magnetCooldown;
 		}
 			
-		// Find the position difference so you know what direction to apply the force
-		diff = pullPos - plr.transform.position;
 		if (lr.enabled) {
 			// Update the line renderer
 			lr.SetPositions (new Vector3[] { plr.transform.position + Vector3.back, pullPos + Vector3.back });
@@ -80,7 +82,6 @@ public class Magnetic : Element {
 
 		// UGLY
 		if (Input.GetMouseButtonUp (2) == true) {
-			Debug.Log ("test");
 			fireReleased = true;
 			pulling = false;
 			timerTick = true;
