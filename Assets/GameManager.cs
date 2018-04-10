@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
@@ -20,14 +21,33 @@ public class GameManager : MonoBehaviour {
 	public bool controllerConnected = false;
 
 	public bool hasGloves = false;
-	public bool loadGame = false;
+	bool loadGame = false;
 
 	public string previousLocation;
 
-	void Start() {
+    public void OnLoadGame(Dictionary<SaveType, object> dict) {
+        if (!loadGame) {
+            var scene = (string)dict[SaveType.SCENE];
+            Debug.Log(scene);
+            SceneManager.LoadScene(scene);
+            loadGame = true;
+        }
+    }
+
+    public void OnSaveGame(Dictionary<SaveType, object> dict) {
+        dict.Add(SaveType.SCENE, SceneManager.GetActiveScene().name);
+    }
+
+    void Start() {
 		// Set the target framerate
 		QualitySettings.vSyncCount = 0;
 		Application.targetFrameRate = targetFramerate;
+
+        if (loadGame)
+        {
+            SaveMan.Load();
+            loadGame = false;
+        }
 	}
 
 	void Awake () {
@@ -56,13 +76,15 @@ public class GameManager : MonoBehaviour {
 			Quest q = Instantiate (quest);
 			quests.Add (q);
 		}
+
+        SaveMan.SaveGame += OnSaveGame;
+        SaveMan.LoadGame += OnLoadGame;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		CheckControllerStatus ();
 	}
-
 
 	void CheckControllerStatus() {
 		string[] joystickNames = Input.GetJoystickNames ();

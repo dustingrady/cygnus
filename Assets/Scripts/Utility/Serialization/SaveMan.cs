@@ -26,10 +26,6 @@ public class SaveMan : MonoBehaviour {
     {
         savePath = Application.persistentDataPath + "/save.dat";
         gameManager = GameManager.instance;
-        if (gameManager.loadGame)
-        {
-            Load();
-        }
     }
 
     void Update()
