@@ -169,8 +169,12 @@ public class Player : MonoBehaviour {
 
 	void OnParticleCollision(GameObject other){
 		if (other.tag == "Acid") {
-			Debug.Log ("Boom boom");
 			this.health.CurrentVal -= 1f;
+		}
+
+		if (other.tag == "Lava") {
+			this.health.CurrentVal -= 5f;
+			//StartCoroutine(damageOverTime(5,1));
 		}
 	}
 
@@ -191,7 +195,7 @@ public class Player : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D col) {
 
 		// Test for the Playground, if you hit Lava or enemy projectile reload
-		if (col.gameObject.name == "Lava" || col.gameObject.tag == "BossSpecial") {
+		if (col.gameObject.tag == "BossSpecial") {
 			inventory.emptyInventory ();
 			SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
 		}
