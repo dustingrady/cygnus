@@ -13,6 +13,8 @@ public class PatrolType : Enemy {
 	private float followDistance = 1.25f; //How close to the player the enemy will get
 	private float turnAroundPoll = 0.5f; //Polling value for checking if enemy is stuck
 
+	private int tolerance = 0;
+
 	[SerializeField] 
 	private bool canShoot = false;
 	private EnemyShooting es;
@@ -25,16 +27,16 @@ public class PatrolType : Enemy {
 	public LayerMask edgeCheck;
 
 	private Rigidbody2D rb;
+	private bool enraged = false; // When the enemy is shot, they persue the player for at least two seconds
 	private bool pause = false;
+	private bool stunned = false;
 
 	private GameObject sparks;
-	private bool stunned = false;
-	private int tolerance = 0;
 
-	// When the enemy is shot, they persue the player for at least two seconds
-	private bool enraged = false;
 	// Reference to coroutine, to refresh it
 	private IEnumerator enragedCoroutine;
+
+	string[] walkableTypes = new string[]{"Metal", "Earth", "Ice"}; //Things we are allowed to walk on
 
 	private Drop dr;
 
@@ -105,12 +107,12 @@ public class PatrolType : Enemy {
 
 
 	bool check_Edge(){
-		RaycastHit2D checkEdge = Physics2D.Raycast (new Vector2 (transform.position.x + patrolSpeed*-0.1f, transform.position.y), new Vector2 (patrolSpeed*-1, -1).normalized, 2f, edgeCheck);
+		RaycastHit2D checkEdge = Physics2D.Raycast (new Vector2 (transform.position.x + patrolSpeed*-0.1f, transform.position.y), new Vector2 (patrolSpeed*-1, -1).normalized, 2, edgeCheck);
 		if (!checkEdge) {
 			return true;
 		}
 
-		if(checkEdge.collider.transform.gameObject.name != "Foreground"){ //Can no longer see ground
+		if(checkEdge.collider.transform.gameObject.name != "Foreground" && !is_Walkable(checkEdge.collider.transform.gameObject.name)){ //About to step on something we shouldn't
 			//Debug.Log("Hit some " + checkEdge.collider.transform.gameObject.name + " turning around");
 			return true;
 		}
@@ -204,6 +206,16 @@ public class PatrolType : Enemy {
 	//Return distance between player and enemy
 	private float Distance(){
 		return Vector3.Distance(transform.position, playerTransform.position);
+	}
+
+	/*Check if we are allowed to walk on passed a given element type*/
+	private bool is_Walkable(string x){
+		foreach (string val in walkableTypes) {
+			if (val == x) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	void OnTriggerEnter2D(Collider2D col){

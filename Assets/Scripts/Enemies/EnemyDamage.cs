@@ -68,8 +68,7 @@ public class EnemyDamage : MonoBehaviour {
 		if (immunities [enemyType] == attackType) {
 			dmg = 0;
 		}
-
-		//Debug.Log ("Dealt " + dmg + " dmg to " + enemyType + " type enemy");
+		//Debug.Log ("Dealt " + dmg + " " + attackType + " type dmg to " + enemyType + " type enemy");
 
 		display_Damage (dmg);
 		return dmg;

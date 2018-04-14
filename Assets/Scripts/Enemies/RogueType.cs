@@ -12,6 +12,8 @@ public class RogueType : Enemy {
 	private float escapeRadius = 10.0f; //How far player must be away to break the chase
 	private float followDistance = 1.25f; //How close to the player the enemy will get
 
+	private int tolerance = 0;
+
 	[SerializeField] 
 	private bool canShoot = false;
 	private EnemyShooting es;
@@ -24,17 +26,17 @@ public class RogueType : Enemy {
 	public LayerMask edgeCheck;
 
 	private Rigidbody2D rb;
+	private bool enraged = false; // When the enemy is shot, they persue the player for atleast two seconds
 	private bool pause = false;
 	private bool hidden = true;
+	private bool stunned = false;
 	private GameObject smokePuff;
 	private GameObject sparks;
-	private bool stunned = false;
-	private int tolerance = 0;
 
 	private SpriteRenderer sr;
 
-	// When the enemy is shot, they persue the player for atleast two seconds
-	private bool enraged = false;
+	string[] walkableTypes = new string[]{"Metal", "Earth", "Ice"}; //Things we are allowed to walk on
+
 	// Reference to coroutine, to refresh it
 	private IEnumerator enragedCoroutine;
 
@@ -90,17 +92,17 @@ public class RogueType : Enemy {
 	//THIS IS DEBUG RAY
 	void OnDrawGizmosSelected(){
 		Gizmos.color = Color.red;
-		Gizmos.DrawRay (new Vector3(transform.position.x, transform.position.y, transform.position.z), new Vector3 (patrolSpeed*-1, -1,0).normalized);
+		Gizmos.DrawRay (new Vector3(transform.position.x, transform.position.y, transform.position.z), new Vector3 (patrolSpeed*-1, -0.5f,0).normalized);
 		//Gizmos.DrawRay (new Vector3(transform.position.x, transform.position.y, transform.position.z), new Vector3 (patrolSpeed*-1, 0,0).normalized);
 	}
 
 	bool check_Edge(){
-		RaycastHit2D checkEdge = Physics2D.Raycast (new Vector2 (transform.position.x + patrolSpeed*-0.1f, transform.position.y), new Vector2 (patrolSpeed*-1, -1).normalized, 2f, edgeCheck);
+		RaycastHit2D checkEdge = Physics2D.Raycast (new Vector2 (transform.position.x + patrolSpeed*-0.1f, transform.position.y), new Vector2 (patrolSpeed*-1, -0.5f).normalized, 2, edgeCheck);
 		if (!checkEdge) {
 			return true;
 		}
 
-		if(checkEdge.collider.transform.gameObject.name != "Foreground"){ //Can no longer see ground
+		if(checkEdge.collider.transform.gameObject.name != "Foreground" && !is_Walkable(checkEdge.collider.transform.gameObject.name)){ //About to step on something we shouldn't
 			//Debug.Log("Hit some " + checkEdge.collider.transform.gameObject.name + " turning around");
 			return true;
 		}
@@ -196,8 +198,18 @@ public class RogueType : Enemy {
 		return Vector3.Distance(transform.position, playerTransform.position);
 	}
 
+	/*Check if we are allowed to walk on passed a given element type*/
+	private bool is_Walkable(string x){
+		foreach (string val in walkableTypes) {
+			if (val == x) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	/*Reveal self once player is in range*/
-	void reveal_Self(bool x){
+	private void reveal_Self(bool x){
 		if (x) {
 			sr.color = new Color (1f, 1f, 1f, 1f); //Change alpha to 1
 			GameObject smoke = Instantiate (smokePuff, transform.position, Quaternion.identity); //Instantiate smoke screen
@@ -207,7 +219,7 @@ public class RogueType : Enemy {
 	}
 
 	/*Hide self once chase has ended*/
-	void hide_Self(bool x){
+	private void hide_Self(bool x){
 		if(!x){
 			sr.color = new Color (1f, 1f, 1f, .2f); //Sneaky sneak
 			hidden = true;
