@@ -99,19 +99,22 @@ public class PatrolType : Enemy {
 	//THIS IS DEBUG RAY
 	void OnDrawGizmosSelected(){
 		Gizmos.color = Color.red;
-		Gizmos.DrawRay (new Vector3(transform.position.x + patrolSpeed*-0.1f, transform.position.y, transform.position.z), Vector3.down*2);
-		Gizmos.DrawRay (new Vector3(transform.position.x, transform.position.y, transform.position.z), new Vector3 (patrolSpeed*-1, 0,0).normalized);
+		Gizmos.DrawRay (new Vector3(transform.position.x, transform.position.y, transform.position.z), new Vector3 (patrolSpeed*-1, -1,0).normalized);
+		//Gizmos.DrawRay (new Vector3(transform.position.x, transform.position.y, transform.position.z), new Vector3 (patrolSpeed*-1, 0,0).normalized);
 	}
 
+
 	bool check_Edge(){
-		RaycastHit2D checkEdge = Physics2D.Raycast (new Vector2 (transform.position.x+ patrolSpeed*-0.1f, transform.position.y), new Vector2 (0, -1).normalized, 2, edgeCheck);
-		if(checkEdge){ //Null check
-			if(checkEdge.collider.transform.gameObject.name != "Foreground"){ //Can no longer see ground
-				//Debug.Log("Hit some " + checkEdge.collider.transform.gameObject.name + " turning around");
-				return false;
-			}
+		RaycastHit2D checkEdge = Physics2D.Raycast (new Vector2 (transform.position.x + patrolSpeed*-0.1f, transform.position.y), new Vector2 (patrolSpeed*-1, -1).normalized, 2f, edgeCheck);
+		if (!checkEdge) {
+			return true;
 		}
-		return true;
+
+		if(checkEdge.collider.transform.gameObject.name != "Foreground"){ //Can no longer see ground
+			//Debug.Log("Hit some " + checkEdge.collider.transform.gameObject.name + " turning around");
+			return true;
+		}
+		return false; //No edge
 	}
 
 	bool check_Stuck(){
@@ -150,12 +153,12 @@ public class PatrolType : Enemy {
 			if (Mathf.Sign (patrolSpeed) != Mathf.Sign (transform.localScale.x)) {
 				this.transform.localScale = new Vector3 (transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
 			}
-			if ((Mathf.Abs (Mathf.Abs (transform.position.x - v.x) - delta) <= 1.5f) || !check_Edge()){
+			if ((Mathf.Abs (Mathf.Abs (transform.position.x - v.x) - delta) <= 1.5f) || check_Edge()){
 				StartCoroutine (idle ());
 				patrolSpeed *= -1;
 			}
 		}
-		if((Distance() <= chaseRadius) && within_LoS() && check_Edge()){
+		if((Distance() <= chaseRadius) && within_LoS() && !check_Edge()){
 			chasingPlayer = true;
 		}
 
@@ -175,12 +178,12 @@ public class PatrolType : Enemy {
 			patrolSpeed *= -1;
 		}
 
-		if((Distance() > escapeRadius && enraged == false) || !within_LoS() || !check_Edge()){
+		if((Distance() > escapeRadius && enraged == false) || !within_LoS() || check_Edge()){
 			enemyStartingPos = transform.position; //Where enemy will resume if player escapes
 			chasingPlayer = false;
 		}
 
-		if ((Distance () > followDistance) && check_Edge()) { //Move towards player until we are n unit(s) away unless that results in going over a ledge
+		if ((Distance () > followDistance) && !check_Edge()) { //Move towards player until we are n unit(s) away unless that results in going over a ledge
 			Vector3 oldpos = transform.position;
 			transform.position = new Vector3(Mathf.MoveTowards(transform.position.x, playerTransform.position.x, chaseSpeed * Time.deltaTime), transform.position.y, transform.position.z);
 			float dv = transform.position.x - oldpos.x;
