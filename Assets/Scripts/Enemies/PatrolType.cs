@@ -36,7 +36,7 @@ public class PatrolType : Enemy {
 	// Reference to coroutine, to refresh it
 	private IEnumerator enragedCoroutine;
 
-	string[] walkableTypes = new string[]{"Metal", "Earth", "Ice"}; //Things we are allowed to walk on
+	List<string> avoidedTypes = new List<string> {"WaterElement", "FireElement"}; //Things we are allowed to walk on
 
 	private Drop dr;
 
@@ -110,16 +110,16 @@ public class PatrolType : Enemy {
 		RaycastHit2D checkEdge = Physics2D.Raycast (new Vector2 (transform.position.x + patrolSpeed*-0.1f, transform.position.y), 
 			new Vector2 (patrolSpeed*-1, -1).normalized, 2, edgeCheck);
 		if (!checkEdge) {
+			Debug.Log ("not hitting something");
 			return true;
 		}
 
-		if (!walkableTilemaps.Contains(checkEdge.collider.transform.gameObject.name) && !is_Walkable (checkEdge.collider.transform.gameObject.name)) { //About to step on something we shouldn't
-			//Debug.Log("Hit some " + checkEdge.collider.transform.gameObject.name + " turning around");
+		if (avoidedTypes.Contains(checkEdge.collider.transform.gameObject.tag)) { //About to step on something we shouldn't
+			Debug.Log("Hit some " + checkEdge.collider.transform.gameObject.name + " turning around");
 			return true;
 		}
 
 		// Check if approaching enemy
-		Debug.Log("touching " + checkEdge.collider.transform.tag);
 		if (checkEdge.collider.transform.CompareTag ("Enemy")) {
 			Debug.Log ("eww touching a fellow enemy");
 			return true;
@@ -215,16 +215,6 @@ public class PatrolType : Enemy {
 	//Return distance between player and enemy
 	private float Distance(){
 		return Vector3.Distance(transform.position, playerTransform.position);
-	}
-
-	/*Check if we are allowed to walk on passed a given element type*/
-	private bool is_Walkable(string x){
-		foreach (string val in walkableTypes) {
-			if (val == x) {
-				return true;
-			}
-		}
-		return false;
 	}
 
 	void OnTriggerEnter2D(Collider2D col){

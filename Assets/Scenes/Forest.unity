@@ -12613,7 +12613,7 @@ MonoBehaviour:
     m_Bits: 768
   edgeCheck:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 257
 --- !u!212 &1029546403
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -75934,14 +75934,6 @@ CompositeCollider2D:
         Y: -120000000
       - X: -2209999872
         Y: -120000000
-    - - X: -860000000
-        Y: 150000000
-      - X: -990000000
-        Y: 150000000
-      - X: -990000000
-        Y: 140000000
-      - X: -860000000
-        Y: 140000000
     - - X: -750000000
         Y: 150000000
       - X: -820000000
@@ -75949,6 +75941,14 @@ CompositeCollider2D:
       - X: -820000000
         Y: 140000000
       - X: -750000000
+        Y: 140000000
+    - - X: -860000000
+        Y: 150000000
+      - X: -990000000
+        Y: 150000000
+      - X: -990000000
+        Y: 140000000
+      - X: -860000000
         Y: 140000000
     - - X: -720000000
         Y: 120000000
@@ -76062,14 +76062,6 @@ CompositeCollider2D:
         Y: -80000000
       - X: -1320000000
         Y: -80000000
-    - - X: 700000000
-        Y: -20000000
-      - X: 690000000
-        Y: -20000000
-      - X: 690000000
-        Y: -30000000
-      - X: 700000000
-        Y: -30000000
     - - X: 410000000
         Y: -20000000
       - X: 390000000
@@ -76078,6 +76070,14 @@ CompositeCollider2D:
         Y: -40000000
       - X: 410000000
         Y: -40000000
+    - - X: 700000000
+        Y: -20000000
+      - X: 690000000
+        Y: -20000000
+      - X: 690000000
+        Y: -30000000
+      - X: 700000000
+        Y: -30000000
     - - X: 310000000
         Y: -30000000
       - X: 300000000
@@ -76398,14 +76398,14 @@ CompositeCollider2D:
       - {x: -408, y: 22}
       - {x: -408, y: -12}
       - {x: -220.99998, y: -12}
-    - - {x: -86, y: 15}
-      - {x: -99, y: 15}
-      - {x: -99, y: 14}
-      - {x: -86, y: 14}
     - - {x: -75, y: 15}
       - {x: -82, y: 15}
       - {x: -82, y: 14}
       - {x: -75, y: 14}
+    - - {x: -86, y: 15}
+      - {x: -99, y: 15}
+      - {x: -99, y: 14}
+      - {x: -86, y: 14}
     - - {x: -72, y: 12}
       - {x: -73, y: 12}
       - {x: -73, y: 8}
@@ -76462,14 +76462,14 @@ CompositeCollider2D:
       - {x: -143, y: -1}
       - {x: -143, y: -8}
       - {x: -132, y: -8}
-    - - {x: 70, y: -2}
-      - {x: 69, y: -2}
-      - {x: 69, y: -3}
-      - {x: 70, y: -3}
     - - {x: 41, y: -2}
       - {x: 39, y: -2}
       - {x: 39, y: -4}
       - {x: 41, y: -4}
+    - - {x: 70, y: -2}
+      - {x: 69, y: -2}
+      - {x: 69, y: -3}
+      - {x: 70, y: -3}
     - - {x: 31, y: -3}
       - {x: 30, y: -3}
       - {x: 30, y: -4}
@@ -76695,11 +76695,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4608127868454306, guid: ff841feaeecac0b438209f7448fdc8ba, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -152.6
+      value: -155.5
       objectReference: {fileID: 0}
     - target: {fileID: 4608127868454306, guid: ff841feaeecac0b438209f7448fdc8ba, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 2.7
+      value: 2.4
       objectReference: {fileID: 0}
     - target: {fileID: 4608127868454306, guid: ff841feaeecac0b438209f7448fdc8ba, type: 2}
       propertyPath: m_LocalPosition.z
@@ -112419,18 +112419,6 @@ CompositeCollider2D:
         Y: -10000000
       - X: -2110000000
         Y: -10000000
-    - - X: -1750000000
-        Y: 30000000
-      - X: -1800000000
-        Y: 30000000
-      - X: -1800000000
-        Y: 20000000
-      - X: -1780000000
-        Y: 20000000
-      - X: -1780000000
-        Y: 10000000
-      - X: -1750000000
-        Y: 10000000
     - - X: -1960000000
         Y: 30000000
       - X: -1980000000
@@ -112511,6 +112499,18 @@ CompositeCollider2D:
         Y: -40000000
       - X: -1710000000
         Y: -40000000
+    - - X: -1750000000
+        Y: 30000000
+      - X: -1800000000
+        Y: 30000000
+      - X: -1800000000
+        Y: 20000000
+      - X: -1780000000
+        Y: 20000000
+      - X: -1780000000
+        Y: 10000000
+      - X: -1750000000
+        Y: 10000000
     - - X: 540000000
         Y: -30000000
       - X: 550000000
@@ -112633,12 +112633,6 @@ CompositeCollider2D:
       - {x: -212, y: 0}
       - {x: -212, y: -1}
       - {x: -211, y: -1}
-    - - {x: -175, y: 3}
-      - {x: -180, y: 3}
-      - {x: -180, y: 2}
-      - {x: -178, y: 2}
-      - {x: -178, y: 1}
-      - {x: -175, y: 1}
     - - {x: -196, y: 3}
       - {x: -198, y: 3}
       - {x: -198, y: 2}
@@ -112679,6 +112673,12 @@ CompositeCollider2D:
       - {x: -182, y: -2}
       - {x: -182, y: -4}
       - {x: -171, y: -4}
+    - - {x: -175, y: 3}
+      - {x: -180, y: 3}
+      - {x: -180, y: 2}
+      - {x: -178, y: 2}
+      - {x: -178, y: 1}
+      - {x: -175, y: 1}
     - - {x: 54, y: -3}
       - {x: 55, y: -3}
       - {x: 55, y: 0}
@@ -115780,11 +115780,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4786540018449206, guid: 064bb79712746ca4fb4eeb186b912e89, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -152.6
+      value: -155.5
       objectReference: {fileID: 0}
     - target: {fileID: 4786540018449206, guid: 064bb79712746ca4fb4eeb186b912e89, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 2.7
+      value: 2.4
       objectReference: {fileID: 0}
     - target: {fileID: 4786540018449206, guid: 064bb79712746ca4fb4eeb186b912e89, type: 2}
       propertyPath: m_LocalPosition.z
@@ -123002,7 +123002,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2098247693}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -152.6, y: 2.7, z: -10}
+  m_LocalPosition: {x: -155.5, y: 2.4, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1991160217}
