@@ -82,6 +82,7 @@ public class Player : MonoBehaviour {
 	*/
 
 	void OnCollisionEnter2D(Collision2D col) {
+		
 		if (centerElement != null) {
 			if (col.transform.CompareTag("MetalElement") && centerElement.elementType == "magnetic") {
 
@@ -120,15 +121,16 @@ public class Player : MonoBehaviour {
 
 				}
 			}	
-
+			/*
 			if (col.gameObject.tag == "Item") {
-
+				Debug.Log ("ITEMS");
 				//string path = "Items/" + col.gameObject.name;
 				//Item temp = Resources.Load(path) as Item;
 
 				Item item = col.gameObject.GetComponent<ItemInteraction>().item;
 
 				if (item != null) {
+					Debug.Log ("TEST");
 					//inventory.GetComponent<Inventory>().addItem(item);
 					//Debug.Log(inventory.GetComponent<Inventory> ().checkSlot(item));
 					if (inventory.GetComponent<Inventory> ().checkSlot (item)) 
@@ -138,11 +140,12 @@ public class Player : MonoBehaviour {
 					else if (!inventory.GetComponent<Inventory> ().checkSlot (item)) 
 					{
 						inventory.GetComponent<Inventory> ().addItem (item);
+						Debug.Log ("TEST add");
 					}
 				} else {
 					Debug.LogError ("There was no item on that object!");
 				}
-			}
+			}*/
 		}
 			
 		if (col.gameObject.tag == "Scrap") {
@@ -150,18 +153,19 @@ public class Player : MonoBehaviour {
 			Destroy (col.gameObject);
 		}
 
-		if (col.gameObject.tag == "Enemy" && !takingDamage) {
+		if ((col.gameObject.tag == "Enemy" && !takingDamage) || (col.gameObject.tag == "Obstacle" && !takingDamage)) {
 			// Trigger knockback and flash
 			TouchedEnemy(col.gameObject);
 
 			StartCoroutine (enemyOnContact (20));
 		}
 			
+			
 	}
 
 	void OnCollisionStay2D(Collision2D col)
 	{
-		if (col.gameObject.tag == "Enemy" && !takingDamage) {
+		if ((col.gameObject.tag == "Enemy" && !takingDamage) || (col.gameObject.tag == "Obstacle" && !takingDamage)) {
 			StartCoroutine (enemyOnContact (20));
 		}
 			
@@ -169,8 +173,12 @@ public class Player : MonoBehaviour {
 
 	void OnParticleCollision(GameObject other){
 		if (other.tag == "Acid") {
-			Debug.Log ("Boom boom");
 			this.health.CurrentVal -= 1f;
+		}
+
+		if (other.tag == "Lava") {
+			this.health.CurrentVal -= 5f;
+			//StartCoroutine(damageOverTime(5,1));
 		}
 	}
 
@@ -191,7 +199,7 @@ public class Player : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D col) {
 
 		// Test for the Playground, if you hit Lava or enemy projectile reload
-		if (col.gameObject.name == "Lava" || col.gameObject.tag == "BossSpecial") {
+		if (col.gameObject.tag == "BossSpecial") {
 			inventory.emptyInventory ();
 			SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
 		}
@@ -205,7 +213,7 @@ public class Player : MonoBehaviour {
 			Debug.Log ("ouch, a fuckin bossbullet");
 			StartCoroutine(enemyProjectiles(1));
 		}
-		/*
+
 		if (col.gameObject.tag == "Item") {
 
 			//string path = "Items/" + col.gameObject.name;
@@ -227,7 +235,7 @@ public class Player : MonoBehaviour {
 			} else {
 				Debug.LogError ("There was no item on that object!");
 			}
-		}*/
+		}
 
 		if ((col.gameObject.tag == "EnemyProjectile" && !takingDamage)) {
 			StartCoroutine (enemyProjectiles(10));
@@ -301,7 +309,7 @@ public class Player : MonoBehaviour {
     {
         standingInFire = true;
 		ReducePlayerHealth (damageAmount);
-        yield return new WaitForSeconds (2);
+        yield return new WaitForSeconds (0.5f);
         standingInFire = false;
     }
 
@@ -344,7 +352,7 @@ public class Player : MonoBehaviour {
 
 	void ReducePlayerHealth(int dmg) {
 
-		FloatingTextController.CreateFloatingText (dmg.ToString(), transform, Color.red, 15);
+		//FloatingTextController.CreateFloatingText (dmg.ToString(), transform, Color.red, 15);
 		health.CurrentVal -= dmg;
 	}
 }

@@ -17,6 +17,8 @@ public class HiddenRoom : MonoBehaviour {
 	Material mm;
 	Transform[] t;
 
+	public bool buttonPress = false;
+
 	void Start()
 	{
 		mm = room.GetComponent<TilemapRenderer> ().material;
@@ -26,6 +28,24 @@ public class HiddenRoom : MonoBehaviour {
 	}
 
 	void Update()
+	{
+		if (buttonPress) {
+			if(Input.GetKeyDown(KeyCode.E)){
+				buttonPress = false;
+			}
+		} else {
+			fadeTrigger ();
+		}
+	}
+
+	void OnTriggerEnter2D(Collider2D col)
+	{
+		if (col.tag == "Player") {
+			fading = true;
+		}
+	}
+
+	void fadeTrigger()
 	{
 		if (fading && !room.GetComponent<TilemapCollider2D> ().enabled) {
 			if (blockade != null) {
@@ -63,13 +83,6 @@ public class HiddenRoom : MonoBehaviour {
 					fading = false;
 				}
 			}
-		}
-	}
-
-	void OnTriggerEnter2D(Collider2D col)
-	{
-		if (col.tag == "Player") {
-			fading = true;
 		}
 	}
 }

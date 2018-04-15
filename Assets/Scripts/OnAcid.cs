@@ -19,7 +19,6 @@ public class OnAcid : MonoBehaviour {
 			ps [randomChance].Play ();
 			timer = Random.Range (3, 6f);
 		}
-		Debug.Log (timer);
 	}
 
 }
