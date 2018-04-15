@@ -100,8 +100,10 @@ public class RogueType : Enemy {
 	bool check_Edge(){
 		RaycastHit2D checkEdge = Physics2D.Raycast (new Vector2 (transform.position.x+ patrolSpeed*-0.1f, transform.position.y), new Vector2 (0, -1).normalized, 3, edgeCheck);
 		if(checkEdge){ //Null check
-			if(checkEdge.collider.transform.gameObject.name != "Foreground"){ //Can no longer see ground
-				//Debug.Log("Hit some " + checkEdge.collider.transform.gameObject.name + " turning around");
+			if(checkEdge.collider.transform.gameObject.name != "Foreground"
+				&& checkEdge.collider.transform.gameObject.name != "Ground"
+				&& checkEdge.collider.transform.gameObject.name != "Construction"){ //Can no longer see ground
+				Debug.Log("Hit some " + checkEdge.collider.transform.gameObject.name + " turning around");
 				return false;
 			}
 		}
