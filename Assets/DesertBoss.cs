@@ -10,7 +10,7 @@ public class DesertBoss : Enemy {
 	private float delta = 5.0f; //How far we move left and right
 	private float patrolSpeed = 1.5f; //How fast we move left and right
 	private float chaseSpeed = 2.5f;
-	private float chaseRadius = 5.0f; //How far we can see player
+	private float chaseRadius = 7.0f; //How far we can see player
 	private float escapeRadius = 30.0f; //How far player must be away to break the chase
 	private EnemyShooting es;
 	private EnemyDrop edrp;

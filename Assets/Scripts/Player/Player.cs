@@ -121,7 +121,7 @@ public class Player : MonoBehaviour {
 				}
 			}	
 
-			if (col.gameObject.tag == "Item") {
+			/*if (col.gameObject.tag == "Item") {
 
 				//string path = "Items/" + col.gameObject.name;
 				//Item temp = Resources.Load(path) as Item;
@@ -143,7 +143,9 @@ public class Player : MonoBehaviour {
 					Debug.LogError ("There was no item on that object!");
 				}
 			}
+			*/
 		}
+
 			
 		if (col.gameObject.tag == "Scrap") {
 			inventory.addScrap (1);
@@ -205,7 +207,7 @@ public class Player : MonoBehaviour {
 			Debug.Log ("ouch, a fuckin bossbullet");
 			StartCoroutine(enemyProjectiles(1));
 		}
-		/*
+
 		if (col.gameObject.tag == "Item") {
 
 			//string path = "Items/" + col.gameObject.name;
@@ -227,7 +229,7 @@ public class Player : MonoBehaviour {
 			} else {
 				Debug.LogError ("There was no item on that object!");
 			}
-		}*/
+		}
 
 		if ((col.gameObject.tag == "EnemyProjectile" && !takingDamage)) {
 			StartCoroutine (enemyProjectiles(10));
