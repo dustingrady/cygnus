@@ -107,15 +107,24 @@ public class PatrolType : Enemy {
 
 
 	bool check_Edge(){
-		RaycastHit2D checkEdge = Physics2D.Raycast (new Vector2 (transform.position.x + patrolSpeed*-0.1f, transform.position.y), new Vector2 (patrolSpeed*-1, -1).normalized, 2, edgeCheck);
+		RaycastHit2D checkEdge = Physics2D.Raycast (new Vector2 (transform.position.x + patrolSpeed*-0.1f, transform.position.y), 
+			new Vector2 (patrolSpeed*-1, -1).normalized, 2, edgeCheck);
 		if (!checkEdge) {
 			return true;
 		}
 
-		if(checkEdge.collider.transform.gameObject.name != "Foreground" && !is_Walkable(checkEdge.collider.transform.gameObject.name)){ //About to step on something we shouldn't
+		if (!walkableTilemaps.Contains(checkEdge.collider.transform.gameObject.name) && !is_Walkable (checkEdge.collider.transform.gameObject.name)) { //About to step on something we shouldn't
 			//Debug.Log("Hit some " + checkEdge.collider.transform.gameObject.name + " turning around");
 			return true;
 		}
+
+		// Check if approaching enemy
+		Debug.Log("touching " + checkEdge.collider.transform.tag);
+		if (checkEdge.collider.transform.CompareTag ("Enemy")) {
+			Debug.Log ("eww touching a fellow enemy");
+			return true;
+		}
+
 		return false; //No edge
 	}
 

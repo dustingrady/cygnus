@@ -15,6 +15,11 @@ public abstract class Enemy : MonoBehaviour {
 		"ElectricElement"
 	};
 
+	protected List<string> walkableTilemaps = new List<string> {
+		"Foreground",
+		"Ground",
+		"Construction"
+	};
 
 
 	[SerializeField]

@@ -140,7 +140,7 @@ MonoBehaviour:
     m_Bits: 768
   edgeCheck:
     serializedVersion: 2
-    m_Bits: 257
+    m_Bits: 2305
 --- !u!114 &114987749231583882
 MonoBehaviour:
   m_ObjectHideFlags: 1

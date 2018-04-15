@@ -18,6 +18,7 @@ public class EnemyShooting : MonoBehaviour {
 		if(count >= cooldown){
 			GameObject bullet = (GameObject)Instantiate (bulletPrefab, enemyTransform.position, enemyTransform.rotation);
 			count = 0;
+			Debug.Log ("oh yeah, shootin baby: " + bullet.name);
 		}
 		count++;
 	}
