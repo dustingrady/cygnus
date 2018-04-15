@@ -34,6 +34,7 @@ TagManager:
   - Checkpoint
   - QuicksandXD
   - Sandstorm
+  - Obstacle
   layers:
   - Default
   - TransparentFX

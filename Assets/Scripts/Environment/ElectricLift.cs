@@ -10,21 +10,50 @@ public class ElectricLift : MonoBehaviour {
 
 	float liftSpeed = 3f;
 
+	public bool electrifying = false;
+	public bool goingRight = true;
+
+	int dir;
+	int particlesCount = 0;
+	int prevParticleCount = 0;
+
+	float timer = 0;
+
 	public enum state{
 		vertical,
-		horizontal,
-		diagonal
+		horizontal
 	}
 
 	public state orientation;
 
 	// Use this for initialization
 	void Start () {
-		
+		if (goingRight) {
+			dir = 1;
+		}
+		else if(!goingRight){
+			dir = -1;
+		}
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		if (prevParticleCount != particlesCount) {
+			prevParticleCount = particlesCount;
+			timer = 0;
+			electrifying = true;
+		}
+
+		if (prevParticleCount == particlesCount) {
+			timer += Time.deltaTime;
+			//electrifying = false;
+			//particlesCount = 0;
+		}
+
+		if (timer >= 3f) {
+			electrifying = false;
+			particlesCount = 0;
+		}
 	}
 
 	void OnCollisionEnter2D(Collision2D col)
@@ -48,24 +77,19 @@ public class ElectricLift : MonoBehaviour {
 
 	void OnParticleCollision(GameObject other){
 		if (other.tag == "ElectricElement" && playerOnTop) {
+			particlesCount++;
 			if (orientation == state.horizontal) {
-				if (Mathf.Abs (this.transform.position.x - target.transform.position.x) >= 0.5) {
-					transform.position = new Vector2 (transform.position.x + liftSpeed * Time.deltaTime, transform.position.y);
+				if (Mathf.Abs (this.transform.position.x - target.transform.position.x) >= 0.1) {
+					transform.position = new Vector2 (transform.position.x + liftSpeed * Time.deltaTime*dir, transform.position.y);
 				}
 			}
 
 			if (orientation == state.vertical) {
-				if (Mathf.Abs (this.transform.position.y - target.transform.position.y) >= 0.5) {
+				if (Mathf.Abs (this.transform.position.y - target.transform.position.y) >= 0.1) {
 					transform.position = new Vector2 (transform.position.x, transform.position.y + liftSpeed * Time.deltaTime);
 				}
 			}
-
-			if (orientation == state.diagonal) {
-				if (Mathf.Abs(transform.position.magnitude - target.transform.position.magnitude) >= 0.5) {
-					transform.position = new Vector2 (transform.position.x + liftSpeed * Time.deltaTime, transform.position.y + liftSpeed * Time.deltaTime);
-				}
-			}
 		}
-			
 	}
+
 }
