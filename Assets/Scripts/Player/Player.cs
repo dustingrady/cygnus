@@ -13,6 +13,7 @@ public class Player : MonoBehaviour {
     public Element centerElement;
 
 	bool onFire = false;
+	bool inAcid = false;
 
 	bool standingInFire = false;
 
@@ -249,6 +250,7 @@ public class Player : MonoBehaviour {
 
 		// Collision with checkpoint trigger
 		if (col.CompareTag("Checkpoint")) {
+			FloatingTextController.CreateFloatingText ("Checkpoint!", this.gameObject.transform, Color.blue, 20);
 			checkpointPos = col.transform.position;
 		}
 	}
@@ -268,8 +270,9 @@ public class Player : MonoBehaviour {
 			StartCoroutine (flash());
 		} 
 
-		if (col.gameObject.tag == "Acid") {
-			StartCoroutine (acidContact (1));
+		if (col.gameObject.tag == "Acid" && !inAcid) {
+			//StartCoroutine (acidContact (1));
+			StartCoroutine (acidOverTime(15, 2));
 		}
 	}
 
@@ -304,6 +307,20 @@ public class Player : MonoBehaviour {
 
         onFire = false;
     }
+
+	//Dot for being in Acid
+	IEnumerator acidOverTime(int ticks, int damageAmount) {
+		inAcid = true;
+
+		int currentTick = 0;
+		while (currentTick < ticks) {
+			ReducePlayerHealth (damageAmount);
+			yield return new WaitForSeconds (1);
+			currentTick++;
+		}
+
+		inAcid = false;
+	}
 
     IEnumerator singularDamage(int damageAmount)
     {
