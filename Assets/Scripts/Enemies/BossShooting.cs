@@ -34,7 +34,6 @@ public class BossShooting : MonoBehaviour {
 			Special_Attack ();
 		} 
 		Base_Attack ();
-		Base_Attack ();
 	}
 
 	/*Base attack (in progress)*/

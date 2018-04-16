@@ -13,6 +13,8 @@ public class PatrolType : Enemy {
 	private float followDistance = 1.25f; //How close to the player the enemy will get
 	private float turnAroundPoll = 0.5f; //Polling value for checking if enemy is stuck
 
+	private int tolerance = 0;
+
 	[SerializeField] 
 	private bool canShoot = false;
 	private EnemyShooting es;
@@ -25,16 +27,16 @@ public class PatrolType : Enemy {
 	public LayerMask edgeCheck;
 
 	private Rigidbody2D rb;
+	private bool enraged = false; // When the enemy is shot, they persue the player for at least two seconds
 	private bool pause = false;
+	private bool stunned = false;
 
 	private GameObject sparks;
-	private bool stunned = false;
-	private int tolerance = 0;
 
-	// When the enemy is shot, they persue the player for at least two seconds
-	private bool enraged = false;
 	// Reference to coroutine, to refresh it
 	private IEnumerator enragedCoroutine;
+
+	List<string> avoidedTypes = new List<string> {"WaterElement", "FireElement"}; //Things we are allowed to walk on
 
 	private Drop dr;
 
@@ -99,19 +101,31 @@ public class PatrolType : Enemy {
 	//THIS IS DEBUG RAY
 	void OnDrawGizmosSelected(){
 		Gizmos.color = Color.red;
-		Gizmos.DrawRay (new Vector3(transform.position.x + patrolSpeed*-0.1f, transform.position.y, transform.position.z), Vector3.down*2);
-		Gizmos.DrawRay (new Vector3(transform.position.x, transform.position.y, transform.position.z), new Vector3 (patrolSpeed*-1, 0,0).normalized);
+		Gizmos.DrawRay (new Vector3(transform.position.x, transform.position.y, transform.position.z), new Vector3 (patrolSpeed*-1, -1,0).normalized);
+		//Gizmos.DrawRay (new Vector3(transform.position.x, transform.position.y, transform.position.z), new Vector3 (patrolSpeed*-1, 0,0).normalized);
 	}
 
+
 	bool check_Edge(){
-		RaycastHit2D checkEdge = Physics2D.Raycast (new Vector2 (transform.position.x+ patrolSpeed*-0.1f, transform.position.y), new Vector2 (0, -1).normalized, 2, edgeCheck);
-		if(checkEdge){ //Null check
-			if(checkEdge.collider.transform.gameObject.name != "Foreground"){ //Can no longer see ground
-				//Debug.Log("Hit some " + checkEdge.collider.transform.gameObject.name + " turning around");
-				return false;
-			}
+		RaycastHit2D checkEdge = Physics2D.Raycast (new Vector2 (transform.position.x + patrolSpeed*-0.1f, transform.position.y), 
+			new Vector2 (patrolSpeed*-1, -1).normalized, 2, edgeCheck);
+		if (!checkEdge) {
+			Debug.Log ("not hitting something");
+			return true;
 		}
-		return true;
+
+		if (avoidedTypes.Contains(checkEdge.collider.transform.gameObject.tag)) { //About to step on something we shouldn't
+			Debug.Log("Hit some " + checkEdge.collider.transform.gameObject.name + " turning around");
+			return true;
+		}
+
+		// Check if approaching enemy
+		if (checkEdge.collider.transform.CompareTag ("Enemy")) {
+			Debug.Log ("eww touching a fellow enemy");
+			return true;
+		}
+
+		return false; //No edge
 	}
 
 	bool check_Stuck(){
@@ -150,12 +164,12 @@ public class PatrolType : Enemy {
 			if (Mathf.Sign (patrolSpeed) != Mathf.Sign (transform.localScale.x)) {
 				this.transform.localScale = new Vector3 (transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
 			}
-			if ((Mathf.Abs (Mathf.Abs (transform.position.x - v.x) - delta) <= 1.5f) || !check_Edge()){
+			if ((Mathf.Abs (Mathf.Abs (transform.position.x - v.x) - delta) <= 1.5f) || check_Edge()){
 				StartCoroutine (idle ());
 				patrolSpeed *= -1;
 			}
 		}
-		if((Distance() <= chaseRadius) && within_LoS() && check_Edge()){
+		if((Distance() <= chaseRadius) && within_LoS() && !check_Edge()){
 			chasingPlayer = true;
 		}
 
@@ -175,12 +189,12 @@ public class PatrolType : Enemy {
 			patrolSpeed *= -1;
 		}
 
-		if((Distance() > escapeRadius && enraged == false) || !within_LoS() || !check_Edge()){
+		if((Distance() > escapeRadius && enraged == false) || !within_LoS() || check_Edge()){
 			enemyStartingPos = transform.position; //Where enemy will resume if player escapes
 			chasingPlayer = false;
 		}
 
-		if ((Distance () > followDistance) && check_Edge()) { //Move towards player until we are n unit(s) away unless that results in going over a ledge
+		if ((Distance () > followDistance) && !check_Edge()) { //Move towards player until we are n unit(s) away unless that results in going over a ledge
 			Vector3 oldpos = transform.position;
 			transform.position = new Vector3(Mathf.MoveTowards(transform.position.x, playerTransform.position.x, chaseSpeed * Time.deltaTime), transform.position.y, transform.position.z);
 			float dv = transform.position.x - oldpos.x;

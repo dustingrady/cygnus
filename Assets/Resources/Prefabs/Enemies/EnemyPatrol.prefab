@@ -151,7 +151,7 @@ MonoBehaviour:
     m_Bits: 768
   edgeCheck:
     serializedVersion: 2
-    m_Bits: 257
+    m_Bits: 2305
 --- !u!212 &212506304645966160
 SpriteRenderer:
   m_ObjectHideFlags: 1
