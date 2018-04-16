@@ -352,7 +352,7 @@ public class Player : MonoBehaviour {
 
 	void ReducePlayerHealth(int dmg) {
 
-		//FloatingTextController.CreateFloatingText (dmg.ToString(), transform, Color.red, 15);
+		FloatingTextController.CreateFloatingText (dmg.ToString(), transform, Color.red, 15);
 		health.CurrentVal -= dmg;
 	}
 }

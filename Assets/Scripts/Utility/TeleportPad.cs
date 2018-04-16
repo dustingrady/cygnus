@@ -39,7 +39,7 @@ public class TeleportPad : MonoBehaviour {
 		if (col.tag == "Player") {
 			if (destinationPad != null) {
 				if(textTimer > (int) teleportTimer) {
-					//FloatingTextController.CreateFloatingText ("Teleporting in " + textTimer + "!", this.gameObject.transform, Color.blue, 20);
+					FloatingTextController.CreateFloatingText ("Teleporting in " + textTimer + "!", this.gameObject.transform, Color.blue, 20);
 					textTimer--;
 				}
 				teleportTimer -= Time.deltaTime;

@@ -57,7 +57,6 @@ public class PatrolType : Enemy {
 
 	void Start(){
 		base.Start ();
-
 		rb = GetComponent<Rigidbody2D> ();
 		//rb.constraints = RigidbodyConstraints2D.FreezeRotation;
 		patrolSpeed = Mathf.Sign (Random.Range (-1, 1)) * patrolSpeed;
