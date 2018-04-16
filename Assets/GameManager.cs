@@ -3,6 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+[System.Serializable]
+public struct QuestInfo {
+    public string name;
+    public bool complete;
+
+    public QuestInfo(string n, bool comp) {
+        name = n;
+        complete = comp;
+    }
+}
+
+public struct Position {
+    public float x, y, z;
+    
+    public Position(float x, float y, float z) { this.x = x; this.y = y; this.z = z; }
+    public static implicit operator Position(Vector3 rvalue) {
+        return new Position(rvalue.x, rvalue.y, rvalue.z);
+    }
+}
+
 public class GameManager : MonoBehaviour {
 
 	public static GameManager instance = null;
@@ -32,10 +52,27 @@ public class GameManager : MonoBehaviour {
             SceneManager.LoadScene(scene);
             loadGame = true;
         }
+        else {
+            quests.Clear();
+            var quest_info = (List<QuestInfo>)dict[SaveType.QUESTS];
+            foreach(var quest in quest_info) {
+                var inst = (Quest)Instantiate(Resources.Load("ScriptableObjects/Quests/" + quest.name));
+                inst.completed = quest.complete;
+                quests.Add(inst);
+            }
+        }
     }
 
     public void OnSaveGame(Dictionary<SaveType, object> dict) {
         dict.Add(SaveType.SCENE, SceneManager.GetActiveScene().name);
+        var save_quests = new List<QuestInfo>();
+
+        foreach(var quest in quests) {
+            var quest_name = ((ScriptableObject)quest).name;
+            quest_name = quest_name.Substring(0, quest_name.IndexOf('('));
+            save_quests.Add(new QuestInfo(name, quest.completed));
+        }
+        dict.Add(SaveType.QUESTS, save_quests);
     }
 
     void Start() {

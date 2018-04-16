@@ -4,6 +4,20 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 
+public struct SerPosition {
+    public float x, y, z;
+
+    public SerPosition(float x, float y, float z) { this.x = x; this.y = y; this.z = z; }
+    public static implicit operator SerPosition(Vector3 rvalue) {
+        return new SerPosition(rvalue.x, rvalue.y, rvalue.z);
+    }
+    
+    public static implicit operator Vector3(SerPosition rvalue) {
+        return new Vector3(rvalue.x, rvalue.y, rvalue.z);
+    }
+}
+
+
 public class Player : MonoBehaviour {
 
     [SerializeField]
@@ -22,12 +36,24 @@ public class Player : MonoBehaviour {
 
 	private Vector3 checkpointPos;
 
+    public void OnSaveGame(Dictionary<SaveType, object> dict) {
+        dict.Add(SaveType.PLAYER, (SerPosition)checkpointPos);
+    }
+    
+    public void OnLoadGame(Dictionary<SaveType, object> dict) {
+        checkpointPos = (Vector3)dict[SaveType.PLAYER];
+    }
+
     void Awake () {
 		health.Initalize();
 		// Inventory references need to be reset each time a scene loads
         inventory = GameObject.Find("Game Manager").GetComponent<Inventory>();
 		inventory.initializeInventory ();
 	}
+
+    void Start() {
+        checkpointPos = transform.position;
+    }
 	
 	// Update is called once per frame
 	void Update () {
