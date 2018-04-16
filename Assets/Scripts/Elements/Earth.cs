@@ -114,7 +114,7 @@ public class Earth : Element {
 		// disable the graphic
 		powerMeter.Hide();
 
-        Debug.Log("boulder fired");
+        //Debug.Log("boulder fired");
 	}
 
 	bool ShotRelease() {

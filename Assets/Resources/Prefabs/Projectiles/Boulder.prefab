@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 114641319049574636}
   - component: {fileID: 50172384099055682}
   - component: {fileID: 114186789761585048}
-  m_Layer: 4
+  m_Layer: 0
   m_Name: Boulder
   m_TagString: EarthElement
   m_Icon: {fileID: 0}

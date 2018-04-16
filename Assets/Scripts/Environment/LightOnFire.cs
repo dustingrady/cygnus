@@ -11,7 +11,8 @@ public class LightOnFire : MonoBehaviour {
 	private Tilemap tilemap;
 	public GameObject lavaPlatform;
 	public GameObject[] lavaTiles;
-
+	ParticleSystem ps;
+	ParticleSystem.Particle[] plist;
 
 	// Use this for initialization
 	void Start () {
@@ -41,6 +42,7 @@ public class LightOnFire : MonoBehaviour {
 			Instantiate (lavaPlatform, blockPosition, Quaternion.identity);	//Replace the tile
 		}
 	}
+		
 
 	// Collects vectors of all positions slightly above, below, and to the left and right of the given point
 	List<Vector3> getPositionChecks(Vector3 pos) {
@@ -97,4 +99,44 @@ public class LightOnFire : MonoBehaviour {
 			}
 		}
 	}
+
+	//NEEDS WORK
+	/*
+	void OnParticleCollision(GameObject other){
+
+		ps = other.GetComponent<ParticleSystem> ();
+		plist = new ParticleSystem.Particle[ps.particleCount];
+
+		ps.GetParticles (plist);
+		if (other.gameObject.tag == "Lava") {
+			
+			for (int i = 0; i < plist.Length; i++) {
+				Vector3 temp = new Vector3 (plist [i].position.x, plist [i].position.z - 1, 0);
+				temp = other.transform.TransformPoint (temp);
+				if (!Check_For_Lava (temp)) {
+					catch_fire (temp);
+					Debug.Log (temp + " " + other.transform.position);
+				}
+			}
+		}
+	}
+
+
+	public void catch_fire(Vector3 position){
+		Vector3 blockPosition = Vector3.zero;
+		Vector3Int cellPos = tilemap.WorldToCell (position);
+
+		List<Vector3> positionChecks = getPositionChecks (position);
+
+		foreach (Vector3 pos in positionChecks) {
+			if (tilemap.GetTile(tilemap.WorldToCell (pos)) != null) {
+				cellPos = tilemap.WorldToCell (pos);
+			}
+		}
+
+		if (tilemap.GetTile(cellPos) != null){
+			blockPosition = tilemap.CellToWorld(cellPos) + tilemap.tileAnchor; //Get The tile sprite for replacement
+			Instantiate (lavaPlatform, blockPosition, Quaternion.identity);	//Replace the tile
+		}
+	}*/
 }
