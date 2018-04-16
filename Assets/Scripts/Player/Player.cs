@@ -14,6 +14,7 @@ public class Player : MonoBehaviour {
 
 	bool onFire = false;
 	bool inAcid = false;
+	private Coroutine acidDamageCoroutine;
 
 	bool standingInFire = false;
 
@@ -35,6 +36,10 @@ public class Player : MonoBehaviour {
 		if (health.CurrentVal <= 0) {
 			CheckHealth ();
 		}
+
+		//if(Input.GetKeyDown("space")) {
+		//	StopCoroutine(acidDamageCoroutine);
+		//}
     }
 
 	public void Knockback (float strength, Vector2 dir) {
@@ -65,12 +70,13 @@ public class Player : MonoBehaviour {
 	void CheckHealth() {
 		if (health.CurrentVal <= 0) {
 			if (checkpointPos != null) {
-				Debug.Log ("going to checkpoint");
+				//Debug.Log ("going to checkpoint");
 				health.CurrentVal = 100;
 				transform.position = checkpointPos;
 			} else {
 				inventory.emptyInventory ();
-				Debug.Log ("Resetting scene");
+				//Debug.Log ("Resetting scene");
+				StopCoroutine (acidDamageCoroutine);
 				SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
 			}
 		}
@@ -205,11 +211,6 @@ public class Player : MonoBehaviour {
 			SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
 		}
 
-		if (col.gameObject.tag == "Acid") {
-			StartCoroutine (acidContact (1));
-		}
-
-
 		if (col.gameObject.tag == "BossBullet") {
 			Debug.Log ("ouch, a fuckin bossbullet");
 			StartCoroutine(enemyProjectiles(1));
@@ -251,6 +252,7 @@ public class Player : MonoBehaviour {
 		// Collision with checkpoint trigger
 		if (col.CompareTag("Checkpoint")) {
 			FloatingTextController.CreateFloatingText ("Checkpoint!", this.gameObject.transform, Color.blue, 20);
+			StopCoroutine (acidDamageCoroutine);
 			checkpointPos = col.transform.position;
 		}
 	}
@@ -271,8 +273,7 @@ public class Player : MonoBehaviour {
 		} 
 
 		if (col.gameObject.tag == "Acid" && !inAcid) {
-			//StartCoroutine (acidContact (1));
-			StartCoroutine (acidOverTime(15, 2));
+			acidDamageCoroutine = StartCoroutine (acidOverTime (3, 10));
 		}
 	}
 
@@ -346,12 +347,6 @@ public class Player : MonoBehaviour {
 		ReducePlayerHealth (damageAmount);
 		yield return new WaitForSeconds (1);
 		takingDamage = false;
-	}
-
-	IEnumerator acidContact(int damageAmount) 
-	{
-		ReducePlayerHealth(damageAmount);
-		yield return new WaitForSeconds (1.0f);
 	}
 
 	IEnumerator flash(){
