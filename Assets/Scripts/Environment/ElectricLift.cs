@@ -12,8 +12,10 @@ public class ElectricLift : MonoBehaviour {
 
 	public bool electrifying = false;
 	public bool goingRight = true;
+	public bool goingDown = true;
 
-	int dir;
+	int dirx;
+	int diry;
 	int particlesCount = 0;
 	int prevParticleCount = 0;
 
@@ -29,10 +31,16 @@ public class ElectricLift : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		if (goingRight) {
-			dir = 1;
+			dirx = 1;
 		}
 		else if(!goingRight){
-			dir = -1;
+			dirx = -1;
+		}
+
+		if (goingDown) {
+			diry = -1;
+		} else if (!goingDown) {
+			diry = 1;
 		}
 	}
 	
@@ -80,13 +88,13 @@ public class ElectricLift : MonoBehaviour {
 			particlesCount++;
 			if (orientation == state.horizontal) {
 				if (Mathf.Abs (this.transform.position.x - target.transform.position.x) >= 0.1) {
-					transform.position = new Vector2 (transform.position.x + liftSpeed * Time.deltaTime*dir, transform.position.y);
+					transform.position = new Vector2 (transform.position.x + liftSpeed * Time.deltaTime*dirx, transform.position.y);
 				}
 			}
 
 			if (orientation == state.vertical) {
 				if (Mathf.Abs (this.transform.position.y - target.transform.position.y) >= 0.1) {
-					transform.position = new Vector2 (transform.position.x, transform.position.y + liftSpeed * Time.deltaTime);
+					transform.position = new Vector2 (transform.position.x, transform.position.y + liftSpeed *diry* Time.deltaTime);
 				}
 			}
 		}

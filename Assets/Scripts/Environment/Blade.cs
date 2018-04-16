@@ -13,6 +13,8 @@ public class Blade : MonoBehaviour {
 	public float rotationSpeed = 200f;
 	public float waitTime = 3f;
 
+	public int spinDir = 1;
+
 	public bool stationary = false;
 	// Use this for initialization
 	void Start () {
@@ -29,7 +31,7 @@ public class Blade : MonoBehaviour {
 
 	void rotatingBlade()
 	{
-		transform.Rotate (Vector3.back, rotationSpeed*Time.deltaTime);
+		transform.Rotate (Vector3.back *spinDir, rotationSpeed*Time.deltaTime);
 	}
 
 	void moving()
