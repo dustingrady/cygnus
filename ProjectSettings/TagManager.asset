@@ -35,6 +35,8 @@ TagManager:
   - QuicksandXD
   - Sandstorm
   - Obstacle
+  - EMP
+  - Barrier
   layers:
   - Default
   - TransparentFX

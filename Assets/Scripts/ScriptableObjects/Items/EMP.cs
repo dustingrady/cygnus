@@ -6,10 +6,16 @@ using UnityEngine;
 public class EMP : Item {
 
     public string description;
-    private bool consumable = false;
+    private bool consumable = true;
+	Player player;
+	GameObject nade;
 
     public override void useItem()
     {
+		nade = Resources.Load ("Prefabs/Projectiles/EMPGrenade") as GameObject;
+		player = GameObject.Find ("Player").GetComponent<Player> ();
+		Instantiate (nade, player.transform.position, Quaternion.identity);
+		Debug.Log ("Used " + this.name);
     }
 
     public override string itemDescription()
