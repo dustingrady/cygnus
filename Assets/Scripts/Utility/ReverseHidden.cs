@@ -7,7 +7,7 @@ public class ReverseHidden : MonoBehaviour {
 
 
 	public GameObject room;
-
+	public bool buttonPress = false;
 	bool fading = false;
 	Material m;
 
@@ -17,6 +17,17 @@ public class ReverseHidden : MonoBehaviour {
 	}
 
 	void Update()
+	{
+		if (buttonPress) {
+			if (Input.GetKeyDown (KeyCode.E)) {
+				buttonPress = false;
+			}
+		} else {
+			fadeTrigger ();
+		}
+	}
+
+	void fadeTrigger()
 	{
 		if (fading) {
 			if (m.color.a >= 0) {
@@ -36,7 +47,7 @@ public class ReverseHidden : MonoBehaviour {
 	{
 		if (col.tag == "Player") {
 			fading = true;
-			FloatingTextController.CreateFloatingText ("Hidden Room Uncovered!", this.gameObject.transform, Color.blue, 20);
+			//FloatingTextController.CreateFloatingText ("Hidden Room Uncovered!", this.gameObject.transform, Color.blue, 20);
 		}
 	}
 }

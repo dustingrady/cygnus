@@ -13,6 +13,8 @@ public class DoorBreakable : Door {
 			chillin.gameObject.transform.parent = null;
 			StartCoroutine ("DestroyChillin", chillin.gameObject);
 		}
+
+		Destroy (gameObject, 1f);
 	}
 
 
@@ -22,8 +24,14 @@ public class DoorBreakable : Door {
 		}
 	}
 
+	void OnCollisionEnter2D(Collision2D col){
+		if (col.gameObject.tag == "EarthElement") {
+			Open ();
+		}
+	}
+
 	IEnumerator DestroyChillin(GameObject chillin) {
-		yield return new WaitForSeconds (2f);
+		yield return new WaitForSeconds (0.9f);
 		Destroy (chillin);
 	}
 }
