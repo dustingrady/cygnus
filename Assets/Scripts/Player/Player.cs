@@ -252,7 +252,6 @@ public class Player : MonoBehaviour {
 		// Collision with checkpoint trigger
 		if (col.CompareTag("Checkpoint")) {
 			FloatingTextController.CreateFloatingText ("Checkpoint!", this.gameObject.transform, Color.blue, 20);
-			StopCoroutine (acidDamageCoroutine);
 			checkpointPos = col.transform.position;
 		}
 	}
