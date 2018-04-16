@@ -62,11 +62,11 @@ public class Inventory : MonoBehaviour {
 
 	public void Awake()
 	{
-		if(canvas == null)
+		if(canvas == null && GameObject.Find ("UI") != null)
 			canvas = GameObject.Find ("UI").GetComponent<Canvas> ();
-		if(toolTip == null)
+		if(toolTip == null && GameObject.Find ("Tooltip") != null)
 			toolTip = GameObject.Find ("Tooltip");
-		if(toolTipText == null)
+		if(toolTipText == null && GameObject.Find ("TooltipText") != null)
 			toolTipText = GameObject.Find ("TooltipText").GetComponent<Text> ();
 
 		cam = GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<Camera> ();
@@ -78,11 +78,17 @@ public class Inventory : MonoBehaviour {
 
 	public void OnLevelWasLoaded()
 	{
-		canvas = GameObject.Find ("UI").GetComponent<Canvas> ();
-		toolTip = GameObject.Find ("Tooltip");
-		toolTipText = GameObject.Find ("TooltipText").GetComponent<Text> ();
+		if (GameObject.Find ("UI") != null) {
+			canvas = GameObject.Find ("UI").GetComponent<Canvas> ();
+		}
+		if (GameObject.Find ("Tooltip") != null) {
+			toolTip = GameObject.Find ("Tooltip");
+		}
+		if (GameObject.Find ("TooltipText") != null) {
+			toolTipText = GameObject.Find ("TooltipText").GetComponent<Text> ();
+		}
 		cam = GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<Camera> ();
-		Debug.Log (canvas + " " + toolTip + " " + toolTipText);
+		//Debug.Log (canvas + " " + toolTip + " " + toolTipText);
 		levelloaded = true;
 	}
 		
@@ -110,7 +116,7 @@ public class Inventory : MonoBehaviour {
 		}
 
 		if (levelloaded) {
-			if (toolTip.activeInHierarchy == true) {
+			if (toolTip != null && toolTip.activeInHierarchy == true) {
 				toolTip.SetActive (false);
 			}
 			levelloaded = false;
