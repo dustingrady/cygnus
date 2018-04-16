@@ -8,13 +8,16 @@ public class EMP : Item {
     public string description;
     private bool consumable = true;
 	Player player;
+	float speed = 3.0f;
 	GameObject nade;
+	GameObject nadeholder;
 
     public override void useItem()
     {
 		nade = Resources.Load ("Prefabs/Projectiles/EMPGrenade") as GameObject;
 		player = GameObject.Find ("Player").GetComponent<Player> ();
-		Instantiate (nade, player.transform.position, Quaternion.identity);
+		nadeholder = Instantiate (nade, player.transform.position, Quaternion.identity) as GameObject;
+		nadeholder.GetComponent<EMPGrenade> ().Initialize (GetCursorDirection (), speed);
 		Debug.Log ("Used " + this.name);
     }
 
@@ -27,4 +30,20 @@ public class EMP : Item {
     {
         return consumable;
     } 
+
+	public Vector2 GetCursorDirection() {
+		if (GameManager.instance.controllerConnected) {
+			GameObject ret = GameObject.Find ("Reticle");
+			Vector3 dirV3 = ret.transform.position - player.transform.position;
+			Vector2 dir = new Vector2 (dirV3.x, dirV3.y);
+
+			return dir;
+		} else {
+			Vector3 dirV3 = Camera.main.ScreenToWorldPoint (Input.mousePosition) - player.transform.position;
+			Vector2 dir = new Vector2 (dirV3.x, dirV3.y);
+
+			return dir;
+		}
+	}
+
 }
