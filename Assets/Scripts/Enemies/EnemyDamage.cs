@@ -56,18 +56,25 @@ public class EnemyDamage : MonoBehaviour {
 			break;
 		}
 
-		if (weaknesses [enemyType] == attackType) {
-			dmg *= 2f;
+		if (weaknesses.ContainsKey (enemyType)) {
+			if (weaknesses [enemyType] == attackType) {
+				dmg *= 2f;
+			}
 		}
 
-		if(resistances[enemyType] == attackType){
-			dmg *= 0.5f;
+		if (resistances.ContainsKey (enemyType)) {
+			if (resistances [enemyType] == attackType) {
+				dmg *= 0.5f;
+			}
 		}
 
 		// Immune to damage from it's own element
-		if (immunities [enemyType] == attackType) {
-			dmg = 0;
+		if (immunities.ContainsKey (enemyType)) {
+			if (immunities [enemyType] == attackType) {
+				dmg = 0;
+			}
 		}
+
 		//Debug.Log ("Dealt " + dmg + " " + attackType + " type dmg to " + enemyType + " type enemy");
 
 		display_Damage (dmg);

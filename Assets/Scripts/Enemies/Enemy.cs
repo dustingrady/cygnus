@@ -15,13 +15,6 @@ public abstract class Enemy : MonoBehaviour {
 		"ElectricElement"
 	};
 
-	protected List<string> walkableTilemaps = new List<string> {
-		"Foreground",
-		"Ground",
-		"Construction"
-	};
-
-
 	[SerializeField]
 	protected Elements elementType;
 	[SerializeField]
@@ -34,14 +27,62 @@ public abstract class Enemy : MonoBehaviour {
 
 	protected Color elementTint;
 
+	// Initialize enemy components and rigidbody refernece
+	protected EnemyDamage edmg;
+	protected EnemyDrop edrp;
+	protected Drop dr;
+	protected SpriteRenderer sr;
+	protected Rigidbody2D rb;
+
+	// Particle Effects
+	protected GameObject sparks;
+
+	// Start position and player reference
+	protected Vector3 startingPosition;
+	protected Transform playerTransform;
+
+	// Visibilty mask for the enemy
+	public LayerMask enemySight;
+
+	// For overloading the enemy with electricity
+	protected int tolerance = 0;
+
+	protected bool pause = false;
+	protected bool stunned = false;
+
 	protected void Start() {
-		// Assigns a random element at the start
+		// Getting references to the drop and damage classes and player
+		playerTransform = playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+
+		// Get references to the enemy drops, if they exist
+		if (gameObject.GetComponent<Drop>() != null) 
+			dr = gameObject.GetComponent<Drop>();
+		if (gameObject.GetComponent<EnemyDrop> () != null)
+			edrp = gameObject.GetComponent<EnemyDrop> ();
+
+		edmg = GetComponent<EnemyDamage> ();
+		rb = GetComponent<Rigidbody2D> ();
+		sr = gameObject.GetComponent<SpriteRenderer> ();
+
+		// Particle effects
+		sparks = Resources.Load ("Prefabs/Particles/Sparks") as GameObject;
+
+		// Set random if type if 'assignRandomType' is checked
 		if (assignRandomType) {
 			int elementCount = System.Enum.GetValues (typeof(Elements)).Length;
 			elementType = (Elements)Random.Range (0, elementCount);
 		}
 
-		// Changes the tint of the sprite on the enemy to match their type
+		// Setting default position and getting player reference
+		startingPosition = transform.position;
+		playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+
+		SetElementColor ();
+	}
+
+
+	// Changes the tint of the sprite on the enemy to match their type
+	public void SetElementColor() {
 		Dictionary<Elements, Color> elementColors = new Dictionary<Elements, Color> {
 			{ Elements.fire, new Color (1, 0.7f, 0.7f, 1f) },
 			{ Elements.water, new Color (0.7f, 0.7f, 1f, 1f) },
@@ -50,12 +91,83 @@ public abstract class Enemy : MonoBehaviour {
 			{ Elements.electric, new Color (1, 1, 0.7f, 1f) }
 		};
 
-		//Debug.Log ("Setting color for an enemy");
-
 		SpriteRenderer sr = GetComponent<SpriteRenderer> ();
 		elementTint = elementColors [elementType];
 		sr.color = elementTint;
 	}
+		
+
+	protected virtual bool within_LoS(){
+		Vector2 start = transform.position;
+		Vector2 direction = playerTransform.position - transform.position;
+		//Debug.DrawRay(start, direction, Color.red,2f,false);
+		RaycastHit2D sightTest = Physics2D.Raycast (start, direction, enemySight);
+		if (sightTest) {
+			if (sightTest.collider.CompareTag("Player")) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+
+	protected void ElectricShock(string tag){
+		if (tag == "ElectricElement" && elementType != Elements.earth) {
+			tolerance++;
+		}
+
+		if (tag == "ElectricElement") {
+			takeDamage (0.5f);
+		}
+	}
+
+
+	protected float DistanceToPlayer(){
+		return Vector3.Distance(transform.position, playerTransform.position);
+	}
+
+
+	public float CalculatePhysicalImpact(Vector2 contactNorm, Vector2 vel, float mass) {
+		return Vector3.Dot (contactNorm, vel) * mass;
+	}
+		
+
+	protected virtual void takeDamage(float amount){
+		StartCoroutine (damage (amount));
+	}
+
+
+	protected void EvaluateTolerance() {
+		if (tolerance == 20) {
+			stunned = true;
+			Instantiate (sparks, this.transform.position, Quaternion.identity);
+			StartCoroutine (stunDuration ());
+		}
+
+		if (tolerance == 200) {
+			tolerance = 0;
+		}
+	}
+
+
+	protected void EvaluateHealth() {
+		if (hitpoints <= 0) {
+			if (edrp != null)
+				edrp.determine_Drop (elementType, this.transform.position);
+
+			if (dr != null) {
+				int chance = Random.Range (0, 100);
+				Debug.Log("Dead Drop Chance: " + chance);
+				dr.dropItem (chance);
+			}
+			Destroy (this.gameObject);
+		}
+	}
+
+	//
+	// Coroutines 
+	//
+
 
 	protected IEnumerator flash(){
 		SpriteRenderer sr = GetComponent<SpriteRenderer> ();
@@ -72,17 +184,16 @@ public abstract class Enemy : MonoBehaviour {
 		sr.color = elementTint;
 	}
 
-	public Elements getEnemyType(){
-		return elementType;
+
+	IEnumerator damage(float amount){
+		hitpoints -= amount;
+		yield return flash ();
+		yield return new WaitForSeconds (1);
 	}
 
-	public float getEnemyHitPoints(){
-		return hitpoints;
-	}
 
-	public float CalculatePhysicalImpact(Vector2 contactNorm, Vector2 vel, float mass) {
-		return Vector3.Dot (contactNorm, vel) * mass;
+	protected IEnumerator stunDuration() {
+		yield return new WaitForSeconds (2);
+		stunned = false;
 	}
-
-	public abstract void takeDamage(float amount);
 }

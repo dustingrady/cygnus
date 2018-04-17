@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4310983928399382}
   - component: {fileID: 198888907000073398}
   - component: {fileID: 199268512868847664}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: SmokePuff
   m_TagString: Untagged
   m_Icon: {fileID: 0}
