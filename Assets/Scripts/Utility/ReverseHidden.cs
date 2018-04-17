@@ -8,7 +8,8 @@ public class ReverseHidden : MonoBehaviour {
 
 	public GameObject room;
 	public bool buttonPress = false;
-	bool fading = false;
+	public bool fading = false;
+	bool displayText = false;
 	Material m;
 
 	void Start()
@@ -46,8 +47,11 @@ public class ReverseHidden : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D col)
 	{
 		if (col.tag == "Player") {
+			if (!displayText) {
+				FloatingTextController.CreateFloatingText ("Hidden Room Uncovered!", this.gameObject.transform, Color.blue, 20);
+				displayText = true;
+			}
 			fading = true;
-			FloatingTextController.CreateFloatingText ("Hidden Room Uncovered!", this.gameObject.transform, Color.blue, 20);
 		}
 	}
 }
