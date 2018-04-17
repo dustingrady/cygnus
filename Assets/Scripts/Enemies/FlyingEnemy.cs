@@ -16,19 +16,19 @@ public class FlyingEnemy : Enemy {
 	private float chaseRadius = 5.0f; //How far we can see player
 	[SerializeField]
 	private float escapeRadius = 10.0f; //How far player must be away to break the chase
-
+	private GameObject alert;
 	private EnemyShooting es;
 
-	// When the enemy is shot, they persue the player for atleast two seconds
-	private bool enraged = false;
+	private bool isAlerted = false;
+	private bool enraged = false; // When the enemy is shot, they persue the player for atleast two seconds
 
 	// Reference to coroutine, to refresh it
 	private IEnumerator enragedCoroutine;
 
 	void Start(){
 		base.Start ();
-
 		rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+		alert = (GameObject)Resources.Load("Prefabs/NPCs/alert");	
 		es = gameObject.GetComponent<EnemyShooting>();
 		patrolSpeed = Mathf.Sign (Random.Range (-1, 1)) * patrolSpeed;
 	}
@@ -68,6 +68,7 @@ public class FlyingEnemy : Enemy {
 		}
 
 		if(DistanceToPlayer() <= chaseRadius && within_LoS()){
+			//alerted(true);
 			chasingPlayer = true;
 		}
 	}
@@ -98,6 +99,16 @@ public class FlyingEnemy : Enemy {
 		}
 	}
 
+	/*Display exclamation point above enemy*/
+	private void alerted(bool x){
+		if (x) {
+			GameObject alertedObj = Instantiate (alert, new Vector2(transform.position.x, transform.position.y + 1), Quaternion.identity); //Instantiate exclamation point
+			SpriteRenderer alertSprite = alertedObj.GetComponent<SpriteRenderer> (); //For fadeout
+			alertedObj.transform.parent = this.transform;
+			Destroy (alertedObj, 1.25f);
+		}
+		isAlerted = false;
+	}
 
 	void OnTriggerEnter2D(Collider2D col){
 		if (col.gameObject.tag == "TurnAround") {

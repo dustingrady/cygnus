@@ -66,10 +66,16 @@ public class RogueType : Enemy {
 		}
 	}
 
+	//THIS IS DEBUG RAY
+	void OnDrawGizmosSelected(){
+		Gizmos.color = Color.red;
+		Gizmos.DrawRay (new Vector3(transform.position.x, transform.position.y, transform.position.z), new Vector3 (patrolSpeed*-1, -0.5f,0).normalized);
+		//Gizmos.DrawRay (new Vector3(transform.position.x, transform.position.y, transform.position.z), new Vector3 (patrolSpeed*-1, 0,0).normalized);
+	}
 
 	bool check_Edge(){
-		RaycastHit2D checkEdge = Physics2D.Raycast (new Vector2 (transform.position.x + patrolSpeed*-0.1f, transform.position.y), 
-			new Vector2 (patrolSpeed*-1, -1).normalized, 2, edgeCheck);
+		RaycastHit2D checkEdge = Physics2D.Raycast (new Vector2 (transform.position.x + patrolSpeed*-0.15f, transform.position.y), 
+			new Vector2 (patrolSpeed*-1, -0.5f).normalized, 2, edgeCheck);
 		
 		if (!checkEdge) {
 			//Debug.Log ("not hitting something");
@@ -157,18 +163,18 @@ public class RogueType : Enemy {
 		
 
 	/*Reveal self once player is in range*/
-	private void reveal_Self(bool x){
+	void reveal_Self(bool x){
 		if (x) {
 			sr.color = new Color (1f, 1f, 1f, 1f); //Change alpha to 1
-			GameObject smoke = Instantiate (smokePuff, transform.position, Quaternion.identity); //Instantiate smoke screen
-			Destroy (smoke, 2);
+			GameObject smokeObj = Instantiate (smokePuff, transform.position, Quaternion.identity); //Instantiate smoke screen
+			Destroy (smokeObj, 2);
 			hidden = false;
 		}
 	}
 
 
 	/*Hide self once chase has ended*/
-	private void hide_Self(bool x){
+	void hide_Self(bool x){
 		if(!x){
 			sr.color = new Color (1f, 1f, 1f, .2f); //Sneaky sneak
 			hidden = true;
@@ -210,12 +216,10 @@ public class RogueType : Enemy {
 	void OnParticleCollision(GameObject other){
 		ElectricShock (other.tag);
 	}
-
-
+		
 	//
 	// Coroutines 
 	//
-
 
 	IEnumerator idle(){
 		pause = true;

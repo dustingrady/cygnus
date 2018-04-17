@@ -23,10 +23,12 @@ public class PatrolType : Enemy {
 
 	[SerializeField] 
 	private bool canShoot = false;
+	private bool enraged = false; // When the enemy is shot, they persue the player for at least two seconds
+	private bool isAlerted = false;
+	private GameObject alert;
 	private EnemyShooting es;
 	public LayerMask edgeCheck;
 
-	private bool enraged = false; // When the enemy is shot, they persue the player for at least two seconds
 
 	// Reference to coroutine, to refresh it
 	private IEnumerator enragedCoroutine;
@@ -35,12 +37,11 @@ public class PatrolType : Enemy {
 
 	void Start(){
 		base.Start ();
-
+		alert = (GameObject)Resources.Load("Prefabs/NPCs/alert");	
 		es = gameObject.GetComponent<EnemyShooting>();
 		patrolSpeed = Mathf.Sign (Random.Range (-1, 1)) * patrolSpeed;
 	}
 		
-
 	void Update(){
 		EvaluateHealth ();
 		EvaluateTolerance ();
@@ -66,7 +67,7 @@ public class PatrolType : Enemy {
 	}
 
 
-	bool check_Edge(){
+	private bool check_Edge(){
 		RaycastHit2D checkEdge = Physics2D.Raycast (new Vector2 (transform.position.x + patrolSpeed*-0.1f, transform.position.y), 
 			new Vector2 (patrolSpeed*-1, -1).normalized, 2, edgeCheck);
 		if (!checkEdge) {
@@ -87,7 +88,7 @@ public class PatrolType : Enemy {
 	}
 
 
-	bool check_Stuck(){
+	private bool check_Stuck(){
 		RaycastHit2D checkFront = Physics2D.Raycast (new Vector2 (transform.position.x, transform.position.y), new Vector2 (patrolSpeed*-1, 0).normalized, 1, enemySight);
 		//Debug.DrawRay (transform.position, new Vector3 (patrolSpeed*-1, 0, 0).normalized, Color.green);
 		if(checkFront.collider != null){
@@ -98,7 +99,7 @@ public class PatrolType : Enemy {
 		
 
 	//Normal patrolling behaviour. Using sin function for side to side patrolling (may change)
-	void patrol_Area(){
+	private void patrol_Area(){
 		Vector3 v = startingPosition;
 
 		if ((Mathf.Abs(transform.position.x - v.x) < delta) && !pause) {
@@ -113,6 +114,7 @@ public class PatrolType : Enemy {
 			}
 		}
 		if((DistanceToPlayer() <= chaseRadius) && within_LoS() && !check_Edge()){
+			alerted(true);
 			chasingPlayer = true;
 		}
 
@@ -123,7 +125,7 @@ public class PatrolType : Enemy {
 	}
 
 
-	void chase_Player(){
+	private void chase_Player(){
 		/*Corrects the patrolSpeed of enemy depending on which side the player is on (Fixes raycast error in check_Edge())*/
 		if ((transform.position.x > playerTransform.position.x) && (Mathf.Sign(patrolSpeed)) == -1) {
 			patrolSpeed *= -1;
@@ -151,11 +153,21 @@ public class PatrolType : Enemy {
 			if (within_LoS()) {
 				es.shoot_At_Player ();
 			} 
-
 			followDistance = 4.0f; //Don't get so close when shooting
 		}
 	}
 
+	/*Display exclamation point above enemy*/
+	private void alerted(bool x){
+		if (x) {
+			
+			GameObject alertedObj = Instantiate (alert, new Vector2(transform.position.x, transform.position.y + 1), Quaternion.identity); //Instantiate exclamation point
+			SpriteRenderer alertSprite = alertedObj.GetComponent<SpriteRenderer> (); //For fadeout
+			alertedObj.transform.parent = this.transform;
+			Destroy (alertedObj, 1.25f);
+		}
+		isAlerted = false;
+	}
 
 	void OnTriggerEnter2D(Collider2D col){
 		if (damagingElements.Contains (col.gameObject.tag)) {
@@ -201,6 +213,17 @@ public class PatrolType : Enemy {
 	// Coroutines 
 	//
 
+	/*
+	IEnumerator fade_Out(GameObject x){
+		SpriteRenderer passed = x.GetComponent<SpriteRenderer> ();
+
+		float time = 1f;
+		while(passed.color.a > 0){
+			//passed.color.a -= Time.deltaTime / time;
+			yield return null;
+		}
+	}
+	*/
 
 	IEnumerator idle(){
 		pause = true;
