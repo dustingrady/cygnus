@@ -59,9 +59,8 @@ public class Player : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (health.CurrentVal <= 0) {
-			CheckHealth ();
-		}
+		CheckHealth ();
+
 
 		//if(Input.GetKeyDown("space")) {
 		//	StopCoroutine(acidDamageCoroutine);
@@ -206,12 +205,13 @@ public class Player : MonoBehaviour {
 
 	void OnParticleCollision(GameObject other){
 		if (other.tag == "Acid") {
-			this.health.CurrentVal -= 1f;
+			this.health.CurrentVal -= 5f;
+			StartCoroutine(damageOverTime(5,1));
 		}
 
 		if (other.tag == "Lava") {
 			this.health.CurrentVal -= 5f;
-			//StartCoroutine(damageOverTime(5,1));
+			StartCoroutine(damageOverTime(5,1));
 		}
 	}
 
@@ -234,12 +234,14 @@ public class Player : MonoBehaviour {
 		// Test for the Playground, if you hit Lava or enemy projectile reload
 		if (col.gameObject.tag == "BossSpecial") {
 			inventory.emptyInventory ();
-			SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
+			StartCoroutine (enemyProjectiles (50));
+			StartCoroutine (flash ());
 		}
 
 		if (col.gameObject.tag == "BossBullet") {
 			Debug.Log ("ouch, a fuckin bossbullet");
-			StartCoroutine(enemyProjectiles(1));
+			StartCoroutine(enemyProjectiles(10));
+			StartCoroutine (flash ());
 		}
 
 		if (col.gameObject.tag == "Item") {

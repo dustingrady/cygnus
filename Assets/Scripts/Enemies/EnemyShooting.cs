@@ -9,7 +9,7 @@ public class EnemyShooting : MonoBehaviour {
 	private Transform playerTransform;
 
 	private int count = 0;
-	private int cooldown = 75;
+	public int cooldown;
 
 	public enum shootPattern
 	{
@@ -24,6 +24,7 @@ public class EnemyShooting : MonoBehaviour {
 	void Awake(){
 		enemyTransform = this.transform; //Reference to current enemy
 		playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+		Debug.Log (cooldown);
 	}
 
 	public void shoot_At_Player(){
@@ -37,15 +38,16 @@ public class EnemyShooting : MonoBehaviour {
 				bullet.GetComponent<BulletBehaviour> ().setBullet ("homing");
 			}
 			if (sp == shootPattern.spread) {
-				for (int i = 0; i < 3; i++) {
+				for (int i = -1; i <= 1; i++) {
 					GameObject bullet = (GameObject)Instantiate (bulletPrefab, enemyTransform.position, enemyTransform.rotation);
 					bullet.GetComponent<BulletBehaviour> ().setBullet ("spread");
+					bullet.transform.LookAt (new Vector3(playerTransform.position.x + i*0.7f, playerTransform.position.y + i*0.7f, 0));
 				}
 			}
 			if (sp == shootPattern.omnidirectional) {
-				for (float i = -2; i <= 2; i += 1f) {
-					for (float j = -2; j <= 2; j += 0.5f) {
-						if (j != 0) {
+				for (float i = -1; i <= 1; i += 1f) {
+					for (float j = -1; j <= 1; j += 0.5f) {
+						if (j != 0 || i !=0) {
 							GameObject bullet = (GameObject)Instantiate (bulletPrefab, enemyTransform.position, enemyTransform.rotation);
 							bullet.GetComponent<BulletBehaviour> ().setBullet ("omnidirectional");
 							bullet.transform.LookAt (new Vector3 (i, j, 0));
@@ -58,5 +60,4 @@ public class EnemyShooting : MonoBehaviour {
 		}
 		count++;
 	}
-
 }
