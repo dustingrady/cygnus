@@ -6,54 +6,27 @@ public class TurretType : Enemy {
 	[SerializeField] 
 	private bool arcLimit = true; //Limits the enemies ability to shoot to ~180 degrees
 
-	private Transform playerTransform;
-	private Transform enemyTransform;
 	[SerializeField]
 	private float turretRadius = 15.0f; //How far our turret enemies can see
 	private EnemyShooting es;
-	private EnemyDrop edrp;
-	private EnemyDamage edmg;
 	private LineRenderer line;
-	public LayerMask enemySight;
-	private GameObject sparks;
-
-	private Drop dr;
-
-	void Awake(){
-		playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-		es = gameObject.GetComponent<EnemyShooting>();
-		edmg = gameObject.GetComponent<EnemyDamage> ();
-
-		if (gameObject.GetComponent<Drop>() != null) 
-			dr = gameObject.GetComponent<Drop>();
-		if (gameObject.GetComponent<EnemyDrop> () != null)
-			edrp = gameObject.GetComponent<EnemyDrop> ();
-
-		sparks = Resources.Load ("Prefabs/Particles/Sparks") as GameObject;
-	}
 
 	void Start(){
 		base.Start ();
 
-		Rigidbody2D rb = GetComponent<Rigidbody2D> ();
 		line = this.gameObject.GetComponent<LineRenderer>();
 		rb.constraints = RigidbodyConstraints2D.FreezeAll;
+		es = gameObject.GetComponent<EnemyShooting>();
 	}
+
 
 	void Update(){
-		if (hitpoints <= 0) {
-			if (edrp != null)
-				edrp.determine_Drop (getEnemyType(), this.transform.position);
+		EvaluateHealth ();
+		EvaluateTolerance ();
 
-			if (dr != null) {
-				int chance = Random.Range (0, 101);
-				Debug.Log ("Dead Drop Chance: " + chance);
-				dr.dropItem (chance);
-			}
-			Destroy (this.gameObject);
-		}
 		guard_Area ();
 	}
+
 
 	//Check if player is within ~180 degrees of enemy
 	bool within_Arc(Vector3 player){
@@ -65,7 +38,8 @@ public class TurretType : Enemy {
 		return up > min && up < max;
 	}
 
-	bool within_LoS(){
+
+	protected override bool within_LoS(){
 		Vector2 start = transform.position;
 		Vector2 direction = playerTransform.position - transform.position;
 		float distance = turretRadius; //Distance in which raycast will check
@@ -79,12 +53,14 @@ public class TurretType : Enemy {
 		return false;
 	}
 
+
 	void draw_And_Shoot(){
 		//Debug.DrawRay(transform.position, (playerTransform.position - transform.position), Color.red,2f,false);
 		line.SetPosition (0, transform.position);
 		line.SetPosition (1, playerTransform.position);
 		es.shoot_At_Player (); //Shoot um up
 	}
+
 
 	void guard_Area(){
 		if (arcLimit && within_Arc (playerTransform.position) && within_LoS ()) {
@@ -97,34 +73,18 @@ public class TurretType : Enemy {
 			line.enabled = false;
 		}
 	}
-
-	//Return distance between player and enemy
-	/*
-	private float Distance(){
-		return Vector3.Distance(transform.position, playerTransform.position);
-	}
-	*/
+		
 
 	void OnTriggerEnter2D(Collider2D col){
 		if (damagingElements.Contains (col.gameObject.tag)) {
-			takeDamage (edmg.determine_Damage (col.gameObject.tag, getEnemyType ()));
+			takeDamage (edmg.determine_Damage (col.gameObject.tag, elementType));
 		}
 	}
 
-	//particle collision for electricity
+
+	// Particle collision for electricity
 	void OnParticleCollision(GameObject other){
-		if (other.tag == "ElectricElement") {
-			takeDamage (0.5f);
-		}
+		ElectricShock (other.tag);
 	}
-
-	IEnumerator damage(float amount){
-		hitpoints -= amount;
-		yield return flash ();
-		yield return new WaitForSeconds (1);
-	}
-
-	public override void takeDamage(float amount){
-		StartCoroutine (damage (amount));
-	}
+		
 }

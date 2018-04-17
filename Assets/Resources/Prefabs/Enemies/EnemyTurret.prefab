@@ -106,7 +106,7 @@ MonoBehaviour:
   baseFire: 15
   baseWater: 10
   baseElectric: 1
-  baseEarth: 10
+  earthMultiplier: 1
 --- !u!114 &114330692470991352
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -120,6 +120,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 1287305833275592, guid: 945a895993499134a8860cbedd0298a2,
     type: 2}
+  sp: 0
 --- !u!114 &114544058530747820
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -146,11 +147,11 @@ MonoBehaviour:
   assignRandomType: 0
   hitpoints: 100
   energy: 0
-  arcLimit: 1
-  turretRadius: 15
   enemySight:
     serializedVersion: 2
     m_Bits: 768
+  arcLimit: 1
+  turretRadius: 15
 --- !u!120 &120086377043348790
 LineRenderer:
   m_ObjectHideFlags: 1

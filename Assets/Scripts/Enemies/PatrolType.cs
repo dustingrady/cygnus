@@ -5,85 +5,46 @@ using UnityEngine;
 public class PatrolType : Enemy {
 
 	private bool chasingPlayer;
-	private float delta = 10.0f; //How far we move left and right
-	private float patrolSpeed = 1.5f; //How fast we move left and right
-	private float chaseSpeed = 4f;
-	private float chaseRadius = 6.0f; //How far we can see player
-	private float escapeRadius = 12.0f; //How far player must be away to break the chase
-	private float followDistance = 1.25f; //How close to the player the enemy will get
-	private float turnAroundPoll = 0.5f; //Polling value for checking if enemy is stuck
 
-	private int tolerance = 0;
+	[SerializeField]
+	private float delta = 10.0f; //How far we move left and right
+	[SerializeField]
+	private float patrolSpeed = 1.5f; //How fast we move left and right
+	[SerializeField]
+	private float chaseSpeed = 4f;
+	[SerializeField]
+	private float chaseRadius = 6.0f; //How far we can see player
+	[SerializeField]
+	private float escapeRadius = 12.0f; //How far player must be away to break the chase
+	[SerializeField]
+	private float followDistance = 1.25f; //How close to the player the enemy will get
+	[SerializeField]
+	private float turnAroundPoll = 0.5f; //Polling value for checking if enemy is stuck
 
 	[SerializeField] 
 	private bool canShoot = false;
+	private bool enraged = false; // When the enemy is shot, they persue the player for at least two seconds
+	private bool isAlerted = false;
+	private GameObject alert;
 	private EnemyShooting es;
-	private EnemyDrop edrp;
-	private EnemyDamage edmg;
-	private Transform enemyTransform;
-	private Transform playerTransform;
-	private Vector3 enemyStartingPos;
-	public LayerMask enemySight;
 	public LayerMask edgeCheck;
 
-	private Rigidbody2D rb;
-	private bool enraged = false; // When the enemy is shot, they persue the player for at least two seconds
-	private bool pause = false;
-	private bool stunned = false;
-
-	private GameObject sparks;
 
 	// Reference to coroutine, to refresh it
 	private IEnumerator enragedCoroutine;
 
 	List<string> avoidedTypes = new List<string> {"WaterElement", "FireElement"}; //Things we are allowed to walk on
 
-	private Drop dr;
-
-	private void Awake(){
-		enemyStartingPos = transform.position; //Initialize startingPos
-		enemyTransform = this.transform; //Reference to current enemy (for testing)
-		es = gameObject.GetComponent<EnemyShooting>();
-		edmg = gameObject.GetComponent<EnemyDamage> ();
-		playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-
-		if (gameObject.GetComponent<Drop>() != null) 
-			dr = gameObject.GetComponent<Drop>();
-		if (gameObject.GetComponent<EnemyDrop> () != null)
-			edrp = gameObject.GetComponent<EnemyDrop> ();
-
-		sparks = Resources.Load ("Prefabs/Particles/Sparks") as GameObject;
-	}
-
 	void Start(){
 		base.Start ();
-		rb = GetComponent<Rigidbody2D> ();
-		//rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+		alert = (GameObject)Resources.Load("Prefabs/NPCs/alert");	
+		es = gameObject.GetComponent<EnemyShooting>();
 		patrolSpeed = Mathf.Sign (Random.Range (-1, 1)) * patrolSpeed;
 	}
 		
 	void Update(){
-		if (hitpoints <= 0) {
-			if (edrp != null)
-				edrp.determine_Drop (getEnemyType(), this.transform.position);
-
-			if (dr != null) {
-				int chance = Random.Range (0, 100);
-				Debug.Log("Dead Drop Chance: " + chance);
-				dr.dropItem (chance);
-			}
-			Destroy (this.gameObject);
-		}
-
-		if (tolerance == 20) {
-			stunned = true;
-			Instantiate (sparks, this.transform.position, Quaternion.identity);
-			StartCoroutine (stunDuration ());
-		}
-
-		if (tolerance == 200) {
-			tolerance = 0;
-		}
+		EvaluateHealth ();
+		EvaluateTolerance ();
 
 		if (stunned == false) {
 			switch (chasingPlayer) {
@@ -97,6 +58,7 @@ public class PatrolType : Enemy {
 		}
 	}
 
+
 	//THIS IS DEBUG RAY
 	void OnDrawGizmosSelected(){
 		Gizmos.color = Color.red;
@@ -105,29 +67,28 @@ public class PatrolType : Enemy {
 	}
 
 
-	bool check_Edge(){
+	private bool check_Edge(){
 		RaycastHit2D checkEdge = Physics2D.Raycast (new Vector2 (transform.position.x + patrolSpeed*-0.1f, transform.position.y), 
 			new Vector2 (patrolSpeed*-1, -1).normalized, 2, edgeCheck);
 		if (!checkEdge) {
-			Debug.Log ("not hitting something");
 			return true;
 		}
 
 		if (avoidedTypes.Contains(checkEdge.collider.transform.gameObject.tag)) { //About to step on something we shouldn't
-			Debug.Log("Hit some " + checkEdge.collider.transform.gameObject.name + " turning around");
+			//Debug.Log("Hit some " + checkEdge.collider.transform.gameObject.name + " turning around");
 			return true;
 		}
 
 		// Check if approaching enemy
 		if (checkEdge.collider.transform.CompareTag ("Enemy")) {
-			Debug.Log ("eww touching a fellow enemy");
 			return true;
 		}
 
 		return false; //No edge
 	}
 
-	bool check_Stuck(){
+
+	private bool check_Stuck(){
 		RaycastHit2D checkFront = Physics2D.Raycast (new Vector2 (transform.position.x, transform.position.y), new Vector2 (patrolSpeed*-1, 0).normalized, 1, enemySight);
 		//Debug.DrawRay (transform.position, new Vector3 (patrolSpeed*-1, 0, 0).normalized, Color.green);
 		if(checkFront.collider != null){
@@ -135,27 +96,11 @@ public class PatrolType : Enemy {
 		}
 		return false;
 	}
-
-	bool within_LoS(){
-		Vector2 start = transform.position;
-		Vector2 direction = playerTransform.position - transform.position;
-		float distance = chaseRadius; //Distance in which raycast will check
-		if (enraged) {
-			distance = 100f;
-		}
-		//Debug.DrawRay(start, direction, Color.red,2f,false);
-		RaycastHit2D sightTest = Physics2D.Raycast (start, direction, distance, enemySight);
-		if (sightTest) {
-			if (sightTest.collider.CompareTag("Player")) {
-				return true;
-			}
-		}
-		return false;
-	}
+		
 
 	//Normal patrolling behaviour. Using sin function for side to side patrolling (may change)
-	void patrol_Area(){
-		Vector3 v = enemyStartingPos;
+	private void patrol_Area(){
+		Vector3 v = startingPosition;
 
 		if ((Mathf.Abs(transform.position.x - v.x) < delta) && !pause) {
 			transform.Translate (new Vector2 (patrolSpeed, 0) * Time.deltaTime);
@@ -168,7 +113,8 @@ public class PatrolType : Enemy {
 				patrolSpeed *= -1;
 			}
 		}
-		if((Distance() <= chaseRadius) && within_LoS() && !check_Edge()){
+		if((DistanceToPlayer() <= chaseRadius) && within_LoS() && !check_Edge()){
+			alerted(true);
 			chasingPlayer = true;
 		}
 
@@ -178,8 +124,8 @@ public class PatrolType : Enemy {
 		}
 	}
 
-	//Off with his head!
-	void chase_Player(){
+
+	private void chase_Player(){
 		/*Corrects the patrolSpeed of enemy depending on which side the player is on (Fixes raycast error in check_Edge())*/
 		if ((transform.position.x > playerTransform.position.x) && (Mathf.Sign(patrolSpeed)) == -1) {
 			patrolSpeed *= -1;
@@ -188,12 +134,12 @@ public class PatrolType : Enemy {
 			patrolSpeed *= -1;
 		}
 
-		if((Distance() > escapeRadius && enraged == false) || !within_LoS() || check_Edge()){
-			enemyStartingPos = transform.position; //Where enemy will resume if player escapes
+		if((DistanceToPlayer() > escapeRadius && enraged == false) || !within_LoS() || check_Edge()){
+			startingPosition = transform.position; //Where enemy will resume if player escapes
 			chasingPlayer = false;
 		}
 
-		if ((Distance () > followDistance) && !check_Edge()) { //Move towards player until we are n unit(s) away unless that results in going over a ledge
+		if ((DistanceToPlayer () > followDistance) && !check_Edge()) { //Move towards player until we are n unit(s) away unless that results in going over a ledge
 			Vector3 oldpos = transform.position;
 			transform.position = new Vector3(Mathf.MoveTowards(transform.position.x, playerTransform.position.x, chaseSpeed * Time.deltaTime), transform.position.y, transform.position.z);
 			float dv = transform.position.x - oldpos.x;
@@ -211,14 +157,21 @@ public class PatrolType : Enemy {
 		}
 	}
 
-	//Return distance between player and enemy
-	private float Distance(){
-		return Vector3.Distance(transform.position, playerTransform.position);
+	/*Display exclamation point above enemy*/
+	private void alerted(bool x){
+		if (x) {
+			
+			GameObject alertedObj = Instantiate (alert, new Vector2(transform.position.x, transform.position.y + 1), Quaternion.identity); //Instantiate exclamation point
+			SpriteRenderer alertSprite = alertedObj.GetComponent<SpriteRenderer> (); //For fadeout
+			alertedObj.transform.parent = this.transform;
+			Destroy (alertedObj, 1.25f);
+		}
+		isAlerted = false;
 	}
 
 	void OnTriggerEnter2D(Collider2D col){
 		if (damagingElements.Contains (col.gameObject.tag)) {
-			takeDamage (edmg.determine_Damage (col.gameObject.tag, getEnemyType ()));
+			takeDamage (edmg.determine_Damage (col.gameObject.tag, elementType));
 
 			// Stop the enrage coroutine and start another
 			if (enragedCoroutine != null) {
@@ -229,16 +182,12 @@ public class PatrolType : Enemy {
 		}
 	}
 
-	//particle collision for electricity
-	void OnParticleCollision(GameObject other){
-		if (other.tag == "ElectricElement" && elementType != Elements.earth) {
-			tolerance++;
-		}
 
-		if (other.tag == "ElectricElement") {
-			takeDamage (0.5f);
-		}
+	// Particle collision for electricity
+	void OnParticleCollision(GameObject other){
+		ElectricShock (other.tag);
 	}
+
 
 	void OnCollisionEnter2D(Collision2D col) {
 		Rigidbody2D collisionRB = col.gameObject.GetComponent<Rigidbody2D> ();
@@ -246,7 +195,7 @@ public class PatrolType : Enemy {
 			float colForce = CalculatePhysicalImpact (col.contacts [0].normal, col.relativeVelocity, collisionRB.mass);
 
 			if (colForce > 3) {
-				float dmg = edmg.determine_Damage ("EarthElement", getEnemyType (), colForce);
+				float dmg = edmg.determine_Damage ("EarthElement", elementType, colForce);
 				takeDamage (dmg);
 
 				// Stop the enrage coroutine and start another
@@ -258,27 +207,30 @@ public class PatrolType : Enemy {
 			}
 		}
 	}
-		
+
+
+	//
+	// Coroutines 
+	//
+
+	/*
+	IEnumerator fade_Out(GameObject x){
+		SpriteRenderer passed = x.GetComponent<SpriteRenderer> ();
+
+		float time = 1f;
+		while(passed.color.a > 0){
+			//passed.color.a -= Time.deltaTime / time;
+			yield return null;
+		}
+	}
+	*/
+
 	IEnumerator idle(){
 		pause = true;
 		yield return new WaitForSeconds (1);
 		pause = false;
 	}
 
-	IEnumerator damage(float amount){
-		hitpoints -= amount;
-		yield return flash ();
-		yield return new WaitForSeconds (1);
-	}
-
-	public override void takeDamage(float amount){
-		StartCoroutine (damage (amount));
-	}
-
-	IEnumerator stunDuration(){
-		yield return new WaitForSeconds (2);
-		stunned = false;
-	}
 
 	IEnumerator Enrage(float duration) {
 		enraged = true;
