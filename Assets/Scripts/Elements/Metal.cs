@@ -112,7 +112,7 @@ public class Metal : Element {
 			cdCounter = 0;
 		}
 		if (eUI != null) {
-			Debug.Log ("Metal update " + eUI.lhandCD + " " + eUI.rhandCD);
+			//Debug.Log ("Metal update " + eUI.lhandCD + " " + eUI.rhandCD);
 		}
 	}
 

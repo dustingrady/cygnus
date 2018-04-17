@@ -15,7 +15,6 @@ public class TurretType : Enemy {
 		base.Start ();
 
 		line = this.gameObject.GetComponent<LineRenderer>();
-		rb.constraints = RigidbodyConstraints2D.FreezeAll;
 		es = gameObject.GetComponent<EnemyShooting>();
 	}
 
@@ -79,6 +78,11 @@ public class TurretType : Enemy {
 		if (damagingElements.Contains (col.gameObject.tag)) {
 			takeDamage (edmg.determine_Damage (col.gameObject.tag, elementType));
 		}
+	}
+
+
+	void OnCollisionEnter2D(Collision2D col) {
+		float collisionTotal = EvaluatePhysical (col);
 	}
 
 

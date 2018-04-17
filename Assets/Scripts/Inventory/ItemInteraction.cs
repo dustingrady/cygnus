@@ -15,6 +15,12 @@ public class ItemInteraction : MonoBehaviour {
             Destroy(this.gameObject);
         }
     }
+
+	// Set the correct sprite when level loads
+	void Start() {
+		GetComponent<SpriteRenderer> ().sprite = item.sprite;
+	}
+
 	/*
 	void OnCollisionEnter2D(Collision2D col)
 	{
