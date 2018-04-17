@@ -190,21 +190,15 @@ public class PatrolType : Enemy {
 
 
 	void OnCollisionEnter2D(Collision2D col) {
-		Rigidbody2D collisionRB = col.gameObject.GetComponent<Rigidbody2D> ();
-		if (collisionRB != null) {
-			float colForce = CalculatePhysicalImpact (col.contacts [0].normal, col.relativeVelocity, collisionRB.mass);
+		float collisionTotal = EvaluatePhysical (col);
 
-			if (colForce > 3) {
-				float dmg = edmg.determine_Damage ("EarthElement", elementType, colForce);
-				takeDamage (dmg);
-
-				// Stop the enrage coroutine and start another
-				if (enragedCoroutine != null) {
-					StopCoroutine (enragedCoroutine);
-				}
-				enragedCoroutine = Enrage (2.0f);
-				StartCoroutine (enragedCoroutine);
+		if (collisionTotal > 7) {
+			// Stop the enrage coroutine and start another
+			if (enragedCoroutine != null) {
+				StopCoroutine (enragedCoroutine);
 			}
+			enragedCoroutine = Enrage (2.0f);
+			StartCoroutine (enragedCoroutine);
 		}
 	}
 

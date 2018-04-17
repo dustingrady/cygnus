@@ -8,7 +8,6 @@ using UnityEngine;
 
 public class BossEnemy : Enemy {
 	public GameObject bossRagdoll;
-	private Transform playerTransform;
 	private Transform enemyTransform;
 	private BossShooting bs;
 	private float shootRadius = 15.0f; //How far our turret enemies can see
@@ -17,7 +16,6 @@ public class BossEnemy : Enemy {
 	void Start () {
 		base.Start (); // Call the based enemy Start() function
 
-		Rigidbody2D rb = GetComponent<Rigidbody2D> ();
 		bs = gameObject.GetComponent<BossShooting>();
 		rb.constraints = RigidbodyConstraints2D.FreezeAll;
 	}

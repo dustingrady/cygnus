@@ -5,7 +5,6 @@ using UnityEngine;
 public class DesertBoss : Enemy {
 
 	private bool chasingPlayer;
-	private bool stunned = false;
 	private float delta = 5.0f; //How far we move left and right
 	private float patrolSpeed = 1.5f; //How fast we move left and right
 	private float chaseSpeed = 2.5f;
@@ -14,6 +13,7 @@ public class DesertBoss : Enemy {
 	private EnemyShooting es;
 
 	private GameObject ebarrier;
+	public bool godLike;
 
 	// When the enemy is shot, they persue the player for atleast two seconds
 	private bool enraged = false;
@@ -29,6 +29,9 @@ public class DesertBoss : Enemy {
 
 	void Start(){
 		base.Start (); // Call the based enemy Start() function
+
+		// Setting the godLike boolean so that the boss starts unkillable
+		godLike = true;
 
 		cc = ebarrier.GetComponent<CircleCollider2D> ();
 		rb.constraints = RigidbodyConstraints2D.FreezeRotation;
@@ -48,17 +51,7 @@ public class DesertBoss : Enemy {
 				break;
 			}
 		}
-			
-		Barrier ();
 	}
-
-
-	void Barrier() {
-		if (GameObject.Find ("DesertBossBarrier").GetComponent<BossBarrier> ().godlike) {
-			
-		}
-	}
-		
 
 
 	//Normal patrolling behaviour. Using sin function for side to side patrolling (may change)
@@ -82,7 +75,7 @@ public class DesertBoss : Enemy {
 		}
 	}
 
-	//Off with his head!
+
 	void chase_Player(){
 		if(DistanceToPlayer() > escapeRadius && enraged == false || !within_LoS()){
 			startingPosition = transform.position; //Where enemy will resume if player escapes
@@ -110,17 +103,32 @@ public class DesertBoss : Enemy {
 		
 
 	void OnTriggerEnter2D(Collider2D col){
-		if (col.gameObject.tag == "TurnAround") {
-			patrolSpeed *= -1;
-		}
-		if (damagingElements.Contains (col.gameObject.tag)) {
-			takeDamage (edmg.determine_Damage (col.gameObject.tag, elementType));
 
+		// Check if godlike is disabled before allowing this 
+		if (godLike == false) {
+			if (damagingElements.Contains (col.gameObject.tag)) {
+				takeDamage (edmg.determine_Damage (col.gameObject.tag, elementType));
+
+				// Stop the enrage coroutine and start another
+				if (enragedCoroutine != null) {
+					StopCoroutine (enragedCoroutine);
+				}
+
+				enragedCoroutine = Enrage (2.0f);
+				StartCoroutine (enragedCoroutine);
+			}
+		}
+	}
+
+
+	void OnCollisionEnter2D(Collision2D col) {
+		float collisionTotal = EvaluatePhysical (col);
+
+		if (collisionTotal > 7) {
 			// Stop the enrage coroutine and start another
 			if (enragedCoroutine != null) {
 				StopCoroutine (enragedCoroutine);
 			}
-
 			enragedCoroutine = Enrage (2.0f);
 			StartCoroutine (enragedCoroutine);
 		}

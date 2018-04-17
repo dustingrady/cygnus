@@ -8,7 +8,7 @@ public class EMP : Item {
     public string description;
     private bool consumable = true;
 	Player player;
-	float speed = 3.0f;
+	float speed = 2000.0f;
 	GameObject nade;
 	GameObject nadeholder;
 
@@ -17,8 +17,7 @@ public class EMP : Item {
 		nade = Resources.Load ("Prefabs/Projectiles/EMPGrenade") as GameObject;
 		player = GameObject.Find ("Player").GetComponent<Player> ();
 		nadeholder = Instantiate (nade, player.transform.position, Quaternion.identity) as GameObject;
-		nadeholder.GetComponent<EMPGrenade> ().Initialize (GetCursorDirection (), speed);
-		Debug.Log ("Used " + this.name);
+		nadeholder.GetComponent<EMPGrenade> ().Initialize (GetCursorDirection (), 2000f);
     }
 
     public override string itemDescription()

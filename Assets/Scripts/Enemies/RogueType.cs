@@ -144,7 +144,7 @@ public class RogueType : Enemy {
 			patrolSpeed *= -1;
 		}
 
-		if((DistanceToPlayer() > escapeRadius && enraged == false) || !within_LoS() || check_Edge()){
+		if(((DistanceToPlayer() > escapeRadius && enraged == false) && !within_LoS()) || check_Edge()){
 			startingPosition = transform.position; //Where enemy will resume if player escapes
 			chasingPlayer = false;
 		}
@@ -206,6 +206,20 @@ public class RogueType : Enemy {
 
 			}
 
+			enragedCoroutine = Enrage (2.0f);
+			StartCoroutine (enragedCoroutine);
+		}
+	}
+
+
+	void OnCollisionEnter2D(Collision2D col) {
+		float collisionTotal = EvaluatePhysical (col);
+
+		if (collisionTotal > 7) {
+			// Stop the enrage coroutine and start another
+			if (enragedCoroutine != null) {
+				StopCoroutine (enragedCoroutine);
+			}
 			enragedCoroutine = Enrage (2.0f);
 			StartCoroutine (enragedCoroutine);
 		}

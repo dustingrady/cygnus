@@ -7,6 +7,7 @@ public class EMPGrenade : MonoBehaviour {
 
 	public void Initialize(Vector2 direction, float speed) {
 		this.direction = direction.normalized;
+
 		gameObject.GetComponent<Rigidbody2D> ().AddForce (this.direction*speed);
 	}
 		

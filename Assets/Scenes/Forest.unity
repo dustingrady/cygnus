@@ -10747,12 +10747,12 @@ Prefab:
     - target: {fileID: 224737888326160916, guid: 267853b8c8fcb2444be28e5a0e114a23,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -16.11111
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224737888326160916, guid: 267853b8c8fcb2444be28e5a0e114a23,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 22.222221
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224166394385784508, guid: 267853b8c8fcb2444be28e5a0e114a23,
         type: 2}
@@ -10772,7 +10772,7 @@ Prefab:
     - target: {fileID: 224166394385784508, guid: 267853b8c8fcb2444be28e5a0e114a23,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -16.11111
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224166394385784508, guid: 267853b8c8fcb2444be28e5a0e114a23,
         type: 2}
@@ -10782,12 +10782,12 @@ Prefab:
     - target: {fileID: 224166394385784508, guid: 267853b8c8fcb2444be28e5a0e114a23,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 32.22222
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224010827024031366, guid: 267853b8c8fcb2444be28e5a0e114a23,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 32.22222
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1251655649359126, guid: 267853b8c8fcb2444be28e5a0e114a23, type: 2}
       propertyPath: m_IsActive
@@ -115144,13 +115144,13 @@ CompositeCollider2D:
         Y: 220000000
       - X: -3960000000
         Y: 220000000
-    - - X: -3500000000
+    - - X: -3390000128
         Y: 230000000
-      - X: -3510000128
+      - X: -3400000000
         Y: 230000000
-      - X: -3510000128
+      - X: -3400000000
         Y: 220000000
-      - X: -3500000000
+      - X: -3390000128
         Y: 220000000
     - - X: -2350000128
         Y: 70000000
@@ -115182,10 +115182,10 @@ CompositeCollider2D:
       - {x: -397, y: 23}
       - {x: -397, y: 22}
       - {x: -396, y: 22}
-    - - {x: -350, y: 23}
-      - {x: -351.00003, y: 23}
-      - {x: -351.00003, y: 22}
-      - {x: -350, y: 22}
+    - - {x: -339.00003, y: 23}
+      - {x: -340, y: 23}
+      - {x: -340, y: 22}
+      - {x: -339.00003, y: 22}
     - - {x: -235.00002, y: 7}
       - {x: -236, y: 7}
       - {x: -236, y: 6}
@@ -115319,7 +115319,7 @@ Tilemap:
       m_ObjectToInstantiate: {fileID: 0}
       m_TileFlags: 1
       m_ColliderType: 1
-  - first: {x: -351, y: 22, z: 0}
+  - first: {x: -340, y: 22, z: 0}
     second:
       m_TileIndex: 17
       m_TileSpriteIndex: 13

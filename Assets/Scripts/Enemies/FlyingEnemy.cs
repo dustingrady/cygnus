@@ -110,6 +110,7 @@ public class FlyingEnemy : Enemy {
 		isAlerted = false;
 	}
 
+
 	void OnTriggerEnter2D(Collider2D col){
 		if (col.gameObject.tag == "TurnAround") {
 			patrolSpeed *= -1;
@@ -122,6 +123,20 @@ public class FlyingEnemy : Enemy {
 				StopCoroutine (enragedCoroutine);
 			}
 
+			enragedCoroutine = Enrage (2.0f);
+			StartCoroutine (enragedCoroutine);
+		}
+	}
+
+
+	void OnCollisionEnter2D(Collision2D col) {
+		float collisionTotal = EvaluatePhysical (col);
+
+		if (collisionTotal > 7) {
+			// Stop the enrage coroutine and start another
+			if (enragedCoroutine != null) {
+				StopCoroutine (enragedCoroutine);
+			}
 			enragedCoroutine = Enrage (2.0f);
 			StartCoroutine (enragedCoroutine);
 		}
