@@ -21,7 +21,7 @@ public class CameraSwitch : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (playerCam == false && GameObject.Find("snek") != null) {
+		if (playerCam == false && GameObject.Find("AcidBoss") != null) {
 			playerCM.SetActive (false);
 			targetCM.SetActive (true);
 		} else if (playerCam == true) {

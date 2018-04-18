@@ -32,5 +32,14 @@ public class AcidBossTest2 : Enemy {
 		}
 	}
 
+	void OnTriggerEnter2D(Collider2D col) {
+		Debug.Log ("Collided");
+		takeDamage(edmg.determine_Damage (col.gameObject.tag, elementType));
+	}
+
+	void OnCollisionEnter2D(Collision2D col) {
+		//EvaluatePhysical (col);
+	}
+
 }
 
