@@ -10,7 +10,7 @@ public class BossEnemy : Enemy {
 	public GameObject bossRagdoll;
 	private Transform enemyTransform;
 	private Area1Boss bs;
-	private float shootRadius = 15.0f; //How far our turret enemies can see
+	public float shootRadius = 15.0f; //How far our turret enemies can see
 
 	// Use this for initialization
 	void Start () {

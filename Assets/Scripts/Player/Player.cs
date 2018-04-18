@@ -94,19 +94,22 @@ public class Player : MonoBehaviour {
 
 	void CheckHealth() {
 		if (health.CurrentVal <= 0) {
-			if (checkpointPos != null) {
-				//Debug.Log ("going to checkpoint");
-				health.CurrentVal = 100;
-				transform.position = checkpointPos;
-			} else {
-				inventory.emptyInventory ();
-				//Debug.Log ("Resetting scene");
-				StopCoroutine (acidDamageCoroutine);
-				SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
-			}
+			backToCheckPoint ();
 		}
 	}
 		
+	public void backToCheckPoint()	{
+		if (checkpointPos != null) {
+			//Debug.Log ("going to checkpoint");
+			health.CurrentVal = 100;
+			transform.position = checkpointPos;
+		} else {
+			inventory.emptyInventory ();
+			//Debug.Log ("Resetting scene");
+			StopCoroutine (acidDamageCoroutine);
+			SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
+		}
+	}
 	/*
 	 * 
 	 * START OF COLLISION STUFF
