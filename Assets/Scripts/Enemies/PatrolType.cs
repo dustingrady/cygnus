@@ -160,8 +160,9 @@ public class PatrolType : Enemy {
 	/*Display exclamation point above enemy*/
 	private void alerted(bool x){
 		if (x) {
-			
-			GameObject alertedObj = Instantiate (alert, new Vector2(transform.position.x, transform.position.y + 1), Quaternion.identity); //Instantiate exclamation point
+
+			float alertHeight = GetComponent<Collider2D>().bounds.extents.y + 0.5f;
+			GameObject alertedObj = Instantiate (alert, new Vector2(transform.position.x, transform.position.y + alertHeight), Quaternion.identity); //Instantiate exclamation point
 			SpriteRenderer alertSprite = alertedObj.GetComponent<SpriteRenderer> (); //For fadeout
 			alertedObj.transform.parent = this.transform;
 			Destroy (alertedObj, 1.25f);
