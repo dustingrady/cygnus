@@ -12,11 +12,13 @@ public class Parallax : MonoBehaviour {
 
     void Awake()
     {
+
         GameObject bg = GameObject.Find("Expanded");
         foreach (Transform child in bg.transform)
             {
                 background.Add(child);
             }
+
     }
 
 	// Use this for initialization
