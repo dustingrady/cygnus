@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using UnityEditor;
+#if UNITY_EDITOR 
+using UnityEditor; 
+
 
 public enum Slope : int {
     Positive,
@@ -59,3 +61,5 @@ public class SlopeBrush : GridBrush {
 
 [CustomEditor(typeof(SlopeBrush))]
 public class SlopeBrushEditor : GridBrushEditor {}
+
+#endif

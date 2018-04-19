@@ -9,6 +9,7 @@ public class Area1Boss : MonoBehaviour {
 	private GameObject specialAttackPrefab;
 	[SerializeField]
 	private GameObject nade;
+	public GameObject exit; 
 
 	private Transform enemyTransform;
 	private Vector3 startingpos;
@@ -21,6 +22,7 @@ public class Area1Boss : MonoBehaviour {
 	private float maxHealth;
 	public float rotationSpeed = 5f;
 	bool moving = false;
+
 	enum attackState{
 		healthy,
 		halfhealth,
@@ -42,7 +44,7 @@ public class Area1Boss : MonoBehaviour {
 	}
 
 	void Update () {
-		Debug.Log (maxHealth + " " + gameObject.GetComponent<BossEnemy> ().getHealth ());
+		
 		if ((gameObject.GetComponent<BossEnemy> ().getHealth () / maxHealth) > 0.7f) {
 			atkState = attackState.healthy;
 		}
@@ -56,7 +58,10 @@ public class Area1Boss : MonoBehaviour {
 		if (atkState == attackState.neardeath) {
 			moveaninch ();
 			transform.RotateAround (startingpos, Vector3.forward, rotationSpeed * Time.deltaTime);
-			Debug.Log (transform.rotation + " " + enemyTransform.rotation);
+		}
+
+		if (gameObject.GetComponent<BossEnemy> ().getHealth () <= 0) {
+			exit.SetActive (true);
 		}
 	}
 
