@@ -23,7 +23,7 @@ public abstract class Enemy : MonoBehaviour {
 	[SerializeField]
 	protected float hitpoints = 100;
 	[SerializeField]
-	protected int energy = 100;
+	protected float energy = 100;
 
 	protected Color elementTint;
 
@@ -203,7 +203,8 @@ public abstract class Enemy : MonoBehaviour {
 
 	IEnumerator damage(float amount){
 		hitpoints -= amount;
-		yield return flash ();
+		if (amount > 0)
+			yield return flash ();
 		yield return new WaitForSeconds (1);
 	}
 
