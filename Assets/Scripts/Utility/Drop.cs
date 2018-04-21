@@ -28,7 +28,7 @@ public class Drop : MonoBehaviour{
 				totalDropWeight = lootTable [i].highestWeight;
 		}
 
-		drop = Resources.Load ("Prefabs/ItemPrefab") as GameObject;
+		drop = Resources.Load ("Prefabs/Items/ItemPrefab") as GameObject;
 	}
 
 	public void dropItem(int deadEnemy)
