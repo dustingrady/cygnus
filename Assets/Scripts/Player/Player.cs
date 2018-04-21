@@ -39,6 +39,8 @@ public class Player : MonoBehaviour {
 
 	private Vector3 checkpointPos;
 
+	private GameObject stunSwirl;
+
     public void OnSaveGame(Dictionary<SaveType, object> dict) {
         dict.Add(SaveType.PLAYER, (SerPosition)checkpointPos);
     }
@@ -56,6 +58,7 @@ public class Player : MonoBehaviour {
 
     void Start() {
         checkpointPos = transform.position;
+		stunSwirl = (GameObject)Resources.Load("Prefabs/NPCs/stunned");	
     }
 	
 	// Update is called once per frame
@@ -66,7 +69,7 @@ public class Player : MonoBehaviour {
 
 		if (stunned) {
 			Debug.Log ("stunned true");
-			StartCoroutine (stunDuration());
+			StartCoroutine (stunnedPlayer());
 		}
 		//if(Input.GetKeyDown("space")) {
 		//	StopCoroutine(acidDamageCoroutine);
@@ -323,14 +326,33 @@ public class Player : MonoBehaviour {
 	 */
 
 	//Stunned
-	IEnumerator stunDuration() {
+	IEnumerator stunnedPlayer() {
 		//Debug.Log ("Player stunned");
+		float height = GetComponent<Collider2D>().bounds.extents.y + 0.5f;
+		GameObject swirlObj = Instantiate (stunSwirl, new Vector2(transform.position.x, transform.position.y + height), Quaternion.identity); //Instantiate exclamation point
+		StartCoroutine(fade_Out(swirlObj)); 
+		//swirlObj.transform.Rotate (0, 0, Time.deltaTime * 60); //Trying to rotate swirl here
+		swirlObj.transform.parent = this.transform;
+		Destroy (swirlObj, 1.25f);
+
 		GetComponent<PlayerController> ().enabled = false;
 		GetComponent<Animator> ().enabled = false;
+
 		yield return new WaitForSeconds (1);
+
 		GetComponent<PlayerController> ().enabled = true;
 		GetComponent<Animator> ().enabled = true;
 		stunned = false;
+	}
+
+	IEnumerator fade_Out(GameObject x){
+		SpriteRenderer passed = x.GetComponent<SpriteRenderer> ();
+		float time = 1f;
+		while(passed.color.a > 0){
+			passed.color = new Color(passed.color.r, passed.color.g, passed.color.b, passed.color.a - (Time.deltaTime / time));
+			//passed.color -= Time.deltaTime / time;
+			yield return null;
+		}
 	}
 
     //FOR FIRE ONLY
