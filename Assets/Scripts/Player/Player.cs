@@ -277,7 +277,8 @@ public class Player : MonoBehaviour {
 
 		// Collision with checkpoint trigger
 		if (col.CompareTag("Checkpoint")) {
-			FloatingTextController.CreateFloatingText ("Checkpoint!", this.gameObject.transform, Color.blue, 20);
+			float height = GetComponent<BoxCollider2D>().size.y; 
+			FloatingTextController.CreateFloatingText ("Checkpoint!", this.gameObject.transform, height, Color.blue, 20);
 			checkpointPos = col.transform.position;
 		}
 	}
@@ -388,8 +389,8 @@ public class Player : MonoBehaviour {
 	}
 
 	void ReducePlayerHealth(int dmg) {
-
-		FloatingTextController.CreateFloatingText (dmg.ToString(), transform, Color.red, 15);
+		float height = GetComponent<BoxCollider2D>().size.y; 
+		FloatingTextController.CreateFloatingText (dmg.ToString(), transform, height, Color.red, 15);
 		health.CurrentVal -= dmg;
 	}
 }
