@@ -23,13 +23,14 @@ public abstract class Enemy : MonoBehaviour {
 	[SerializeField]
 	protected float hitpoints = 100;
 	[SerializeField]
-	protected int energy = 100;
+	protected float energy = 100;
 
 	protected Color elementTint;
 
 	// Initialize enemy components and rigidbody refernece
 	protected EnemyDamage edmg;
 	protected EnemyDrop edrp;
+	protected Player player;
 	protected Drop dr;
 	protected SpriteRenderer sr;
 	protected Rigidbody2D rb;
@@ -76,6 +77,7 @@ public abstract class Enemy : MonoBehaviour {
 		// Setting default position and getting player reference
 		startingPosition = transform.position;
 		playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+
 
 		SetElementColor ();
 	}
@@ -168,7 +170,7 @@ public abstract class Enemy : MonoBehaviour {
 	protected float EvaluatePhysical(Collision2D col) {
 		float colForce = 0;
 		Rigidbody2D collisionRB = col.gameObject.GetComponent<Rigidbody2D> ();
-		if (collisionRB != null) {
+		if (collisionRB != null && col.contacts [0].normal != null) {
 			colForce = CalculatePhysicalImpact (col.contacts [0].normal, col.relativeVelocity, collisionRB.mass);
 
 			if (colForce > 5) {
@@ -203,7 +205,8 @@ public abstract class Enemy : MonoBehaviour {
 
 	IEnumerator damage(float amount){
 		hitpoints -= amount;
-		yield return flash ();
+		if (amount > 0)
+			yield return flash ();
 		yield return new WaitForSeconds (1);
 	}
 

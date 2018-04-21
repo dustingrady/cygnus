@@ -26,6 +26,7 @@ public class Player : MonoBehaviour {
 	public Element rightElement;
     public Element centerElement;
 
+	public bool stunned = false;
 	bool onFire = false;
 	bool inAcid = false;
 	private Coroutine acidDamageCoroutine;
@@ -63,6 +64,10 @@ public class Player : MonoBehaviour {
 			CheckHealth ();
 		}
 
+		if (stunned) {
+			Debug.Log ("stunned true");
+			StartCoroutine (stunDuration());
+		}
 		//if(Input.GetKeyDown("space")) {
 		//	StopCoroutine(acidDamageCoroutine);
 		//}
@@ -86,8 +91,7 @@ public class Player : MonoBehaviour {
 		Knockback(1200f, dir);
 	}
 	
-	public void healWounds(float amount)
-	{
+	public void healWounds(float amount){
 		this.health.CurrentVal += amount;
 		Debug.Log ("healing for: " + amount);
 	}
@@ -115,7 +119,6 @@ public class Player : MonoBehaviour {
 	*/
 
 	void OnCollisionEnter2D(Collision2D col) {
-		
 		if (centerElement != null) {
 			if (col.transform.CompareTag("MetalElement") && centerElement.elementType == "magnetic") {
 
@@ -277,7 +280,8 @@ public class Player : MonoBehaviour {
 
 		// Collision with checkpoint trigger
 		if (col.CompareTag("Checkpoint")) {
-			FloatingTextController.CreateFloatingText ("Checkpoint!", this.gameObject.transform, Color.blue, 20);
+			float height = GetComponent<BoxCollider2D>().size.y; 
+			FloatingTextController.CreateFloatingText ("Checkpoint!", this.gameObject.transform, height, Color.blue, 20);
 			checkpointPos = col.transform.position;
 		}
 	}
@@ -318,10 +322,19 @@ public class Player : MonoBehaviour {
 	 *
 	 */
 
+	//Stunned
+	IEnumerator stunDuration() {
+		//Debug.Log ("Player stunned");
+		GetComponent<PlayerController> ().enabled = false;
+		GetComponent<Animator> ().enabled = false;
+		yield return new WaitForSeconds (1);
+		GetComponent<PlayerController> ().enabled = true;
+		GetComponent<Animator> ().enabled = true;
+		stunned = false;
+	}
 
     //FOR FIRE ONLY
-    IEnumerator damageOverTime(int ticks, int damageAmount)
-    {
+    IEnumerator damageOverTime(int ticks, int damageAmount){
         onFire = true;
 
         int currentTick = 0;
@@ -388,8 +401,8 @@ public class Player : MonoBehaviour {
 	}
 
 	void ReducePlayerHealth(int dmg) {
-
-		FloatingTextController.CreateFloatingText (dmg.ToString(), transform, Color.red, 15);
+		float height = GetComponent<BoxCollider2D>().size.y; 
+		FloatingTextController.CreateFloatingText (dmg.ToString(), transform, height, Color.red, 15);
 		health.CurrentVal -= dmg;
 	}
 }

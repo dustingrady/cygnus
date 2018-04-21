@@ -17,10 +17,12 @@ public class FloatingTextController : MonoBehaviour {
 		}
 	}
 
-	public static void CreateFloatingText(string dmg, Transform location, Color clr = default(Color), int size = 20){
+	public static void CreateFloatingText(string dmg, Transform location, float height, Color clr = default(Color), int size = 20){
 		FloatingText instance = Instantiate (popupText);
 		instance.transform.SetParent (canvas.transform, false);
-		instance.transform.position = (location.position + Vector3.up);
+		//instance.transform.position = (location.position + Vector3.up);
+		instance.transform.position = new Vector3 (location.position.x, location.position.y + height, location.position.z);
+
 		instance.SetText (dmg);
 		if (clr != default(Color))
 			instance.SetColor (clr);

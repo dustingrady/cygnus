@@ -160,9 +160,11 @@ public class PatrolType : Enemy {
 	/*Display exclamation point above enemy*/
 	private void alerted(bool x){
 		if (x) {
-			
-			GameObject alertedObj = Instantiate (alert, new Vector2(transform.position.x, transform.position.y + 1), Quaternion.identity); //Instantiate exclamation point
-			SpriteRenderer alertSprite = alertedObj.GetComponent<SpriteRenderer> (); //For fadeout
+
+			float alertHeight = GetComponent<Collider2D>().bounds.extents.y + 0.5f;
+			GameObject alertedObj = Instantiate (alert, new Vector2(transform.position.x, transform.position.y + alertHeight), Quaternion.identity); //Instantiate exclamation point
+			//SpriteRenderer alertSprite = alertedObj.GetComponent<SpriteRenderer> (); //For fadeout
+			StartCoroutine(fade_Out(alertedObj)); 
 			alertedObj.transform.parent = this.transform;
 			Destroy (alertedObj, 1.25f);
 		}
@@ -225,6 +227,15 @@ public class PatrolType : Enemy {
 		pause = false;
 	}
 
+	IEnumerator fade_Out(GameObject x){
+		SpriteRenderer passed = x.GetComponent<SpriteRenderer> ();
+		float time = 1f;
+		while(passed.color.a > 0){
+			passed.color = new Color(passed.color.r, passed.color.g, passed.color.b, passed.color.a - (Time.deltaTime / time));
+			//passed.color -= Time.deltaTime / time;
+			yield return null;
+		}
+	}
 
 	IEnumerator Enrage(float duration) {
 		enraged = true;
