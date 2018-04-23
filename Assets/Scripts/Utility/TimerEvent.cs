@@ -47,9 +47,10 @@ public class TimerEvent : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D col){
-		if (col.gameObject.tag != "Player" || col.gameObject.tag != "EnemyProjectile") {
+		if (col.gameObject.name != "Player" && col.gameObject.tag != "EnemyProjectile") {
 			hp -= 1;
 		}
+
 	}
 
 	void addTime(float time)

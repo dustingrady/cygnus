@@ -22,7 +22,8 @@ public class Area1Boss : MonoBehaviour {
 	private float maxHealth;
 	public float rotationSpeed = 5f;
 	bool moving = false;
-
+	Vector3 currentVel = Vector3.zero;
+	Vector3 offset;
 	enum attackState{
 		healthy,
 		halfhealth,
@@ -34,17 +35,32 @@ public class Area1Boss : MonoBehaviour {
 		enemyTransform = this.transform; //Reference to current enemy
 		startingpos = transform.position;
 		maxHealth = gameObject.GetComponent<BossEnemy> ().getHealth ();
+		StartCoroutine(changeTar());
 	}
 
 	void moveaninch(){
-		if (!moving) {
-			transform.Translate (new Vector2 (2, 2));
-			moving = true;
-		}
+		//if (!moving) {
+		transform.position = Vector3.SmoothDamp (transform.position, offset, ref currentVel, 50/rotationSpeed, 50/rotationSpeed *5,Time.deltaTime);
+		Debug.Log (transform.position + " " + offset);
+			//moving = true;
+		//}
 	}
 
 	void Update () {
 		
+		determineState ();
+
+		if (atkState == attackState.neardeath) {
+			moveaninch ();
+			//transform.RotateAround (startingpos, Vector3.forward, rotationSpeed * Time.deltaTime);
+		}
+
+		if (gameObject.GetComponent<BossEnemy> ().getHealth () <= 0) {
+			exit.SetActive (true);
+		}
+	}
+
+	void determineState(){
 		if ((gameObject.GetComponent<BossEnemy> ().getHealth () / maxHealth) > 0.7f) {
 			atkState = attackState.healthy;
 		}
@@ -53,15 +69,6 @@ public class Area1Boss : MonoBehaviour {
 		}
 		if ((gameObject.GetComponent<BossEnemy> ().getHealth () / maxHealth) <= 0.3f) {
 			atkState = attackState.neardeath;
-		}
-
-		if (atkState == attackState.neardeath) {
-			moveaninch ();
-			transform.RotateAround (startingpos, Vector3.forward, rotationSpeed * Time.deltaTime);
-		}
-
-		if (gameObject.GetComponent<BossEnemy> ().getHealth () <= 0) {
-			exit.SetActive (true);
 		}
 	}
 
@@ -88,25 +95,22 @@ public class Area1Boss : MonoBehaviour {
 			if (atkState == attackState.halfhealth) {
 				cooldown = 75;
 				specialOffset = 100;
+				for (float i = -2; i <= 2; i+=0.5f) {
+					GameObject bullet = (GameObject)Instantiate (baseAttackPrefab, enemyTransform.position, enemyTransform.rotation);
+					bullet.GetComponent<BulletBehaviour> ().setBullet ("spread");
+					bullet.transform.LookAt (new Vector3(player.transform.position.x + i*3f, player.transform.position.y + i*3f, 0));
+				}
+
+				baseAttackCount = 0;
+			}
+			if (atkState == attackState.neardeath) {
+				cooldown = 75;
+				specialOffset = 50;
+				StartCoroutine(changeTar());
 				GameObject grenade = Instantiate(nade, enemyTransform.position, enemyTransform.rotation) as GameObject;
 				Vector2 dir = (player.transform.position - transform.position);
 				dir = new Vector2 (dir.x, dir.y + 2).normalized;
 				grenade.GetComponent<Rigidbody2D> ().AddForce (dir * 10f);
-				baseAttackCount = 0;
-			}
-			if (atkState == attackState.neardeath) {
-				cooldown = 100;
-				specialOffset = 75;
-				for (float i = -2; i <= 2; i += 1f) {
-					for (float j = -2; j <= 2; j += 0.5f) {
-						if (j != 0 || i !=0) {
-							GameObject bullet = (GameObject)Instantiate (baseAttackPrefab, enemyTransform.position,enemyTransform.rotation);
-							bullet.GetComponent<BulletBehaviour> ().setBullet ("omnidirectional");
-							bullet.transform.LookAt (new Vector3 (i, j, 0));
-							bullet.GetComponent<BulletBehaviour> ().omDir = new Vector3 (i, j, 0);
-						}
-					}
-				}
 				baseAttackCount = 0;
 			}
 		}
@@ -121,5 +125,11 @@ public class Area1Boss : MonoBehaviour {
 			specialAttackCount = 0;
 		}
 		specialAttackCount++;
+	}
+
+	IEnumerator changeTar(){
+		offset = new Vector3(Random.Range(-3,3), Random.Range(-5,5), 0);
+		offset = startingpos + offset;
+		yield return new WaitForSeconds (3f);
 	}
 }
