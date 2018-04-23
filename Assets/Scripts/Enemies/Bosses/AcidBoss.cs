@@ -2,116 +2,48 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AcidBoss : MonoBehaviour 
-{
+public class AcidBoss : Enemy {
+	private float radius = 40.0f; //How far we can see player
+	private bool shootingPlayer;
+	private EnemyShooting es;
 
-	public float RotateSpeed = 5f;
-	public float Radius = 10.0f;
-	public bool Clockwise = true;
+	private CameraSwitch cs;
 
-	private Vector2 _centre;
-	private float _angle;
-	public List<GameObject> children;
-	private List<GameObject> offset = new List<GameObject>();
-	private int counter = 0;
-
-	private void Start()
-	{
-		_centre = transform.position;
+	private void Awake(){
+		es = gameObject.GetComponent<EnemyShooting> ();
 	}
 
-	private void Update()
-	{
-
-		transform.rotation = Quaternion.Euler (0, 0, rotate() - 90);
-		if (Clockwise) {
-			rotateClockwise ();
-		} else {
-			rotateCounterClockwise ();
+	// Use this for initialization
+	void Start () {
+		cs = GameObject.Find ("CameraSwapTrigger").GetComponent<CameraSwitch> ();
+		base.Start (); // Call the based enemy Start() function	
+	}
+	
+	// Update is called once per frame
+	void Update () {
+		if (this.hitpoints <= 0) {
+			cs.playerCam = true;
 		}
-		/**
-		if (offset.Count != children.Count) {
-			offset.Add (children [counter]);
-			counter++;
-			for (int i = 0; i < offset.Count; i++) {
-				if (offset.Count == 1) {
-					float rotation = rotate ();
-					offset [0].transform.rotation = Quaternion.Euler (0, 0, rotation - 90);
-				} else {
-					float rotation = rotate ();
-					if (i == 0) {
-						offset [0].transform.rotation = Quaternion.Euler (0, 0, rotation - 90);
-					} else {
-						Quaternion prevRotation = offset [i - 1].transform.rotation;
-						offset [i].transform.rotation = prevRotation;//Quaternion.Euler (0, 0, prevRotation - 90);
-					}
-				}
-				if (Clockwise) {
-					rotateClockwise ();
-				} else {
-					rotateCounterClockwise ();
-				}
-			}
-		} else {
-			for (int i = 0; i < offset.Count; i++) {
-				if (offset.Count == 1) {
-					float rotation = rotate ();
-					offset [0].transform.rotation = Quaternion.Euler (0, 0, rotation - 90);
-					if (Clockwise) {
-						rotateClockwise ();
-					} else {
-						rotateCounterClockwise ();
-					}
-				} else {
-					float rotation = rotate ();
+		EvaluateHealth ();
 
-					if (i == 0) {
-						offset [0].transform.rotation = Quaternion.Euler (0, 0, rotation - 90);
-						if (Clockwise) {
-							rotateClockwise ();
-						} else {
-							rotateCounterClockwise ();
-						}
-					} else {
-						Vector2 position = offset [i - 1].transform.position;
-						Quaternion prevRotation = offset [i - 1].transform.rotation;
-						offset [i].transform.rotation = prevRotation;//Quaternion.Euler (0, 0, prevRotation - 90);
-						offset[i].transform.position = Vector2.Lerp(offset[i].transform.position, position, Time.deltaTime*0.5f);
-					}
-				}
-
-			}
+		if (DistanceToPlayer() <= radius) {
+			es.shoot_At_Player ();
+			//takeDamage (0.01f);
 		}
-		/*
-		for (int i = 0; i < children.Count; i++) {
-			//Vector2 v1 = _centre - new Vector2 (transform.position.x, transform.position.y);
-			float rotation = rotate ();
-			children [i].transform.rotation = Quaternion.Euler (0, 0, rotation - 90);
-			if (Clockwise) {
-				rotateClockwise ();
-			} else {
-				rotateCounterClockwise ();
-			}
-		}*/
 	}
 
-	private float rotate() {
-		Vector2 v1 = _centre - new Vector2 (transform.position.x, transform.position.y);
-		v1 = v1.normalized;
-		return Mathf.Atan2 (v1.y, v1.x) * Mathf.Rad2Deg;
+	void OnTriggerEnter2D(Collider2D col) {
+		if(damagingElements.Contains (col.gameObject.tag))
+			takeDamage(edmg.determine_Damage (col.gameObject.tag, elementType));
 	}
 
-	private void rotateClockwise() {
-		_angle += RotateSpeed * Time.deltaTime;
-
-		var offset = new Vector2(Mathf.Sin(_angle), Mathf.Cos(_angle)) * Radius;
-		transform.position = _centre + offset;
+	void OnCollisionEnter2D(Collision2D col) {
+		EvaluatePhysical (col);
 	}
 
-	private void rotateCounterClockwise() {
-		_angle += RotateSpeed * Time.deltaTime;
-
-		var offset = new Vector2(Mathf.Cos(_angle), Mathf.Sin(_angle)) * Radius;
-		transform.position = _centre + offset;
+	void OnParticleCollision(GameObject other){
+		ElectricShock (other.tag);
 	}
+
 }
+
