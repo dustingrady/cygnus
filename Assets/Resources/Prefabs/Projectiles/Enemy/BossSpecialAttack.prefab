@@ -9,47 +9,48 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1982655995458220}
+  m_RootGameObject: {fileID: 1027033272120046}
   m_IsPrefabParent: 1
---- !u!1 &1982655995458220
+--- !u!1 &1027033272120046
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4326712967612926}
-  - component: {fileID: 212436594173907178}
-  - component: {fileID: 114336036757714928}
-  - component: {fileID: 58177632008841398}
-  - component: {fileID: 50520096498543250}
-  m_Layer: 10
-  m_Name: BossBullet
-  m_TagString: BossBullet
+  - component: {fileID: 4825327928547420}
+  - component: {fileID: 212604452837259108}
+  - component: {fileID: 114608575616182606}
+  - component: {fileID: 58292931804492600}
+  - component: {fileID: 50463785379703982}
+  - component: {fileID: 114188977318775050}
+  m_Layer: 18
+  m_Name: BossSpecialAttack
+  m_TagString: BossSpecial
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4326712967612926
+--- !u!4 &4825327928547420
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1982655995458220}
+  m_GameObject: {fileID: 1027033272120046}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.3268504, y: -6.5286694, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0.14591599, y: -3.698013, z: 0}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!50 &50520096498543250
+--- !u!50 &50463785379703982
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1982655995458220}
+  m_GameObject: {fileID: 1027033272120046}
   m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
@@ -63,12 +64,12 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!58 &58177632008841398
+--- !u!58 &58292931804492600
 CircleCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1982655995458220}
+  m_GameObject: {fileID: 1027033272120046}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -77,24 +78,37 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.12
---- !u!114 &114336036757714928
+  m_Radius: 0.35
+--- !u!114 &114188977318775050
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1982655995458220}
+  m_GameObject: {fileID: 1027033272120046}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17808f92e42fb404287d7cb83be8facf, type: 3}
+  m_Script: {fileID: 11500000, guid: 53e93d77993026a45a82f043f901898a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!212 &212436594173907178
+  typeOfBullet: 
+  omDir: {x: 0, y: 0, z: 0}
+--- !u!114 &114608575616182606
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1027033272120046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b82aa7669b4d4bb4393e038bf33e4091, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!212 &212604452837259108
 SpriteRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1982655995458220}
+  m_GameObject: {fileID: 1027033272120046}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -122,13 +136,13 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
-  m_Sprite: {fileID: 21300016, guid: f95e0d462dcb49f4c9c6f288fded5615, type: 3}
+  m_SortingOrder: 3
+  m_Sprite: {fileID: 21300000, guid: b8227c4d55b51fa46b9ee3b664d24891, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.48, y: 0.16}
+  m_Size: {x: 0.74, y: 0.74}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

@@ -45,6 +45,78 @@ public class GameManager : MonoBehaviour {
 
 	public string previousLocation;
 
+
+	void Start() {
+		// Set the target framerate
+		QualitySettings.vSyncCount = 0;
+		Application.targetFrameRate = targetFramerate;
+
+		if (loadGame)
+		{
+			SaveMan.Load();
+			loadGame = false;
+		}
+	}
+
+	void Awake () {
+		// Allow the game manage to survive scene transition
+		DontDestroyOnLoad (transform.gameObject);
+
+		// Disable cursor
+		Cursor.visible = false;
+
+		// Creates singleton game manager
+		if (instance == null) {
+			instance = this;
+		} else if (instance != this) {
+			Destroy (gameObject);
+		}
+
+		// Fill questBase from Resources Folder
+		Object[] loadedQuests = Resources.LoadAll("ScriptableObjects/Quests", typeof(Quest));
+
+		foreach(Object quest in loadedQuests) {
+			questsBase.Add ((Quest)quest);
+		}
+
+		// Fill the quests from the questBase
+		foreach (Quest quest in questsBase) {
+			Quest q = Instantiate (quest);
+			quests.Add (q);
+		}
+
+		SaveMan.SaveGame += OnSaveGame;
+		SaveMan.LoadGame += OnLoadGame;
+	}
+
+	// Update is called once per frame
+	void Update () {
+		CheckControllerStatus ();
+	}
+
+
+	// ------
+	// Input
+	// ------
+
+	void CheckControllerStatus() {
+		string[] joystickNames = Input.GetJoystickNames ();
+
+		if (joystickNames.Length > 0) {
+			foreach (var str in joystickNames) {
+				if (!string.IsNullOrEmpty (str) && controllerConnected == false) {
+					controllerConnected = true;
+				} else if (string.IsNullOrEmpty (str) && controllerConnected == true) {
+					controllerConnected = false;
+				}
+			}
+		}
+	}
+
+	// ------
+	// Save, Load, and Checkpoints
+	// ------
+
     public void OnLoadGame(Dictionary<SaveType, object> dict) {
         if (!loadGame) {
             var scene = (string)dict[SaveType.SCENE];
@@ -75,68 +147,9 @@ public class GameManager : MonoBehaviour {
         dict.Add(SaveType.QUESTS, save_quests);
     }
 
-    void Start() {
-		// Set the target framerate
-		QualitySettings.vSyncCount = 0;
-		Application.targetFrameRate = targetFramerate;
-
-        if (loadGame)
-        {
-            SaveMan.Load();
-            loadGame = false;
-        }
-	}
-
-	void Awake () {
-		// Allow the game manage to survive scene transition
-		DontDestroyOnLoad (transform.gameObject);
-
-		// Disable cursor
-		Cursor.visible = false;
-
-		// Creates singleton game manager
-		if (instance == null) {
-			instance = this;
-		} else if (instance != this) {
-			Destroy (gameObject);
-		}
-
-		// Fill questBase from Resources Folder
-		Object[] loadedQuests = Resources.LoadAll("ScriptableObjects/Quests", typeof(Quest));
-
-		foreach(Object quest in loadedQuests) {
-			questsBase.Add ((Quest)quest);
-		}
-
-		// Fill the quests from the questBase
-		foreach (Quest quest in questsBase) {
-			Quest q = Instantiate (quest);
-			quests.Add (q);
-		}
-
-        SaveMan.SaveGame += OnSaveGame;
-        SaveMan.LoadGame += OnLoadGame;
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		CheckControllerStatus ();
-	}
-
-	void CheckControllerStatus() {
-		string[] joystickNames = Input.GetJoystickNames ();
-
-		if (joystickNames.Length > 0) {
-			foreach (var str in joystickNames) {
-				if (!string.IsNullOrEmpty (str) && controllerConnected == false) {
-					controllerConnected = true;
-				} else if (string.IsNullOrEmpty (str) && controllerConnected == true) {
-					controllerConnected = false;
-				}
-			}
-		}
-	}
-
+	// ------
+	// Quests
+	// ------
 
 	public bool CheckQuestComplete(int id) {
 		Quest q = quests.Find (x => x.id == id);

@@ -9,6 +9,8 @@ using UnityEngine;
 
 public class EnemyDrop : MonoBehaviour {
 
+	public bool doNotDrop = false;
+
 	private GameObject metalDrop, fireDrop, waterDrop, earthDrop, electricDrop;
 
 	void Start(){
@@ -20,20 +22,22 @@ public class EnemyDrop : MonoBehaviour {
 	}
 
 	public void determine_Drop(Elements type, Vector3 pos){
-		if(type == Elements.metal){
-			Instantiate (metalDrop, pos, Quaternion.identity);
-		}
-		if(type == Elements.fire){
-			Instantiate (fireDrop, pos, Quaternion.identity);
-		}
-		if(type == Elements.water){
-			Instantiate (waterDrop, pos, Quaternion.identity);
-		}
-		if(type == Elements.earth){
-			Instantiate (earthDrop, pos, Quaternion.identity);
-		}
-		if(type == Elements.electric){
-			Instantiate (electricDrop, pos, Quaternion.identity);
+		if (!doNotDrop) {
+			if(type == Elements.metal){
+				Instantiate (metalDrop, pos, Quaternion.identity);
+			}
+			if(type == Elements.fire){
+				Instantiate (fireDrop, pos, Quaternion.identity);
+			}
+			if(type == Elements.water){
+				Instantiate (waterDrop, pos, Quaternion.identity);
+			}
+			if(type == Elements.earth){
+				Instantiate (earthDrop, pos, Quaternion.identity);
+			}
+			if(type == Elements.electric){
+				Instantiate (electricDrop, pos, Quaternion.identity);
+			}
 		}
 	}
 
