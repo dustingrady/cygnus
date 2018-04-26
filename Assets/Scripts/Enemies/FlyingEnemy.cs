@@ -11,11 +11,11 @@ public class FlyingEnemy : Enemy {
 	[SerializeField]
 	private float patrolSpeed = 1.5f; //How fast we move left and right
 	[SerializeField]
-	private float chaseSpeed = 4.5f;
+	private float chaseSpeed = 7.5f;
 	[SerializeField]
 	private float chaseRadius = 12.0f; //How far we can see player
 	[SerializeField]
-	private float escapeRadius = 16.0f; //How far player must be away to break the chase
+	private float escapeRadius = 20.0f; //How far player must be away to break the chase
 	public float moveRetargetFreq = 2f;
 
 	private GameObject alert;
