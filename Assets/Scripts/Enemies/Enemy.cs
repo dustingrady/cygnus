@@ -12,7 +12,8 @@ public abstract class Enemy : MonoBehaviour {
 		"WaterElement",
 		"EarthElement",
 		"MetalElement",
-		"ElectricElement"
+		"ElectricElement",
+		"Lava"
 	};
 
 	[SerializeField]
