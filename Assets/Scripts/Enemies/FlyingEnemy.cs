@@ -11,11 +11,11 @@ public class FlyingEnemy : Enemy {
 	[SerializeField]
 	private float patrolSpeed = 1.5f; //How fast we move left and right
 	[SerializeField]
-	private float chaseSpeed = 5.0f;
+	private float chaseSpeed = 4.5f;
 	[SerializeField]
-	private float chaseRadius = 6.0f; //How far we can see player
+	private float chaseRadius = 12.0f; //How far we can see player
 	[SerializeField]
-	private float escapeRadius = 12.0f; //How far player must be away to break the chase
+	private float escapeRadius = 16.0f; //How far player must be away to break the chase
 	public float moveRetargetFreq = 2f;
 
 	private GameObject alert;
@@ -30,7 +30,7 @@ public class FlyingEnemy : Enemy {
 
 	// Reference to coroutine, to refresh it
 	private IEnumerator enragedCoroutine;
-	List<string> avoidedTypes = new List<string> {"WaterElement", "FireElement"}; //Things we are allowed to collide with
+	List<string> avoidedTypes = new List<string> {"WaterElement", "FireElement", "ElectricElement", "MetalElement", "EarthElement", "Ice"}; //Things we are allowed to collide with
 
 	void Start(){
 		base.Start ();
@@ -46,7 +46,6 @@ public class FlyingEnemy : Enemy {
 		EvaluateHealth ();
 		EvaluateTolerance ();
 		check_State ();
-		//chase_Player ();
 	}
 
 	void check_State(){
@@ -62,41 +61,16 @@ public class FlyingEnemy : Enemy {
 		}
 	}
 
-	/*
-	private bool check_Collision(){
-		RaycastHit2D checkEdge = Physics2D.Raycast (new Vector2 (transform.position.x + patrolSpeed*-0.1f, transform.position.y), 
-			new Vector2 (patrolSpeed*-1, -1).normalized, 2, edgeCheck);
-		if (!checkEdge) {
-			return true;
-		}
-
-		if (avoidedTypes.Contains(checkEdge.collider.transform.gameObject.tag)) { //About to step on something we shouldn't
-			//Debug.Log("Hit some " + checkEdge.collider.transform.gameObject.name + " turning around");
-			return true;
-		}
-
-		// Check if approaching enemy
-		if (checkEdge.collider.transform.CompareTag ("Enemy")) {
-			return true;
-		}
-
-		return false; //No edge
-	}
-	*/
-
 
 	//Normal patrolling behaviour. Using sin function for side to side patrolling (may change)
 	void patrol_Area(){
-		
 		Vector3 v = startingPosition;
 		if ((Mathf.Abs(transform.position.x - v.x) < delta) && !pause) {
 			transform.Translate (new Vector2 (patrolSpeed, 0) * Time.deltaTime);
-
 			
 			if (Mathf.Sign (patrolSpeed) != Mathf.Sign (transform.localScale.x)) {
 				this.transform.localScale = new Vector3 (transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
 			}
-
 
 			if (Mathf.Abs (Mathf.Abs (transform.position.x - v.x) - delta) <= 0.5){
 				StartCoroutine (idle ());
@@ -117,9 +91,7 @@ public class FlyingEnemy : Enemy {
 			chasingPlayer = false;
 		}
 
-		Debug.Log ("Chasing player");
 		if (within_LoS ()) {
-			Debug.Log("Within LoS");
 			es.shoot_At_Player ();
 		}
 
@@ -155,8 +127,17 @@ public class FlyingEnemy : Enemy {
 			StartCoroutine (enragedCoroutine);
 		}
 		//Testing for collision with objects
-		if(col.gameObject.layer == LayerMask.NameToLayer("Ground")){
-			Debug.Log ("Hit ground");
+		if (avoidedTypes.Contains (col.transform.gameObject.tag)) {
+			patrolSpeed *= -1;
+			Debug.Log ("Hit some: " + col.transform.gameObject.tag);
+			/*
+			Collider2D collider = col.collider;
+			Vector3 contactPoint = col.GetContacts [0];
+			Vector3 center = collider.bounds.center;
+
+			bool right = contactPoint.x > center.x;
+			bool top = contactPoint.y > center.y;
+			*/
 		}
 	}
 

@@ -45,7 +45,10 @@ public class PatrolType : Enemy {
 	void Update(){
 		EvaluateHealth ();
 		EvaluateTolerance ();
+		check_State ();
+	}
 
+	void check_State(){
 		if (stunned == false) {
 			switch (chasingPlayer) {
 			case true:
@@ -57,7 +60,6 @@ public class PatrolType : Enemy {
 			}
 		}
 	}
-
 
 	//THIS IS DEBUG RAY
 	void OnDrawGizmosSelected(){

@@ -54,7 +54,10 @@ public class RogueType : Enemy {
 	void Update(){
 		EvaluateHealth ();
 		EvaluateTolerance ();
+		check_State ();
+	}
 
+	void check_State(){
 		if (stunned == false) {
 			switch (chasingPlayer) {
 			case true:
@@ -147,6 +150,7 @@ public class RogueType : Enemy {
 
 		if(((DistanceToPlayer() > escapeRadius && enraged == false) && !within_LoS()) || check_Edge()){
 			startingPosition = transform.position; //Where enemy will resume if player escapes
+			firstHit = true;
 			chasingPlayer = false;
 		}
 
