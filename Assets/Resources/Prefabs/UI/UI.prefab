@@ -3000,6 +3000,8 @@ MonoBehaviour:
   centerElementImg: {fileID: 114744089834358830}
   centerElementImgCd: {fileID: 114698516198789158}
   powerMeter: {fileID: 0}
+  lhandCD: 0
+  rhandCD: 0
 --- !u!114 &114606158723374582
 MonoBehaviour:
   m_ObjectHideFlags: 1

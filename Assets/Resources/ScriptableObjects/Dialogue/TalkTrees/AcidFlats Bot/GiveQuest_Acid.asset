@@ -15,20 +15,12 @@ MonoBehaviour:
   - text: YOU! You are different! Not a mindless drone like those that travel these
       caverns.
     choices:
-    - response: What do you mean? What's wrong with the robots here?
+    - response: What's wrong with the robots here?
       nextState: 1
       dialogActions: []
       dialogCondition: {fileID: 0}
     - response: Uh, yeah. Sure.
       nextState: 2
-      dialogActions: []
-      dialogCondition: {fileID: 0}
-    - response: NA
-      nextState: -1
-      dialogActions: []
-      dialogCondition: {fileID: 0}
-    - response: NA
-      nextState: -1
       dialogActions: []
       dialogCondition: {fileID: 0}
     endTree: 0
@@ -43,14 +35,6 @@ MonoBehaviour:
       nextState: 2
       dialogActions: []
       dialogCondition: {fileID: 0}
-    - response: NA
-      nextState: -1
-      dialogActions: []
-      dialogCondition: {fileID: 0}
-    - response: NA
-      nextState: -1
-      dialogActions: []
-      dialogCondition: {fileID: 0}
     endTree: 0
   - text: You could destroy them! They're nothing but a nuisance anyway.
     choices:
@@ -60,14 +44,6 @@ MonoBehaviour:
       dialogCondition: {fileID: 0}
     - response: Naw, I'm good.
       nextState: 4
-      dialogActions: []
-      dialogCondition: {fileID: 0}
-    - response: NA
-      nextState: -1
-      dialogActions: []
-      dialogCondition: {fileID: 0}
-    - response: NA
-      nextState: -1
       dialogActions: []
       dialogCondition: {fileID: 0}
     endTree: 0
@@ -80,34 +56,21 @@ MonoBehaviour:
     choices:
     - response: I will carry out this task for you!
       nextState: 5
-      dialogActions: []
+      dialogActions:
+      - {fileID: 11400000, guid: 344b9e42f32e93948aebc93dbec28b55, type: 2}
       dialogCondition: {fileID: 0}
     - response: Naw, I'm good.
       nextState: 5
-      dialogActions: []
-      dialogCondition: {fileID: 0}
-    - response: NA
-      nextState: -1
-      dialogActions: []
-      dialogCondition: {fileID: 0}
-    - response: NA
-      nextState: -1
-      dialogActions: []
+      dialogActions:
+      - {fileID: 11400000, guid: 344b9e42f32e93948aebc93dbec28b55, type: 2}
       dialogCondition: {fileID: 0}
     endTree: 0
   - text: Fine! I hope you melt in these wretched caverns.
     choices:
     - response: Thanks
       nextState: 5
-      dialogActions: []
-      dialogCondition: {fileID: 0}
-    - response: NA
-      nextState: -1
-      dialogActions: []
-      dialogCondition: {fileID: 0}
-    - response: NA
-      nextState: -1
-      dialogActions: []
+      dialogActions:
+      - {fileID: 11400000, guid: 344b9e42f32e93948aebc93dbec28b55, type: 2}
       dialogCondition: {fileID: 0}
     - response: NA
       nextState: -1
