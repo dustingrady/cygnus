@@ -45,10 +45,7 @@ public class PatrolType : Enemy {
 	void Update(){
 		EvaluateHealth ();
 		EvaluateTolerance ();
-		check_State ();
-	}
 
-	void check_State(){
 		if (stunned == false) {
 			switch (chasingPlayer) {
 			case true:
@@ -60,6 +57,7 @@ public class PatrolType : Enemy {
 			}
 		}
 	}
+
 
 	//THIS IS DEBUG RAY
 	void OnDrawGizmosSelected(){
@@ -162,8 +160,10 @@ public class PatrolType : Enemy {
 	/*Display exclamation point above enemy*/
 	private void alerted(bool x){
 		if (x) {
+
 			float alertHeight = GetComponent<Collider2D>().bounds.extents.y + 0.5f;
 			GameObject alertedObj = Instantiate (alert, new Vector2(transform.position.x, transform.position.y + alertHeight), Quaternion.identity); //Instantiate exclamation point
+			//SpriteRenderer alertSprite = alertedObj.GetComponent<SpriteRenderer> (); //For fadeout
 			StartCoroutine(fade_Out(alertedObj)); 
 			alertedObj.transform.parent = this.transform;
 			Destroy (alertedObj, 1.25f);
