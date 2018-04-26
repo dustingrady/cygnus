@@ -46,7 +46,7 @@ public class ReverseHidden : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D col)
 	{
-		float height = GetComponent<BoxCollider2D>().size.y; 
+		float height = GetComponent<BoxCollider2D> ().size.y; 
 		if (col.tag == "Player") {
 			Debug.Log ("wat");
 			if (!displayText) {
@@ -55,5 +55,6 @@ public class ReverseHidden : MonoBehaviour {
 			}
 			fading = true;
 		}
+
 	}
 }

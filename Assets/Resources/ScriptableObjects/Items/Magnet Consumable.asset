@@ -11,6 +11,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8d6315decddae9468e42dbf995e0794, type: 3}
   m_Name: Magnet Consumable
   m_EditorClassIdentifier: 
-  sprite: {fileID: 21300000, guid: a0f4bf4bedc2cb64d86a8797568fdfef, type: 3}
+  sprite: {fileID: 21300030, guid: f95e0d462dcb49f4c9c6f288fded5615, type: 3}
   comboElement: magnet
   description: Volatile magnet elemental.

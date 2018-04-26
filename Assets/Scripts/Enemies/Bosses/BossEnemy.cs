@@ -70,7 +70,7 @@ public class BossEnemy : Enemy {
 			Color baseClr = Color.yellow;
 			baseClr.g -= 50 / 100;
 			float dmgSize = Mathf.Lerp (18, 35, 50 / 80);
-			FloatingTextController.CreateFloatingText ("50", this.gameObject.transform, Color.yellow, 20);
+			FloatingTextController.CreateFloatingText ("50", this.gameObject.transform,dmgSize, Color.yellow, 20);
 
 			Destroy (col.gameObject);
 		}
