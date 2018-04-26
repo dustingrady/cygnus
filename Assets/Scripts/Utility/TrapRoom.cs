@@ -15,6 +15,7 @@ public class TrapRoom : MonoBehaviour {
 	public bool summon = false;
 	public float timer = 0;
 	public float spawnRotation = 10f;
+	public bool isTrigger = true;
 	int listIndex = 0;
 	// Use this for initialization
 	void Start () {
@@ -50,7 +51,7 @@ public class TrapRoom : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D col)	{
-		if (col.gameObject.name == "Player") {
+		if (col.gameObject.name == "Player" && isTrigger) {
 			summon = true;
 		}
 	}

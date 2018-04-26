@@ -69,4 +69,5 @@ public class FallingPlatform : MonoBehaviour {
 		yield return new WaitForSeconds (5);
 		tilemap.SetTile (tilemap.WorldToCell(v), previousTile);
 	}
+
 }

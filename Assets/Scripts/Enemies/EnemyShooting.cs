@@ -23,6 +23,7 @@ public class EnemyShooting : MonoBehaviour {
 
 	void Awake(){
 		playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+		Debug.Log (cooldown);
 	}
 
 	public void shoot_At_Player(){
@@ -39,6 +40,7 @@ public class EnemyShooting : MonoBehaviour {
 				for (int i = 0; i < 3; i++) {
 					GameObject bullet = (GameObject)Instantiate (bulletPrefab, transform.position, transform.rotation);
 					bullet.GetComponent<BulletBehaviour> ().setBullet ("spread");
+					bullet.transform.LookAt (new Vector3(playerTransform.position.x + i*0.7f, playerTransform.position.y + i*0.7f, 0));
 				}
 			}
 			if (sp == shootPattern.omnidirectional) {
@@ -57,5 +59,4 @@ public class EnemyShooting : MonoBehaviour {
 		}
 		count++;
 	}
-
 }

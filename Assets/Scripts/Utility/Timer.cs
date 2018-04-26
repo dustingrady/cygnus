@@ -11,13 +11,18 @@ public class Timer : MonoBehaviour {
     public Color hightlight = Color.red;    // Flash color
     public Color standard = Color.green;    // Regular color
 
-    [SerializeField]
-    UnityEvent timerEnd;                    // Add listeners here for when time is up
     Text timerText;
+
+	Player player;
+
+	void OnLevelWasLoaded(){
+		player = GameObject.Find ("Player").GetComponent<Player> ();
+	}
 
     // Use this for initialization
     void Awake()
     {
+		player = GameObject.Find ("Player").GetComponent<Player> ();
         timerText = gameObject.GetComponent<Text>();
         timerText.color = standard;
         timerText.text = timeLeft.ToString("0.00");
@@ -50,7 +55,7 @@ public class Timer : MonoBehaviour {
             if (timeLeft <= 0.0f)
             {
                 timeLeft = 0.0f;
-                timerEnd.Invoke();
+				player.backToCheckPoint ();
                 Active = false;
             }
             else

@@ -6,24 +6,32 @@ public class TimerEvent : MonoBehaviour {
 
 	int hp = 3;
 	public bool startSequence = false;
+	public bool endSequence;
 	public GameObject Timer;
 	public ParticleSystem exp;
 	public GameObject tp;
 	bool addingTime = true;
+	public GameObject trTrigger;
 	TrapRoom tr;
 
 	// Use this for initialization
 	void Start () {
-		tr = gameObject.GetComponent<TrapRoom> ();
+		if (trTrigger != null) {
+			tr = trTrigger.GetComponent<TrapRoom> ();
+		} else {
+			tr = gameObject.GetComponent<TrapRoom> ();
+		}
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		if (hp <= 0) {
-			if (startSequence) {
-				Timer.GetComponent<Timer> ().Activate (90f);
-			} else if (!startSequence) {
-				addTime(30f);
+			if (startSequence && !endSequence) {
+				Timer.GetComponent<Timer> ().Activate (180f);
+			} else if (!startSequence && !endSequence) {
+				addTime (180f);
+			} else if (!startSequence && endSequence) {
+				Timer.GetComponent<Timer> ().Active = false;
 			}
 			if (tp != null) {
 				tp.SetActive (true);
@@ -39,9 +47,10 @@ public class TimerEvent : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D col){
-		if (col.gameObject.tag != "Player" || col.gameObject.tag != "EnemyProjectile") {
+		if (col.gameObject.name != "Player" && col.gameObject.tag != "EnemyProjectile") {
 			hp -= 1;
 		}
+
 	}
 
 	void addTime(float time)

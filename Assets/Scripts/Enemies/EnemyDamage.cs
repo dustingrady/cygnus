@@ -12,6 +12,7 @@ public class EnemyDamage : MonoBehaviour {
 	public float baseWater = 3f;
 	public float baseElectric = 0.1f;
 	public float earthMultiplier = 2f;
+	public float baseLava = 20f;
 
 	void Start(){
 		FloatingTextController.Initialize ();
@@ -53,6 +54,9 @@ public class EnemyDamage : MonoBehaviour {
 			break;
 		case "ElectricElement":
 			dmg = baseElectric;
+			break;
+		case "Lava":
+			dmg = baseLava;
 			break;
 		}
 
