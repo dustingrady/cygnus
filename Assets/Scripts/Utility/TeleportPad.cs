@@ -36,10 +36,11 @@ public class TeleportPad : MonoBehaviour {
 
 	void OnTriggerStay2D(Collider2D col)
 	{
+		float height = GetComponent<BoxCollider2D>().size.y; 
 		if (col.tag == "Player") {
 			if (destinationPad != null) {
 				if(textTimer > (int) teleportTimer) {
-					FloatingTextController.CreateFloatingText ("Teleporting in " + textTimer + "!", this.gameObject.transform, Color.blue, 20);
+					FloatingTextController.CreateFloatingText ("Teleporting in " + textTimer + "!", this.gameObject.transform, height, Color.blue, 20);
 					textTimer--;
 				}
 				teleportTimer -= Time.deltaTime;

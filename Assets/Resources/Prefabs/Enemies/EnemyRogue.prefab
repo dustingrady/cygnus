@@ -40,7 +40,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1472431077089508}
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: -30.017797, y: 9.631192, z: 0.0859375}
+  m_LocalPosition: {x: -22.83, y: -10.72, z: 0.0859375}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children: []
   m_Father: {fileID: 0}
@@ -119,6 +119,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 1287305833275592, guid: 945a895993499134a8860cbedd0298a2,
     type: 2}
+  cooldown: 75
+  sp: 0
 --- !u!114 &114700408789443272
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -134,13 +136,21 @@ MonoBehaviour:
   assignRandomType: 0
   hitpoints: 100
   energy: 100
-  canShoot: 0
   enemySight:
     serializedVersion: 2
     m_Bits: 768
+  delta: 5
+  patrolSpeed: 0.5
+  chaseRadius: 3
+  escapeRadius: 15
+  followDistance: 1
+  chaseBaseSpeed: 5
+  sprintSpeed: 12
+  sprintDuration: 0.6
   edgeCheck:
     serializedVersion: 2
     m_Bits: 2305
+  canStun: 1
 --- !u!114 &114987749231583882
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -152,6 +162,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aefd7724ee6c73e488df4e1ac72cdafb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doNotDrop: 0
 --- !u!212 &212252901734448732
 SpriteRenderer:
   m_ObjectHideFlags: 1

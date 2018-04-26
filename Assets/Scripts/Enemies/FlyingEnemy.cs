@@ -11,22 +11,30 @@ public class FlyingEnemy : Enemy {
 	[SerializeField]
 	private float patrolSpeed = 1.5f; //How fast we move left and right
 	[SerializeField]
-	private float chaseSpeed = 2.5f;
+	private float chaseSpeed = 7.5f;
 	[SerializeField]
-	private float chaseRadius = 5.0f; //How far we can see player
+	private float chaseRadius = 12.0f; //How far we can see player
 	[SerializeField]
-	private float escapeRadius = 10.0f; //How far player must be away to break the chase
+	private float escapeRadius = 20.0f; //How far player must be away to break the chase
+	public float moveRetargetFreq = 2f;
+
 	private GameObject alert;
 	private EnemyShooting es;
+
+	private Vector3 currentVel = Vector3.zero;
+	private Vector3 target = Vector3.zero;
+	private Vector3 targetOffset = Vector3.zero;
 
 	private bool isAlerted = false;
 	private bool enraged = false; // When the enemy is shot, they persue the player for atleast two seconds
 
 	// Reference to coroutine, to refresh it
 	private IEnumerator enragedCoroutine;
+	List<string> avoidedTypes = new List<string> {"WaterElement", "FireElement", "ElectricElement", "MetalElement", "EarthElement", "Ice"}; //Things we are allowed to collide with
 
 	void Start(){
 		base.Start ();
+		StartCoroutine (ChangeTargetPos(moveRetargetFreq));
 		rb.constraints = RigidbodyConstraints2D.FreezeRotation;
 		alert = (GameObject)Resources.Load("Prefabs/NPCs/alert");	
 		es = gameObject.GetComponent<EnemyShooting>();
@@ -37,7 +45,10 @@ public class FlyingEnemy : Enemy {
 	void Update(){
 		EvaluateHealth ();
 		EvaluateTolerance ();
+		check_State ();
+	}
 
+	void check_State(){
 		if (stunned == false) {
 			switch (chasingPlayer) {
 			case true:
@@ -56,7 +67,7 @@ public class FlyingEnemy : Enemy {
 		Vector3 v = startingPosition;
 		if ((Mathf.Abs(transform.position.x - v.x) < delta) && !pause) {
 			transform.Translate (new Vector2 (patrolSpeed, 0) * Time.deltaTime);
-
+			
 			if (Mathf.Sign (patrolSpeed) != Mathf.Sign (transform.localScale.x)) {
 				this.transform.localScale = new Vector3 (transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
 			}
@@ -76,27 +87,16 @@ public class FlyingEnemy : Enemy {
 
 	void chase_Player(){
 		if(DistanceToPlayer() > escapeRadius && enraged == false || !within_LoS()){
-			startingPosition = transform.position; //Where enemy will resume if player escapes
+			//startingPosition = transform.position; //Where enemy will resume if player escapes
 			chasingPlayer = false;
 		}
-		//Follow player in x-axis
-		if (DistanceToPlayer () > 3f) { //Move towards player until we are n unit(s) away (to avoid collision)
-			Vector3 oldpos = transform.position;
-			transform.position = new Vector3(Mathf.MoveTowards(transform.position.x, playerTransform.position.x, chaseSpeed * Time.deltaTime), transform.position.y, transform.position.z);
-			float dx = transform.position.x - oldpos.x;
 
-			if (Mathf.Sign (dx) == Mathf.Sign (transform.localScale.x)) {
-				this.transform.localScale = new Vector3 (transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
-			}
-		}
-		//Follow player in y-axis
-		if(Mathf.Abs(transform.position.y - playerTransform.position.y) > 2f){
-			//Debug.Log ("Y distance trigger"); //Testing
-			transform.position = new Vector3(transform.position.x, Mathf.MoveTowards(transform.position.y, playerTransform.position.y, chaseSpeed * Time.deltaTime), transform.position.z);
-		}
 		if (within_LoS ()) {
 			es.shoot_At_Player ();
 		}
+
+		target = playerTransform.position + targetOffset;
+		transform.position = Vector3.SmoothDamp (transform.position, target, ref currentVel, (chaseSpeed));
 	}
 
 	/*Display exclamation point above enemy*/
@@ -125,6 +125,19 @@ public class FlyingEnemy : Enemy {
 
 			enragedCoroutine = Enrage (2.0f);
 			StartCoroutine (enragedCoroutine);
+		}
+		//Testing for collision with objects
+		if (avoidedTypes.Contains (col.transform.gameObject.tag)) {
+			patrolSpeed *= -1;
+			Debug.Log ("Hit some: " + col.transform.gameObject.tag);
+			/*
+			Collider2D collider = col.collider;
+			Vector3 contactPoint = col.GetContacts [0];
+			Vector3 center = collider.bounds.center;
+
+			bool right = contactPoint.x > center.x;
+			bool top = contactPoint.y > center.y;
+			*/
 		}
 	}
 
@@ -168,5 +181,15 @@ public class FlyingEnemy : Enemy {
 		yield return new WaitForSeconds (duration);
 
 		enraged = false;
+	}
+
+	IEnumerator ChangeTargetPos(float time) {
+		while (true) {
+			float baseHeight = 5f;
+			float offsetX = Random.Range (-3, 4);
+			float offsetY = Random.Range (-1, 2);
+			targetOffset = new Vector3 (offsetX, baseHeight + offsetY, 0f);
+			yield return new WaitForSeconds (time);
+		}
 	}
 }

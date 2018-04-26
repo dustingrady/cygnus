@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class RogueType : Enemy {
-
-	private bool chasingPlayer;
-
 	[SerializeField] 
 	private float delta = 5.0f; //How far we move left and right
 	[SerializeField] 
@@ -27,7 +24,12 @@ public class RogueType : Enemy {
 	private float sprintDuration = 0.6f;
 
 	public LayerMask edgeCheck;
+	private Player p; //Testing
 
+	[SerializeField] 
+	private bool canStun = false;
+	private bool firstHit = true;
+	private bool chasingPlayer;
 	private bool enraged = false; // When the enemy is shot, they persue the player for atleast two seconds
 	private bool hidden = true;
 	private GameObject smokePuff;
@@ -48,12 +50,14 @@ public class RogueType : Enemy {
 		hide_Self(hidden);
 		patrolSpeed = Mathf.Sign (Random.Range (-1, 1)) * patrolSpeed;
 	}
-
-
+		
 	void Update(){
 		EvaluateHealth ();
 		EvaluateTolerance ();
+		check_State ();
+	}
 
+	void check_State(){
 		if (stunned == false) {
 			switch (chasingPlayer) {
 			case true:
@@ -104,7 +108,7 @@ public class RogueType : Enemy {
 		}
 		return false;
 	}
-		
+
 
 	//Normal patrolling behaviour. Using sin function for side to side patrolling (may change)
 	void patrol_Area(){
@@ -146,6 +150,7 @@ public class RogueType : Enemy {
 
 		if(((DistanceToPlayer() > escapeRadius && enraged == false) && !within_LoS()) || check_Edge()){
 			startingPosition = transform.position; //Where enemy will resume if player escapes
+			firstHit = true;
 			chasingPlayer = false;
 		}
 
@@ -186,6 +191,7 @@ public class RogueType : Enemy {
 		if (col.gameObject.tag == "TurnAround") {
 			patrolSpeed *= -1;
 		}
+			
 		if (damagingElements.Contains (col.gameObject.tag)) {
 
 			// If the enemy is hidden, make it come out of stealth and chase the player
@@ -195,7 +201,6 @@ public class RogueType : Enemy {
 
 				// Make the enemy sprint to close the distance gap
 				StartCoroutine(Sprint(sprintDuration));
-
 			}
 
 			takeDamage (edmg.determine_Damage (col.gameObject.tag, elementType));
@@ -214,6 +219,14 @@ public class RogueType : Enemy {
 
 	void OnCollisionEnter2D(Collision2D col) {
 		float collisionTotal = EvaluatePhysical (col);
+
+		if (canStun &&  firstHit && col.gameObject.tag == "Player") {
+			GameObject player = GameObject.FindGameObjectWithTag ("Player");
+			Player p = player.GetComponent<Player> ();
+			p.stunned = true;
+			firstHit = false;
+			//p.StartCoroutine (stunDuration());
+		}
 
 		if (collisionTotal > 7) {
 			// Stop the enrage coroutine and start another

@@ -31,6 +31,7 @@ public abstract class Enemy : MonoBehaviour {
 	// Initialize enemy components and rigidbody refernece
 	protected EnemyDamage edmg;
 	protected EnemyDrop edrp;
+	protected Player player;
 	protected Drop dr;
 	protected SpriteRenderer sr;
 	protected Rigidbody2D rb;
@@ -77,6 +78,7 @@ public abstract class Enemy : MonoBehaviour {
 		// Setting default position and getting player reference
 		startingPosition = transform.position;
 		playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+
 
 		SetElementColor ();
 	}

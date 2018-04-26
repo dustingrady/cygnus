@@ -90,15 +90,26 @@ public class EnemyDamage : MonoBehaviour {
 
 		// Scale the damage size between 12 and 35 based on how much damage was delt
 		float dmgSize = Mathf.Lerp (18, 35, dmg / 80);
-
+		float height;
 		// Reduce the amount of green to make the color more red based on damage
 		Color baseClr = Color.yellow;
 		baseClr.g -= dmg / 100;
 
+		//Get y axis offset for where text should be spawned
+		if (this.gameObject.GetComponent<BoxCollider2D> () != null) {//If there is a box collider
+			height = GetComponent<BoxCollider2D> ().size.y; 
+		} 
+		else if (this.gameObject.GetComponent<CapsuleCollider2D> () != null) { //If there is a capsule collider
+			height = GetComponent<CapsuleCollider2D> ().size.y-2; //Capsule collider seems to be acting taller than it is, offsetting by -2
+		} 
+		else {
+			height = 1; //Default
+		}
+
 		if (dmg > 0) {
-			FloatingTextController.CreateFloatingText (dmg.ToString (), this.gameObject.transform, baseClr, (int)dmgSize);
+			FloatingTextController.CreateFloatingText (dmg.ToString (), this.gameObject.transform, height, baseClr, (int)dmgSize);
 		} else {
-			FloatingTextController.CreateFloatingText ("immune", this.gameObject.transform, Color.yellow, 20);
+			FloatingTextController.CreateFloatingText ("immune", this.gameObject.transform, height, Color.yellow, 20);
 		}
 	}
 }

@@ -26,6 +26,7 @@ public class Player : MonoBehaviour {
 	public Element rightElement;
     public Element centerElement;
 
+	public bool stunned = false;
 	bool onFire = false;
 	bool inAcid = false;
 	private Coroutine acidDamageCoroutine;
@@ -37,6 +38,8 @@ public class Player : MonoBehaviour {
     public Inventory inventory;
 
 	private Vector3 checkpointPos;
+
+	private GameObject stunSwirl;
 
     public void OnSaveGame(Dictionary<SaveType, object> dict) {
         dict.Add(SaveType.PLAYER, (SerPosition)checkpointPos);
@@ -55,6 +58,7 @@ public class Player : MonoBehaviour {
 
     void Start() {
         checkpointPos = transform.position;
+		stunSwirl = (GameObject)Resources.Load("Prefabs/NPCs/stunned");	
     }
 	
 	// Update is called once per frame
@@ -62,6 +66,10 @@ public class Player : MonoBehaviour {
 		CheckHealth ();
 
 
+		if (stunned) {
+			Debug.Log ("stunned true");
+			StartCoroutine (stunnedPlayer());
+		}
 		//if(Input.GetKeyDown("space")) {
 		//	StopCoroutine(acidDamageCoroutine);
 		//}
@@ -85,8 +93,7 @@ public class Player : MonoBehaviour {
 		Knockback(1200f, dir);
 	}
 	
-	public void healWounds(float amount)
-	{
+	public void healWounds(float amount){
 		this.health.CurrentVal += amount;
 		Debug.Log ("healing for: " + amount);
 	}
@@ -117,7 +124,6 @@ public class Player : MonoBehaviour {
 	*/
 
 	void OnCollisionEnter2D(Collision2D col) {
-		
 		if (centerElement != null) {
 			if (col.transform.CompareTag("MetalElement") && centerElement.elementType == "magnetic") {
 
@@ -282,7 +288,8 @@ public class Player : MonoBehaviour {
 
 		// Collision with checkpoint trigger
 		if (col.CompareTag("Checkpoint")) {
-			FloatingTextController.CreateFloatingText ("Checkpoint!", this.gameObject.transform, Color.blue, 20);
+			float height = GetComponent<BoxCollider2D>().size.y; 
+			FloatingTextController.CreateFloatingText ("Checkpoint!", this.gameObject.transform, height, Color.blue, 20);
 			checkpointPos = col.transform.position;
 		}
 	}
@@ -323,10 +330,38 @@ public class Player : MonoBehaviour {
 	 *
 	 */
 
+	//Stunned
+	IEnumerator stunnedPlayer() {
+		//Debug.Log ("Player stunned");
+		float height = GetComponent<Collider2D>().bounds.extents.y + 0.5f;
+		GameObject swirlObj = Instantiate (stunSwirl, new Vector2(transform.position.x, transform.position.y + height), Quaternion.identity); //Instantiate exclamation point
+		StartCoroutine(fade_Out(swirlObj)); 
+		//swirlObj.transform.Rotate (0, 0, Time.deltaTime * 60); //Trying to rotate swirl here
+		swirlObj.transform.parent = this.transform;
+		Destroy (swirlObj, 1.25f);
+
+		GetComponent<PlayerController> ().enabled = false;
+		GetComponent<Animator> ().enabled = false;
+
+		yield return new WaitForSeconds (1);
+
+		GetComponent<PlayerController> ().enabled = true;
+		GetComponent<Animator> ().enabled = true;
+		stunned = false;
+	}
+
+	IEnumerator fade_Out(GameObject x){
+		SpriteRenderer passed = x.GetComponent<SpriteRenderer> ();
+		float time = 1f;
+		while(passed.color.a > 0){
+			passed.color = new Color(passed.color.r, passed.color.g, passed.color.b, passed.color.a - (Time.deltaTime / time));
+			//passed.color -= Time.deltaTime / time;
+			yield return null;
+		}
+	}
 
     //FOR FIRE ONLY
-    IEnumerator damageOverTime(int ticks, int damageAmount)
-    {
+    IEnumerator damageOverTime(int ticks, int damageAmount){
         onFire = true;
 
         int currentTick = 0;
@@ -393,8 +428,8 @@ public class Player : MonoBehaviour {
 	}
 
 	void ReducePlayerHealth(int dmg) {
-
-		FloatingTextController.CreateFloatingText (dmg.ToString(), transform, Color.red, 15);
+		float height = GetComponent<BoxCollider2D>().size.y; 
+		FloatingTextController.CreateFloatingText (dmg.ToString(), transform, height, Color.red, 15);
 		health.CurrentVal -= dmg;
 	}
 }

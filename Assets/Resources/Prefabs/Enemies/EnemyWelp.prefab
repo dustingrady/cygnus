@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: 114782974095480920}
   - component: {fileID: 114019358392620314}
   - component: {fileID: 61478512148566426}
+  - component: {fileID: 58151240577135346}
   - component: {fileID: 50076808568407546}
   m_Layer: 11
   m_Name: EnemyWelp
@@ -39,8 +40,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1886642574826056}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -7.21, y: -5.18, z: 0}
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalPosition: {x: 10.49, y: -8.03, z: 0.0859375}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -66,6 +67,21 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!58 &58151240577135346
+CircleCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1886642574826056}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.93
 --- !u!61 &61478512148566426
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -102,6 +118,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b17dded1bf6d6714296cea0180d4eea0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  baseFire: 12
+  baseWater: 3
+  baseElectric: 0.1
+  earthMultiplier: 2
 --- !u!114 &114183170304131292
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -120,6 +140,12 @@ MonoBehaviour:
   enemySight:
     serializedVersion: 2
     m_Bits: 768
+  delta: 5
+  patrolSpeed: 1.5
+  chaseSpeed: 2.5
+  chaseRadius: 5
+  escapeRadius: 10
+  moveRetargetFreq: 3
 --- !u!114 &114782974095480920
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -131,6 +157,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aefd7724ee6c73e488df4e1ac72cdafb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doNotDrop: 0
 --- !u!114 &114813696563316754
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -144,6 +171,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 1287305833275592, guid: 945a895993499134a8860cbedd0298a2,
     type: 2}
+  cooldown: 75
+  sp: 0
 --- !u!212 &212507988503526972
 SpriteRenderer:
   m_ObjectHideFlags: 1
