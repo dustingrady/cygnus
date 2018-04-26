@@ -5,7 +5,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
+#if UNITY_EDITOR 
+using UnityEditor; 
+#endif
 
 public class BulletBehaviour : MonoBehaviour {
 	private GameObject player;
@@ -15,6 +17,8 @@ public class BulletBehaviour : MonoBehaviour {
 
 	public string typeOfBullet;
 	public Vector3 omDir;
+
+
 	// Use this for initialization
 	void Start () {
 		player = GameObject.Find("Player");
@@ -22,8 +26,8 @@ public class BulletBehaviour : MonoBehaviour {
 		playerPos = new Vector3 (player.transform.position.x, player.transform.position.y, player.transform.position.z);
 		if(typeOfBullet == "single" || typeOfBullet == "homing")
 			transform.LookAt (playerTransform.position); //Face the player
-		if(typeOfBullet == "spread")
-			transform.LookAt (new Vector3(playerTransform.position.x + Random.Range(-0.5f, 0.5f), playerTransform.position.y + Random.Range(-0.5f, 0.5f), 0));
+		//if(typeOfBullet == "spread")
+			//transform.LookAt (new Vector3(playerTransform.position.x + Random.Range(-0.7f, 0.7f), playerTransform.position.y + Random.Range(-0.5f, 0.5f), 0));
 
 		transform.Rotate (new Vector3(0,-90,0),Space.Self); //Correct original rotation
 	}
@@ -36,9 +40,8 @@ public class BulletBehaviour : MonoBehaviour {
 			Destroy (this.gameObject, 10f);
 		} else if (typeOfBullet == "omnidirectional") {
 			transform.position += omDir.normalized * bulletSpeed * Time.deltaTime;
-			Destroy(this.gameObject, 2f);
-		}
-		else {
+			Destroy (this.gameObject, 2f);
+		} else {
 			transform.position += transform.right * bulletSpeed * Time.deltaTime;
 			Destroy(this.gameObject, 5f);
 		}

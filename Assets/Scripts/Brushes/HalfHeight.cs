@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using UnityEditor;
+#if UNITY_EDITOR 
+using UnityEditor; 
+
 
 [CustomGridBrush(true, false, false, "Half Height")]
 public class HalfHeight : GridBrush
@@ -28,3 +30,5 @@ public class HalfHeight : GridBrush
 
 [CustomEditor(typeof(HalfHeight))]
 public class HalfHeightEditor : GridBrushEditor { }
+
+#endif

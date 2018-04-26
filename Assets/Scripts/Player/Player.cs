@@ -26,6 +26,7 @@ public class Player : MonoBehaviour {
 	public Element rightElement;
     public Element centerElement;
 
+	public bool stunned = false;
 	bool onFire = false;
 	bool inAcid = false;
 	private Coroutine acidDamageCoroutine;
@@ -37,6 +38,8 @@ public class Player : MonoBehaviour {
     public Inventory inventory;
 
 	private Vector3 checkpointPos;
+
+	private GameObject stunSwirl;
 
     public void OnSaveGame(Dictionary<SaveType, object> dict) {
         dict.Add(SaveType.PLAYER, (SerPosition)checkpointPos);
@@ -55,14 +58,18 @@ public class Player : MonoBehaviour {
 
     void Start() {
         checkpointPos = transform.position;
+		stunSwirl = (GameObject)Resources.Load("Prefabs/NPCs/stunned");	
     }
 	
 	// Update is called once per frame
 	void Update () {
-		if (health.CurrentVal <= 0) {
-			CheckHealth ();
-		}
+		CheckHealth ();
 
+
+		if (stunned) {
+			Debug.Log ("stunned true");
+			StartCoroutine (stunnedPlayer());
+		}
 		//if(Input.GetKeyDown("space")) {
 		//	StopCoroutine(acidDamageCoroutine);
 		//}
@@ -86,8 +93,7 @@ public class Player : MonoBehaviour {
 		Knockback(1200f, dir);
 	}
 	
-	public void healWounds(float amount)
-	{
+	public void healWounds(float amount){
 		this.health.CurrentVal += amount;
 		Debug.Log ("healing for: " + amount);
 	}
@@ -95,19 +101,22 @@ public class Player : MonoBehaviour {
 
 	void CheckHealth() {
 		if (health.CurrentVal <= 0) {
-			if (checkpointPos != null) {
-				//Debug.Log ("going to checkpoint");
-				health.CurrentVal = 100;
-				transform.position = checkpointPos;
-			} else {
-				inventory.emptyInventory ();
-				//Debug.Log ("Resetting scene");
-				StopCoroutine (acidDamageCoroutine);
-				SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
-			}
+			backToCheckPoint ();
 		}
 	}
 		
+	public void backToCheckPoint()	{
+		if (checkpointPos != null) {
+			//Debug.Log ("going to checkpoint");
+			health.CurrentVal = 100;
+			transform.position = checkpointPos;
+		} else {
+			inventory.emptyInventory ();
+			//Debug.Log ("Resetting scene");
+			StopCoroutine (acidDamageCoroutine);
+			SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
+		}
+	}
 	/*
 	 * 
 	 * START OF COLLISION STUFF
@@ -115,7 +124,6 @@ public class Player : MonoBehaviour {
 	*/
 
 	void OnCollisionEnter2D(Collision2D col) {
-		
 		if (centerElement != null) {
 			if (col.transform.CompareTag("MetalElement") && centerElement.elementType == "magnetic") {
 
@@ -206,12 +214,13 @@ public class Player : MonoBehaviour {
 
 	void OnParticleCollision(GameObject other){
 		if (other.tag == "Acid") {
-			this.health.CurrentVal -= 1f;
+			this.health.CurrentVal -= 5f;
+			StartCoroutine(damageOverTime(5,1));
 		}
 
 		if (other.tag == "Lava") {
 			this.health.CurrentVal -= 5f;
-			//StartCoroutine(damageOverTime(5,1));
+			StartCoroutine(damageOverTime(5,1));
 		}
 	}
 
@@ -234,12 +243,14 @@ public class Player : MonoBehaviour {
 		// Test for the Playground, if you hit Lava or enemy projectile reload
 		if (col.gameObject.tag == "BossSpecial") {
 			inventory.emptyInventory ();
-			SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
+			StartCoroutine (enemyProjectiles (50));
+			StartCoroutine (flash ());
 		}
 
 		if (col.gameObject.tag == "BossBullet") {
 			Debug.Log ("ouch, a fuckin bossbullet");
-			StartCoroutine(enemyProjectiles(1));
+			StartCoroutine(enemyProjectiles(10));
+			StartCoroutine (flash ());
 		}
 
 		if (col.gameObject.tag == "Item") {
@@ -319,10 +330,38 @@ public class Player : MonoBehaviour {
 	 *
 	 */
 
+	//Stunned
+	IEnumerator stunnedPlayer() {
+		//Debug.Log ("Player stunned");
+		float height = GetComponent<Collider2D>().bounds.extents.y + 0.5f;
+		GameObject swirlObj = Instantiate (stunSwirl, new Vector2(transform.position.x, transform.position.y + height), Quaternion.identity); //Instantiate exclamation point
+		StartCoroutine(fade_Out(swirlObj)); 
+		//swirlObj.transform.Rotate (0, 0, Time.deltaTime * 60); //Trying to rotate swirl here
+		swirlObj.transform.parent = this.transform;
+		Destroy (swirlObj, 1.25f);
+
+		GetComponent<PlayerController> ().enabled = false;
+		GetComponent<Animator> ().enabled = false;
+
+		yield return new WaitForSeconds (1);
+
+		GetComponent<PlayerController> ().enabled = true;
+		GetComponent<Animator> ().enabled = true;
+		stunned = false;
+	}
+
+	IEnumerator fade_Out(GameObject x){
+		SpriteRenderer passed = x.GetComponent<SpriteRenderer> ();
+		float time = 1f;
+		while(passed.color.a > 0){
+			passed.color = new Color(passed.color.r, passed.color.g, passed.color.b, passed.color.a - (Time.deltaTime / time));
+			//passed.color -= Time.deltaTime / time;
+			yield return null;
+		}
+	}
 
     //FOR FIRE ONLY
-    IEnumerator damageOverTime(int ticks, int damageAmount)
-    {
+    IEnumerator damageOverTime(int ticks, int damageAmount){
         onFire = true;
 
         int currentTick = 0;

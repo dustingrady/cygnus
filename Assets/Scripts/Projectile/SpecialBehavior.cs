@@ -26,7 +26,10 @@ public class SpecialBehavior : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D col){
 		if (col.gameObject.tag == "Shield") {
 			bulletSpeed *= -1;
-			this.gameObject.tag = "Deflected";
+			gameObject.tag = "Deflected";
+		}
+		if (col.gameObject.tag == "Player") {
+			Destroy (gameObject);
 		}
 	}
 }
