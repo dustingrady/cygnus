@@ -102,6 +102,7 @@ public class Player : MonoBehaviour {
 	void CheckHealth() {
 		if (health.CurrentVal <= 0) {
 			backToCheckPoint ();
+			GameObject.Find ("CameraSwapTrigger").GetComponent<CameraSwitch> ().playerCam = true;
 		}
 	}
 		

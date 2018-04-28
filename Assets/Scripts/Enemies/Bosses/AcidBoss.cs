@@ -28,7 +28,6 @@ public class AcidBoss : Enemy {
 
 		if (DistanceToPlayer() <= radius) {
 			es.shoot_At_Player ();
-			//takeDamage (0.01f);
 		}
 	}
 
