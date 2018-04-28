@@ -27,9 +27,9 @@ public class TimerEvent : MonoBehaviour {
 	void Update () {
 		if (hp <= 0) {
 			if (startSequence && !endSequence) {
-				Timer.GetComponent<Timer> ().Activate (180f);
+				Timer.GetComponent<Timer> ().Activate (270f);
 			} else if (!startSequence && !endSequence) {
-				addTime (180f);
+				addTime (200f);
 			} else if (!startSequence && endSequence) {
 				Timer.GetComponent<Timer> ().Active = false;
 			}
