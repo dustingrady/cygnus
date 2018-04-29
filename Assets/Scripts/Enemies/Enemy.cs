@@ -52,6 +52,8 @@ public abstract class Enemy : MonoBehaviour {
 	protected bool pause = false;
 	protected bool stunned = false;
 
+	protected float maxHitPoints;
+
 	protected void Start() {
 		// Getting references to the drop and damage classes and player
 		playerTransform = playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
@@ -78,7 +80,7 @@ public abstract class Enemy : MonoBehaviour {
 		// Setting default position and getting player reference
 		startingPosition = transform.position;
 		playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-
+		maxHitPoints = hitpoints;
 
 		SetElementColor ();
 	}
@@ -163,10 +165,25 @@ public abstract class Enemy : MonoBehaviour {
 				Debug.Log("Dead Drop Chance: " + chance);
 				dr.dropItem (chance);
 			}
-			Destroy (this.gameObject);
+			//Destroy (this.gameObject);
+			this.gameObject.SetActive(false);
 		}
 	}
 
+	public void respawnActive(){
+		hitpoints = maxHitPoints;
+		this.gameObject.transform.position = startingPosition;
+		this.SetElementColor ();
+		if (!this.gameObject.activeInHierarchy) {
+			this.gameObject.SetActive (true);
+		}
+	}
+
+	public void respawnHidden(){
+		hitpoints = maxHitPoints;
+		this.gameObject.transform.position = startingPosition;
+		this.SetElementColor ();
+	}
 
 	protected float EvaluatePhysical(Collision2D col) {
 		float colForce = 0;
