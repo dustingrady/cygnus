@@ -129,24 +129,19 @@ public class FlyingEnemy : Enemy {
 		}
 		//Testing for collision with objects
 		if (avoidedTypes.Contains (col.transform.gameObject.tag)) {
-			StartCoroutine(break_Contact ("horizontal"));
-			Debug.Log ("Hit some: " + col.transform.gameObject.tag);
+			//Debug.Log ("Hit some: " + col.transform.gameObject.tag);
 
-			/*
+
 			ContactPoint2D[] contacts = new ContactPoint2D[2];
 			col.GetContacts(contacts);
 			Vector3 contactPoint = contacts [0].normal;
 			Debug.Log ("Thing we hit: " + contactPoint);
 
+			/*
 			Vector3 center = rb.position;
 			Debug.Log ("Our center: " + rb.position.x);
-
-
-			bool right = contactPoint.x > center.x;
-			bool top = contactPoint.y > center.y;
-			//Debug.Log ("right: " + right);
-			//Debug.Log ("top: " + top);
 			*/
+			StartCoroutine(break_Contact (contactPoint));
 		}
 	}
 
@@ -183,14 +178,13 @@ public class FlyingEnemy : Enemy {
 	}
 
 	/*Allow enemy a moment to turn away from harmful contact before engaging player again*/
-	IEnumerator break_Contact(string dir){
+	IEnumerator break_Contact(Vector3 x){
+		Debug.Log ("Breaking contact");
 		enraged = false;
 		chasingPlayer = false;
 		disengaged = true;
-		if (dir == "horizontal") {
-			patrolSpeed *= -1;
-		}
-		yield return new WaitForSeconds (2);
+		patrolSpeed *= x.normalized.y;
+		yield return new WaitForSeconds (0.5f);
 		disengaged = false;
 	}
 
