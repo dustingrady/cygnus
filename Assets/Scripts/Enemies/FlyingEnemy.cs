@@ -146,7 +146,7 @@ public class FlyingEnemy : Enemy {
 			bool top = contactPoint.y > center.y;
 			//Debug.Log ("right: " + right);
 			//Debug.Log ("top: " + top);
-			&/
+			*/
 		}
 	}
 
