@@ -302,7 +302,7 @@ public class Player : MonoBehaviour {
 		}
 
         if (col.gameObject.tag == "QuicksandXD" && !standingInFire) {
-            StartCoroutine(singularDamage(25));
+			StartCoroutine(singularDamage(5));
         }
 
 		if ((col.gameObject.tag == "FireElement" && !standingInFire)) {

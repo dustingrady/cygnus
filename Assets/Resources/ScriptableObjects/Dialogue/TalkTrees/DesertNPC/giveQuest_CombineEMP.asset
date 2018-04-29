@@ -14,12 +14,12 @@ MonoBehaviour:
   states:
   - text: Awesome! You have the items for the EMP.
     choices:
-    - response: Sweet!
+    - response: What can I do with it?
       nextState: 1
       dialogActions: []
       dialogCondition: {fileID: 0}
     endTree: 0
-  - text: Let me craft that EMP device right up!
+  - text: This device will disrupt any field it touches.
     choices:
     - response: Fantastic!
       nextState: 2

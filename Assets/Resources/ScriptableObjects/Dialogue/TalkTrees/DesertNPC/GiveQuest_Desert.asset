@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Name: GiveQuest_Desert
   m_EditorClassIdentifier: 
   states:
-  - text: In order to defeat this boss, you will need to collect 2 EMP pieces and
-      30 scrap to reassemble the EMP
+  - text: Gah! I hate sand! Be wary of sandstorms!
     choices:
     - response: Ok
       nextState: 1
