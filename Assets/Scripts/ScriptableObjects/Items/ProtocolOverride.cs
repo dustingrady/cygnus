@@ -12,7 +12,7 @@ public class ProtocolOverride : Item {
 	GameObject protocolHolder;
 
 	public override void useItem () {
-		protocol = Resources.Load ("Prefabs/Projectiles/EMPGrenade") as GameObject;
+		protocol = Resources.Load ("Prefabs/Projectiles/ProtocolOverrideProjectile") as GameObject;
 		player = GameObject.Find ("Player").GetComponent<Player> ();
 		protocolHolder = Instantiate (protocol, player.transform.position, Quaternion.identity) as GameObject;
 		protocolHolder.GetComponent<EMPGrenade> ().Initialize (GetCursorDirection (), 2000f);

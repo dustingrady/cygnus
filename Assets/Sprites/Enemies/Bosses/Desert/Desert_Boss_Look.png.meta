@@ -1,0 +1,799 @@
+fileFormatVersion: 2
+guid: 08cb63e396ad8a54ab83c9086fe05cc7
+timeCreated: 1525040443
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Desert_Boss_Look_0
+    21300002: Desert_Boss_Look_1
+    21300004: Desert_Boss_Look_2
+    21300006: Desert_Boss_Look_3
+    21300008: Desert_Boss_Look_4
+    21300010: Desert_Boss_Look_5
+    21300012: Desert_Boss_Look_6
+    21300014: Desert_Boss_Look_7
+    21300016: Desert_Boss_Look_8
+    21300018: Desert_Boss_Look_9
+    21300020: Desert_Boss_Look_10
+    21300022: Desert_Boss_Look_11
+    21300024: Desert_Boss_Look_12
+    21300026: Desert_Boss_Look_13
+    21300028: Desert_Boss_Look_14
+    21300030: Desert_Boss_Look_15
+    21300032: Desert_Boss_Look_16
+    21300034: Desert_Boss_Look_17
+    21300036: Desert_Boss_Look_18
+    21300038: Desert_Boss_Look_19
+    21300040: Desert_Boss_Look_20
+    21300042: Desert_Boss_Look_21
+    21300044: Desert_Boss_Look_22
+    21300046: Desert_Boss_Look_23
+    21300048: Desert_Boss_Look_24
+    21300050: Desert_Boss_Look_25
+    21300052: Desert_Boss_Look_26
+    21300054: Desert_Boss_Look_27
+    21300056: Desert_Boss_Look_28
+    21300058: Desert_Boss_Look_29
+    21300060: Desert_Boss_Look_30
+    21300062: Desert_Boss_Look_31
+    21300064: Desert_Boss_Look_32
+    21300066: Desert_Boss_Look_33
+    21300068: Desert_Boss_Look_34
+    21300070: Desert_Boss_Look_35
+    21300072: Desert_Boss_Look_36
+    21300074: Desert_Boss_Look_37
+    21300076: Desert_Boss_Look_38
+    21300078: Desert_Boss_Look_39
+    21300080: Desert_Boss_Look_40
+    21300082: Desert_Boss_Look_41
+    21300084: Desert_Boss_Look_42
+    21300086: Desert_Boss_Look_43
+    21300088: Desert_Boss_Look_44
+    21300090: Desert_Boss_Look_45
+    21300092: Desert_Boss_Look_46
+  externalObjects: {}
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -1
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 0
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 140
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 8192
+    resizeAlgorithm: 1
+    textureFormat: -1
+    textureCompression: 2
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - buildTarget: Standalone
+    maxTextureSize: 8192
+    resizeAlgorithm: 1
+    textureFormat: -1
+    textureCompression: 2
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Desert_Boss_Look_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 50
+        width: 300
+        height: 350
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Desert_Boss_Look_1
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 50
+        width: 300
+        height: 350
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Desert_Boss_Look_2
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 50
+        width: 300
+        height: 350
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Desert_Boss_Look_3
+      rect:
+        serializedVersion: 2
+        x: 900
+        y: 50
+        width: 300
+        height: 350
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Desert_Boss_Look_4
+      rect:
+        serializedVersion: 2
+        x: 1200
+        y: 50
+        width: 300
+        height: 350
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Desert_Boss_Look_5
+      rect:
+        serializedVersion: 2
+        x: 1500
+        y: 50
+        width: 300
+        height: 350
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Desert_Boss_Look_6
+      rect:
+        serializedVersion: 2
+        x: 1800
+        y: 50
+        width: 300
+        height: 350
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Desert_Boss_Look_7
+      rect:
+        serializedVersion: 2
+        x: 2097
+        y: 47
+        width: 300
+        height: 350
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Desert_Boss_Look_8
+      rect:
+        serializedVersion: 2
+        x: 2400
+        y: 50
+        width: 300
+        height: 350
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Desert_Boss_Look_9
+      rect:
+        serializedVersion: 2
+        x: 2700
+        y: 50
+        width: 300
+        height: 350
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Desert_Boss_Look_10
+      rect:
+        serializedVersion: 2
+        x: 3000
+        y: 50
+        width: 300
+        height: 350
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Desert_Boss_Look_11
+      rect:
+        serializedVersion: 2
+        x: 3300
+        y: 50
+        width: 300
+        height: 350
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Desert_Boss_Look_12
+      rect:
+        serializedVersion: 2
+        x: 3600
+        y: 50
+        width: 300
+        height: 350
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Desert_Boss_Look_13
+      rect:
+        serializedVersion: 2
+        x: 3900
+        y: 50
+        width: 300
+        height: 350
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Desert_Boss_Look_14
+      rect:
+        serializedVersion: 2
+        x: 4200
+        y: 50
+        width: 300
+        height: 350
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Desert_Boss_Look_15
+      rect:
+        serializedVersion: 2
+        x: 4500
+        y: 50
+        width: 300
+        height: 350
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Desert_Boss_Look_16
+      rect:
+        serializedVersion: 2
+        x: 4800
+        y: 50
+        width: 300
+        height: 350
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Desert_Boss_Look_17
+      rect:
+        serializedVersion: 2
+        x: 5100
+        y: 50
+        width: 300
+        height: 350
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Desert_Boss_Look_18
+      rect:
+        serializedVersion: 2
+        x: 5400
+        y: 50
+        width: 300
+        height: 350
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Desert_Boss_Look_19
+      rect:
+        serializedVersion: 2
+        x: 5700
+        y: 50
+        width: 300
+        height: 350
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Desert_Boss_Look_20
+      rect:
+        serializedVersion: 2
+        x: 6000
+        y: 50
+        width: 300
+        height: 350
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Desert_Boss_Look_21
+      rect:
+        serializedVersion: 2
+        x: 6297
+        y: 50
+        width: 300
+        height: 350
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Desert_Boss_Look_22
+      rect:
+        serializedVersion: 2
+        x: 6600
+        y: 50
+        width: 300
+        height: 350
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Desert_Boss_Look_23
+      rect:
+        serializedVersion: 2
+        x: 6900
+        y: 50
+        width: 300
+        height: 350
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Desert_Boss_Look_24
+      rect:
+        serializedVersion: 2
+        x: 7200
+        y: 50
+        width: 300
+        height: 350
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Desert_Boss_Look_25
+      rect:
+        serializedVersion: 2
+        x: 7500
+        y: 50
+        width: 300
+        height: 350
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Desert_Boss_Look_26
+      rect:
+        serializedVersion: 2
+        x: 7800
+        y: 50
+        width: 300
+        height: 350
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Desert_Boss_Look_27
+      rect:
+        serializedVersion: 2
+        x: 8100
+        y: 50
+        width: 300
+        height: 350
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Desert_Boss_Look_28
+      rect:
+        serializedVersion: 2
+        x: 8400
+        y: 50
+        width: 300
+        height: 350
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Desert_Boss_Look_29
+      rect:
+        serializedVersion: 2
+        x: 8700
+        y: 50
+        width: 300
+        height: 350
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Desert_Boss_Look_30
+      rect:
+        serializedVersion: 2
+        x: 9000
+        y: 50
+        width: 300
+        height: 350
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Desert_Boss_Look_31
+      rect:
+        serializedVersion: 2
+        x: 9300
+        y: 50
+        width: 300
+        height: 350
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Desert_Boss_Look_32
+      rect:
+        serializedVersion: 2
+        x: 9600
+        y: 50
+        width: 300
+        height: 350
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Desert_Boss_Look_33
+      rect:
+        serializedVersion: 2
+        x: 9900
+        y: 50
+        width: 300
+        height: 350
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Desert_Boss_Look_34
+      rect:
+        serializedVersion: 2
+        x: 10200
+        y: 50
+        width: 300
+        height: 350
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Desert_Boss_Look_35
+      rect:
+        serializedVersion: 2
+        x: 10500
+        y: 50
+        width: 300
+        height: 350
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Desert_Boss_Look_36
+      rect:
+        serializedVersion: 2
+        x: 10800
+        y: 50
+        width: 300
+        height: 350
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Desert_Boss_Look_37
+      rect:
+        serializedVersion: 2
+        x: 11100
+        y: 50
+        width: 300
+        height: 350
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Desert_Boss_Look_38
+      rect:
+        serializedVersion: 2
+        x: 11400
+        y: 50
+        width: 300
+        height: 350
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Desert_Boss_Look_39
+      rect:
+        serializedVersion: 2
+        x: 11700
+        y: 50
+        width: 300
+        height: 350
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Desert_Boss_Look_40
+      rect:
+        serializedVersion: 2
+        x: 12000
+        y: 50
+        width: 300
+        height: 350
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Desert_Boss_Look_41
+      rect:
+        serializedVersion: 2
+        x: 12300
+        y: 50
+        width: 300
+        height: 350
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Desert_Boss_Look_42
+      rect:
+        serializedVersion: 2
+        x: 12600
+        y: 50
+        width: 300
+        height: 350
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Desert_Boss_Look_43
+      rect:
+        serializedVersion: 2
+        x: 12900
+        y: 50
+        width: 300
+        height: 350
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Desert_Boss_Look_44
+      rect:
+        serializedVersion: 2
+        x: 13200
+        y: 50
+        width: 300
+        height: 350
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Desert_Boss_Look_45
+      rect:
+        serializedVersion: 2
+        x: 13500
+        y: 50
+        width: 300
+        height: 350
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Desert_Boss_Look_46
+      rect:
+        serializedVersion: 2
+        x: 13800
+        y: 50
+        width: 300
+        height: 350
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    outline:
+    - - {x: 7008.691, y: 165.51724}
+      - {x: -6974.267, y: 165.51724}
+      - {x: -7049.9995, y: 117.24139}
+      - {x: -7049.9995, y: -131.03448}
+      - {x: -6994.9214, y: -137.93105}
+      - {x: 7049.9995, y: -137.93105}
+      - {x: 7049.9995, y: -6.896552}
+    physicsShape: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

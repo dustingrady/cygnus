@@ -37,6 +37,7 @@ TagManager:
   - Obstacle
   - EMP
   - Barrier
+  - Protocol Override
   layers:
   - Default
   - TransparentFX

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: giveQuest_EMP
   m_EditorClassIdentifier: 
   states:
-  - text: Bring me the EMP parts and I will craft it for you.
+  - text: Bring me two parts and I will craft you an amazing device!
     choices:
     - response: Okay.
       nextState: 1
