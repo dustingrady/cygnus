@@ -21,6 +21,8 @@ public class ElectricLift : MonoBehaviour {
 
 	float timer = 0;
 
+	Vector3 startingPos;
+
 	public enum state{
 		vertical,
 		horizontal
@@ -30,6 +32,8 @@ public class ElectricLift : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		startingPos = transform.position;
+
 		if (goingRight) {
 			dirx = 1;
 		}
@@ -81,6 +85,10 @@ public class ElectricLift : MonoBehaviour {
 
 			col.transform.parent = null;
 		}
+	}
+
+	public void reset(){
+		transform.position = startingPos;
 	}
 
 	void OnParticleCollision(GameObject other){

@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class TimerEvent : MonoBehaviour {
 
-	int hp = 3;
+	const int maxhp = 3;
+	int hp;
 	public bool startSequence = false;
 	public bool endSequence;
 	public GameObject Timer;
@@ -21,6 +22,7 @@ public class TimerEvent : MonoBehaviour {
 		} else {
 			tr = gameObject.GetComponent<TrapRoom> ();
 		}
+		hp = maxhp;
 	}
 	
 	// Update is called once per frame
@@ -42,7 +44,9 @@ public class TimerEvent : MonoBehaviour {
 			}
 			exp.Play ();
 
-			Destroy (gameObject, 0.1f);
+			//Destroy (gameObject, 0.1f);
+			//gameObject.SetActive(false);
+			StartCoroutine(delay());
 		}
 	}
 
@@ -59,5 +63,14 @@ public class TimerEvent : MonoBehaviour {
 			Timer.GetComponent<Timer> ().timeLeft += time;
 		}
 		addingTime = false;
+	}
+
+	public void resetItem(){
+		hp = maxhp;
+	}
+
+	IEnumerator delay(){
+		yield return new WaitForSeconds (0.2f);
+		gameObject.SetActive(false);
 	}
 }
