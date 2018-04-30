@@ -9,19 +9,20 @@ public enum SaveType
 {
 	PLAYER,
 	SCENE,
+    GLOVES,
 	INVENTORY,
 	QUESTS
 }
 
-public enum SaveSlot : string
+public enum SaveSlot : int 
 {
-    QUICK = "Q",
-    ONE = "1",
-    TWO = "2",
-    THREE = "3"
+    QUICK = 0,
+    ONE,
+    TWO,
+    THREE
 }
 
-public delegate void SaveHandler(Dictionary<SaveType, object> dict);
+public delegate void SaveHandler(Dictionary<SaveType, object> dict, SaveSlot slot);
 
 public class SaveMan : MonoBehaviour {
     static string savePath;
@@ -50,14 +51,14 @@ public class SaveMan : MonoBehaviour {
 
 	static void Serialize(Dictionary<SaveType, object> dict, SaveSlot slot) {
 		var binFormat = new BinaryFormatter();
-		var fstream = new FileStream(savePath + slot + ".dat", FileMode.Create);
+		var fstream = new FileStream(savePath + slot.ToString() + ".dat", FileMode.Create);
 		binFormat.Serialize(fstream, dict);
 		fstream.Close();
 	}
 
 	static Dictionary<SaveType, object> Deserialize(SaveSlot slot) {
 		var binFormat = new BinaryFormatter();
-		var fstream = new FileStream(savePath + slot + ".dat", FileMode.OpenOrCreate);
+		var fstream = new FileStream(savePath + slot.ToString() + ".dat", FileMode.OpenOrCreate);
 		var dict = (Dictionary<SaveType, object>)binFormat.Deserialize(fstream);
 		fstream.Close();
 
@@ -67,7 +68,7 @@ public class SaveMan : MonoBehaviour {
     public static void Save(SaveSlot slot = SaveSlot.QUICK)
     {
 		var dict = new Dictionary<SaveType, object>();
-		SaveGame(dict);	
+		SaveGame(dict, slot);	
 		Serialize(dict, slot);
         Debug.Log("Game Saved");
     }
@@ -75,7 +76,7 @@ public class SaveMan : MonoBehaviour {
     public static void Load(SaveSlot slot = SaveSlot.QUICK)
     {
 		var dict = Deserialize(slot);
-		LoadGame(dict);
+		LoadGame(dict, slot);
         Debug.Log("Game Loaded");
     }
 }
