@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 58444247987994656}
   - component: {fileID: 50871164160601828}
   m_Layer: 0
-  m_Name: ProtocolOverrideGrenade
+  m_Name: ProtocolOverrideProjectile
   m_TagString: Protocol Override
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
