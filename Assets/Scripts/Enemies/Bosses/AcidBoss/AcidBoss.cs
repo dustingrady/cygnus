@@ -3,9 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class AcidBoss : Enemy {
-	private float radius = 40.0f; //How far we can see player
+	private float radius = 35.0f; //How far we can see player
 	private bool shootingPlayer;
 	private EnemyShooting es;
+	public bool isShooting = false;
+	public bool isTakingDamage = false;
+	public bool protocolOn = true;
+	private bool healBool = true;
 
 	private CameraSwitch cs;
 
@@ -26,14 +30,29 @@ public class AcidBoss : Enemy {
 		}
 		EvaluateHealth ();
 
-		if (DistanceToPlayer() <= radius) {
+		if (DistanceToPlayer () <= radius) {
 			es.shoot_At_Player ();
+			isShooting = true;
+		} else {
+			isShooting = false;
+		}
+
+		if (protocolOn && healBool) {
+			healBool = false;
+			StartCoroutine (heal (10.0f));
 		}
 	}
 
 	void OnTriggerEnter2D(Collider2D col) {
-		if(damagingElements.Contains (col.gameObject.tag))
-			takeDamage(edmg.determine_Damage (col.gameObject.tag, elementType));
+		if (damagingElements.Contains (col.gameObject.tag)) {
+			takeDamage (edmg.determine_Damage (col.gameObject.tag, elementType));
+			isTakingDamage = true;
+		} else {
+			isTakingDamage = false;
+		}
+
+		if (col.gameObject.tag == "ProtocolGrenade")
+			protocolOn = false;
 	}
 
 	void OnCollisionEnter2D(Collision2D col) {
@@ -43,6 +62,13 @@ public class AcidBoss : Enemy {
 	void OnParticleCollision(GameObject other){
 		ElectricShock (other.tag);
 	}
+		
+	IEnumerator heal(float amount) {
+		if(hitpoints < maxHitPoints)
+			hitpoints += amount;
 
+		yield return new WaitForSeconds (2);
+		healBool = true;
+	}
 }
 
