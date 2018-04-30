@@ -15,16 +15,16 @@ public class ProtocolAction : DialogueAction {
 		Inventory inv = gm.gameObject.GetComponent<Inventory>();
 		foreach (Item item in inv.items) {
 			if (item != null) {
-				if (item.name == "Protocol Override Part 1") {
-					inv.updateStack (item);
+				if (item.name == "ProtocolOverride Part 1") {
+					inv.removeItem (item);
 				}
 
-				if (item.name == "Protocol Override Part 2") {
-					inv.updateStack (item);
+				if (item.name == "ProtocolOverride Part 2") {
+					inv.removeItem (item);
 				}
 
-				if (item.name == "Protocol Override Part 3") {
-					inv.updateStack (item);
+				if (item.name == "ProtocolOverride Part 3") {
+					inv.removeItem (item);
 				}
 			}
 		}

@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 198990938846390218}
   - component: {fileID: 199729629394717088}
   - component: {fileID: 114220945388203058}
+  - component: {fileID: 114085748035902634}
   m_Layer: 9
   m_Name: Acid Explosion
   m_TagString: Acid
@@ -35,13 +36,25 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1708488537068012}
-  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -7.88, y: -9.84, z: -0.11}
+  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 73.73, y: 3.65, z: 0.3196875}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+--- !u!114 &114085748035902634
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1708488537068012}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 000c9bfd2c950294c8c39ce7b9580703, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ps: []
 --- !u!114 &114220945388203058
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -113,7 +126,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1621137555
+  randomSeed: -1467126779
   InitialModule:
     serializedVersion: 3
     enabled: 1

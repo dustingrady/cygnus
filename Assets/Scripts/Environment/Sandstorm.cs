@@ -35,13 +35,13 @@ public class Sandstorm : MonoBehaviour {
 
         if (Storm.isEmitting)
         {
-            if (sandForce.forceMagnitude > -50)
+            if (sandForce.forceMagnitude > -35)
             {
                 sandForce.forceMagnitude -= Time.deltaTime * 7;
             }
-            else if (sandForce.forceMagnitude <= -50)
+            else if (sandForce.forceMagnitude <= -35)
             {
-                sandForce.forceMagnitude = -50;
+                sandForce.forceMagnitude = -35;
             }
         }
     }

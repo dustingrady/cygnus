@@ -11,7 +11,6 @@ public class DoorTrigger : MonoBehaviour {
 		if (col.gameObject.tag == "Player") {
 			GameObject cm = GameObject.Find("FollowCM");
 			cm.GetComponent<CameraController> ().FocusForTime(door.gameObject, 2.5f);
-
 			door.Open ();
 		}
 	}

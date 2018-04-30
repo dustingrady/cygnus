@@ -102,6 +102,9 @@ public class Player : MonoBehaviour {
 	void CheckHealth() {
 		if (health.CurrentVal <= 0) {
 			backToCheckPoint ();
+			if (GameObject.Find ("CameraSwapTrigger") != null) {
+				GameObject.Find ("CameraSwapTrigger").GetComponent<CameraSwitch> ().playerCam = true;
+			}
 		}
 	}
 		
@@ -301,7 +304,7 @@ public class Player : MonoBehaviour {
 		}
 
         if (col.gameObject.tag == "QuicksandXD" && !standingInFire) {
-            StartCoroutine(singularDamage(25));
+			StartCoroutine(singularDamage(5));
         }
 
 		if ((col.gameObject.tag == "FireElement" && !standingInFire)) {

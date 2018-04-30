@@ -27,6 +27,7 @@ public class FlyingEnemy : Enemy {
 
 	private bool isAlerted = false;
 	private bool enraged = false; // When the enemy is shot, they persue the player for atleast two seconds
+	private bool disengaged = false;
 
 	// Reference to coroutine, to refresh it
 	private IEnumerator enragedCoroutine;
@@ -78,7 +79,7 @@ public class FlyingEnemy : Enemy {
 			}
 		}
 
-		if(DistanceToPlayer() <= chaseRadius && within_LoS()){
+		if(DistanceToPlayer() <= chaseRadius && within_LoS() && !disengaged){
 			//alerted(true);
 			chasingPlayer = true;
 		}
@@ -109,7 +110,7 @@ public class FlyingEnemy : Enemy {
 		}
 		isAlerted = false;
 	}
-
+		
 
 	void OnTriggerEnter2D(Collider2D col){
 		if (col.gameObject.tag == "TurnAround") {
@@ -128,16 +129,19 @@ public class FlyingEnemy : Enemy {
 		}
 		//Testing for collision with objects
 		if (avoidedTypes.Contains (col.transform.gameObject.tag)) {
-			patrolSpeed *= -1;
-			/*
-			Debug.Log ("Hit some: " + col.transform.gameObject.tag);
-			Collider2D collider = col.collider;
-			Vector3 contactPoint = col.GetContacts [0];
-			Vector3 center = collider.bounds.center;
+			//Debug.Log ("Hit some: " + col.transform.gameObject.tag);
 
-			bool right = contactPoint.x > center.x;
-			bool top = contactPoint.y > center.y;
+
+			ContactPoint2D[] contacts = new ContactPoint2D[2];
+			col.GetContacts(contacts);
+			Vector3 contactPoint = contacts [0].normal;
+			Debug.Log ("Thing we hit: " + contactPoint);
+
+			/*
+			Vector3 center = rb.position;
+			Debug.Log ("Our center: " + rb.position.x);
 			*/
+			StartCoroutine(break_Contact (contactPoint));
 		}
 	}
 
@@ -172,7 +176,17 @@ public class FlyingEnemy : Enemy {
 		yield return new WaitForSeconds (1);
 		pause = false;
 	}
-		
+
+	/*Allow enemy a moment to turn away from harmful contact before engaging player again*/
+	IEnumerator break_Contact(Vector3 x){
+		Debug.Log ("Breaking contact");
+		enraged = false;
+		chasingPlayer = false;
+		disengaged = true;
+		patrolSpeed *= x.normalized.y;
+		yield return new WaitForSeconds (0.5f);
+		disengaged = false;
+	}
 
 	IEnumerator Enrage(float duration) {
 		enraged = true;
