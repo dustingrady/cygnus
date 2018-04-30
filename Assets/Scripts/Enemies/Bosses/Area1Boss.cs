@@ -41,7 +41,6 @@ public class Area1Boss : MonoBehaviour {
 	void moveaninch(){
 		//if (!moving) {
 		transform.position = Vector3.SmoothDamp (transform.position, offset, ref currentVel, 50/rotationSpeed, 50/rotationSpeed *5,Time.deltaTime);
-		Debug.Log (transform.position + " " + offset);
 			//moving = true;
 		//}
 	}

@@ -19,7 +19,6 @@ public class EventItemRespawnManager : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D col){
 		if (col.gameObject.tag == "Player") {
-			rm.currentTime = Timer.GetComponent<Timer> ().timeLeft;
 			if (!atCheckPoint) {
 				if (rm.destructibles.Count > 0) {
 					foreach (GameObject go in rm.destructibles) {
@@ -32,6 +31,12 @@ public class EventItemRespawnManager : MonoBehaviour {
 				rm.removeDestItem (prevEventItem);
 				atCheckPoint = true;
 			}
+		}
+	}
+
+	void OnTriggerExit2D(Collider2D col){
+		if (col.gameObject.tag == "Player") {
+			rm.currentTime = Timer.GetComponent<Timer> ().timeLeft;
 		}
 	}
 }
