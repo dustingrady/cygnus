@@ -38,6 +38,7 @@ TagManager:
   - EMP
   - Barrier
   - Protocol Override
+  - Quicksand
   layers:
   - Default
   - TransparentFX

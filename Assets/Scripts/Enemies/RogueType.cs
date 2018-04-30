@@ -34,7 +34,7 @@ public class RogueType : Enemy {
 	private bool hidden = true;
 	private GameObject smokePuff;
 
-	List<string> avoidedTypes = new List<string> {"WaterElement", "FireElement"}; //Things we are allowed to walk on
+	List<string> avoidedTypes = new List<string> {"WaterElement", "FireElement", "Quicksand"}; //Things we are allowed to walk on
 
 	// Reference to coroutine, to refresh it
 	private IEnumerator enragedCoroutine;

@@ -179,11 +179,12 @@ public class FlyingEnemy : Enemy {
 
 	/*Allow enemy a moment to turn away from harmful contact before engaging player again*/
 	IEnumerator break_Contact(Vector3 x){
-		Debug.Log ("Breaking contact");
 		enraged = false;
 		chasingPlayer = false;
 		disengaged = true;
-		patrolSpeed *= x.normalized.y;
+		patrolSpeed *= -1;
+		//patrolSpeed *= x.normalized.y;
+		//Debug.Log ("Normalized val: " + x.normalized.y);
 		yield return new WaitForSeconds (0.5f);
 		disengaged = false;
 	}

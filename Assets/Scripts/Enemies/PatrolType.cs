@@ -33,7 +33,7 @@ public class PatrolType : Enemy {
 	// Reference to coroutine, to refresh it
 	private IEnumerator enragedCoroutine;
 
-	List<string> avoidedTypes = new List<string> {"WaterElement", "FireElement"}; //Things we are allowed to walk on
+	List<string> avoidedTypes = new List<string> {"WaterElement", "FireElement", "Quicksand"}; //Things we are allowed to walk on
 
 	void Start(){
 		base.Start ();
