@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5686664946884b240934c2b487729e48, type: 3}
+  m_Name: ground
+  m_EditorClassIdentifier: 
+  m_DefaultSprite: {fileID: 21300002, guid: f31a519ab70d63c428a9fd5441fc452b, type: 3}
+  m_DefaultColliderType: 1
+  m_TilingRules: []

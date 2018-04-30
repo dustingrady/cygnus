@@ -13,6 +13,9 @@ public class LaunchProjectile : MonoBehaviour {
 	[SerializeField]
 	GameObject proj;
 
+	[SerializeField]
+	GameObject boomerParent;
+
 	// Use this for initialization
 	void Start () {
 		if (launchOffset != 0) {
@@ -45,6 +48,10 @@ public class LaunchProjectile : MonoBehaviour {
 
 	IEnumerator Launch() {
 		GameObject go = Instantiate (proj, transform.position, Quaternion.identity);
+		if (boomerParent != null) {
+			go.transform.SetParent (boomerParent.transform);
+		}
+
 		Projectile projectileComponent = go.GetComponent<Projectile> ();
 		if (projectileComponent != null) {
 			projectileComponent.dir = this.dir;

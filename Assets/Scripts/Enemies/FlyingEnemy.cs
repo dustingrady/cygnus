@@ -129,8 +129,8 @@ public class FlyingEnemy : Enemy {
 		//Testing for collision with objects
 		if (avoidedTypes.Contains (col.transform.gameObject.tag)) {
 			patrolSpeed *= -1;
-			Debug.Log ("Hit some: " + col.transform.gameObject.tag);
 			/*
+			Debug.Log ("Hit some: " + col.transform.gameObject.tag);
 			Collider2D collider = col.collider;
 			Vector3 contactPoint = col.GetContacts [0];
 			Vector3 center = collider.bounds.center;
