@@ -131,11 +131,10 @@ public class FlyingEnemy : Enemy {
 		if (avoidedTypes.Contains (col.transform.gameObject.tag)) {
 			//Debug.Log ("Hit some: " + col.transform.gameObject.tag);
 
-
 			ContactPoint2D[] contacts = new ContactPoint2D[2];
 			col.GetContacts(contacts);
 			Vector3 contactPoint = contacts [0].normal;
-			Debug.Log ("Thing we hit: " + contactPoint);
+			//Debug.Log ("Thing we hit: " + contactPoint);
 
 			/*
 			Vector3 center = rb.position;

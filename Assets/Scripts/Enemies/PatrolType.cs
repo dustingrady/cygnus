@@ -25,6 +25,7 @@ public class PatrolType : Enemy {
 	private bool canShoot = false;
 	private bool enraged = false; // When the enemy is shot, they persue the player for at least two seconds
 	private bool isAlerted = false;
+	private bool disengaged = false;
 	private GameObject alert;
 	private EnemyShooting es;
 	public LayerMask edgeCheck;
@@ -33,7 +34,7 @@ public class PatrolType : Enemy {
 	// Reference to coroutine, to refresh it
 	private IEnumerator enragedCoroutine;
 
-	List<string> avoidedTypes = new List<string> {"WaterElement", "FireElement", "Quicksand"}; //Things we are allowed to walk on
+	List<string> avoidedTypes = new List<string> {"WaterElement", "FireElement", "Quicksand", "Acid"}; //Things we are allowed to walk on
 
 	void Start(){
 		base.Start ();
@@ -69,7 +70,7 @@ public class PatrolType : Enemy {
 
 	private bool check_Edge(){
 		RaycastHit2D checkEdge = Physics2D.Raycast (new Vector2 (transform.position.x + patrolSpeed*-0.1f, transform.position.y), 
-			new Vector2 (patrolSpeed*-1, -1).normalized, 2, edgeCheck);
+			new Vector2 (patrolSpeed*-1, -1).normalized, 25, edgeCheck);
 		if (!checkEdge) {
 			return true;
 		}
@@ -83,7 +84,6 @@ public class PatrolType : Enemy {
 		if (checkEdge.collider.transform.CompareTag ("Enemy")) {
 			return true;
 		}
-
 		return false; //No edge
 	}
 
@@ -113,7 +113,8 @@ public class PatrolType : Enemy {
 				patrolSpeed *= -1;
 			}
 		}
-		if((DistanceToPlayer() <= chaseRadius) && within_LoS() && !check_Edge()){
+
+		if((DistanceToPlayer() <= chaseRadius) && within_LoS() && !check_Edge() && !disengaged){
 			alerted(true);
 			chasingPlayer = true;
 		}
@@ -134,7 +135,8 @@ public class PatrolType : Enemy {
 			patrolSpeed *= -1;
 		}
 
-		if((DistanceToPlayer() > escapeRadius && enraged == false) || !within_LoS() || check_Edge()){
+		if((DistanceToPlayer() > escapeRadius && !enraged) || !within_LoS() || check_Edge()){
+			StartCoroutine(break_Contact ());
 			startingPosition = transform.position; //Where enemy will resume if player escapes
 			chasingPlayer = false;
 		}
@@ -235,6 +237,16 @@ public class PatrolType : Enemy {
 			//passed.color -= Time.deltaTime / time;
 			yield return null;
 		}
+	}
+
+	/*Allow enemy a moment to turn away from harmful contact before engaging player again*/
+	IEnumerator break_Contact(){
+		enraged = false;
+		chasingPlayer = false;
+		disengaged = true;
+		patrolSpeed *= -1;
+		yield return new WaitForSeconds (1.25f);
+		disengaged = false;
 	}
 
 	IEnumerator Enrage(float duration) {
