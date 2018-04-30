@@ -59,7 +59,9 @@ public class RespawnManager : MonoBehaviour {
 				}
 			}
 
-			Timer.GetComponent<Timer> ().timeLeft = currentTime;
+			if (Timer != null) {
+				Timer.GetComponent<Timer> ().timeLeft = currentTime;
+			}
 			respawn = !respawn;
 		}
 	}

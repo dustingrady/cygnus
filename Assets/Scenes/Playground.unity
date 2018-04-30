@@ -9656,11 +9656,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4062297412796568, guid: cf06be31013f6c346ab2e54dfe3dcbf4, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -7.605439
+      value: -7.605464
       objectReference: {fileID: 0}
     - target: {fileID: 4062297412796568, guid: cf06be31013f6c346ab2e54dfe3dcbf4, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -4.9348063
+      value: -4.9395814
       objectReference: {fileID: 0}
     - target: {fileID: 4062297412796568, guid: cf06be31013f6c346ab2e54dfe3dcbf4, type: 2}
       propertyPath: m_LocalPosition.z
@@ -9960,13 +9960,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activeEnemies:
-  - {fileID: 2034532238}
   - {fileID: 860038533}
   - {fileID: 672453955}
+  - {fileID: 2034532238}
   hiddenEnemies: []
   destructibles: []
-  interactibleObjects:
-  - {fileID: 1439356271}
+  currentTime: 0
+  Timer: {fileID: 0}
+  interactibleObjects: []
 --- !u!1 &1092406304
 GameObject:
   m_ObjectHideFlags: 0
@@ -12718,11 +12719,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ff841feaeecac0b438209f7448fdc8ba, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &1439356271 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1536156768072258, guid: fe1165c2795a08e4d98ea5d00a896114,
-    type: 2}
-  m_PrefabInternal: {fileID: 928392176}
 --- !u!1001 &1443237696
 Prefab:
   m_ObjectHideFlags: 0
