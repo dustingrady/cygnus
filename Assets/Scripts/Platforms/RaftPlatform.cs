@@ -11,8 +11,6 @@ public class RaftPlatform : MonoBehaviour {
 
 	void OnCollisionStay2D(Collision2D col) {
 		if (col.gameObject.name == "Player") {
-			Vector2 raftVel = gameObject.GetComponent<Rigidbody2D> ().velocity;
-			col.gameObject.GetComponent<Rigidbody2D> ().velocity = col.gameObject.GetComponent<Rigidbody2D> ().velocity + raftVel;
 			/*
 			if ((col.transform.position.y - col.gameObject.GetComponent<BoxCollider2D> ().bounds.extents.y) > transform.position.y) {
 				
