@@ -200,6 +200,10 @@ public abstract class Enemy : MonoBehaviour {
 		return colForce;
 	}
 
+	public float getHP() {
+		return(hitpoints);
+	}
+
 	//
 	// Coroutines 
 	//

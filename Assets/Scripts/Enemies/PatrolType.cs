@@ -226,8 +226,10 @@ public class PatrolType : Enemy {
 
 	IEnumerator idle(){
 		pause = true;
+		anim.SetBool ("idle", true);
 		yield return new WaitForSeconds (1);
 		pause = false;
+		anim.SetBool ("idle", false);
 	}
 
 	IEnumerator fade_Out(GameObject x){
