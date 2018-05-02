@@ -5,28 +5,22 @@ using UnityEngine;
 public class AnimationManager : MonoBehaviour {
 	[SerializeField]
 	private Animator snakeAnim;
-
-	AcidBoss boss;
+	private GameObject boss;
 
 	// Use this for initialization
 	void Start () {
 		snakeAnim = GetComponent<Animator> ();
-		boss = GameObject.Find ("AcidBoss").GetComponent<AcidBoss> ();
+		boss = GameObject.Find ("AcidBoss");
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		bool isShooting = boss.GetComponent<AcidBoss> ().isShooting;
 
-		if (boss.isShooting) {
+		if (isShooting) {
 			snakeAnim.SetBool ("Attack Transition", true);
 		} else {
 			snakeAnim.SetBool ("Attack Transition", false);
-		}
-
-		if (boss.isTakingDamage) {
-			snakeAnim.SetBool ("Damage Transition", true);
-		} else {
-			snakeAnim.SetBool ("Damage Transition", false);
 		}
 	}
 }

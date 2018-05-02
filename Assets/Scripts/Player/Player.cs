@@ -101,10 +101,13 @@ public class Player : MonoBehaviour {
 
 	void CheckHealth() {
 		if (health.CurrentVal <= 0) {
-			backToCheckPoint ();
-			if (GameObject.Find ("CameraSwapTrigger") != null) {
+			if (GameObject.Find ("CameraSwapTrigger") != null || GameObject.Find("Boss Wall") != null) {
+				Debug.Log ("We ded.");
 				GameObject.Find ("CameraSwapTrigger").GetComponent<CameraSwitch> ().playerCam = true;
+				GameObject.Find ("Wall Trigger").GetComponent<BossWallTrigger> ().wallOn = false;
 			}
+
+			backToCheckPoint ();
 		}
 	}
 		

@@ -7,7 +7,6 @@ public class AcidBoss : Enemy {
 	private bool shootingPlayer;
 	private EnemyShooting es;
 	public bool isShooting = false;
-	public bool isTakingDamage = false;
 	public bool protocolOn = true;
 	private bool healBool = true;
 
@@ -46,9 +45,6 @@ public class AcidBoss : Enemy {
 	void OnTriggerEnter2D(Collider2D col) {
 		if (damagingElements.Contains (col.gameObject.tag)) {
 			takeDamage (edmg.determine_Damage (col.gameObject.tag, elementType));
-			isTakingDamage = true;
-		} else {
-			isTakingDamage = false;
 		}
 
 		if (col.gameObject.tag == "ProtocolGrenade")

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraSwitch : MonoBehaviour {
 	public bool playerCam = true;
-	private GameObject targetCM;
+	private GameObject bossCM;
 	private GameObject playerCM;
 
 	void OnTriggerEnter2D(Collider2D col) {
@@ -15,7 +15,7 @@ public class CameraSwitch : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		targetCM = GameObject.Find("BossCamera");
+		bossCM = GameObject.Find("BossCamera");
 		playerCM = GameObject.Find ("Follow CM");
 	}
 	
@@ -23,9 +23,9 @@ public class CameraSwitch : MonoBehaviour {
 	void Update () {
 		if (playerCam == false && GameObject.Find("AcidBoss") != null) {
 			playerCM.SetActive (false);
-			targetCM.SetActive (true);
+			bossCM.SetActive (true);
 		} else if (playerCam == true) {
-			targetCM.SetActive (false);
+			bossCM.SetActive (false);
 			playerCM.SetActive (true);
 		}
 	}
