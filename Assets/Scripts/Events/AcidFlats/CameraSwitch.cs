@@ -4,28 +4,28 @@ using UnityEngine;
 
 public class CameraSwitch : MonoBehaviour {
 	public bool playerCam = true;
-	private GameObject bossCM;
+	private GameObject bossRoomCM;
 	private GameObject playerCM;
 
 	void OnTriggerEnter2D(Collider2D col) {
 		if (col.gameObject.tag == "Player") {
-			playerCam = false;
+			playerCam = !playerCam;
 		}
 	}
 
 	// Use this for initialization
 	void Start () {
-		bossCM = GameObject.Find("BossCamera");
+		bossRoomCM = GameObject.Find("BossRoomCamera");
 		playerCM = GameObject.Find ("Follow CM");
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (playerCam == false && GameObject.Find("AcidBoss") != null) {
+		if (playerCam == false) {
 			playerCM.SetActive (false);
-			bossCM.SetActive (true);
+			bossRoomCM.SetActive (true);
 		} else if (playerCam == true) {
-			bossCM.SetActive (false);
+			bossRoomCM.SetActive (false);
 			playerCM.SetActive (true);
 		}
 	}

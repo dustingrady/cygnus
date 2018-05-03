@@ -32,10 +32,7 @@ public class AcidFlatsQuestCheck : DialogueAction {
 		}
 
 		if (part1 && part2 && part3) {
-			Debug.Log ("Quest should be completed.");
 			gm.CompleteQuest (420);
-		} else {
-			Debug.Log ("Don't have all 3 items.");
 		}
 	}
 }

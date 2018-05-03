@@ -10,23 +10,17 @@ public class AcidBoss : Enemy {
 	public bool protocolOn = true;
 	private bool healBool = true;
 
-	private CameraSwitch cs;
-
 	private void Awake(){
 		es = gameObject.GetComponent<EnemyShooting> ();
 	}
 
 	// Use this for initialization
 	void Start () {
-		cs = GameObject.Find ("CameraSwapTrigger").GetComponent<CameraSwitch> ();
 		base.Start (); // Call the based enemy Start() function	
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (this.hitpoints <= 0) {
-			cs.playerCam = true;
-		}
 		EvaluateHealth ();
 
 		if (DistanceToPlayer () <= radius) {

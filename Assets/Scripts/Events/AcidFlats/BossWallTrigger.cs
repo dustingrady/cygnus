@@ -5,7 +5,6 @@ using UnityEngine;
 public class BossWallTrigger : MonoBehaviour {
 	public GameObject wall;
 	public bool wallOn = false;
-	private GameObject boss;
 
 	// Use this for initialization
 	void Start () {
