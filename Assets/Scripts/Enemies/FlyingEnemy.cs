@@ -16,7 +16,8 @@ public class FlyingEnemy : Enemy {
 	private float chaseRadius = 12.0f; //How far we can see player
 	[SerializeField]
 	private float escapeRadius = 20.0f; //How far player must be away to break the chase
-	public float moveRetargetFreq = 2f;
+	private float moveRetargetFreq = 2f;
+	private float maxSpeed = Mathf.Infinity;
 
 	private GameObject alert;
 	private EnemyShooting es;
@@ -47,6 +48,7 @@ public class FlyingEnemy : Enemy {
 		EvaluateHealth ();
 		EvaluateTolerance ();
 		check_State ();
+		Debug.Log ("Chasing Player: " + chasingPlayer); //Chasing player
 	}
 
 	void check_State(){
@@ -80,14 +82,14 @@ public class FlyingEnemy : Enemy {
 		}
 
 		if(DistanceToPlayer() <= chaseRadius && within_LoS() && !disengaged){
-			//alerted(true);
+			alerted(true);
 			chasingPlayer = true;
 		}
 	}
 
 
 	void chase_Player(){
-		if(DistanceToPlayer() > escapeRadius && enraged == false || !within_LoS()){
+		if(DistanceToPlayer() > escapeRadius && enraged == false){
 			//startingPosition = transform.position; //Where enemy will resume if player escapes
 			chasingPlayer = false;
 		}
@@ -97,7 +99,7 @@ public class FlyingEnemy : Enemy {
 		}
 
 		target = playerTransform.position + targetOffset;
-		transform.position = Vector3.SmoothDamp (transform.position, target, ref currentVel, (chaseSpeed));
+		transform.position = Vector3.SmoothDamp (transform.position, target, ref currentVel, 0.9f, maxSpeed);
 	}
 
 	/*Display exclamation point above enemy*/
@@ -113,7 +115,7 @@ public class FlyingEnemy : Enemy {
 		
 
 	void OnTriggerEnter2D(Collider2D col){
-		if (col.gameObject.tag == "TurnAround") {
+		if (col.gameObject.tag == "TurnAround") { //No longer needed?
 			patrolSpeed *= -1;
 		}
 		if (damagingElements.Contains (col.gameObject.tag)) {
@@ -131,6 +133,7 @@ public class FlyingEnemy : Enemy {
 		if (avoidedTypes.Contains (col.transform.gameObject.tag)) {
 			//Debug.Log ("Hit some: " + col.transform.gameObject.tag);
 
+			//Attempting to get contact points of collider box to move in opposite dir
 			ContactPoint2D[] contacts = new ContactPoint2D[2];
 			col.GetContacts(contacts);
 			Vector3 contactPoint = contacts [0].normal;
@@ -199,8 +202,8 @@ public class FlyingEnemy : Enemy {
 
 	IEnumerator ChangeTargetPos(float time) {
 		while (true) {
-			float baseHeight = 5f;
-			float offsetX = Random.Range (-3, 4);
+			float baseHeight = 3f;
+			float offsetX = Random.Range (-2, 3);
 			float offsetY = Random.Range (-1, 2);
 			targetOffset = new Vector3 (offsetX, baseHeight + offsetY, 0f);
 			yield return new WaitForSeconds (time);
