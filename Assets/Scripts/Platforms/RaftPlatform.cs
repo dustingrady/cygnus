@@ -6,7 +6,7 @@ public class RaftPlatform : MonoBehaviour {
 
 
 	void Start() {
-		GetComponent<Rigidbody2D> ().constraints = RigidbodyConstraints2D.FreezePositionX;
+		//GetComponent<Rigidbody2D> ().constraints = RigidbodyConstraints2D.FreezeRotation;
 	}
 
 	void OnCollisionStay2D(Collision2D col) {
