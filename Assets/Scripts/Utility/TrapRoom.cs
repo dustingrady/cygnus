@@ -39,14 +39,7 @@ public class TrapRoom : MonoBehaviour {
 				listIndex++;
 				timer = 0;
 			}
-			/*
-			foreach (GameObject g in l) {
-				if (!g.activeInHierarchy) {
-					g.SetActive (true);
-				}
-			}
-			//Destroy (this.gameObject, 2f);
-			*/
+			summon = false;
 		}
 	}
 
