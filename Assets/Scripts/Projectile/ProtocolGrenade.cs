@@ -13,8 +13,8 @@ public class ProtocolGrenade : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D col) {
-		if (col.gameObject.tag != "Player" && col.gameObject.tag != "Protocol Override") {
-			DestroyObject (this.gameObject);
+		if (col.gameObject.tag != "Player" && col.gameObject.tag != "ProtocolGrenade") {
+			DestroyObject (this.gameObject,0.1f);
 		}
 	}
 }

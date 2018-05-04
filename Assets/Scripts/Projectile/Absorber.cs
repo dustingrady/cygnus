@@ -8,6 +8,7 @@ public class Absorber : MonoBehaviour {
 	public float speed;
 	public Vector3 direction;
 	private string hand;
+	public AudioClip clip;
 
 	ElementManager elementManager;
 
@@ -22,6 +23,7 @@ public class Absorber : MonoBehaviour {
 	}
 
 	void Start() {
+		AudioSource.PlayClipAtPoint (clip, this.transform.position);
 		GameObject go = GameObject.FindGameObjectWithTag ("Player");
 		elementManager = go.GetComponentInChildren<ElementManager> ();
 	}

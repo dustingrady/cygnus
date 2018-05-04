@@ -32,9 +32,11 @@ public class RogueType : Enemy {
 	private bool chasingPlayer;
 	private bool enraged = false; // When the enemy is shot, they persue the player for atleast two seconds
 	private bool hidden = true;
+	private bool disengaged = false;
+
 	private GameObject smokePuff;
 
-	List<string> avoidedTypes = new List<string> {"WaterElement", "FireElement"}; //Things we are allowed to walk on
+	List<string> avoidedTypes = new List<string> {"WaterElement", "FireElement", "Quicksand", "Acid"}; //Things we are allowed to walk on
 
 	// Reference to coroutine, to refresh it
 	private IEnumerator enragedCoroutine;
@@ -127,7 +129,7 @@ public class RogueType : Enemy {
 			}
 		}
 
-		if((DistanceToPlayer() <= chaseRadius) && within_LoS() && !check_Edge()){
+		if((DistanceToPlayer() <= chaseRadius) && within_LoS() && !check_Edge() && !disengaged){
 			reveal_Self(true); 
 			chasingPlayer = true;
 		}
@@ -148,7 +150,8 @@ public class RogueType : Enemy {
 			patrolSpeed *= -1;
 		}
 
-		if(((DistanceToPlayer() > escapeRadius && enraged == false) && !within_LoS()) || check_Edge()){
+		if(((DistanceToPlayer() > escapeRadius && !enraged) || !within_LoS()) || check_Edge()){
+			StartCoroutine(break_Contact ());
 			startingPosition = transform.position; //Where enemy will resume if player escapes
 			firstHit = true;
 			chasingPlayer = false;
@@ -254,6 +257,15 @@ public class RogueType : Enemy {
 		pause = false;
 	}
 		
+	/*Allow enemy a moment to turn away from harmful contact before engaging player again*/
+	IEnumerator break_Contact(){
+		enraged = false;
+		chasingPlayer = false;
+		disengaged = true;
+		patrolSpeed *= -1;
+		yield return new WaitForSeconds (1.25f);
+		disengaged = false;
+	}
 
 	IEnumerator Enrage(float duration) {
 		enraged = true;

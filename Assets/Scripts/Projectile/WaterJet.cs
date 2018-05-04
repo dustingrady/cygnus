@@ -5,12 +5,17 @@ using UnityEngine;
 public class WaterJet : MonoBehaviour {
 	public Vector3 direction;
 	public Rigidbody2D rb;
+	public AudioClip clip;
 
 	public void Initialize(Vector2 direction, float speed) {
 		this.direction = direction.normalized;
 		gameObject.GetComponent<Rigidbody2D> ().AddForce (this.direction*speed);
 
 		rb = GetComponent<Rigidbody2D> ();
+	}
+
+	void Start(){
+		AudioSource.PlayClipAtPoint (clip, this.transform.position);
 	}
 
 	void OnTriggerEnter2D(Collider2D col)

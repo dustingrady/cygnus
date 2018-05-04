@@ -123,7 +123,7 @@ public class Inventory : MonoBehaviour {
 		}
 	}
 
-	public void OnSaveGame(Dictionary<SaveType, object> dict) {
+	public void OnSaveGame(Dictionary<SaveType, object> dict, SaveSlot s) {
 		var inv = new InventoryData();
 		//inv.items = (from c in items where c != null select c).ToArray();
 		var item_list = new List<InventoryItem>();
@@ -138,7 +138,7 @@ public class Inventory : MonoBehaviour {
 		dict.Add(SaveType.INVENTORY, inv);
 	}
 
-	public void OnLoadGame(Dictionary<SaveType, object> dict) {
+	public void OnLoadGame(Dictionary<SaveType, object> dict, SaveSlot s) {
 		var inv = (InventoryData)dict[SaveType.INVENTORY];
 		foreach(var pair in inv.items) {
 			Debug.Log("ScriptableObjects/Items/" + pair.item);
