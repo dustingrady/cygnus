@@ -44,6 +44,7 @@ public class GameManager : MonoBehaviour {
 	bool loadGame = false;
 
 	public string previousLocation;
+    public SaveSlot slot;
 
 
 	void Start() {
@@ -53,7 +54,7 @@ public class GameManager : MonoBehaviour {
 
 		if (loadGame)
 		{
-			SaveMan.Load();
+			SaveMan.Load(slot);
 			loadGame = false;
 		}
 	}
@@ -117,11 +118,13 @@ public class GameManager : MonoBehaviour {
 	// Save, Load, and Checkpoints
 	// ------
 
-    public void OnLoadGame(Dictionary<SaveType, object> dict) {
+    public void OnLoadGame(Dictionary<SaveType, object> dict, SaveSlot s) {
         if (!loadGame) {
             var scene = (string)dict[SaveType.SCENE];
+            hasGloves = (bool)dict[SaveType.GLOVES];
             Debug.Log(scene);
             SceneManager.LoadScene(scene);
+            slot = s;
             loadGame = true;
         }
         else {
@@ -135,8 +138,9 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    public void OnSaveGame(Dictionary<SaveType, object> dict) {
+    public void OnSaveGame(Dictionary<SaveType, object> dict, SaveSlot s) {
         dict.Add(SaveType.SCENE, SceneManager.GetActiveScene().name);
+        dict.Add(SaveType.GLOVES, hasGloves); 
         var save_quests = new List<QuestInfo>();
 
         foreach(var quest in quests) {

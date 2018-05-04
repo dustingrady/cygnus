@@ -39,10 +39,11 @@ public class RespawnManager : MonoBehaviour {
 
 			if (hiddenEnemies.Count > 0) {
 				foreach (GameObject go in hiddenEnemies) {
+					go.GetComponent<Enemy> ().respawnHidden ();
+					Debug.Log (go.name);
 					if (go.activeInHierarchy) {
 						go.SetActive (false);
 					}
-					go.GetComponent<Enemy> ().respawnHidden ();
 				}
 			}
 

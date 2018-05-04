@@ -67,6 +67,13 @@ public class TimerEvent : MonoBehaviour {
 
 	public void resetItem(){
 		hp = maxhp;
+		if (tp != null) {
+			tp.SetActive (false);
+		}
+
+		if (tr != null) {
+			tr.summon = false;
+		}
 	}
 
 	IEnumerator delay(){
