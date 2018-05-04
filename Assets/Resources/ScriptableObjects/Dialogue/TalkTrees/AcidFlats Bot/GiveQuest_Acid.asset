@@ -15,7 +15,7 @@ MonoBehaviour:
   - text: YOU! You are different! Not a mindless drone like those that travel these
       caverns.
     choices:
-    - response: What's wrong with the robots here?
+    - response: Mindless drones?
       nextState: 1
       dialogActions: []
       dialogCondition: {fileID: 0}
@@ -27,7 +27,7 @@ MonoBehaviour:
   - text: The acid has decayed their processors and their bodies. They are nothing
       more than husks, travelling through the environment!
     choices:
-    - response: Is there anything I can do?
+    - response: Can I help?
       nextState: 2
       dialogActions: []
       dialogCondition: {fileID: 0}
@@ -38,7 +38,7 @@ MonoBehaviour:
     endTree: 0
   - text: You could destroy them! They're nothing but a nuisance anyway.
     choices:
-    - response: I will carry out a swift execution!
+    - response: Sure.
       nextState: 3
       dialogActions: []
       dialogCondition: {fileID: 0}
@@ -54,7 +54,7 @@ MonoBehaviour:
       back to me, I can finish constructing it and you can use it against the foul
       beast.
     choices:
-    - response: I will carry out this task for you!
+    - response: I'll do it.
       nextState: 5
       dialogActions:
       - {fileID: 11400000, guid: 344b9e42f32e93948aebc93dbec28b55, type: 2}

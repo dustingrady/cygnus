@@ -37,8 +37,7 @@ TagManager:
   - Obstacle
   - EMP
   - Barrier
-  - Protocol Override
-  - Quicksand
+  - ProtocolGrenade
   layers:
   - Default
   - TransparentFX
