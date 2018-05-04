@@ -4,18 +4,19 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "ProtocolOverride", menuName = "Items/ProtocolOverride")]
 public class ProtocolOverride : Item {
+	
 	public string description;
 	private bool consumable = true;
 	Player player;
 	float speed = 2000.0f;
-	GameObject protocol;
+	GameObject protocolGrenade;
 	GameObject protocolHolder;
 
 	public override void useItem () {
-		protocol = Resources.Load ("Prefabs/Projectiles/ProtocolOverrideProjectile") as GameObject;
+		protocolGrenade = Resources.Load ("Prefabs/Projectiles/ProtocolGrenade") as GameObject;
 		player = GameObject.Find ("Player").GetComponent<Player> ();
-		protocolHolder = Instantiate (protocol, player.transform.position, Quaternion.identity) as GameObject;
-		protocolHolder.GetComponent<EMPGrenade> ().Initialize (GetCursorDirection (), 2000f);
+		protocolHolder = Instantiate (protocolGrenade, player.transform.position, Quaternion.identity) as GameObject;
+		protocolHolder.GetComponent<ProtocolGrenade> ().Initialize (GetCursorDirection (), 20f);
 	}
 
 	public override string itemDescription()

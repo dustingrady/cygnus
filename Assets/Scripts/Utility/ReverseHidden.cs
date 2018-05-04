@@ -48,7 +48,7 @@ public class ReverseHidden : MonoBehaviour {
 	{
 		float height = GetComponent<BoxCollider2D> ().size.y; 
 		if (col.tag == "Player") {
-			Debug.Log ("wat");
+			//Debug.Log ("wat");
 			if (!displayText) {
 				FloatingTextController.CreateFloatingText ("Hidden Room Uncovered!", this.gameObject.transform, height, Color.blue, 20);
 				displayText = true;
