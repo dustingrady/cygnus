@@ -9,11 +9,20 @@ public enum SaveType
 {
 	PLAYER,
 	SCENE,
+    GLOVES,
 	INVENTORY,
 	QUESTS
 }
 
-public delegate void SaveHandler(Dictionary<SaveType, object> dict);
+public enum SaveSlot : int 
+{
+    QUICK = 0,
+    ONE,
+    TWO,
+    THREE
+}
+
+public delegate void SaveHandler(Dictionary<SaveType, object> dict, SaveSlot slot);
 
 public class SaveMan : MonoBehaviour {
     static string savePath;
@@ -24,7 +33,7 @@ public class SaveMan : MonoBehaviour {
 
     void Start()
     {
-        savePath = Application.persistentDataPath + "/save.dat";
+        savePath = Application.persistentDataPath + "/save";
         gameManager = GameManager.instance;
     }
 
@@ -40,34 +49,34 @@ public class SaveMan : MonoBehaviour {
         }
     }
 
-	static void Serialize(Dictionary<SaveType, object> dict) {
+	static void Serialize(Dictionary<SaveType, object> dict, SaveSlot slot) {
 		var binFormat = new BinaryFormatter();
-		var fstream = new FileStream(savePath, FileMode.Create);
+		var fstream = new FileStream(savePath + slot.ToString() + ".dat", FileMode.Create);
 		binFormat.Serialize(fstream, dict);
 		fstream.Close();
 	}
 
-	static Dictionary<SaveType, object> Deserialize() {
+	static Dictionary<SaveType, object> Deserialize(SaveSlot slot) {
 		var binFormat = new BinaryFormatter();
-		var fstream = new FileStream(savePath, FileMode.OpenOrCreate);
+		var fstream = new FileStream(savePath + slot.ToString() + ".dat", FileMode.OpenOrCreate);
 		var dict = (Dictionary<SaveType, object>)binFormat.Deserialize(fstream);
 		fstream.Close();
 
 		return dict;
 	}
 
-    public static void Save()
+    public static void Save(SaveSlot slot = SaveSlot.QUICK)
     {
 		var dict = new Dictionary<SaveType, object>();
-		SaveGame(dict);	
-		Serialize(dict);
+		SaveGame(dict, slot);	
+		Serialize(dict, slot);
         Debug.Log("Game Saved");
     }
 
-    public static void Load()
+    public static void Load(SaveSlot slot = SaveSlot.QUICK)
     {
-		var dict = Deserialize();
-		LoadGame(dict);
+		var dict = Deserialize(slot);
+		LoadGame(dict, slot);
         Debug.Log("Game Loaded");
     }
 }
