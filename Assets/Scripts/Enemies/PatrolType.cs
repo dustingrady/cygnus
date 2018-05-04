@@ -30,6 +30,7 @@ public class PatrolType : Enemy {
 	private EnemyShooting es;
 	public LayerMask edgeCheck;
 
+	private Animator anim;
 
 	// Reference to coroutine, to refresh it
 	private IEnumerator enragedCoroutine;
@@ -41,6 +42,8 @@ public class PatrolType : Enemy {
 		alert = (GameObject)Resources.Load("Prefabs/NPCs/alert");	
 		es = gameObject.GetComponent<EnemyShooting>();
 		patrolSpeed = Mathf.Sign (Random.Range (-1, 1)) * patrolSpeed;
+
+		anim = GetComponent<Animator> ();
 	}
 		
 	void Update(){
@@ -225,8 +228,10 @@ public class PatrolType : Enemy {
 
 	IEnumerator idle(){
 		pause = true;
+		anim.SetBool ("idle", true);
 		yield return new WaitForSeconds (1);
 		pause = false;
+		anim.SetBool ("idle", false);
 	}
 
 	IEnumerator fade_Out(GameObject x){

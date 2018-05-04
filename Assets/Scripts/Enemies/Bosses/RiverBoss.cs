@@ -24,7 +24,8 @@ public class RiverBoss : Enemy {
 	[Header("Assets")]
 	public Sprite fireSprite;
 	public Sprite waterSprite;
-	public GameObject bulletPrefab;
+	public GameObject redBulletPrefab;
+	public GameObject blueBulletPrefab;
 
 	private Vector3 currentVel = Vector3.zero;
 	private Vector3 target = Vector3.zero;
@@ -33,6 +34,7 @@ public class RiverBoss : Enemy {
 	// Needed References
 	private EnemyShooting es;
 	private LineRenderer lr;
+	public GameObject endingIsland;
 
 	void Start() {
 		base.Start ();
@@ -50,6 +52,7 @@ public class RiverBoss : Enemy {
 
 	void Update() {
 		EvaluateEnergy ();
+		CheckIslandSpawn ();
 		EvaluateHealth ();
 		UpdateLine ();
 		DrawLine ();
@@ -99,7 +102,6 @@ public class RiverBoss : Enemy {
 		lr.endWidth = maxLineSize - maxLineSize * lineMulti;
 		lr.startWidth = maxLineSize - maxLineSize * lineMulti;
 	}
-
 		
 	//
 	// Combat
@@ -126,10 +128,10 @@ public class RiverBoss : Enemy {
 
 	void Shoot() {
 		if (fireMode) {
-			for (float i = -2; i <= 2; i += 1f) {
-				for (float j = -2; j <= 2; j += 0.5f) {
+			for (float i = -1; i <= 1; i += 1f) {
+				for (float j = -1; j <= 1; j += 0.5f) {
 					if (j != 0) {
-						GameObject bullet = (GameObject)Instantiate (bulletPrefab, transform.position, transform.rotation);
+						GameObject bullet = (GameObject)Instantiate (redBulletPrefab, transform.position, transform.rotation);
 						bullet.GetComponent<BulletBehaviour> ().setBullet ("omnidirectional");
 						bullet.transform.LookAt (new Vector3 (i, j, 0));
 						bullet.GetComponent<BulletBehaviour> ().omDir = new Vector3 (i, j, 0);
@@ -137,8 +139,11 @@ public class RiverBoss : Enemy {
 				}
 			}
 		} else {
-			GameObject bullet = (GameObject)Instantiate (bulletPrefab, transform.position, transform.rotation);
-			bullet.GetComponent<BulletBehaviour> ().setBullet ("single");
+			for (int i = 0; i < 3; i++) {
+				GameObject bullet = (GameObject)Instantiate (blueBulletPrefab, transform.position, transform.rotation);
+				bullet.GetComponent<BulletBehaviour> ().setBullet ("spread");
+				bullet.transform.LookAt (new Vector3(playerTransform.position.x + i*0.7f, playerTransform.position.y + i*0.7f, 0));
+			}
 		}
 	}
 		
@@ -148,7 +153,7 @@ public class RiverBoss : Enemy {
 
 	void Movement() {
 		MoveNearPlayer();
-		//Bobble (bobbleFrequency, bobbleAmplitude);
+		Bobble (bobbleFrequency, bobbleAmplitude);
 	}
 
 
@@ -163,6 +168,16 @@ public class RiverBoss : Enemy {
 		float theta = Time.timeSinceLevelLoad / peroid;
 		float distance = amplitude * Mathf.Sin (theta) * Time.deltaTime;
 		transform.position = new Vector3 (transform.position.x, transform.position.y + distance, 0f);
+	}
+
+
+	void CheckIslandSpawn() {
+		if (hitpoints <= 0) {
+			Debug.Log ("Spawning end island");
+
+			endingIsland.SetActive (true);
+			endingIsland.transform.position = new Vector3 (playerTransform.transform.position.x + 25f, 0f, 0f);
+		}
 	}
 
 	//

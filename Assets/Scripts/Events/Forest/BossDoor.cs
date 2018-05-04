@@ -32,7 +32,7 @@ public class BossDoor : MonoBehaviour {
 	}
 
 	void Update() {
-		if (boss == null && bossAlive) {
+		if (boss.GetComponent<Enemy> ().getHP () <= 0 && bossAlive) {
 			bossAlive = false;
 
 			door.GetComponent<SpriteRenderer> ().enabled = false;

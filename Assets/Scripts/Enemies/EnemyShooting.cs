@@ -23,7 +23,6 @@ public class EnemyShooting : MonoBehaviour {
 
 	void Awake(){
 		playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-		Debug.Log (cooldown);
 	}
 
 	public void shoot_At_Player(){

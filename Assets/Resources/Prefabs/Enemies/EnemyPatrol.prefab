@@ -26,6 +26,7 @@ GameObject:
   - component: {fileID: 114002484052074792}
   - component: {fileID: 50418460557531886}
   - component: {fileID: 61261828671666392}
+  - component: {fileID: 95470496868171688}
   m_Layer: 11
   m_Name: EnemyPatrol
   m_TagString: Enemy
@@ -39,9 +40,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1160446891498228}
-  m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
-  m_LocalPosition: {x: 38.567207, y: -8.896243, z: 0.0859375}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalRotation: {x: -0, y: -1, z: -0, w: 0}
+  m_LocalPosition: {x: -323.25, y: 23.74, z: 0.0859375}
+  m_LocalScale: {x: 1, y: 1, z: 2}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -82,15 +83,32 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.64, y: 0.64}
+    oldSize: {x: 1.4419643, y: 1.25}
     newSize: {x: 1.5, y: 1.07}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.61, y: 0.5387478}
+  m_Size: {x: 1.3, y: 1.18}
   m_EdgeRadius: 0
+--- !u!95 &95470496868171688
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1160446891498228}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: babb62dcfd41a9d4aaf5a301a765b5f9, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114002484052074792
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -118,7 +136,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aefd7724ee6c73e488df4e1ac72cdafb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  doNotDrop: 0
+  doNotDrop: 1
 --- !u!114 &114847875786812540
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -145,7 +163,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edb497888d2c6d34d83a014241c71908, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  elementType: 0
+  elementType: 3
   assignRandomType: 0
   hitpoints: 80
   energy: 100
@@ -159,7 +177,7 @@ MonoBehaviour:
   escapeRadius: 12
   followDistance: 1.25
   turnAroundPoll: 0.5
-  canShoot: 0
+  canShoot: 1
   edgeCheck:
     serializedVersion: 2
     m_Bits: 2305
@@ -197,7 +215,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: 3bdb6a3973f7b5a4186dbb0bff01a369, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0bbf31d3675653240aca4b8ec5c59c56, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
