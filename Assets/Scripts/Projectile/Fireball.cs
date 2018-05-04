@@ -6,6 +6,7 @@ using UnityEngine.Tilemaps;
 public class Fireball : MonoBehaviour {
 	float speed;
 	public Vector3 direction;
+	public AudioClip clip;
 
 	public void Initialize(Vector2 direction, float speed) {
 		this.speed = speed;
@@ -14,6 +15,10 @@ public class Fireball : MonoBehaviour {
 		// Change the angle to match the direction.
 		float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 		transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+	}
+
+	void Start(){
+		AudioSource.PlayClipAtPoint (clip, this.transform.position);
 	}
 
 	void Update() {
