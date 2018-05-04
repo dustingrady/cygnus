@@ -40,7 +40,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1160446891498228}
   m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
-  m_LocalPosition: {x: -11.731572, y: -9.12082, z: 0.0859375}
+  m_LocalPosition: {x: 38.567207, y: -8.896243, z: 0.0859375}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children: []
   m_Father: {fileID: 0}
@@ -106,6 +106,7 @@ MonoBehaviour:
   baseWater: 4
   baseElectric: 0.1
   earthMultiplier: 2
+  baseLava: 20
 --- !u!114 &114382831828925680
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -117,6 +118,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aefd7724ee6c73e488df4e1ac72cdafb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doNotDrop: 0
 --- !u!114 &114847875786812540
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -130,6 +132,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 1287305833275592, guid: 945a895993499134a8860cbedd0298a2,
     type: 2}
+  cooldown: 75
+  sp: 0
 --- !u!114 &114976631449305536
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -145,10 +149,17 @@ MonoBehaviour:
   assignRandomType: 0
   hitpoints: 80
   energy: 100
-  canShoot: 0
   enemySight:
     serializedVersion: 2
     m_Bits: 768
+  delta: 10
+  patrolSpeed: 1.5
+  chaseSpeed: 4
+  chaseRadius: 6
+  escapeRadius: 12
+  followDistance: 1.25
+  turnAroundPoll: 0.5
+  canShoot: 0
   edgeCheck:
     serializedVersion: 2
     m_Bits: 2305
