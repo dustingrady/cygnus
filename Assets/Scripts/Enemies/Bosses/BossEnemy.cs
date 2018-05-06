@@ -53,8 +53,9 @@ public class BossEnemy : Enemy {
 	/*Are we still alive?*/
 	private void Check_Health() {
 		if(hitpoints <= 0){
-			Destroy(this.gameObject);
-			Instantiate (bossRagdoll, this.transform.position, Quaternion.identity);	//Instantiate dead boss
+			//Destroy(this.gameObject);
+			//Instantiate (bossRagdoll, this.transform.position, Quaternion.identity);	//Instantiate dead boss
+			gameObject.SetActive(false);
 		}
 	}
 		

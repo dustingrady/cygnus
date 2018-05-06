@@ -10,6 +10,7 @@ public class EventItemRespawnManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		rm = GameObject.Find ("RespawnManager").GetComponent<RespawnManager> ();
+		Debug.Log (rm.gameObject.name);
 	}
 	
 	// Update is called once per frame
