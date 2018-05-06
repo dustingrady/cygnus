@@ -13,7 +13,9 @@ public class BossDoor : MonoBehaviour {
 	public bool bossAlive = true;
 	private AudioController ac;
 
+
 	void Start() {
+		Player.OnDeath += ResetDoor;
 		door.GetComponent<SpriteRenderer> ().enabled = false;
 		door.GetComponent<BoxCollider2D> ().enabled = false;
 
@@ -51,5 +53,17 @@ public class BossDoor : MonoBehaviour {
 
 			switchTilemap.SetActive (false);
 		}
+	}
+
+	void ResetDoor() {
+		Debug.Log ("opening the door again");
+		// Open the door back up
+		door.GetComponent<SpriteRenderer> ().enabled = false;
+		door.GetComponent<BoxCollider2D> ().enabled = false;
+
+		boss.SetActive (false);
+
+		// Reenable the collider
+		GetComponent<BoxCollider2D> ().enabled = true;
 	}
 }

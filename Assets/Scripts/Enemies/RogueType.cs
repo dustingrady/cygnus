@@ -151,7 +151,8 @@ public class RogueType : Enemy {
 		}
 
 		if(((DistanceToPlayer() > escapeRadius && !enraged) || !within_LoS()) || check_Edge()){
-			StartCoroutine(break_Contact ());
+			if (gameObject.activeInHierarchy)
+				StartCoroutine(break_Contact ());
 			startingPosition = transform.position; //Where enemy will resume if player escapes
 			firstHit = true;
 			chasingPlayer = false;

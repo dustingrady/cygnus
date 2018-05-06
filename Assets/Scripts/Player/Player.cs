@@ -43,6 +43,10 @@ public class Player : MonoBehaviour {
 
 	private AudioController ac;
 
+	// Death broadcast event
+	public delegate void PlayerDeath();
+	public static event PlayerDeath OnDeath;
+
     public void OnSaveGame(Dictionary<SaveType, object> dict) {
         dict.Add(SaveType.PLAYER, (SerPosition)checkpointPos);
     }
@@ -73,7 +77,6 @@ public class Player : MonoBehaviour {
 
 
 		if (stunned) {
-			Debug.Log ("stunned true");
 			StartCoroutine (stunnedPlayer());
 		}
 		//if(Input.GetKeyDown("space")) {
@@ -118,6 +121,10 @@ public class Player : MonoBehaviour {
 	}
 		
 	public void backToCheckPoint()	{
+		if (OnDeath != null) {
+			OnDeath ();
+		}
+
 		if (checkpointPos != null) {
 			//Debug.Log ("going to checkpoint");
 			health.CurrentVal = 100;

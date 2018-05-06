@@ -8,7 +8,7 @@ public class CaveGuardian : MonoBehaviour {
 	private Vector3 targetPos;
 	private CapsuleCollider2D col;
 	public float speed = 1.5f;
-	private bool activated = false;
+	private bool activated;
 	private EnemyShooting es;
 	private TurretType turret;
 	CinemachineBasicMultiChannelPerlin pn;
@@ -28,6 +28,10 @@ public class CaveGuardian : MonoBehaviour {
 		CinemachineVirtualCamera vc = cam.GetComponent<CinemachineVirtualCamera>();
 		pn = vc.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin> ();
 
+	}
+
+	void OnEnable() {
+		activated = false;
 	}
 	
 	// Update is called once per frame
