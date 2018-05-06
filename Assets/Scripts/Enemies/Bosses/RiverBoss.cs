@@ -36,9 +36,22 @@ public class RiverBoss : Enemy {
 	private LineRenderer lr;
 	public GameObject endingIsland;
 
+	private AudioController ac;
+
+
 	void Start() {
 		base.Start ();
 		rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+
+		//Reference to Audio Controller
+		GameObject camera = GameObject.Find("Main Camera");
+		ac = camera.GetComponent<AudioController>();
+		if (ac.audio [1] != null) {
+			ac.source.Stop ();
+			ac.source.clip = ac.audio [1]; //Switch to boss music
+			ac.source.Play ();
+		}
+
 
 		// Get References
 		es = GetComponent<EnemyShooting>();
@@ -174,6 +187,10 @@ public class RiverBoss : Enemy {
 	void CheckIslandSpawn() {
 		if (hitpoints <= 0) {
 			Debug.Log ("Spawning end island");
+
+			ac.source.Stop ();
+			ac.source.clip = ac.audio [0]; //Switch to default (or victory) music
+			ac.source.Play ();
 
 			endingIsland.SetActive (true);
 			endingIsland.transform.position = new Vector3 (playerTransform.transform.position.x + 25f, 0f, 0f);
