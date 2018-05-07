@@ -18,7 +18,7 @@ public class Fireball : MonoBehaviour {
 	}
 
 	void Start(){
-		AudioSource.PlayClipAtPoint (clip, this.transform.position);
+		AudioSource.PlayClipAtPoint (clip, this.transform.position, 1.3f);
 	}
 
 	void Update() {

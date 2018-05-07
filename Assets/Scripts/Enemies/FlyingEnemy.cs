@@ -48,7 +48,6 @@ public class FlyingEnemy : Enemy {
 		EvaluateHealth ();
 		EvaluateTolerance ();
 		check_State ();
-		Debug.Log ("Chasing Player: " + chasingPlayer); //Chasing player
 	}
 
 	void check_State(){

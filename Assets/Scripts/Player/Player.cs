@@ -41,6 +41,12 @@ public class Player : MonoBehaviour {
 
 	private GameObject stunSwirl;
 
+	private AudioController ac;
+
+	// Death broadcast event
+	public delegate void PlayerDeath();
+	public static event PlayerDeath OnDeath;
+
     public void OnSaveGame(Dictionary<SaveType, object> dict) {
         dict.Add(SaveType.PLAYER, (SerPosition)checkpointPos);
     }
@@ -59,6 +65,10 @@ public class Player : MonoBehaviour {
     void Start() {
         checkpointPos = transform.position;
 		stunSwirl = (GameObject)Resources.Load("Prefabs/NPCs/stunned");	
+
+		//Reference to Audio Controller
+		GameObject camera = GameObject.Find("Main Camera");
+		ac = camera.GetComponent<AudioController>();
     }
 	
 	// Update is called once per frame
@@ -67,7 +77,6 @@ public class Player : MonoBehaviour {
 
 
 		if (stunned) {
-			Debug.Log ("stunned true");
 			StartCoroutine (stunnedPlayer());
 		}
 		//if(Input.GetKeyDown("space")) {
@@ -105,12 +114,17 @@ public class Player : MonoBehaviour {
 				GameObject.Find ("CameraSwapTrigger").GetComponent<CameraSwitch> ().playerCam = true;
 				GameObject.Find ("Wall Trigger").GetComponent<BossWallTrigger> ().wallOn = false;
 			}
-
+			ac.source.clip = ac.audio [0]; //Switch to default music
+			ac.source.Play ();
 			backToCheckPoint ();
 		}
 	}
 		
 	public void backToCheckPoint()	{
+		if (OnDeath != null) {
+			OnDeath ();
+		}
+
 		if (checkpointPos != null) {
 			//Debug.Log ("going to checkpoint");
 			health.CurrentVal = 100;

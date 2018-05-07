@@ -11,10 +11,17 @@ public class BossDoor : MonoBehaviour {
 	[SerializeField]
 	private GameObject switchTilemap;
 	public bool bossAlive = true;
+	private AudioController ac;
+
 
 	void Start() {
+		Player.OnDeath += ResetDoor;
 		door.GetComponent<SpriteRenderer> ().enabled = false;
 		door.GetComponent<BoxCollider2D> ().enabled = false;
+
+		//Reference to Audio Controller
+		GameObject camera = GameObject.Find("Main Camera");
+		ac = camera.GetComponent<AudioController>();
 
 		boss.SetActive (false);
 	}
@@ -27,6 +34,11 @@ public class BossDoor : MonoBehaviour {
 			if (boss != null) {
 				boss.SetActive (true);
 				GetComponent<BoxCollider2D> ().enabled = false;
+				if (ac.audio [1] != null) {
+					ac.source.Stop ();
+					ac.source.clip = ac.audio [1]; //Switch to boss music
+					ac.source.Play ();
+				}
 			}
 		}
 	}
@@ -34,11 +46,24 @@ public class BossDoor : MonoBehaviour {
 	void Update() {
 		if (boss.GetComponent<Enemy> ().getHP () <= 0 && bossAlive) {
 			bossAlive = false;
-
+			ac.source.clip = ac.audio [0]; //Switch back to default music after beating boss
+			ac.source.Play (); 
 			door.GetComponent<SpriteRenderer> ().enabled = false;
 			door.GetComponent<BoxCollider2D> ().enabled = false;
 
 			switchTilemap.SetActive (false);
 		}
+	}
+
+	void ResetDoor() {
+		Debug.Log ("opening the door again");
+		// Open the door back up
+		door.GetComponent<SpriteRenderer> ().enabled = false;
+		door.GetComponent<BoxCollider2D> ().enabled = false;
+
+		boss.SetActive (false);
+
+		// Reenable the collider
+		GetComponent<BoxCollider2D> ().enabled = true;
 	}
 }

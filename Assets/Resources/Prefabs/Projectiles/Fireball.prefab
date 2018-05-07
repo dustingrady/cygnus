@@ -109,7 +109,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   direction: {x: 0, y: 0, z: 0}
-  clip: {fileID: 8300000, guid: fdd59e47d80c119438620684ad7f12b0, type: 3}
+  clip: {fileID: 8300000, guid: fa84f596b70310149b1868856ef1f93a, type: 3}
 --- !u!114 &114637919599369568
 MonoBehaviour:
   m_ObjectHideFlags: 1
