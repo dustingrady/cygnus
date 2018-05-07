@@ -12,8 +12,6 @@ public class RogueType : Enemy {
 	private float chaseRadius = 3.0f; //How far we can see player
 	[SerializeField] 
 	private float escapeRadius = 15.0f; //How far player must be away to break the chase
-	[SerializeField] 
-	private float followDistance = 1f; //How close to the player the enemy will get
 
 	private float chaseSpeed;
 	[SerializeField] 
@@ -158,7 +156,7 @@ public class RogueType : Enemy {
 			chasingPlayer = false;
 		}
 
-		if ((DistanceToPlayer () > followDistance) && !check_Edge ()) { //Move towards player until we are n unit(s) away unless that results in going over a ledge
+		if (!check_Edge ()) { //Move towards player unless that results in going over a ledge
 			Vector3 oldpos = transform.position;
 			transform.position = new Vector3 (Mathf.MoveTowards (transform.position.x, playerTransform.position.x, chaseSpeed * Time.deltaTime), transform.position.y, transform.position.z);
 			float dv = transform.position.x - oldpos.x;
@@ -264,7 +262,7 @@ public class RogueType : Enemy {
 		chasingPlayer = false;
 		disengaged = true;
 		patrolSpeed *= -1;
-		yield return new WaitForSeconds (1.25f);
+		yield return new WaitForSeconds (2.0f);
 		disengaged = false;
 	}
 

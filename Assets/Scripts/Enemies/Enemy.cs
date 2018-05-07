@@ -109,6 +109,12 @@ public abstract class Enemy : MonoBehaviour {
 		RaycastHit2D sightTest = Physics2D.Raycast (start, direction, enemySight);
 		if (sightTest) {
 			if (sightTest.collider.CompareTag("Player")) {
+				if (sightTest.collider.CompareTag ("EnemyProjectile")) {
+					return true;
+				}
+				return true;
+			}
+			if (sightTest.collider.CompareTag ("EnemyProjectile")) {
 				return true;
 			}
 		}

@@ -8,7 +8,6 @@ public class ProtocolOverride : Item {
 	public string description;
 	private bool consumable = true;
 	Player player;
-	float speed = 2000.0f;
 	GameObject protocolGrenade;
 	GameObject protocolHolder;
 

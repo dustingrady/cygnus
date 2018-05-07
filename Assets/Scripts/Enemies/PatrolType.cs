@@ -17,8 +17,6 @@ public class PatrolType : Enemy {
 	[SerializeField]
 	private float escapeRadius = 12.0f; //How far player must be away to break the chase
 	[SerializeField]
-	private float followDistance = 1.25f; //How close to the player the enemy will get
-	[SerializeField]
 	private float turnAroundPoll = 0.5f; //Polling value for checking if enemy is stuck
 
 	[SerializeField] 
@@ -49,7 +47,10 @@ public class PatrolType : Enemy {
 	void Update(){
 		EvaluateHealth ();
 		EvaluateTolerance ();
+		check_State ();
+	}
 
+	void check_State(){
 		if (stunned == false) {
 			switch (chasingPlayer) {
 			case true:
@@ -144,7 +145,7 @@ public class PatrolType : Enemy {
 			chasingPlayer = false;
 		}
 
-		if ((DistanceToPlayer () > followDistance) && !check_Edge()) { //Move towards player until we are n unit(s) away unless that results in going over a ledge
+		if (!check_Edge()) { //Move towards player unless that results in going over a ledge
 			Vector3 oldpos = transform.position;
 			transform.position = new Vector3(Mathf.MoveTowards(transform.position.x, playerTransform.position.x, chaseSpeed * Time.deltaTime), transform.position.y, transform.position.z);
 			float dv = transform.position.x - oldpos.x;
@@ -158,7 +159,6 @@ public class PatrolType : Enemy {
 			if (within_LoS()) {
 				es.shoot_At_Player ();
 			} 
-			followDistance = 4.0f; //Don't get so close when shooting
 		}
 	}
 
