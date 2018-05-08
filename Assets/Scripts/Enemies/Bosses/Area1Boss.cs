@@ -24,6 +24,8 @@ public class Area1Boss : MonoBehaviour {
 	bool moving = false;
 	Vector3 currentVel = Vector3.zero;
 	Vector3 offset;
+
+	private AudioController ac;
 	enum attackState{
 		healthy,
 		halfhealth,
@@ -36,6 +38,8 @@ public class Area1Boss : MonoBehaviour {
 		startingpos = transform.position;
 		maxHealth = gameObject.GetComponent<BossEnemy> ().getHealth ();
 		StartCoroutine(changeTar());
+		GameObject camera = GameObject.Find("Main Camera");
+		ac = camera.GetComponent<AudioController>();
 	}
 
 	void moveaninch(){
@@ -56,6 +60,9 @@ public class Area1Boss : MonoBehaviour {
 
 		if (gameObject.GetComponent<BossEnemy> ().getHealth () <= 0) {
 			exit.SetActive (true);
+			ac.source.Stop ();
+			ac.source.clip = ac.audio [0]; 
+			ac.source.Play ();
 		}
 	}
 
