@@ -5,13 +5,17 @@ using UnityEngine.SceneManagement;
 
 public class ShipBot : MonoBehaviour {
 
-	public Sprite angrySpt;
-	public Sprite happySpt;
-
 	public NPCTalk talker;
+
+	[Header("Talk Trees")]
 	public TalkTree outsideDialogue;
 	public TalkTree gloveDialogue;
 	public TalkTree inside_fireOut;
+	public TalkTree collected_one;
+	public TalkTree collected_two;
+	public TalkTree collected_three;
+	public TalkTree collected_four;
+
 
 	bool movingToShip;
 
@@ -23,8 +27,12 @@ public class ShipBot : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+
 		gm = GameManager.instance;
 		talker = GetComponent<NPCTalk> ();
+
+		// Check how many parts have been collected
+		int collectedParts = CheckPartsCollected();
 
 		// If the scene is the ship exterior and the fire quest is still not complete, be visible
 		// and use the outside ship dialog
@@ -44,7 +52,17 @@ public class ShipBot : MonoBehaviour {
 		// Ship Scene
 		if (SceneManager.GetActiveScene ().name == "Ship") {
 			if (gm.CheckQuestComplete (1) == true) {
-				talker.tree = inside_fireOut;
+				if (collectedParts == 0) {
+					talker.tree = inside_fireOut;
+				} else if (collectedParts == 1) {
+					talker.tree = collected_one;
+				} else if (collectedParts == 2) {
+					talker.tree = collected_two;
+				} else if (collectedParts == 3) {
+					talker.tree = collected_three;
+				} else if (collectedParts == 4) {
+					talker.tree = collected_four;
+				}
 			}
 		}
 	}
@@ -70,15 +88,6 @@ public class ShipBot : MonoBehaviour {
 	}
 
 
-	void HappyBot(bool isHappy) {
-		if (isHappy) {
-			GetComponent<SpriteRenderer> ().sprite = happySpt;
-		} else {
-			GetComponent<SpriteRenderer> ().sprite = angrySpt;
-		}
-	}
-
-
 	// Used when the fire is put out
 	void StartMoveToShip(int id) {
 		if (id == 1) {
@@ -87,5 +96,19 @@ public class ShipBot : MonoBehaviour {
 			GetComponent<BoxCollider2D>().enabled = false;
 			movingToShip = true;
 		}
+	}
+
+
+	// Returns the number of ship parts collected
+	int CheckPartsCollected() {
+		int[] questNums = {199, 299, 399, 499 };
+		int completed = 0;
+		foreach (int quest in questNums) {
+			if (gm.CheckQuestComplete (quest)) {
+				completed++;
+			}
+		}
+
+		return completed;
 	}
 }

@@ -51,7 +51,7 @@ MonoBehaviour:
       dialogCondition: {fileID: 0}
     endTree: 0
   - text: My scanners show a relic with the power to control the elements in the ruins
-      to the north.  Go check it out, I'll watch the flames.
+      to the southwest.  Go check it out, I'll watch the flames.
     choices:
     - response: I'm on it!
       nextState: 3

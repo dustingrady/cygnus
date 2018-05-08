@@ -12,13 +12,32 @@ MonoBehaviour:
   m_Name: inside_fire_out
   m_EditorClassIdentifier: 
   states:
-  - text: Well, we're not on fire.  Unfortunately that's the end of this demo, hopefully
-      the team will get to finish making the game!
+  - text: Well, we're not on fire anymore.  Unfortunately the Star Blaster lost four
+      parts in the crash that we need to escape this planet.
     choices:
-    - response: I hope so too!
+    - response: Okay.
       nextState: 1
-      dialogActions:
-      - {fileID: 11400000, guid: 344b9e42f32e93948aebc93dbec28b55, type: 2}
+      dialogActions: []
+      dialogCondition: {fileID: 0}
+    - response: 
+      nextState: -1
+      dialogActions: []
+      dialogCondition: {fileID: 0}
+    - response: 
+      nextState: -1
+      dialogActions: []
+      dialogCondition: {fileID: 0}
+    - response: 
+      nextState: -1
+      dialogActions: []
+      dialogCondition: {fileID: 0}
+    endTree: 0
+  - text: They were collected by the BossBots in the Forest, Desert, Acid, and Phuc_Branch
+      Regions.
+    choices:
+    - response: I'll get em!
+      nextState: 2
+      dialogActions: []
       dialogCondition: {fileID: 0}
     - response: 
       nextState: -1
