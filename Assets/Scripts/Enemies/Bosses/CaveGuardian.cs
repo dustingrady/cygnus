@@ -8,7 +8,8 @@ public class CaveGuardian : MonoBehaviour {
 	private Vector3 targetPos;
 	private CapsuleCollider2D col;
 	public float speed = 1.5f;
-	private bool activated;
+	public bool activated;
+	public bool respawned = false;
 	private EnemyShooting es;
 	private TurretType turret;
 	CinemachineBasicMultiChannelPerlin pn;
@@ -33,11 +34,12 @@ public class CaveGuardian : MonoBehaviour {
 	void OnEnable() {
 		activated = false;
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
-		if (activated == false) {
+		if (activated == false && !respawned) {
 			if (Vector3.Distance (transform.position, targetPos) > 0.05f) {
+				Debug.Log (Vector3.Distance (transform.position, targetPos));
 				transform.position = Vector3.MoveTowards (transform.position, targetPos, speed * Time.deltaTime);
 				pn.m_AmplitudeGain = 0.3f;
 				pn.m_FrequencyGain = 8f;

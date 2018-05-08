@@ -62,10 +62,15 @@ public class Inventory : MonoBehaviour {
 
 	public void Awake()
 	{
+		if(canvas == null && GameObject.Find("Inventory") != null)
+			inventoryUI = GameObject.Find("Inventory");
+		
 		if(canvas == null && GameObject.Find ("UI") != null)
 			canvas = GameObject.Find ("UI").GetComponent<Canvas> ();
+		
 		if(toolTip == null && GameObject.Find ("Tooltip") != null)
 			toolTip = GameObject.Find ("Tooltip");
+		
 		if(toolTipText == null && GameObject.Find ("TooltipText") != null)
 			toolTipText = GameObject.Find ("TooltipText").GetComponent<Text> ();
 
