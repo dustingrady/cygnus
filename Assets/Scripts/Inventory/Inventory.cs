@@ -62,10 +62,15 @@ public class Inventory : MonoBehaviour {
 
 	public void Awake()
 	{
+		if(canvas == null && GameObject.Find("Inventory") != null)
+			inventoryUI = GameObject.Find("Inventory");
+		
 		if(canvas == null && GameObject.Find ("UI") != null)
 			canvas = GameObject.Find ("UI").GetComponent<Canvas> ();
+		
 		if(toolTip == null && GameObject.Find ("Tooltip") != null)
 			toolTip = GameObject.Find ("Tooltip");
+		
 		if(toolTipText == null && GameObject.Find ("TooltipText") != null)
 			toolTipText = GameObject.Find ("TooltipText").GetComponent<Text> ();
 
@@ -78,6 +83,9 @@ public class Inventory : MonoBehaviour {
 
 	public void OnLevelWasLoaded()
 	{
+		inventoryUI = GameObject.Find("Inventory");
+		initializeInventory ();
+
 		if (GameObject.Find ("UI") != null) {
 			canvas = GameObject.Find ("UI").GetComponent<Canvas> ();
 		}
@@ -97,8 +105,10 @@ public class Inventory : MonoBehaviour {
 	public void Start() {
 		initializeInventory ();
 
-		if (toolTip.activeInHierarchy == true) {
-			toolTip.SetActive (false);
+		if (toolTip != null) {
+			if (toolTip.activeInHierarchy == true) {
+				toolTip.SetActive (false);
+			}
 		}
 	}
 
@@ -267,20 +277,20 @@ public class Inventory : MonoBehaviour {
 
 	// Inventory needs to be initalized every time a new scene is loaded
 	public void initializeInventory() {
-		inventoryUI = GameObject.FindGameObjectWithTag ("InventoryUI");
-		for (int i = 0; i < inventorySize; i++) {
-			Transform item = inventoryUI.transform.Find(string.Format("item{0}", i));
-			itemImages[i] = item.transform.Find ("ItemImage").GetComponentInChildren<Image> ();
-			itemImageQuantities[i] = item.transform.Find ("ItemQuant").GetComponentInChildren<Text> ();
+		if (inventoryUI != null) {
+			inventoryUI = GameObject.FindGameObjectWithTag ("InventoryUI");
+			for (int i = 0; i < inventorySize; i++) {
+				Transform item = inventoryUI.transform.Find(string.Format("item{0}", i));
+				itemImages[i] = item.transform.Find ("ItemImage").GetComponentInChildren<Image> ();
+				itemImageQuantities[i] = item.transform.Find ("ItemQuant").GetComponentInChildren<Text> ();
+			}
+
+			Transform UITransform = inventoryUI.transform.root.Find ("ScrapElement");
+			Transform scrapTransform = UITransform.Find ("ScrapCount");
+			scrapCountDisplay = scrapTransform.GetComponent<Text> ();
+			setScrapText ();
 		}
-
-		Transform UITransform = inventoryUI.transform.root.Find ("ScrapElement");
-		Transform scrapTransform = UITransform.Find ("ScrapCount");
-		scrapCountDisplay = scrapTransform.GetComponent<Text> ();
-
-		setScrapText ();
-
-		hideInventory();
+		//hideInventory();
 	}
 
 	public void showToolTip(GameObject slot){

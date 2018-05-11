@@ -61,6 +61,10 @@ public class BossDoor : MonoBehaviour {
 		door.GetComponent<SpriteRenderer> ().enabled = false;
 		door.GetComponent<BoxCollider2D> ().enabled = false;
 
+		// Disable cave guardian script
+		if (boss.GetComponent<CaveGuardian> ().activated == true) {
+			boss.GetComponent<CaveGuardian>().respawned = true;
+		}
 		boss.SetActive (false);
 
 		// Reenable the collider

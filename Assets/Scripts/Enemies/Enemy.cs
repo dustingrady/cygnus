@@ -194,7 +194,7 @@ public abstract class Enemy : MonoBehaviour {
 	protected float EvaluatePhysical(Collision2D col) {
 		float colForce = 0;
 		Rigidbody2D collisionRB = col.gameObject.GetComponent<Rigidbody2D> ();
-		if (collisionRB != null && col.contacts [0].normal != null) {
+		if (collisionRB != null && col.contacts.Length > 0) {
 			colForce = CalculatePhysicalImpact (col.contacts [0].normal, col.relativeVelocity, collisionRB.mass);
 
 			if (colForce > 5) {
