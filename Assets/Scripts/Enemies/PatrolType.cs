@@ -74,7 +74,7 @@ public class PatrolType : Enemy {
 
 	private bool check_Edge(){
 		RaycastHit2D checkEdge = Physics2D.Raycast (new Vector2 (transform.position.x + patrolSpeed*-0.1f, transform.position.y), 
-			new Vector2 (patrolSpeed*-1, -1).normalized, 25, edgeCheck);
+			new Vector2 (patrolSpeed*-1, -1).normalized, 2, edgeCheck);
 		if (!checkEdge) {
 			return true;
 		}
@@ -139,7 +139,7 @@ public class PatrolType : Enemy {
 			patrolSpeed *= -1;
 		}
 
-		if((DistanceToPlayer() > escapeRadius && !enraged) || !within_LoS() || check_Edge()){
+		if((DistanceToPlayer() > escapeRadius && !enraged) || check_Edge()){
 			startingPosition = transform.position; //Where enemy will resume if player escapes
 			chasingPlayer = false;
 		}

@@ -47,7 +47,7 @@ public class RogueType : Enemy {
 		smokePuff = (GameObject)Resources.Load("Prefabs/Particles/SmokePuff");	
 
 		rb.constraints = RigidbodyConstraints2D.FreezeRotation;
-		hide_Self(hidden);
+		hide_Self(true);
 		patrolSpeed = Mathf.Sign (Random.Range (-1, 1)) * patrolSpeed;
 	}
 		
@@ -80,7 +80,6 @@ public class RogueType : Enemy {
 	bool check_Edge(){
 		RaycastHit2D checkEdge = Physics2D.Raycast (new Vector2 (transform.position.x + patrolSpeed*-0.15f, transform.position.y), 
 			new Vector2 (patrolSpeed*-1, -0.5f).normalized, 2, edgeCheck);
-		
 		if (!checkEdge) {
 			//Debug.Log ("not hitting something");
 			return true;
@@ -149,7 +148,7 @@ public class RogueType : Enemy {
 			patrolSpeed *= -1;
 		}
 
-		if(((DistanceToPlayer() > escapeRadius && !enraged) || !within_LoS()) || check_Edge()){
+		if((DistanceToPlayer() > escapeRadius && !enraged) || check_Edge()){
 			startingPosition = transform.position; //Where enemy will resume if player escapes
 			firstHit = true;
 			chasingPlayer = false;
@@ -208,20 +207,17 @@ public class RogueType : Enemy {
 				// Make the enemy sprint to close the distance gap
 				StartCoroutine(Sprint(sprintDuration));
 			}
-
 			takeDamage (edmg.determine_Damage (col.gameObject.tag, elementType));
 
 			// Stop the enrage coroutine and start another
 			if (enragedCoroutine != null) {
 				StopCoroutine (enragedCoroutine);
-
 			}
 
 			enragedCoroutine = Enrage (2.0f);
 			StartCoroutine (enragedCoroutine);
 		}
 	}
-
 
 	void OnCollisionEnter2D(Collision2D col) {
 		float collisionTotal = EvaluatePhysical (col);
