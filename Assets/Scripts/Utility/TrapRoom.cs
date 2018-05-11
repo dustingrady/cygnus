@@ -41,6 +41,10 @@ public class TrapRoom : MonoBehaviour {
 			}
 			summon = false;
 		}
+
+		if (!summon) {
+			timer = 0;
+		}
 	}
 
 	void OnTriggerEnter2D(Collider2D col)	{
