@@ -24,7 +24,7 @@ public struct InventoryData {
 
 public class Inventory : MonoBehaviour {
 
-	public bool showInventory = true;
+	public bool showInventory = false;
 
 	public int currentScrap = 0;
 	public Text scrapCountDisplay;
@@ -159,6 +159,7 @@ public class Inventory : MonoBehaviour {
 
 	public void addItem(Item item)
     {
+		displayInventory ();
         for(int i = 0; i < items.Length; i++)
         {
 			/*if (items [i] == item) 
@@ -268,11 +269,13 @@ public class Inventory : MonoBehaviour {
 	}
 
 	public void hideInventory() {
-		inventoryUI.transform.localScale = Vector3.zero;
+		if (inventoryUI != null)
+			inventoryUI.transform.localScale = Vector3.zero;
 	}
 
 	public void displayInventory() {
-		inventoryUI.transform.localScale = new Vector3 (1f, 1f, 1f);
+		if (inventoryUI != null)
+			inventoryUI.transform.localScale = new Vector3 (1f, 1f, 1f);
 	}
 
 	// Inventory needs to be initalized every time a new scene is loaded
@@ -290,7 +293,7 @@ public class Inventory : MonoBehaviour {
 			scrapCountDisplay = scrapTransform.GetComponent<Text> ();
 			setScrapText ();
 		}
-		//hideInventory();
+		hideInventory();
 	}
 
 	public void showToolTip(GameObject slot){
