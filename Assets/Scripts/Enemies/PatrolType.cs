@@ -140,7 +140,6 @@ public class PatrolType : Enemy {
 		}
 
 		if((DistanceToPlayer() > escapeRadius && !enraged) || !within_LoS() || check_Edge()){
-			StartCoroutine(break_Contact ());
 			startingPosition = transform.position; //Where enemy will resume if player escapes
 			chasingPlayer = false;
 		}
@@ -155,6 +154,13 @@ public class PatrolType : Enemy {
 				this.transform.localScale = new Vector3 (transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
 			}
 		}
+
+		if(check_Edge()){
+			if (gameObject.activeInHierarchy){
+				StartCoroutine(break_Contact ());
+			}
+		}
+
 		if (canShoot) {
 			if (within_LoS()) {
 				es.shoot_At_Player ();

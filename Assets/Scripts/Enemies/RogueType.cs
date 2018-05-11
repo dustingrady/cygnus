@@ -140,6 +140,7 @@ public class RogueType : Enemy {
 
 
 	void chase_Player(){
+
 		/*Corrects the patrolSpeed of enemy depending on which side the player is on (Fixes raycast error in check_Edge())*/
 		if ((transform.position.x > playerTransform.position.x) && (Mathf.Sign(patrolSpeed)) == -1) {
 			patrolSpeed *= -1;
@@ -149,8 +150,6 @@ public class RogueType : Enemy {
 		}
 
 		if(((DistanceToPlayer() > escapeRadius && !enraged) || !within_LoS()) || check_Edge()){
-			if (gameObject.activeInHierarchy)
-				StartCoroutine(break_Contact ());
 			startingPosition = transform.position; //Where enemy will resume if player escapes
 			firstHit = true;
 			chasingPlayer = false;
@@ -164,6 +163,11 @@ public class RogueType : Enemy {
 			//Debug.Log ((transform.position.x - oldpos.x) + " " + transform.localScale.x);
 			if (Mathf.Sign (dv) == Mathf.Sign (transform.localScale.x)) {
 				this.transform.localScale = new Vector3 (transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
+			}
+		}
+		if(check_Edge()){
+			if (gameObject.activeInHierarchy){
+				StartCoroutine(break_Contact ());
 			}
 		}
 	}

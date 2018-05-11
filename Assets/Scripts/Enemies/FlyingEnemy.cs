@@ -26,7 +26,6 @@ public class FlyingEnemy : Enemy {
 	private Vector3 target = Vector3.zero;
 	private Vector3 targetOffset = Vector3.zero;
 
-	private bool isAlerted = false;
 	private bool enraged = false; // When the enemy is shot, they persue the player for atleast two seconds
 	private bool disengaged = false;
 
@@ -109,7 +108,6 @@ public class FlyingEnemy : Enemy {
 			alertedObj.transform.parent = this.transform;
 			Destroy (alertedObj, 1.25f);
 		}
-		isAlerted = false;
 	}
 		
 
@@ -129,19 +127,14 @@ public class FlyingEnemy : Enemy {
 			StartCoroutine (enragedCoroutine);
 		}
 		//Testing for collision with objects
-		if (avoidedTypes.Contains (col.transform.gameObject.tag)) {
+		if (avoidedTypes.Contains (col.transform.gameObject.tag) && !disengaged) {
 			//Debug.Log ("Hit some: " + col.transform.gameObject.tag);
 
 			//Attempting to get contact points of collider box to move in opposite dir
 			ContactPoint2D[] contacts = new ContactPoint2D[2];
 			col.GetContacts(contacts);
 			Vector3 contactPoint = contacts [0].normal;
-			//Debug.Log ("Thing we hit: " + contactPoint);
 
-			/*
-			Vector3 center = rb.position;
-			Debug.Log ("Our center: " + rb.position.x);
-			*/
 			StartCoroutine(break_Contact (contactPoint));
 		}
 	}
