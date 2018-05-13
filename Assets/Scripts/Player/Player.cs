@@ -289,7 +289,7 @@ public class Player : MonoBehaviour {
 		// Collision with checkpoint trigger
 		if (col.CompareTag("Checkpoint")) {
 			float height = GetComponent<BoxCollider2D>().size.y; 
-			FloatingTextController.CreateFloatingText ("Checkpoint!", this.gameObject.transform, height, Color.blue, 20);
+			FloatingTextController.CreateFloatingText ("Checkpoint", this.gameObject.transform, height, Color.yellow, 20);
 			checkpointPos = col.transform.position;
 		}
 	}

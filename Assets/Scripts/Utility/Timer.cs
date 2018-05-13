@@ -25,7 +25,7 @@ public class Timer : MonoBehaviour {
 		player = GameObject.Find ("Player").GetComponent<Player> ();
         timerText = gameObject.GetComponent<Text>();
         timerText.color = standard;
-        timerText.text = timeLeft.ToString("0.00");
+		timerText.text = Mathf.Round(timeLeft).ToString();
         Active = active;
     }
 
@@ -60,7 +60,7 @@ public class Timer : MonoBehaviour {
             }
             else
             {
-                timerText.text = timeLeft.ToString("0.00");
+				timerText.text = Mathf.Round(timeLeft).ToString();
                 timeLeft -= Time.deltaTime;
 
                 if (timeLeft < alertTime)
