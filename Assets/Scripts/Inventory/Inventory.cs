@@ -312,7 +312,6 @@ public class Inventory : MonoBehaviour {
 			float x = inventoryUI.transform.GetChild (temp).position.x + 170;
 			float y = ((inventoryUI.transform.GetChild (temp).position.y) + 110);//+ toolTipText.GetComponent<RectTransform>().rect.height);
 			toolTip.transform.position = new Vector2 (x, y);
-			Debug.Log (toolTipText.GetComponent<RectTransform>().rect.width*1/4);
 		}
 	}
 
