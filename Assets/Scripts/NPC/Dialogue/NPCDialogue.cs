@@ -11,6 +11,7 @@ public class NPCDialogue : MonoBehaviour {
     public Text npcText;
     public Text[] choices;
     public Image potrait;
+	public Text npcName;
     public delegate void DialogueEnd();
     public DialogueEnd signal;
 

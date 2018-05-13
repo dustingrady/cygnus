@@ -26,8 +26,11 @@ public struct Position {
 public class GameManager : MonoBehaviour {
 
 	public static GameManager instance = null;
-
 	private const int targetFramerate = 60;
+
+	[Header("User Settings")]
+	public float backgroundMusicVolume = 0.3f;
+
 
 	public int totalScrap = 0;
 	public int currentScrap = 0;

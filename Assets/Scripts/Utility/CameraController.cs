@@ -23,6 +23,8 @@ public class CameraController : MonoBehaviour {
 	}
 
 	IEnumerator MoveToTarget(GameObject target, float time) {
+		Debug.Log (target);
+		Debug.Log (cameraAnchor);
 		cameraAnchor.transform.position = target.transform.position;
 		plr.GetComponent<PlayerController> ().enabled = false;
 		plr.GetComponent<PlayerAnimation> ().enabled = false;

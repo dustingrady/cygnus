@@ -9,6 +9,12 @@ public class DialogMessage : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D col) {
 		if (col.gameObject.name == "Player") {
+			// Destroy the old window if one exists
+			GameObject previousWindow = GameObject.Find("DialogueDisplay(Clone)");
+			if (previousWindow != null) {
+				Destroy (previousWindow);
+			}
+
 			DialogPopupController.Initialize ();
 			DialogPopupController.CreateDialogPopup (message, duration);
 			Destroy (gameObject);
