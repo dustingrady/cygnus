@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 61248224687658758}
   - component: {fileID: 114373491223542986}
   m_Layer: 0
-  m_Name: Ship Part Forest 3
+  m_Name: Ship Part Phuc
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
