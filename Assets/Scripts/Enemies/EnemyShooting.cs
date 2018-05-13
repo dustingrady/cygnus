@@ -9,7 +9,7 @@ public class EnemyShooting : MonoBehaviour {
 
 	private int count = 0;
 	[SerializeField]
-	private int cooldown = 75; // Fire rate
+	public int cooldown = 150; // Fire rate
 
 	public enum shootPattern
 	{

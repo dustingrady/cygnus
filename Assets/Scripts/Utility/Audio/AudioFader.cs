@@ -17,7 +17,6 @@ public class AudioFader : MonoBehaviour {
 
 	void Update() {
 		if (audio.volume < endVolume) {
-			
 			audio.volume += (Time.deltaTime * endVolume) / fadeTime;
 		}
 	}

@@ -8,8 +8,12 @@ public class AudioController : MonoBehaviour {
 
 	void Start () {
 		source = gameObject.GetComponent<AudioSource> ();
-		source.clip = audio [0]; //First song in array will be background track
-		source.Play ();
+
+		if (audio.Length > 0) {
+			source.volume = GameManager.instance.backgroundMusicVolume;
+			source.clip = audio [0]; //First song in array will be main background track
+			source.Play ();
+		}
 	}
 	
 	void Update () {

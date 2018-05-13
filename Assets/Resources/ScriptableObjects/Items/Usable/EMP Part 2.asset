@@ -11,5 +11,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ed9739204495bb429805c67607be183, type: 3}
   m_Name: EMP Part 2
   m_EditorClassIdentifier: 
-  sprite: {fileID: 21300000, guid: 7af138d070e05e44c8e0bf8f6453911d, type: 3}
+  sprite: {fileID: 21300000, guid: cf75b6379743cb244bb1b787be8234a9, type: 3}
   description: A broken robotic device, this could be useful.

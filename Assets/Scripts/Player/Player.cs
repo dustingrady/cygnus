@@ -32,16 +32,18 @@ public class Player : MonoBehaviour {
 	private Coroutine acidDamageCoroutine;
 
 	bool standingInFire = false;
-
 	bool takingDamage = false;
+	public bool respawning = false;
 
     public Inventory inventory;
 
 	private Vector3 checkpointPos;
 
 	private GameObject stunSwirl;
+	private GameObject deathParticle;
 
 	private AudioController ac;
+	public AudioClip deathSound;
 
 	// Death broadcast event
 	public delegate void PlayerDeath();
@@ -65,6 +67,7 @@ public class Player : MonoBehaviour {
     void Start() {
         checkpointPos = transform.position;
 		stunSwirl = (GameObject)Resources.Load("Prefabs/NPCs/stunned");	
+		deathParticle = (GameObject)Resources.Load("Prefabs/Particles/DeathEffect");	
 
 		//Reference to Audio Controller
 		GameObject camera = GameObject.Find("Main Camera");
@@ -109,14 +112,18 @@ public class Player : MonoBehaviour {
 	
 
 	void CheckHealth() {
-		if (health.CurrentVal <= 0) {
+		if (health.CurrentVal <= 0 && !respawning) {
 			if (GameObject.Find ("CameraSwapTrigger") != null || GameObject.Find("Boss Wall") != null) {
 				GameObject.Find ("CameraSwapTrigger").GetComponent<CameraSwitch> ().playerCam = true;
 				GameObject.Find ("Wall Trigger").GetComponent<BossWallTrigger> ().wallOn = false;
 			}
-			ac.source.clip = ac.audio [0]; //Switch to default music
-			ac.source.Play ();
-			backToCheckPoint ();
+
+			// set respawning flag to prevent update
+			respawning = true;
+			if (acidDamageCoroutine != null)
+				StopCoroutine (acidDamageCoroutine);
+			
+			StartCoroutine(playerDeath ());
 		}
 	}
 		
@@ -126,13 +133,12 @@ public class Player : MonoBehaviour {
 		}
 
 		if (checkpointPos != null) {
-			//Debug.Log ("going to checkpoint");
+			Debug.Log ("Going back to checkpoint");
 			health.CurrentVal = 100;
 			transform.position = checkpointPos;
 		} else {
+			Debug.Log ("reloading scene?");
 			inventory.emptyInventory ();
-			//Debug.Log ("Resetting scene");
-			StopCoroutine (acidDamageCoroutine);
 			SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
 		}
 	}
@@ -181,31 +187,6 @@ public class Player : MonoBehaviour {
 
 				}
 			}	
-			/*
-			if (col.gameObject.tag == "Item") {
-				Debug.Log ("ITEMS");
-				//string path = "Items/" + col.gameObject.name;
-				//Item temp = Resources.Load(path) as Item;
-
-				Item item = col.gameObject.GetComponent<ItemInteraction>().item;
-
-				if (item != null) {
-					Debug.Log ("TEST");
-					//inventory.GetComponent<Inventory>().addItem(item);
-					//Debug.Log(inventory.GetComponent<Inventory> ().checkSlot(item));
-					if (inventory.GetComponent<Inventory> ().checkSlot (item)) 
-					{
-						inventory.GetComponent<Inventory> ().stackItem (item);
-					} 
-					else if (!inventory.GetComponent<Inventory> ().checkSlot (item)) 
-					{
-						inventory.GetComponent<Inventory> ().addItem (item);
-						Debug.Log ("TEST add");
-					}
-				} else {
-					Debug.LogError ("There was no item on that object!");
-				}
-			}*/
 		}
 			
 		if (col.gameObject.tag == "Scrap") {
@@ -308,7 +289,7 @@ public class Player : MonoBehaviour {
 		// Collision with checkpoint trigger
 		if (col.CompareTag("Checkpoint")) {
 			float height = GetComponent<BoxCollider2D>().size.y; 
-			FloatingTextController.CreateFloatingText ("Checkpoint!", this.gameObject.transform, height, Color.blue, 20);
+			FloatingTextController.CreateFloatingText ("Checkpoint", this.gameObject.transform, height, Color.yellow, 20);
 			checkpointPos = col.transform.position;
 		}
 	}
@@ -444,6 +425,36 @@ public class Player : MonoBehaviour {
 			yield return new WaitForSeconds(0.10f);
 			elapsed++;
 		}
+	}
+
+	IEnumerator playerDeath() {
+		// Display particle effect
+		Instantiate(deathParticle, transform.position, Quaternion.identity);
+
+		if (deathSound != null)
+			ac.source.PlayOneShot (deathSound);
+		
+		// Disable character sprite and controller
+		GetComponent<PlayerController>().enabled = false;
+		GetComponent<SpriteRenderer>().enabled = false;
+		GetComponent<Collider2D>().enabled = false;
+		GetComponent<Rigidbody2D> ().simulated = false;
+
+		yield return new WaitForSeconds (1.5f);
+
+		GetComponent<PlayerController>().enabled = true;
+		GetComponent<SpriteRenderer>().enabled = true;
+		GetComponent<Rigidbody2D> ().simulated = true;
+		GetComponent<Collider2D>().enabled = true;
+
+		respawning = false;
+
+		if (ac.source.clip != ac.audio [0]) {
+			ac.source.clip = ac.audio [0]; //Switch to default music
+			ac.source.Play ();
+		}
+
+		backToCheckPoint ();
 	}
 
 	void ReducePlayerHealth(int dmg) {

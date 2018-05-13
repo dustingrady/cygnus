@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Name: GiveQuest_Desert
   m_EditorClassIdentifier: 
   states:
-  - text: Gah! I hate sand! Be wary of sandstorms!
+  - text: Gah! I hate sand! Be wary of sandstorms, if you're not on the ground they
+      send you flying!
     choices:
     - response: Ok
       nextState: 1

@@ -9,6 +9,7 @@ public class NPCTalk : MonoBehaviour
     public GameObject uiRoot;
     public TalkTree tree;
     public Sprite portrait;
+	public string npcName;
     public GameObject windowPrefeb;
     bool inDialogue = false;
 
@@ -41,6 +42,9 @@ public class NPCTalk : MonoBehaviour
             d.dialogue = tree;
             d.potrait.sprite = portrait;
 			d.npc = this.gameObject;
+			if (npcName.Length != 0) {
+				d.npcName.text = npcName;
+			}
 
             d.UpdateDialogue();
         }
