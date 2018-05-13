@@ -114,9 +114,6 @@ public abstract class Enemy : MonoBehaviour {
 				}
 				return true;
 			}
-			if (sightTest.collider.CompareTag ("EnemyProjectile")) {
-				return true;
-			}
 		}
 		return false;
 	}
