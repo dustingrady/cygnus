@@ -27,7 +27,6 @@ public class FlyingEnemy : Enemy {
 	private Vector3 targetOffset = Vector3.zero;
 
 	private bool enraged = false; // When the enemy is shot, they persue the player for atleast two seconds
-	private bool disengaged = false;
 
 	// Reference to coroutine, to refresh it
 	private IEnumerator enragedCoroutine;
@@ -79,7 +78,7 @@ public class FlyingEnemy : Enemy {
 			}
 		}
 
-		if(DistanceToPlayer() <= chaseRadius && within_LoS() && !disengaged){
+		if(DistanceToPlayer() <= chaseRadius && within_LoS()){
 			alerted(true);
 			chasingPlayer = true;
 		}
@@ -110,12 +109,12 @@ public class FlyingEnemy : Enemy {
 		}
 	}
 		
-
+	//yourObj.GetComponent<YourScript>();
 	void OnTriggerEnter2D(Collider2D col){
 		if (col.gameObject.tag == "TurnAround") { //No longer needed?
 			patrolSpeed *= -1;
 		}
-		if (damagingElements.Contains (col.gameObject.tag)) {
+		if (damagingElements.Contains (col.gameObject.tag) && col.gameObject.GetComponent<RogueProjectile>()) {
 			takeDamage (edmg.determine_Damage (col.gameObject.tag, elementType));
 
 			// Stop the enrage coroutine and start another
@@ -127,7 +126,7 @@ public class FlyingEnemy : Enemy {
 			StartCoroutine (enragedCoroutine);
 		}
 		//Testing for collision with objects
-		if (avoidedTypes.Contains (col.transform.gameObject.tag) && !disengaged) {
+		if (avoidedTypes.Contains (col.transform.gameObject.tag) && !chasingPlayer) {
 			//Debug.Log ("Hit some: " + col.transform.gameObject.tag);
 
 			//Attempting to get contact points of collider box to move in opposite dir
@@ -175,12 +174,10 @@ public class FlyingEnemy : Enemy {
 	IEnumerator break_Contact(Vector3 x){
 		enraged = false;
 		chasingPlayer = false;
-		disengaged = true;
 		patrolSpeed *= -1;
 		//patrolSpeed *= x.normalized.y;
 		//Debug.Log ("Normalized val: " + x.normalized.y);
 		yield return new WaitForSeconds (0.5f);
-		disengaged = false;
 	}
 
 	IEnumerator Enrage(float duration) {
