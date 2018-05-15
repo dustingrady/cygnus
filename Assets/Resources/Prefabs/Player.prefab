@@ -97,7 +97,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1259700113646964}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -11.18, y: -2.09, z: 0}
+  m_LocalPosition: {x: -48.5, y: 6.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4565867435854406}
@@ -245,9 +245,10 @@ MonoBehaviour:
   elementType: magnetic
   sprite: {fileID: 21300000, guid: b1d19bfea2941eb479f5acef2a05df27, type: 3}
   active: 0
+  magnetStrength: 1000
   lr: {fileID: 0}
+  magnetCooldown: 0.2
   pulling: 0
-  icon: {fileID: 0}
 --- !u!114 &114231931990252468
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -296,7 +297,8 @@ MonoBehaviour:
   active: 0
   metalShield: {fileID: 1143730445134482, guid: e4723ad7e383b1242ab15889bac976bf,
     type: 2}
-  icon: {fileID: 0}
+  licon: {fileID: 0}
+  ricon: {fileID: 0}
   distance: 1
 --- !u!114 &114482010898966262
 MonoBehaviour:
@@ -400,7 +402,10 @@ MonoBehaviour:
   leftElement: {fileID: 0}
   rightElement: {fileID: 0}
   centerElement: {fileID: 0}
+  stunned: 0
+  respawning: 0
   inventory: {fileID: 0}
+  deathSound: {fileID: 8300000, guid: 539c6eecca9377145acaeee221349906, type: 3}
 --- !u!120 &120464075483739310
 LineRenderer:
   m_ObjectHideFlags: 1

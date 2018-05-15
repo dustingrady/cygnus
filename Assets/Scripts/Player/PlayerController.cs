@@ -49,7 +49,7 @@ public class PlayerController: MonoBehaviour {
 
 	void Start () {
 		rb = GetComponent<Rigidbody2D> ();
-		col = GetComponent<BoxCollider2D> ();
+		col = GetComponent<Collider2D> ();
 
 		string currentScene = SceneManager.GetActiveScene ().name;
 
@@ -77,6 +77,16 @@ public class PlayerController: MonoBehaviour {
 		};
 		foreach (Vector3 pos in castPos) {
 			Debug.DrawRay (pos, Vector3.down, Color.red);
+		}
+
+		Vector3[] headPos = new Vector3[] { transform.position, 
+			new Vector3 (transform.position.x - col.bounds.extents.x + 0.06f, transform.position.y, transform.position.z),
+			new Vector3 (transform.position.x + col.bounds.extents.x, transform.position.y, transform.position.z)
+		};
+
+		foreach (Vector3 pos in headPos)
+		{
+			Debug.DrawRay (pos, Vector3.up, Color.blue);
 		}
 		// ------------- Visualize groundcheck rays -----------------------------
 
@@ -171,12 +181,15 @@ public class PlayerController: MonoBehaviour {
 
 	private bool CheckClearance()
 	{
-		LayerMask playerMask = 1 << LayerMask.NameToLayer ("Ground");
-		Vector3[] castPos = new Vector3[] { transform.position
+		LayerMask playerMask = 1 << LayerMask.NameToLayer ("Ground") << LayerMask.NameToLayer("Default");
+		Vector3[] castPos = new Vector3[] { transform.position, 
+			new Vector3 (transform.position.x - col.bounds.extents.x + 0.06f, transform.position.y, transform.position.z),
+			new Vector3 (transform.position.x + col.bounds.extents.x, transform.position.y, transform.position.z)
 		};
 
 		foreach (Vector3 pos in castPos)
 		{
+			Debug.DrawRay (pos, Vector3.up, Color.red);
 			if (Physics2D.Raycast(pos, Vector2.up, col.bounds.extents.y + 0.2f, playerMask).collider != null)
 			{
 				return false;
