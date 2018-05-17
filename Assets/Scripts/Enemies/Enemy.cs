@@ -38,6 +38,11 @@ public abstract class Enemy : MonoBehaviour {
 
 	// Particle Effects
 	protected GameObject sparks;
+	protected GameObject deathParticle;
+	protected GameObject damageParticle;
+
+	// SFX
+	protected AudioClip deathSound;
 
 	// Start position and player reference
 	protected Vector3 startingPosition;
@@ -70,6 +75,9 @@ public abstract class Enemy : MonoBehaviour {
 
 		// Particle effects
 		sparks = Resources.Load ("Prefabs/Particles/Sparks") as GameObject;
+		deathParticle = (GameObject)Resources.Load("Prefabs/Particles/ExplodeEffect");
+		damageParticle = (GameObject)Resources.Load("Prefabs/Particles/DamageEffect");
+		deathSound = (AudioClip)Resources.Load ("Sounds/SFX/explode");
 
 		// Set random if type if 'assignRandomType' is checked
 		if (assignRandomType) {
@@ -160,7 +168,10 @@ public abstract class Enemy : MonoBehaviour {
 
 	protected void EvaluateHealth() {
 		if (hitpoints <= 0) {
-			if (edrp != null)
+			Instantiate (deathParticle, transform.position, Quaternion.identity);
+			AudioSource.PlayClipAtPoint (deathSound, transform.position);
+
+			if (edrp != null) 
 				edrp.determine_Drop (elementType, this.transform.position);
 
 			if (dr != null) {
@@ -229,6 +240,7 @@ public abstract class Enemy : MonoBehaviour {
 
 
 	IEnumerator damage(float amount){
+		Instantiate (damageParticle, this.transform.position, Quaternion.identity);
 		hitpoints -= amount;
 		if (amount > 0)
 			yield return flash ();
