@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Magnetic : Element {
-	public float magnetStrength = 1000f;
+	public float magnetStrength = 600f;
 
 	public LineRenderer lr;
 
@@ -37,7 +37,10 @@ public class Magnetic : Element {
 			Vector3 diff = pullPos - plr.transform.position;
 
 			// Make the force stronger depending on how far away from the object the player is located
-			plr.GetComponent<Rigidbody2D> ().AddForce ((magnetStrength / diff.magnitude) * diff.normalized);
+			Vector3 pull = ClampVector((magnetStrength / diff.magnitude) * diff.normalized, 500);
+			plr.GetComponent<Rigidbody2D> ().AddForce (pull);
+
+			Debug.Log((magnetStrength / diff.magnitude) * diff.normalized);
 
 			// Enable the line renderer
 			lr.enabled = true;
@@ -47,6 +50,11 @@ public class Magnetic : Element {
 
 		}
 	}
+
+	Vector3 ClampVector(Vector3 vect, int max) {
+		return new Vector3 (Mathf.Clamp (vect.x, -max, max), Mathf.Clamp (vect.y, -max, max), Mathf.Clamp (vect.z, -max, max));
+	}
+
 
 	void Start() {
 		lr = GetComponent<LineRenderer> ();
@@ -64,7 +72,11 @@ public class Magnetic : Element {
 			lr.enabled = false;
 		}
 	}
+
+	
 }
+
+
 
 
 /**

@@ -80,7 +80,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.65625, y: 0.625}
+    oldSize: {x: 0.59375, y: 0.78125}
     newSize: {x: 0.65625, y: 0.625}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -105,7 +105,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.65625, y: 0.625}
+    oldSize: {x: 0.59375, y: 0.78125}
     newSize: {x: 0.65625, y: 0.625}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -127,7 +127,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   questID: 399
   collectedText: Nice, you got another ship part.  Head back to the ship... or don't.  It's
-    actually kinda peaceful.
+    actually kinda peaceful here without you.
 --- !u!212 &212175457525812114
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -161,8 +161,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 0e7a0f6e91d995a4dbb4c419397d0244, type: 3}
+  m_SortingOrder: 1
+  m_Sprite: {fileID: 21300000, guid: 98a4a0d7cc3d93e48aebf899bbd53c69, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

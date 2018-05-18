@@ -80,6 +80,7 @@ public class LiftPlatform : MonoBehaviour {
 
 		// Check for autoReset, if you get close to the end with it set, go back
 		if (Vector2.Distance (transform.position, target.transform.position) < 0.05 && autoReset) {
+			Debug.Log ("going back?");
 			// Creates the conditions to move back to start
 			atStart = false;
 			movingToStart = true;

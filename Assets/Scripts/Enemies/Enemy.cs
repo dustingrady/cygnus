@@ -125,7 +125,9 @@ public abstract class Enemy : MonoBehaviour {
 		}
 
 		if (tag == "ElectricElement") {
-			takeDamage (0.5f);
+			FloatingTextController.Initialize();
+			FloatingTextController.CreateFloatingText ("1", this.gameObject.transform, GetComponent<Collider2D>().bounds.extents.y + 0.1f, Color.yellow, 20);
+			takeDamage (1f);
 		}
 	}
 
@@ -148,6 +150,11 @@ public abstract class Enemy : MonoBehaviour {
 	protected void EvaluateTolerance() {
 		if (tolerance == 20) {
 			stunned = true;
+
+			// Display stunned
+			FloatingTextController.Initialize();
+			FloatingTextController.CreateFloatingText ("Stunned", this.gameObject.transform, GetComponent<Collider2D>().bounds.extents.y + 0.1f, Color.yellow, 20);
+
 			Instantiate (sparks, this.transform.position, Quaternion.identity);
 			StartCoroutine (stunDuration ());
 		}

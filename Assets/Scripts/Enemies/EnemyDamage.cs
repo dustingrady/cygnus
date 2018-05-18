@@ -109,7 +109,7 @@ public class EnemyDamage : MonoBehaviour {
 		if (dmg > 0) {
 			FloatingTextController.CreateFloatingText (dmg.ToString (), this.gameObject.transform, height, baseClr, (int)dmgSize);
 		} else {
-			FloatingTextController.CreateFloatingText ("immune", this.gameObject.transform, height, Color.yellow, 20);
+			FloatingTextController.CreateFloatingText ("immune", this.gameObject.transform, height, Color.white, 20);
 		}
 	}
 }
