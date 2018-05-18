@@ -14,7 +14,7 @@ MonoBehaviour:
   states:
   - text: You have collected one ship part, three to go!
     choices:
-    - response: k
+    - response: Alright, I'll get on it.
       nextState: 1
       dialogActions: []
       dialogCondition: {fileID: 0}

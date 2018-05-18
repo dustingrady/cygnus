@@ -60,7 +60,7 @@ public class MainMenu : MonoBehaviour {
 		audio.Stop ();
 		fadingOut = true;
 		yield return new WaitForSeconds (1f);
-		SceneManager.LoadScene("Ship");
+		SceneManager.LoadScene("Opening");
 	}
 
 	IEnumerator LoadGameRoutine(int slot) {

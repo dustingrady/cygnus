@@ -32,8 +32,8 @@ MonoBehaviour:
       dialogActions: []
       dialogCondition: {fileID: 0}
     endTree: 0
-  - text: They were collected by the BossBots in the Forest, Desert, Acid, and Phuc_Branch
-      Regions.
+  - text: They were collected by the Boss Bots in the Forest, Desert, Acid, and Phuc_Branch
+      Regions.  Go out and try and get them back, I'll wait for help.
     choices:
     - response: I'll get em!
       nextState: 2

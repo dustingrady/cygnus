@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: inside_ship_fire
   m_EditorClassIdentifier: 
   states:
-  - text: We crash landed on plant Tobor and the ship is on fire!  We gotta get out
-      of here!
+  - text: Hey captain, I just sent out a distress signal.  I'd like to keep chatting,
+      but the ship is indeed on fire.  Lets continue this outside, shall we?
     choices:
     - response: Who are you?
       nextState: 1

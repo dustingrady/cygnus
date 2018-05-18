@@ -33,4 +33,10 @@ public class Terminal : MonoBehaviour {
 		SceneManager.LoadScene ("Ship");
 	}
 
+	void Update() {
+		if (Input.GetKeyDown (KeyCode.Space)) {
+			SceneManager.LoadScene ("Ship");
+		}	
+	}
+
 }
