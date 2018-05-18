@@ -15,6 +15,11 @@ public class AudioController : MonoBehaviour {
 			source.Play ();
 		}
 	}
+
+	public void ChangeVolume(float val) {
+		GameManager.instance.backgroundMusicVolume = val;
+		source.volume = val;
+	}
 	
 	void Update () {
 		

@@ -80,6 +80,11 @@ public class InGameMenu : MonoBehaviour {
         SaveMan.Load((SaveSlot)slot);
 	}
 
+	public void VolumeSlider(float val) {
+		GameManager.instance.backgroundMusicVolume = val;
+
+	}
+
 	public void Quit()
 	{
 		Application.Quit ();
