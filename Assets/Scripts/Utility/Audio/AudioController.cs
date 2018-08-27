@@ -5,12 +5,13 @@ using UnityEngine;
 public class AudioController : MonoBehaviour {
 	public AudioClip[] audio;
 	public AudioSource source;
+	public float startingVolume;
 
 	void Start () {
 		source = gameObject.GetComponent<AudioSource> ();
 
 		if (audio.Length > 0) {
-			source.volume = GameManager.instance.backgroundMusicVolume;
+			source.volume = startingVolume;
 			source.clip = audio [0]; //First song in array will be main background track
 			source.Play ();
 		}

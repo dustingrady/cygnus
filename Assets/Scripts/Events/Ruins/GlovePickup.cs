@@ -8,6 +8,7 @@ public class GlovePickup : MonoBehaviour {
 
 	void OnTriggerEnter2D() {
 		GameManager.instance.hasGloves = true;
+		GameObject.FindGameObjectWithTag ("Player").GetComponent<PlayerAnimation> ().EnableGloves ();
 
 		GameObject ui = GameObject.Find ("UI");
 		ElementUI eleUI = ui.GetComponent<ElementUI> ();

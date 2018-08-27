@@ -49,7 +49,6 @@ public class Typewriter : MonoBehaviour {
 
 	public void SetText(string msg) {
 		buffer = msg;
-		Debug.Log (msg.Length);
 	}
 
 	IEnumerator Submit() {

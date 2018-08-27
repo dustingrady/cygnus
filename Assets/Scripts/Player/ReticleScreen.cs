@@ -32,4 +32,12 @@ public class ReticleScreen : MonoBehaviour {
 			}
 		}
 	}
+
+	public void DisableReticle() {
+		gameObject.GetComponent<Image> ().color = new Color (1, 1, 1, 0);
+	}
+
+	public void EnableReticle() {
+		gameObject.GetComponent<Image> ().color = new Color (1, 1, 1, 1);
+	}
 }

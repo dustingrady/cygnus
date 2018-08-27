@@ -7,6 +7,10 @@ public class PlayerAnimation : MonoBehaviour {
 	[SerializeField]
 	private Animator playerAnim;
 	[SerializeField]
+	private RuntimeAnimatorController playerNoGloveAnim;
+	[SerializeField]
+	private RuntimeAnimatorController playerGloveAnim;
+	[SerializeField]
 	private float sprintMulti;
 	private PlayerShooting plrShoot;
 
@@ -18,6 +22,11 @@ public class PlayerAnimation : MonoBehaviour {
 		playerAnim = GetComponent<Animator> ();
 		plrShoot = GetComponent<PlayerShooting> ();
 		PlayerShooting.OnShoot += PlayShoot;
+
+		if (GameManager.instance.hasGloves == false) {
+			SetController (playerNoGloveAnim);
+		}
+
 	}
 
 	void Update() {
@@ -100,4 +109,11 @@ public class PlayerAnimation : MonoBehaviour {
 		}
 	}
 
+	void SetController(RuntimeAnimatorController controller) {
+		playerAnim.runtimeAnimatorController = controller;
+	}
+
+	public void EnableGloves() {
+		SetController (playerGloveAnim);
+	}
 }

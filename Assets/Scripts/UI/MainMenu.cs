@@ -19,7 +19,6 @@ public class MainMenu : MonoBehaviour {
 
 	void Update() {
 		if (fadingOut) {
-			Debug.Log (fader.color.a);
 			fader.color = new Color(fader.color.r, fader.color.g, fader.color.b, fader.color.a + Time.deltaTime);
 		}
 	}
@@ -34,7 +33,7 @@ public class MainMenu : MonoBehaviour {
 	}
 
 	public void SaveOne() {
-		Debug.Log ("boo");
+		
 		Load (1);
 	}
 
@@ -68,7 +67,6 @@ public class MainMenu : MonoBehaviour {
 		fadingOut = true;
 		yield return new WaitForSeconds (1f);
 		try {
-			Debug.Log ("Load game: " + slot);
 			SaveMan.Load((SaveSlot)slot);
 		} catch {
 			GameObject.Find ("UnableToLoad").transform.localScale = new Vector3 (1.5f, 1.5f, 1f);

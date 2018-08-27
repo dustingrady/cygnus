@@ -91,6 +91,11 @@ public class GameManager : MonoBehaviour {
 
 		SaveMan.SaveGame += OnSaveGame;
 		SaveMan.LoadGame += OnLoadGame;
+
+		// Hide the reticle if the player loads game without gloves
+		/*if (!hasGloves) {
+			GameObject.Find("Reticle").GetComponent<ReticleScreen>().DisableReticle();
+		}*/
 	}
 
 	// Update is called once per frame
