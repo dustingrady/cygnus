@@ -25,9 +25,10 @@ public class RespawnManager : MonoBehaviour {
 
 	public void Respawn() {
 		Debug.Log ("respawning enemies");
-
 		if (activeEnemies.Count > 0) {
+			Debug.Log (activeEnemies);
 			foreach (GameObject go in activeEnemies) {
+				Debug.Log (go);
 				go.GetComponent<Enemy> ().respawnActive ();
 			}
 		}

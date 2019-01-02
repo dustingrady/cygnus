@@ -115,7 +115,7 @@ public class Player : MonoBehaviour {
 		if (health.CurrentVal <= 0 && !respawning) {
 			if (GameObject.Find ("CameraSwapTrigger") != null || GameObject.Find("Boss Wall") != null) {
 				GameObject.Find ("CameraSwapTrigger").GetComponent<CameraSwitch> ().playerCam = true;
-				GameObject.Find ("Wall Trigger").GetComponent<BossWallTrigger> ().wallOn = false;
+				//GameObject.Find ("Wall Trigger").GetComponent<BossWallTrigger> ().wallOn = false;
 			}
 
 			// set respawning flag to prevent update
@@ -134,6 +134,7 @@ public class Player : MonoBehaviour {
 
 		if (checkpointPos != null) {
 			Debug.Log ("Going back to checkpoint");
+			inAcid = false;
 			health.CurrentVal = 100;
 			transform.position = checkpointPos;
 		} else {
@@ -214,6 +215,7 @@ public class Player : MonoBehaviour {
 
 	void OnParticleCollision(GameObject other){
 		if (other.tag == "Acid") {
+			Debug.Log ("touched acid");
 			this.health.CurrentVal -= 5f;
 			StartCoroutine(damageOverTime(5,1));
 		}
@@ -310,6 +312,7 @@ public class Player : MonoBehaviour {
 		} 
 
 		if (col.gameObject.tag == "Acid" && !inAcid) {
+			Debug.Log ("touched acid");
 			acidDamageCoroutine = StartCoroutine (acidOverTime (3, 10));
 		}
 	}

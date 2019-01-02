@@ -4,15 +4,24 @@ using UnityEngine;
 
 public class Magnetic : Element {
 	public float magnetStrength = 600f;
-
-	public LineRenderer lr;
+	public int maxMagnetStrength = 200;
 
 	[SerializeField]
 	private float magnetCooldown = 0.2f;
+
+	[SerializeField]
+	private const float magneticCapacity = 30f;
+	private float currentCapacity = magneticCapacity;
+
 	private float timeSinceFire;
 	private bool fireReleased = true;
 	public bool pulling = false;
 	Vector3 pullPos;
+
+	// UI
+	private PowerMeter powerMeter;
+	private bool showPower = false;
+	public LineRenderer lr;
 
 	public override void UseElement(Vector3 pos, Vector2 dir) {
 		if (timeSinceFire > magnetCooldown && fireReleased) {
@@ -28,8 +37,8 @@ public class Magnetic : Element {
 
 			timeSinceFire = 0;
 			fireReleased = false;
-		} else if (pulling) {
 
+		} else if (pulling && currentCapacity > Time.deltaTime * 20) {
 			// Get the transform of the player
 			GameObject plr = gameObject.transform.root.gameObject;
 
@@ -37,10 +46,8 @@ public class Magnetic : Element {
 			Vector3 diff = pullPos - plr.transform.position;
 
 			// Make the force stronger depending on how far away from the object the player is located
-			Vector3 pull = ClampVector((magnetStrength / diff.magnitude) * diff.normalized, 500);
+			Vector3 pull = ClampVector((magnetStrength / diff.magnitude) * diff.normalized, maxMagnetStrength);
 			plr.GetComponent<Rigidbody2D> ().AddForce (pull);
-
-			Debug.Log((magnetStrength / diff.magnitude) * diff.normalized);
 
 			// Enable the line renderer
 			lr.enabled = true;
@@ -48,6 +55,14 @@ public class Magnetic : Element {
 			// Update the line renderer
 			lr.SetPositions (new Vector3[] { plr.transform.position + Vector3.back, pullPos + Vector3.back });
 
+			if (!showPower) {
+				// Set the powermeter color and show the meter
+				powerMeter.SetBarColor(Color.magenta);
+				powerMeter.Show ();
+				showPower = true;
+			}
+
+			currentCapacity -= Time.deltaTime * 20;
 		}
 	}
 
@@ -58,10 +73,26 @@ public class Magnetic : Element {
 
 	void Start() {
 		lr = GetComponent<LineRenderer> ();
+
+		if (GameObject.FindGameObjectWithTag ("PowerMeter") != null) {
+			powerMeter = GameObject.FindGameObjectWithTag ("PowerMeter").GetComponent<PowerMeter> ();
+		} else {
+			Debug.LogError ("Unable to locate player power meter");
+		}
 	}
 
 	void Update() {
 		timeSinceFire += Time.deltaTime;
+
+		if (currentCapacity < magneticCapacity) {
+			currentCapacity += Time.deltaTime * 5;
+			powerMeter.SetBarValue (currentCapacity/magneticCapacity);
+		}
+
+		if (showPower && currentCapacity > magneticCapacity) {
+			powerMeter.Hide ();
+			showPower = false;
+		}
 
 		// UGLY
 		if (Input.GetMouseButtonUp (2) == true) {

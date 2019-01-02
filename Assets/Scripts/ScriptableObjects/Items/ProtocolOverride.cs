@@ -4,18 +4,11 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "ProtocolOverride", menuName = "Items/ProtocolOverride")]
 public class ProtocolOverride : Item {
-	
 	public string description;
-	private bool consumable = true;
-	Player player;
-	GameObject protocolGrenade;
-	GameObject protocolHolder;
+	private bool consumable = false;
 
 	public override void useItem () {
-		protocolGrenade = Resources.Load ("Prefabs/Projectiles/ProtocolGrenade") as GameObject;
-		player = GameObject.Find ("Player").GetComponent<Player> ();
-		protocolHolder = Instantiate (protocolGrenade, player.transform.position, Quaternion.identity) as GameObject;
-		protocolHolder.GetComponent<ProtocolGrenade> ().Initialize (GetCursorDirection (), 20f);
+		
 	}
 
 	public override string itemDescription()
@@ -28,6 +21,7 @@ public class ProtocolOverride : Item {
 		return consumable;
 	} 
 
+	/*
 	public Vector2 GetCursorDirection() {
 		if (GameManager.instance.controllerConnected) {
 			GameObject ret = GameObject.Find ("Reticle");
@@ -41,5 +35,5 @@ public class ProtocolOverride : Item {
 
 			return dir;
 		}
-	}
+	}*/
 }

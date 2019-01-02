@@ -79,7 +79,7 @@ public class EnemyDamage : MonoBehaviour {
 			}
 		}
 
-		//Debug.Log ("Dealt " + dmg + " " + attackType + " type dmg to " + enemyType + " type enemy");
+		Debug.Log ("Dealt " + dmg + " " + attackType + " type dmg to " + enemyType + " type enemy");
 
 		display_Damage (dmg);
 		return dmg;

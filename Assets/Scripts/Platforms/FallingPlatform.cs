@@ -11,6 +11,8 @@ public class FallingPlatform : MonoBehaviour {
 	List<Vector3> tilesHit;
 	TileBase previousTile;
 	Vector3 prevBlock;
+	[SerializeField]
+	private float respawnTime = 5;
 
 	// Use this for initialization
 	void Start () {
@@ -66,7 +68,7 @@ public class FallingPlatform : MonoBehaviour {
 
 	IEnumerator replaceTile(Vector3 v)
 	{
-		yield return new WaitForSeconds (5);
+		yield return new WaitForSeconds (respawnTime);
 		tilemap.SetTile (tilemap.WorldToCell(v), previousTile);
 	}
 

@@ -25,6 +25,8 @@ public abstract class Enemy : MonoBehaviour {
 	protected float hitpoints = 100;
 	[SerializeField]
 	protected float energy = 100;
+	[SerializeField]
+	protected int maxTolerance = 70;
 
 	protected Color elementTint;
 
@@ -55,7 +57,7 @@ public abstract class Enemy : MonoBehaviour {
 	protected int tolerance = 0;
 
 	protected bool pause = false;
-	protected bool stunned = false;
+	public bool stunned = false;
 
 	protected float maxHitPoints;
 
@@ -129,14 +131,17 @@ public abstract class Enemy : MonoBehaviour {
 
 	protected void ElectricShock(string tag){
 		if (tag == "ElectricElement" && elementType != Elements.earth) {
-			tolerance++;
+			if (this.gameObject.activeSelf) {
+				StartCoroutine (flash (Color.yellow));
+				tolerance++;
+			}
 		}
 
-		if (tag == "ElectricElement") {
+		/* if (tag == "ElectricElement") {
 			FloatingTextController.Initialize();
 			FloatingTextController.CreateFloatingText ("1", this.gameObject.transform, GetComponent<Collider2D>().bounds.extents.y + 0.1f, Color.yellow, 20);
 			takeDamage (1f);
-		}
+		} */
 	}
 
 
@@ -156,18 +161,17 @@ public abstract class Enemy : MonoBehaviour {
 
 
 	protected void EvaluateTolerance() {
-		if (tolerance == 20) {
+		if (tolerance == maxTolerance) {
 			stunned = true;
 
 			// Display stunned
 			FloatingTextController.Initialize();
-			FloatingTextController.CreateFloatingText ("Stunned", this.gameObject.transform, GetComponent<Collider2D>().bounds.extents.y + 0.1f, Color.yellow, 20);
+			FloatingTextController.CreateFloatingText ("20 + stunned", this.gameObject.transform, GetComponent<Collider2D>().bounds.extents.y + 0.1f, Color.yellow, 20);
+			takeDamage (20f);
 
 			Instantiate (sparks, this.transform.position, Quaternion.identity);
 			StartCoroutine (stunDuration ());
-		}
 
-		if (tolerance == 200) {
 			tolerance = 0;
 		}
 	}
@@ -213,6 +217,7 @@ public abstract class Enemy : MonoBehaviour {
 			colForce = CalculatePhysicalImpact (col.contacts [0].normal, col.relativeVelocity, collisionRB.mass);
 
 			if (colForce > 5) {
+				Debug.Log (colForce);
 				float dmg = edmg.determine_Damage ("EarthElement", elementType, colForce);
 				takeDamage (dmg);
 			}
@@ -230,12 +235,12 @@ public abstract class Enemy : MonoBehaviour {
 	//
 
 
-	protected IEnumerator flash(){
+	protected IEnumerator flash(Color color) {
 		SpriteRenderer sr = GetComponent<SpriteRenderer> ();
 		int elapsed = 0;
 		int flashes = 3;
 		while(elapsed < flashes){
-			sr.color = Color.red;
+			sr.color = color;
 			yield return new WaitForSeconds(0.10f);
 			sr.color = Color.white;
 			yield return new WaitForSeconds(0.10f);
@@ -250,13 +255,13 @@ public abstract class Enemy : MonoBehaviour {
 		Instantiate (damageParticle, this.transform.position, Quaternion.identity);
 		hitpoints -= amount;
 		if (amount > 0)
-			yield return flash ();
+			yield return flash (Color.red);
 		yield return new WaitForSeconds (1);
 	}
 
 
 	protected IEnumerator stunDuration() {
-		yield return new WaitForSeconds (2);
+		yield return new WaitForSeconds (3);
 		stunned = false;
 	}
 }

@@ -8,6 +8,7 @@ public class FastTeleport : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D col) {
 		if (col.CompareTag ("Player")) {
+			col.gameObject.GetComponent<Rigidbody2D> ().velocity = Vector3.zero;
 			col.gameObject.transform.position = pos;
 		}
 	}

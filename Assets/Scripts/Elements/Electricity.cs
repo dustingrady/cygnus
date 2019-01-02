@@ -6,6 +6,8 @@ public class Electricity : Element {
 	public GameObject electProbe;
 	bool electricOn = false;
 
+	public int particleRate = 50;
+
 	ParticleSystem.EmissionModule em;
 
 	public override void UseElement(Vector3 pos, Vector2 dir){
@@ -22,7 +24,7 @@ public class Electricity : Element {
 
 	void Update() {
 		if (electricOn) {
-			em.rateOverTime = 50;
+			em.rateOverTime = particleRate;
 		} else {
 			em.rateOverTime = 0;
 		}

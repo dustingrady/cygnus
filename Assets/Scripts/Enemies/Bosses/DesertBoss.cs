@@ -93,7 +93,7 @@ public class DesertBoss : Enemy {
 			teleporter.SetActive (true);
 		}
 
-		yield return flash ();
+		yield return flash (Color.red);
 		yield return new WaitForSeconds (1);
 	}
 

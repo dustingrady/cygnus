@@ -9,7 +9,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d01e289a90fbbba4d8e0cef906d087fc, type: 3}
-  m_Name: ProtocolOverride
+  m_Name: Protocol Override Part One
   m_EditorClassIdentifier: 
-  sprite: {fileID: 21300000, guid: 41470d69d043a224ca646e2b1f682f14, type: 3}
-  description: Throw at the great beast to disable his regeneration protocols
+  itemName: ProtocolOverrideOne
+  sprite: {fileID: 21300000, guid: 5fb3fd103a77c794a87fe98807b3d28c, type: 3}
+  description: The first piece of Cyclon's machine to disable the shield protocol

@@ -12,15 +12,11 @@ MonoBehaviour:
   m_Name: GiveQuest_Acid
   m_EditorClassIdentifier: 
   states:
-  - text: YOU! You are different! Not a mindless drone like those that travel these
+  - text: YOU! You are different! Not a mindless drone like those that exist in these
       caverns.
     choices:
     - response: Mindless drones?
       nextState: 1
-      dialogActions: []
-      dialogCondition: {fileID: 0}
-    - response: Uh, yeah. Sure.
-      nextState: 2
       dialogActions: []
       dialogCondition: {fileID: 0}
     endTree: 0
@@ -31,10 +27,6 @@ MonoBehaviour:
       nextState: 2
       dialogActions: []
       dialogCondition: {fileID: 0}
-    - response: Sounds rough.
-      nextState: 2
-      dialogActions: []
-      dialogCondition: {fileID: 0}
     endTree: 0
   - text: You could destroy them! They're nothing but a nuisance anyway.
     choices:
@@ -42,35 +34,23 @@ MonoBehaviour:
       nextState: 3
       dialogActions: []
       dialogCondition: {fileID: 0}
-    - response: Naw, I'm good.
-      nextState: 4
-      dialogActions: []
-      dialogCondition: {fileID: 0}
     endTree: 0
   - text: Excellent! Be careful of the great beast that dwells deep within these caverns.
-      I was beginning to construct a weapon to defeat it, however I was attacked and
-      those retches absconded with my weapon. Those savage ripped it apart and ran
-      away with the different pieces. If you find all three pieces and bring them
-      back to me, I can finish constructing it and you can use it against the foul
-      beast.
+      I was beginning to construct a protocol override device to access it's chambers,
+      however I was attacked and those retches absconded with my device. Those savage
+      ripped it apart and ran away with the different pieces. If you find both pieces
+      and bring them back, I can reconstruct it and get us access to him.
     choices:
     - response: I'll do it.
       nextState: 5
-      dialogActions:
-      - {fileID: 11400000, guid: 344b9e42f32e93948aebc93dbec28b55, type: 2}
-      dialogCondition: {fileID: 0}
-    - response: Naw, I'm good.
-      nextState: 5
-      dialogActions:
-      - {fileID: 11400000, guid: 344b9e42f32e93948aebc93dbec28b55, type: 2}
+      dialogActions: []
       dialogCondition: {fileID: 0}
     endTree: 0
   - text: Fine! I hope you melt in these wretched caverns.
     choices:
     - response: Thanks
       nextState: 5
-      dialogActions:
-      - {fileID: 11400000, guid: 344b9e42f32e93948aebc93dbec28b55, type: 2}
+      dialogActions: []
       dialogCondition: {fileID: 0}
     - response: NA
       nextState: -1

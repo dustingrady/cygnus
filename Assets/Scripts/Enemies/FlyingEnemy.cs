@@ -140,6 +140,7 @@ public class FlyingEnemy : Enemy {
 
 
 	void OnCollisionEnter2D(Collision2D col) {
+		Debug.Log ("collision on flying");
 		float collisionTotal = EvaluatePhysical (col);
 
 		if (collisionTotal > 7) {

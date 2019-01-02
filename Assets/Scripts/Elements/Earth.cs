@@ -11,9 +11,11 @@ public class Earth : Element {
 	[SerializeField]
 	private float maxMass = 1.4f;
 	[SerializeField]
-	private float earthCooldown = 1f;
+	private float earthCooldown = 0.4f;
 	[SerializeField]
-	private float maxCharge = 2f;
+	private float maxCharge = 2.5f;
+	[SerializeField]
+	private float chargeRate = 1.5f;
 
 	private float chargeTime;
 	private float timeSinceFire;
@@ -64,7 +66,7 @@ public class Earth : Element {
 	void Update() {
 		if (shotCharging) {
 			if (chargeTime < maxCharge) {
-				chargeTime += Time.deltaTime;
+				chargeTime += Time.deltaTime * chargeRate;
 
 				float chargePercent = chargeTime / maxCharge;
 

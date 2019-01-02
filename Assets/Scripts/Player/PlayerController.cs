@@ -92,7 +92,11 @@ public class PlayerController: MonoBehaviour {
 
 		if (Input.GetButtonDown("Jump") && grapple != GrappleState.None)
 		{
-			rb.AddForce((grapple == GrappleState.Left ? Vector3.left : Vector3.right) * 100);
+			Debug.Log ("Jumping from grapple!");
+			var grappleVector = (grapple == GrappleState.Left ? Vector2.left : Vector2.right) * 1000;
+			Debug.Log (grappleVector);
+
+			rb.AddForce(grappleVector);
 			StartCoroutine("JumpCurve");
 		}
 
@@ -143,7 +147,7 @@ public class PlayerController: MonoBehaviour {
 		}
 		float speed = Mathf.Abs(rb.velocity.x);
 
-		if (Mathf.Abs(speed) < maxSpeed) {
+		if (Mathf.Abs (speed) < maxSpeed) {
 			rb.AddForce (Vector2.right * h * (moveForce - speed * 10.0f));
 		}
 	}
@@ -243,8 +247,7 @@ public class PlayerController: MonoBehaviour {
 	}
 
 	void OnCollisionExit2D(Collision2D col) {
-		//StopGrapple ();
-		Grapple = GrappleState.None;
+		grapple = GrappleState.None;
 	}
 
 	// This can prematurely end a jump when it doesn't make sense to

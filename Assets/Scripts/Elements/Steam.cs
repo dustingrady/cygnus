@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Steam : Element {
 	public GameObject burst;
-	private float burstStrength = 5f;
+	public float burstStrength = 5f;
 	private const float maxForce = 40f;
 
 	private const float steamCapacity = 20f;

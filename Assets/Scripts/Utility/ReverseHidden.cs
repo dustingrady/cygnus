@@ -4,8 +4,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public class ReverseHidden : MonoBehaviour {
-
-
+	public Sprite replacementSprite;
 	public GameObject room;
 	public bool buttonPress = false;
 	private bool fading = false;
@@ -49,10 +48,17 @@ public class ReverseHidden : MonoBehaviour {
 		float height = GetComponent<BoxCollider2D> ().size.y; 
 		if (col.tag == "Player") {
 			//Debug.Log ("wat");
+			// replace sprite
+			if (GetComponent<SpriteRenderer> () != null) {
+				GetComponent<SpriteRenderer>().sprite = replacementSprite;
+			}
+
+			// show floating text
 			if (!displayText) {
 				FloatingTextController.CreateFloatingText ("Hidden Room Uncovered!", this.gameObject.transform, height, Color.blue, 20);
 				displayText = true;
 			}
+			// enable fading
 			fading = true;
 		}
 

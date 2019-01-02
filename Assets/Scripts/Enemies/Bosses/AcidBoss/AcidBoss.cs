@@ -7,58 +7,130 @@ public class AcidBoss : Enemy {
 	private bool shootingPlayer;
 	private EnemyShooting es;
 	public bool isShooting = false;
-	public bool protocolOn = true;
-	private bool healBool = true;
+
+	public int maxHP = 200;
+	private Vector3 originalPosition;
+	[SerializeField]
+	private GameObject leftTail;
+	private Vector3 originalLeftTailPosition;
+	[SerializeField]
+	private GameObject rightTail;
+	private Vector3 originalRightTailPosition;
+
+	[SerializeField]
+	private GameObject endDoor;
+
+	private BossHealthBar healthBar;
+
+	public bool activated;
+	public bool raised;
 
 	private void Awake(){
 		es = gameObject.GetComponent<EnemyShooting> ();
+		Player.OnDeath += ResetBoss;
 	}
 
 	// Use this for initialization
 	void Start () {
-		base.Start (); // Call the based enemy Start() function	
+		base.Start (); // Call the based enemy Start() function
+		hitpoints = maxHP;
+
+		// find ui
+		healthBar = GameObject.Find("BossHealthBar").GetComponent<BossHealthBar>();
+
+		originalPosition = transform.position;
+		originalLeftTailPosition = leftTail.transform.position;
+		originalRightTailPosition = rightTail.transform.position;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		EvaluateHealth ();
+		if (activated) {
+			EvaluateHealth ();
+			EvaluateTolerance ();
 
-		if (DistanceToPlayer () <= radius) {
-			es.shoot_At_Player ();
-			isShooting = true;
-		} else {
-			isShooting = false;
+			if (!raised) {
+				Activate ();
+			} else if (hitpoints > maxHP * 0.75) {
+				PhaseOne ();
+			} else if (hitpoints < maxHP * 0.75) {
+				PhaseTwo ();
+			}
 		}
-
-		if (protocolOn && healBool) {
-			healBool = false;
-			StartCoroutine (heal (10.0f));
-		}
-	}
-
-	void OnTriggerEnter2D(Collider2D col) {
-		if (damagingElements.Contains (col.gameObject.tag)) {
-			takeDamage (edmg.determine_Damage (col.gameObject.tag, elementType));
-		}
-
-		if (col.gameObject.tag == "ProtocolGrenade")
-			protocolOn = false;
 	}
 
 	void OnCollisionEnter2D(Collision2D col) {
-		EvaluatePhysical (col);
+		//EvaluatePhysical (col);
 	}
 
-	void OnParticleCollision(GameObject other){
-		ElectricShock (other.tag);
+	public void TakeDamage(string tag) {
+		ElectricShock (tag);
 	}
-		
-	IEnumerator heal(float amount) {
-		if(hitpoints < maxHitPoints)
-			hitpoints += amount;
+				
+	private void Activate() {
+		if (transform.localPosition.y < -13) {
+			transform.Translate (new Vector3 (-Time.deltaTime * 3, 0, 0));
+		} else {
+			raised = true;
+			healthBar.Enable (maxHP);
+		}
+	}
 
-		yield return new WaitForSeconds (2);
-		healBool = true;
+	private void PhaseOne() {
+		if (leftTail.transform.localPosition.y < -13) {
+			leftTail.transform.Translate (new Vector3 (Time.deltaTime * 3, 0, 0));
+		}
+
+		ShootAtPlayer ();
+	}
+
+	private void PhaseTwo() {
+		if (leftTail.transform.localPosition.y > -30) {
+			leftTail.transform.Translate (new Vector3 (-Time.deltaTime * 3, 0, 0));
+		} else if (rightTail.transform.localPosition.y < -13) {
+			rightTail.transform.Translate (new Vector3 (Time.deltaTime * 3, 0, 0));
+		}
+
+		ShootAtPlayer ();
+	}
+
+	private void ShootAtPlayer() {
+		if (raised && DistanceToPlayer () <= radius && !stunned) {
+			es.shoot_At_Player ();
+		}
+	}
+
+	protected void EvaluateHealth() {
+		// Remove the door if the boss dies
+		if (hitpoints <= 0) {
+			// remove the door
+			endDoor.SetActive (false);
+
+			// disable bar
+			healthBar.Disable ();
+
+			// disable tail
+			leftTail.SetActive(false);
+			rightTail.SetActive(false);
+		}
+
+		healthBar.SetCurrentHealth (hitpoints);
+
+		base.EvaluateHealth ();
+
+	}
+
+	void ResetBoss() {
+		healthBar.Disable ();
+
+		hitpoints = maxHP;
+
+		transform.position = originalPosition;
+		leftTail.transform.position = originalLeftTailPosition;
+		rightTail.transform.position = originalRightTailPosition;
+
+		activated = false;
+		raised = false;
 	}
 }
 

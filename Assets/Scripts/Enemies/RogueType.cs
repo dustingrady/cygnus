@@ -31,6 +31,7 @@ public class RogueType : Enemy {
 	private bool enraged = false; // When the enemy is shot, they persue the player for atleast two seconds
 	private bool hidden = true;
 	private bool disengaged = false;
+	private bool fading = false;
 
 	private GameObject smokePuff;
 
@@ -47,7 +48,7 @@ public class RogueType : Enemy {
 		smokePuff = (GameObject)Resources.Load("Prefabs/Particles/SmokePuff");	
 
 		rb.constraints = RigidbodyConstraints2D.FreezeRotation;
-		hide_Self(true);
+		cloak ();
 		patrolSpeed = Mathf.Sign (Random.Range (-1, 1)) * patrolSpeed;
 	}
 		
@@ -110,9 +111,10 @@ public class RogueType : Enemy {
 
 
 	//Normal patrolling behaviour. Using sin function for side to side patrolling (may change)
-	void patrol_Area(){
-		hide_Self(false);
+	void patrol_Area() {
 		Vector3 v = startingPosition;
+		float distanceFromPlayer = DistanceToPlayer ();
+
 		if ((Mathf.Abs(transform.position.x - v.x) < delta) && !pause) {
 			transform.Translate (new Vector2 (patrolSpeed, 0) * Time.deltaTime);
 
@@ -125,10 +127,16 @@ public class RogueType : Enemy {
 				patrolSpeed *= -1;
 			}
 		}
-
-		if((DistanceToPlayer() <= chaseRadius) && within_LoS() && !check_Edge() && !disengaged){
-			reveal_Self(true); 
+			
+		if ((distanceFromPlayer <= chaseRadius) && within_LoS () && !check_Edge () && !disengaged) {
+			// Aggro the player
+			reveal_Self (); 
 			chasingPlayer = true;
+		} else if (distanceFromPlayer < chaseRadius * 2 && !chasingPlayer) {
+			// Become visible to the player;
+			uncloak ();
+		} else if (distanceFromPlayer > chaseRadius * 2 && !chasingPlayer) {
+			cloak ();
 		}
 
 		if (check_Stuck()) { //Turn around if stuck
@@ -139,7 +147,6 @@ public class RogueType : Enemy {
 
 
 	void chase_Player(){
-
 		/*Corrects the patrolSpeed of enemy depending on which side the player is on (Fixes raycast error in check_Edge())*/
 		if ((transform.position.x > playerTransform.position.x) && (Mathf.Sign(patrolSpeed)) == -1) {
 			patrolSpeed *= -1;
@@ -164,6 +171,7 @@ public class RogueType : Enemy {
 				this.transform.localScale = new Vector3 (transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
 			}
 		}
+
 		if(check_Edge()){
 			if (gameObject.activeInHierarchy){
 				StartCoroutine(break_Contact ());
@@ -173,22 +181,32 @@ public class RogueType : Enemy {
 		
 
 	/*Reveal self once player is in range*/
-	void reveal_Self(bool x){
-		if (x) {
-			sr.color = new Color (1f, 1f, 1f, 1f); //Change alpha to 1
-			GameObject smokeObj = Instantiate (smokePuff, transform.position, Quaternion.identity); //Instantiate smoke screen
-			Destroy (smokeObj, 2);
-			hidden = false;
-		}
+	void reveal_Self(){
+		changeOpacity (1f); //Change alpha to 1
+		GameObject smokeObj = Instantiate (smokePuff, transform.position, Quaternion.identity); //Instantiate smoke screen
+		Destroy (smokeObj, 2);
+		hidden = false;
 	}
 
 
 	/*Hide self once chase has ended*/
-	void hide_Self(bool x){
-		if(!x){
-			sr.color = new Color (1f, 1f, 1f, .2f); //Sneaky sneak
-			hidden = true;
-		}
+	void HideSelf() {
+		Debug.Log("hiding self");
+		changeOpacity (0.2f); //Sneaky sneak
+		hidden = true;
+	}
+
+
+	void uncloak() {
+		changeOpacity (0.2f);
+	}
+
+	void cloak() {
+		changeOpacity (0f);
+	}
+
+	void changeOpacity(float opacity) {
+		sr.color = new Color (sr.color.r, sr.color.g, sr.color.b, opacity);
 	}
 
 
@@ -201,7 +219,7 @@ public class RogueType : Enemy {
 
 			// If the enemy is hidden, make it come out of stealth and chase the player
 			if (hidden) {
-				reveal_Self (true);
+				reveal_Self ();
 				chasingPlayer = true;
 
 				// Make the enemy sprint to close the distance gap
@@ -243,6 +261,14 @@ public class RogueType : Enemy {
 
 	// Particle collision for electricity
 	void OnParticleCollision(GameObject other){
+		if (hidden) {
+			hidden = false;
+			changeOpacity (1f);
+			chasingPlayer = true;
+		}
+
+		// Make the enemy sprint to close the distance gap
+		StartCoroutine(Sprint(sprintDuration));
 		ElectricShock (other.tag);
 	}
 		
@@ -258,6 +284,7 @@ public class RogueType : Enemy {
 		
 	/*Allow enemy a moment to turn away from harmful contact before engaging player again*/
 	IEnumerator break_Contact(){
+		HideSelf();
 		enraged = false;
 		chasingPlayer = false;
 		disengaged = true;
@@ -275,6 +302,23 @@ public class RogueType : Enemy {
 		enraged = false;
 	}
 
+	/*
+	IEnumerator SpriteFade(float targetValue, float duration) {
+		if (targetValue >= 0f && targetValue <= 1.0f) {
+			fading = true;
+			var SR = gameObject.GetComponent<SpriteRenderer> ();
+			float opacity = SR.color.a;
+			Debug.Log (Mathf.Abs (opacity - targetValue));
+			while (Mathf.Abs (opacity - targetValue) < 0.01) {
+				Debug.Log ("fading sprite in loop");
+				opacity = opacity - 0.01f;
+				SR.color = new Color (1f, 1f, 1f, opacity);
+			}
+		}
+		yield return new WaitForSeconds (1f);
+		fading = false;
+	}
+	*/
 
 	IEnumerator Sprint(float duration) {
 		chaseSpeed = sprintSpeed;

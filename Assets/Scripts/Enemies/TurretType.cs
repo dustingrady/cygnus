@@ -62,7 +62,9 @@ public class TurretType : Enemy {
 
 
 	void guard_Area(){
-		if (arcLimit && within_Arc (playerTransform.position) && within_LoS ()) {
+		if (stunned) {
+			line.enabled = false;
+		} else if (arcLimit && within_Arc (playerTransform.position) && within_LoS ()) {
 			line.enabled = true;
 			draw_And_Shoot ();
 		} else if (!arcLimit && within_LoS ()) {
