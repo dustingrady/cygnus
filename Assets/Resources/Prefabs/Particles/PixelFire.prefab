@@ -69,7 +69,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1917362252073498}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.76, y: -1.41, z: -0.16015625}
+  m_LocalPosition: {x: 10.077826, y: 1.7356482, z: -0.22530845}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children:
   - {fileID: 4731913741710894}
@@ -132,7 +132,7 @@ ParticleSystem:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1890843203269298}
   serializedVersion: 5
-  lengthInSec: 2.92
+  lengthInSec: 1.82
   simulationSpeed: 1
   stopAction: 0
   looping: 1
@@ -185,14 +185,14 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -329256632
+  randomSeed: 506685585
   InitialModule:
     serializedVersion: 3
     enabled: 1
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 3.36
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -745,7 +745,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 52.87
+      scalar: 46.78
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -1285,7 +1285,7 @@ ParticleSystem:
     y:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 2.39
+      scalar: 0.4
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -3493,7 +3493,7 @@ ParticleSystem:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1062568626993888}
   serializedVersion: 5
-  lengthInSec: 2.92
+  lengthInSec: 1.82
   simulationSpeed: 1
   stopAction: 0
   looping: 1
@@ -3546,14 +3546,14 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1642570168
+  randomSeed: -139825596
   InitialModule:
     serializedVersion: 3
     enabled: 1
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 3.36
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -4106,7 +4106,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 52.87
+      scalar: 37.23
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -4646,7 +4646,7 @@ ParticleSystem:
     y:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 2.39
+      scalar: 0.4
       minScalar: 0
       maxCurve:
         serializedVersion: 2

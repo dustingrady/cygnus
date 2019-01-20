@@ -12,12 +12,18 @@ public class BossEnemy : Enemy {
 	private Area1Boss bs;
 	public float shootRadius = 15.0f; //How far our turret enemies can see
 
+	BossHealthBar healthBar;
+
 	// Use this for initialization
 	void Start () {
 		base.Start (); // Call the based enemy Start() function
 		FloatingTextController.Initialize ();
 		bs = gameObject.GetComponent<Area1Boss>();
 		rb.constraints = RigidbodyConstraints2D.FreezeAll;
+
+		// find ui
+		healthBar = GameObject.Find("BossHealthBar").GetComponent<BossHealthBar>();
+		healthBar.Enable ((int)hitpoints);
 	}
 
 
@@ -52,10 +58,12 @@ public class BossEnemy : Enemy {
 
 	/*Are we still alive?*/
 	private void Check_Health() {
+		healthBar.SetCurrentHealth (hitpoints);
 		if(hitpoints <= 0){
 			//Destroy(this.gameObject);
 			//Instantiate (bossRagdoll, this.transform.position, Quaternion.identity);	//Instantiate dead boss
 			gameObject.SetActive(false);
+			healthBar.Disable();
 		}
 	}
 		

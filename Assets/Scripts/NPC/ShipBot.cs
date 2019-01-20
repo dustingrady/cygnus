@@ -41,7 +41,7 @@ public class ShipBot : MonoBehaviour {
 
 			if (gm.CheckQuestComplete (0) == false) {
 				talker.tree = outsideDialogue;
-			} else if (gm.CheckQuestComplete(1) == false) {
+			} else if (gm.CheckQuestComplete (1) == false) {
 				talker.tree = gloveDialogue;
 				transform.position = new Vector3 (6.5f, -8.5f, 0f);
 			} else {
@@ -108,7 +108,7 @@ public class ShipBot : MonoBehaviour {
 				completed++;
 			}
 		}
-
+		Debug.Log (completed);
 		return completed;
 	}
 }

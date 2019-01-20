@@ -13,4 +13,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Collect Desert Part
   id: 399
-  completed: 0
+  completed: 1

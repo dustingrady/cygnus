@@ -22,19 +22,25 @@ public class ChangeCursor : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 	public void OnPointerEnter(PointerEventData eventData) {
 		cursorImg.sprite = replacement;
 
-		plrShooting.enabled = false;
+		if (plrShooting != null) {
+			plrShooting.enabled = false;
+		}
 	}
 
 	public void OnPointerExit(PointerEventData eventData) {
 		cursorImg.sprite = original;
 
-		plrShooting.enabled = true;
+		if (plrShooting != null) {
+			plrShooting.enabled = true;
+		}
 	}
 
 	public void OnPointerClick(PointerEventData eventData) {
 		cursorImg.sprite = original;
 
-		plrShooting.enabled = true;
+		if (plrShooting != null) {
+			plrShooting.enabled = true;
+		}
 	}
 
 

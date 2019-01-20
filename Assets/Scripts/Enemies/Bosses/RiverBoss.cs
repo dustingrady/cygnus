@@ -38,6 +38,7 @@ public class RiverBoss : Enemy {
 
 	private AudioController ac;
 
+	private BossHealthBar healthBar;
 
 	void Start() {
 		base.Start ();
@@ -57,6 +58,10 @@ public class RiverBoss : Enemy {
 		es = GetComponent<EnemyShooting>();
 		lr = GetComponent<LineRenderer> ();
 
+		// Find UI
+		healthBar = GameObject.Find("BossHealthBar").GetComponent<BossHealthBar>();
+		healthBar.Enable ((int)hitpoints);
+
 		// Begin target shifting
 		StartCoroutine (ChangeTargetPos(moveRetargetFreq));
 		StartCoroutine (ChangeModeRoutine (modeTimer));
@@ -64,6 +69,8 @@ public class RiverBoss : Enemy {
 
 
 	void Update() {
+		healthBar.SetCurrentHealth (hitpoints);
+
 		EvaluateEnergy ();
 		CheckIslandSpawn ();
 		EvaluateHealth ();
@@ -187,6 +194,9 @@ public class RiverBoss : Enemy {
 	void CheckIslandSpawn() {
 		if (hitpoints <= 0) {
 			Debug.Log ("Spawning end island");
+
+			// disable bar
+			healthBar.Disable ();
 
 			ac.source.Stop ();
 			ac.source.clip = ac.audio [0]; //Switch to default (or victory) music

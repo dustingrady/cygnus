@@ -13,4 +13,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: ShipFire
   id: 1
-  completed: 0
+  completed: 1

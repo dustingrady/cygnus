@@ -54,19 +54,19 @@ public class MapController : MonoBehaviour
 
 		// Change the player's facing direction based on directional movement
 		if (Input.GetAxis ("Horizontal") > 0) {
-			transform.localScale = new Vector3 (1, transform.localScale.y, transform.localScale.z);
+			transform.localScale = new Vector3 (0.5f, transform.localScale.y, transform.localScale.z);
 			facingLeft = false;
 		} else if (Input.GetAxis ("Horizontal") < 0) {
-			transform.localScale = new Vector3 (-1, transform.localScale.y, transform.localScale.z);
+			transform.localScale = new Vector3 (-0.5f, transform.localScale.y, transform.localScale.z);
 			facingLeft = true;
 		}
 
 
 		// Determine if the player is standing or running
-		if (Input.GetAxis("Horizontal") > 0.001 || Input.GetAxis("Horizontal") < -0.001) {
+		if (Mathf.Abs(Input.GetAxis("Horizontal")) > 0.001 || Mathf.Abs(Input.GetAxis("Vertical")) > 0.001f) {
 				playerAnim.SetInteger ("State", 1);
 		}
-		else if (Input.GetAxis("Horizontal") <= 0.001 && Input.GetAxis("Horizontal") >= -0.001) {
+		else if (Mathf.Abs(Input.GetAxis("Horizontal")) <= 0.001 && Mathf.Abs(Input.GetAxis("Vertical")) <= 0.001f) {
 				playerAnim.SetInteger ("State", 0);
 		}
     }

@@ -109,9 +109,17 @@ public class ElementUI : MonoBehaviour {
 		Transform rightElement = transform.Find ("RightElement");
 		Transform centerElement = transform.Find ("CenterElement");
 
-		leftElement.transform.localScale = Vector3.one;
-		rightElement.transform.localScale = Vector3.one;
-		centerElement.transform.localScale = Vector3.one;
+		if (leftElement != null) {
+			leftElement.transform.localScale = Vector3.one;
+		}
+
+		if (rightElement != null) {
+			rightElement.transform.localScale = Vector3.one;
+		}
+
+		if (centerElement != null) {
+			centerElement.transform.localScale = Vector3.one;
+		}
 
 		UpdateElements ();
 	}
@@ -122,9 +130,17 @@ public class ElementUI : MonoBehaviour {
 		Transform rightElement = transform.Find ("RightElement");
 		Transform centerElement = transform.Find ("CenterElement");
 
-		leftElement.transform.localScale = Vector3.zero;
-		rightElement.transform.localScale = Vector3.zero;
-		centerElement.transform.localScale = Vector3.zero;
+		if (leftElement != null) {
+			leftElement.transform.localScale = Vector3.zero;
+		}
+
+		if (rightElement != null) {
+			rightElement.transform.localScale = Vector3.zero;
+		}
+
+		if (centerElement != null) {
+			centerElement.transform.localScale = Vector3.zero;
+		}
 
 		UpdateElements ();
 	}

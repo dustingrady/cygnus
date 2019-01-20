@@ -11,7 +11,6 @@ public class CaveGuardian : MonoBehaviour {
 	public bool activated;
 	public bool respawned = false;
 	private EnemyShooting es;
-	private TurretType turret;
 	CinemachineBasicMultiChannelPerlin pn;
 
 	// Use this for initialization
@@ -23,12 +22,9 @@ public class CaveGuardian : MonoBehaviour {
 		es = GetComponent<EnemyShooting> ();
 		es.enabled = false;
 
-		turret = GetComponent<TurretType> ();
-
 		GameObject cam = GameObject.Find ("FollowCM");
 		CinemachineVirtualCamera vc = cam.GetComponent<CinemachineVirtualCamera>();
 		pn = vc.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin> ();
-
 	}
 
 	void OnEnable() {

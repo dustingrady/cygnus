@@ -13,4 +13,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Collect Forest Part
   id: 199
-  completed: 0
+  completed: 1

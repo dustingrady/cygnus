@@ -14,16 +14,17 @@ MonoBehaviour:
   states:
   - text: Do you have the two pieces necessary to crack the door?
     choices:
-    - response: Yes
-      nextState: 1
-      dialogActions:
-      - {fileID: 11400000, guid: 7db003bd8fe6b7e4f9435b63e42976a4, type: 2}
-      dialogCondition: {fileID: 11400000, guid: d6b574b0602893045aaea70dff567904,
-        type: 2}
     - response: No
       nextState: 1
       dialogActions: []
       dialogCondition: {fileID: 0}
+    - response: Yes
+      nextState: 1
+      dialogActions:
+      - {fileID: 11400000, guid: 7db003bd8fe6b7e4f9435b63e42976a4, type: 2}
+      - {fileID: 11400000, guid: d372f9d8d49b5c547a81d540c71c9214, type: 2}
+      dialogCondition: {fileID: 11400000, guid: d6b574b0602893045aaea70dff567904,
+        type: 2}
     endTree: 0
   - text: 
     choices: []

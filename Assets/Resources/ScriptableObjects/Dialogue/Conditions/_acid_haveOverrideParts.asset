@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Name: _acid_haveOverrideParts
   m_EditorClassIdentifier: 
   requiredItems:
-  - ProtocolOverrideOne
-  - ProtocolOverrideTwo
+  - Protocol Override One
+  - Protocol Override Two

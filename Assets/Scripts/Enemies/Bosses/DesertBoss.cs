@@ -24,11 +24,17 @@ public class DesertBoss : Enemy {
 	public bool godLike;
 	CircleCollider2D cc;
 
+	// UI
+	BossHealthBar healthBar;
+
 	bool activated = true;
 
 	private void Awake(){
 		es = gameObject.GetComponent<EnemyShooting>();
 		ebarrier = GameObject.Find ("DesertBossBarrier");
+
+		// find ui
+		healthBar = GameObject.Find("BossHealthBar").GetComponent<BossHealthBar>();
 
 		startPos = transform.position;
 	}
@@ -42,10 +48,14 @@ public class DesertBoss : Enemy {
 
 		// Begin target shifting
 		StartCoroutine (ChangeTargetPos(moveRetargetFreq));
+
+		healthBar.Enable ((int)hitpoints);
 	}
 
 	void Update(){
 		if (activated == true) {
+			healthBar.SetCurrentHealth (hitpoints);
+
 			EvaluateHealth ();
 			CheckPhaseChange ();
 			Movement ();
@@ -89,6 +99,7 @@ public class DesertBoss : Enemy {
 		hitpoints -= amount;
 
 		if (hitpoints <= 0) {
+			healthBar.Disable();
 			Instantiate (shipPiece, transform.position, Quaternion.identity);
 			teleporter.SetActive (true);
 		}
@@ -118,6 +129,7 @@ public class DesertBoss : Enemy {
 		GetComponent<Rigidbody2D>().velocity = Vector3.zero;
 		inPhaseTwo = false;
 		activated = false;
+		healthBar.Disable();
 	}
 
 	protected override void takeDamage(float amount) {
