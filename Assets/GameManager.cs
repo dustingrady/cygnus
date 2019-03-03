@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.IO;
 
 [System.Serializable]
 public struct QuestInfo {
@@ -30,7 +31,6 @@ public class GameManager : MonoBehaviour {
 
 	[Header("User Settings")]
 	public float backgroundMusicVolume = 0.3f;
-
 
 	public int totalScrap = 0;
 	public int currentScrap = 0;
@@ -88,38 +88,6 @@ public class GameManager : MonoBehaviour {
 			Quest q = Instantiate (quest);
 			quests.Add (q);
 		}
-
-		SaveMan.SaveGame += OnSaveGame;
-		SaveMan.LoadGame += OnLoadGame;
-
-		// Hide the reticle if the player loads game without gloves
-		/*if (!hasGloves) {
-			GameObject.Find("Reticle").GetComponent<ReticleScreen>().DisableReticle();
-		}*/
-	}
-
-	// Update is called once per frame
-	void Update () {
-		CheckControllerStatus ();
-	}
-
-
-	// ------
-	// Input
-	// ------
-
-	void CheckControllerStatus() {
-		string[] joystickNames = Input.GetJoystickNames ();
-
-		if (joystickNames.Length > 0) {
-			foreach (var str in joystickNames) {
-				if (!string.IsNullOrEmpty (str) && controllerConnected == false) {
-					controllerConnected = true;
-				} else if (string.IsNullOrEmpty (str) && controllerConnected == true) {
-					controllerConnected = false;
-				}
-			}
-		}
 	}
 
 	// ------
@@ -159,6 +127,14 @@ public class GameManager : MonoBehaviour {
         dict.Add(SaveType.QUESTS, save_quests);
     }
 
+	public void SaveGame(int slot) {
+		Saver.SaveGame (slot);
+	}
+
+	public void LoadGame(int slot) {
+		Saver.LoadGame (slot);
+	}
+		
 	// ------
 	// Quests
 	// ------

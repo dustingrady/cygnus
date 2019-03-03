@@ -9,7 +9,7 @@ public class InGameMenuEventTrigger : EventTrigger {
 
 	// Use this for initialization
 	void Start () {
-		gamemanager  = GameObject.Find ("Game Manager");
+		gamemanager = GameObject.Find ("Game Manager");
 	}
 
 	public override void OnPointerClick(PointerEventData data)

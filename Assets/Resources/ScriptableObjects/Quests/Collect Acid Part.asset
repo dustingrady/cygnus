@@ -13,4 +13,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Collect Acid Part
   id: 299
-  completed: 1
+  completed: 0

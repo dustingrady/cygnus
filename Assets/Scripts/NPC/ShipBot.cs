@@ -61,7 +61,7 @@ public class ShipBot : MonoBehaviour {
 				} else if (collectedParts == 3) {
 					talker.tree = collected_three;
 				} else if (collectedParts == 4) {
-					talker.tree = collected_four;
+					Destroy (this.gameObject);
 				}
 			}
 		}
@@ -108,7 +108,7 @@ public class ShipBot : MonoBehaviour {
 				completed++;
 			}
 		}
-		Debug.Log (completed);
+
 		return completed;
 	}
 }

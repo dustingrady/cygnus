@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: inside_fire_out
   m_EditorClassIdentifier: 
   states:
-  - text: Well, we're not on fire anymore.  Unfortunately the Star Blaster lost four
-      parts in the crash that we need to escape this planet.
+  - text: Well, we're not on fire anymore.  Unfortunately the Cygni lost four crucial
+      parts in the crash.
     choices:
     - response: Okay.
       nextState: 1

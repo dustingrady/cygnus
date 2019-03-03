@@ -18,7 +18,7 @@ MonoBehaviour:
       nextState: 1
       dialogActions: []
       dialogCondition: {fileID: 0}
-    - response: How do I extinguish?
+    - response: How do I extinguish it?
       nextState: 2
       dialogActions: []
       dialogCondition: {fileID: 0}
@@ -51,7 +51,7 @@ MonoBehaviour:
       dialogCondition: {fileID: 0}
     endTree: 0
   - text: My scanners show a relic with the power to control the elements in the ruins
-      to the southwest.  Go check it out, I'll watch the flames.
+      to the southwest.  Go check it out, I'll keep watching our future go up in flames.
     choices:
     - response: I'm on it!
       nextState: 3

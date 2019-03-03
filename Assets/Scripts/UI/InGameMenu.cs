@@ -14,6 +14,7 @@ public class InGameMenu : MonoBehaviour {
 	void OnLevelWasLoaded(){
 		if (GameObject.Find ("UI") != null) {
 			inGameMenu = GameObject.Find ("UI").transform.Find ("InGameMenu").gameObject;
+			drop = GameObject.Find ("File").GetComponent<Dropdown> ();
 			hideMenu ();
 		}
 	}
@@ -22,6 +23,7 @@ public class InGameMenu : MonoBehaviour {
 	void Start () {
 		if (GameObject.Find ("UI") != null) {
 			inGameMenu = GameObject.Find ("UI").transform.Find ("InGameMenu").gameObject;
+			drop = GameObject.Find ("File").GetComponent<Dropdown> ();
 			hideMenu ();
 		}
 	}
@@ -43,7 +45,7 @@ public class InGameMenu : MonoBehaviour {
 
     public void ChangeSlot() {
         slot = drop.value + 1;
-        Debug.Log("New Slot: " + slot.ToString());
+        Debug.Log("New Slot: " + slot);
     }
 
 	void showMenu()
@@ -69,15 +71,14 @@ public class InGameMenu : MonoBehaviour {
 
 	public void Save()
 	{
-		Debug.Log ("Saving");
+		Saver.SaveGame (drop.value + 1);
         Resume();
-        SaveMan.Save((SaveSlot)slot);
 	}
 
 	public void Load(){
 		Debug.Log ("Load");
+		Saver.LoadGame (drop.value + 1);
         Resume();
-        SaveMan.Load((SaveSlot)slot);
 	}
 
 	public void VolumeSlider(float val) {

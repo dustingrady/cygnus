@@ -12,13 +12,17 @@ public class AudioFader : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		audio = GetComponent<AudioSource> ();
+		if (useBackgroundVolumeAsTarget) {
+			endVolume = GameManager.instance.backgroundMusicVolume;
+			console.log (endVolume);
+		}
+		audio = GameManager.instance.GetComponent<AudioSource> ();
 		audio.volume = startVolume;
-		endVolume = useBackgroundVolumeAsTarget ? GameManager.instance.backgroundMusicVolume : endVolume;
 	}
 
 	void Update() {
-		if (audio.volume < endVolume) {
+		var targetVolume = useBackgroundVolumeAsTarget ? GameManager.instance.backgroundMusicVolume : endVolume;
+		if (audio.volume < targetVolume) {
 			audio.volume += (Time.deltaTime * endVolume) / fadeTime;
 		}
 	}

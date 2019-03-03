@@ -13,4 +13,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Collect Phuc Part
   id: 499
-  completed: 1
+  completed: 0

@@ -33,9 +33,7 @@ public class InventoryInput : MonoBehaviour {
 			if (Input.GetKeyDown (keys[i])) {
 				if (inventory.items [i] != null) {
 					Debug.Log (inventory.items [i].name + " " + inventory.items [i].checkType ());
-					Debug.Log ("type: " + inventory.items [i].checkType ());
 					if (inventory.items [i].checkType ()) {
-						Debug.Log ("using the item!");
 						inventory.items [i].useItem ();
 						inventory.updateStack (inventory.items [i]);
 					}

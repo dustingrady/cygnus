@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Name: outside_got_gloves
   m_EditorClassIdentifier: 
   states:
-  - text: Great, you found the gloves.  Now shoot an absorber pellet (ctrl + left
-      click) at the water to take in the element into your left hand.
+  - text: Why are you talking to me?  Use this water here to save your ship!
     choices:
     - response: Then what?
       nextState: 1
@@ -32,29 +31,10 @@ MonoBehaviour:
       dialogActions: []
       dialogCondition: {fileID: 0}
     endTree: 0
-  - text: Shoot water (left click) at our ship to put it out.
-    choices:
-    - response: OK
-      nextState: 2
-      dialogActions: []
-      dialogCondition: {fileID: 0}
-    - response: 
-      nextState: -1
-      dialogActions: []
-      dialogCondition: {fileID: 0}
-    - response: 
-      nextState: -1
-      dialogActions: []
-      dialogCondition: {fileID: 0}
-    - response: 
-      nextState: -1
-      dialogActions: []
-      dialogCondition: {fileID: 0}
-    endTree: 0
   - text: END
     choices:
     - response: 
-      nextState: -1
+      nextState: 0
       dialogActions: []
       dialogCondition: {fileID: 0}
     - response: 

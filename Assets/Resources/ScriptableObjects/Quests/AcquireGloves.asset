@@ -13,4 +13,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Acquire Gloves
   id: 0
-  completed: 1
+  completed: 0

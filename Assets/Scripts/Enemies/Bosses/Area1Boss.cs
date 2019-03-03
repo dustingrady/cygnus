@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class Area1Boss : MonoBehaviour {
 	[SerializeField]
@@ -10,6 +11,12 @@ public class Area1Boss : MonoBehaviour {
 	[SerializeField]
 	private GameObject nade;
 	public GameObject exit; 
+	public GameObject shipPiece;
+
+	public CinemachineVirtualCamera cam;
+	public bool expandingCamera = false;
+	private float originalCameraSize;
+	public Sprite phaseThreeSprite;
 
 	private Transform enemyTransform;
 	private Vector3 startingpos;
@@ -40,6 +47,10 @@ public class Area1Boss : MonoBehaviour {
 		StartCoroutine(changeTar());
 		GameObject camera = GameObject.Find("Main Camera");
 		ac = camera.GetComponent<AudioController>();
+
+		cam = GameObject.Find ("FollowCM").gameObject.GetComponent<CinemachineVirtualCamera> ();
+		expandingCamera = true;
+		originalCameraSize = cam.m_Lens.OrthographicSize;
 	}
 
 	void moveaninch(){
@@ -64,13 +75,22 @@ public class Area1Boss : MonoBehaviour {
 			ac.source.clip = ac.audio [0]; 
 			ac.source.Play ();
 		}
+
+		if (expandingCamera) {
+			cam.m_Lens.OrthographicSize += 1.5f * Time.deltaTime;
+
+			if (cam.m_Lens.OrthographicSize > 12) {
+				expandingCamera = false;
+				//this.gameObject.SetActive (false);
+			}
+		}
 	}
 
 	void determineState(){
-		if ((gameObject.GetComponent<BossEnemy> ().getHealth () / maxHealth) > 0.7f) {
+		if ((gameObject.GetComponent<BossEnemy> ().getHealth () / maxHealth) > 0.8f) {
 			atkState = attackState.healthy;
 		}
-		if ((gameObject.GetComponent<BossEnemy> ().getHealth () / maxHealth) <= 0.7f && (gameObject.GetComponent<BossEnemy> ().getHealth () / maxHealth) > 0.3f) {
+		if ((gameObject.GetComponent<BossEnemy> ().getHealth () / maxHealth) <= 0.8f && (gameObject.GetComponent<BossEnemy> ().getHealth () / maxHealth) > 0.3f) {
 			atkState = attackState.halfhealth;
 		}
 		if ((gameObject.GetComponent<BossEnemy> ().getHealth () / maxHealth) <= 0.3f) {
@@ -116,7 +136,7 @@ public class Area1Boss : MonoBehaviour {
 				GameObject grenade = Instantiate(nade, enemyTransform.position, enemyTransform.rotation) as GameObject;
 				Vector2 dir = (player.transform.position - transform.position);
 				dir = new Vector2 (dir.x, dir.y + 2).normalized;
-				grenade.GetComponent<Rigidbody2D> ().AddForce (dir * 10f);
+				grenade.GetComponent<Rigidbody2D> ().AddForce (dir * 5f);
 				baseAttackCount = 0;
 			}
 		}

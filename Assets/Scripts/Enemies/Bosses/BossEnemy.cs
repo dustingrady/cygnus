@@ -11,6 +11,7 @@ public class BossEnemy : Enemy {
 	private Transform enemyTransform;
 	private Area1Boss bs;
 	public float shootRadius = 15.0f; //How far our turret enemies can see
+	public GameObject shipPiece;
 
 	BossHealthBar healthBar;
 
@@ -60,8 +61,9 @@ public class BossEnemy : Enemy {
 	private void Check_Health() {
 		healthBar.SetCurrentHealth (hitpoints);
 		if(hitpoints <= 0){
-			//Destroy(this.gameObject);
-			//Instantiate (bossRagdoll, this.transform.position, Quaternion.identity);	//Instantiate dead boss
+			if (shipPiece != null) {
+				shipPiece.SetActive (true);
+			}
 			gameObject.SetActive(false);
 			healthBar.Disable();
 		}

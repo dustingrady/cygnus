@@ -6,7 +6,7 @@ using UnityEngine;
 public class EMP : Item {
 
     public string description;
-    private bool consumable = true;
+    private bool consumable = false;
 	Player player;
 	float speed = 2000.0f;
 	GameObject nade;

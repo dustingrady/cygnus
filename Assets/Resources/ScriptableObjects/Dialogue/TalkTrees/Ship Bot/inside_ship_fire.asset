@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Name: inside_ship_fire
   m_EditorClassIdentifier: 
   states:
-  - text: Hey captain, I just sent out a distress signal.  I'd like to keep chatting,
-      but the ship is indeed on fire.  Lets continue this outside, shall we?
+  - text: Hey captain, you're awake, thats great.  I just sent out a distress signal.  I'd
+      like to keep chatting, but the ship is indeed on fire.  Lets continue this outside,
+      shall we?
     choices:
     - response: Who are you?
       nextState: 1
@@ -32,7 +33,8 @@ MonoBehaviour:
       dialogActions: []
       dialogCondition: {fileID: 0}
     endTree: 0
-  - text: Did you hit your head in the crash?  I'm Piptip, your assistant.
+  - text: Did you hit your head in the crash?  I'm Piptip, your always faithful and
+      loyal assistant.
     choices:
     - response: OK
       nextState: 0

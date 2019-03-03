@@ -83,11 +83,7 @@ public class RiverBoss : Enemy {
 
 	void OnTriggerEnter2D(Collider2D col) {
 		if (damagingElements.Contains (col.gameObject.tag)) {
-			if (fireMode) {
-				takeDamage (edmg.determine_Damage (col.gameObject.tag, Elements.fire));
-			} else {
-				takeDamage (edmg.determine_Damage (col.gameObject.tag, Elements.water));
-			}
+			takeDamage (edmg.determine_Damage (col.gameObject.tag, Elements.earth));
 		}
 	}
 		

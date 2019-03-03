@@ -4,8 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class ElementUI : MonoBehaviour {
-
-
 	private Player plr;
 	public Image leftElementImg;
 	public Image leftElementImgCd;
@@ -34,8 +32,10 @@ public class ElementUI : MonoBehaviour {
 		}
 
 		Absorber.OnAbsorb += UpdateElements;
+	}
 
-		// Add Cooldown visual delegate here
+	void OnDestroy() {
+		Absorber.OnAbsorb -= UpdateElements;
 	}
 
 	void Update()	{
@@ -58,8 +58,16 @@ public class ElementUI : MonoBehaviour {
 	}
 
 	public void UpdateElements() {
+		if (GameObject.FindGameObjectWithTag ("Player") != null) {
+			plr = GameObject.FindGameObjectWithTag ("Player").GetComponent<Player> ();
+		}
+
 		if (plr.leftElement != null) {
 			prevLeftE = leftElementImgCd.sprite;
+
+			if (leftElementImg.enabled == false) {
+				Debug.Log ("component is disabled");
+			}
 
 			leftElementImg.sprite = plr.leftElement.sprite;
 			leftElementImgCd.sprite =  plr.leftElement.sprite;

@@ -26,6 +26,7 @@ public class PlayerController: MonoBehaviour {
 	private float gravity = 20;
 
 	private bool grounded;
+	private bool stunned = false;
 
 	[Range(0.01f, 5.0f)]
 	public float jumpTravel = 1.8f;
@@ -80,8 +81,8 @@ public class PlayerController: MonoBehaviour {
 		}
 
 		Vector3[] headPos = new Vector3[] { transform.position, 
-			new Vector3 (transform.position.x - col.bounds.extents.x + 0.06f, transform.position.y, transform.position.z),
-			new Vector3 (transform.position.x + col.bounds.extents.x, transform.position.y, transform.position.z)
+			new Vector3 (transform.position.x - col.bounds.extents.x - 0.01f, transform.position.y, transform.position.z),
+			new Vector3 (transform.position.x + col.bounds.extents.x - 0.05f, transform.position.y, transform.position.z)
 		};
 
 		foreach (Vector3 pos in headPos)
@@ -101,7 +102,7 @@ public class PlayerController: MonoBehaviour {
 		}
 
 		// Normal jump
-		else if (Input.GetButtonDown("Jump") && JumpCheck()) {
+		else if (Input.GetButtonDown("Jump") && JumpCheck() && !stunned) {
 			StartCoroutine("JumpCurve");
 		}
 
@@ -120,7 +121,9 @@ public class PlayerController: MonoBehaviour {
 			GrappleMove();
 		} else {
 			rb.AddForce(Vector3.down * gravity * rb.mass); // Add more weight to the player
-			Move();
+			if (!stunned) {
+				Move ();
+			}
 		}
 
 		if (JumpCheck ()) {
@@ -187,13 +190,13 @@ public class PlayerController: MonoBehaviour {
 	{
 		LayerMask playerMask = 1 << LayerMask.NameToLayer ("Ground") << LayerMask.NameToLayer("Default");
 		Vector3[] castPos = new Vector3[] { transform.position, 
-			new Vector3 (transform.position.x - col.bounds.extents.x + 0.06f, transform.position.y, transform.position.z),
-			new Vector3 (transform.position.x + col.bounds.extents.x, transform.position.y, transform.position.z)
+			new Vector3 (transform.position.x - col.bounds.extents.x - 0.01f, transform.position.y, transform.position.z),
+			new Vector3 (transform.position.x + col.bounds.extents.x - 0.05f, transform.position.y, transform.position.z)
 		};
 
 		foreach (Vector3 pos in castPos)
 		{
-			Debug.DrawRay (pos, Vector3.up, Color.red);
+			//Debug.DrawRay (pos, Vector3.up, Color.red);
 			if (Physics2D.Raycast(pos, Vector2.up, col.bounds.extents.y + 0.2f, playerMask).collider != null)
 			{
 				return false;
@@ -230,6 +233,16 @@ public class PlayerController: MonoBehaviour {
 		rb.gravityScale = 1;
 	}
 
+	public void Stun() {
+		Debug.Log ("stunning player");
+		stunned = true;
+	}
+
+	public void Unstun() {
+		Debug.Log ("unstunning player");
+		stunned = false;
+	}
+
 	public GrappleState Grapple{
 		set
 		{
@@ -259,6 +272,7 @@ public class PlayerController: MonoBehaviour {
     // -- Jahn
 	void OnCollisionEnter2D(Collision2D col) {
 		if (!CheckClearance ()) {
+			Debug.Log("hit my head!");
 			StopCoroutine("JumpCurve");
 		}
 	}

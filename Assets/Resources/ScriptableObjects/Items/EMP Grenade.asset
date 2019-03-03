@@ -11,5 +11,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19b674773cbcae74285ad18b01dcce06, type: 3}
   m_Name: EMP Grenade
   m_EditorClassIdentifier: 
+  itemName: 
   sprite: {fileID: 21300022, guid: f95e0d462dcb49f4c9c6f288fded5615, type: 3}
-  description: A powerful device. Use with care.
+  description: Fires a shield disruption grenade

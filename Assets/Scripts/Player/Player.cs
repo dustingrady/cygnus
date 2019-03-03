@@ -19,12 +19,13 @@ public struct SerPosition {
 
 
 public class Player : MonoBehaviour {
-
     [SerializeField]
     public Stat health;
 	public Element leftElement;
 	public Element rightElement;
     public Element centerElement;
+
+	public Sprite stunnedSprite;
 
 	public bool stunned = false;
 	bool onFire = false;
@@ -72,19 +73,27 @@ public class Player : MonoBehaviour {
 		//Reference to Audio Controller
 		GameObject camera = GameObject.Find("Main Camera");
 		ac = camera.GetComponent<AudioController>();
+
+		// Ensure the game manager has the correct reference
+		GameManager.instance.player = this.gameObject;
+
+		// Check to see if the Saver was used to load and set player position;
+		if (Saver.loading == true) {
+			transform.position = Saver.position;
+			Saver.loading = false;
+		} else {
+			Debug.Log ("started without loading");
+		}
+
     }
 	
 	// Update is called once per frame
 	void Update () {
 		CheckHealth ();
 
-
 		if (stunned) {
-			StartCoroutine (stunnedPlayer());
+			StartCoroutine (StunPlayer(1f));
 		}
-		//if(Input.GetKeyDown("space")) {
-		//	StopCoroutine(acidDamageCoroutine);
-		//}
     }
 
 	public void Knockback (float strength, Vector2 dir) {
@@ -333,29 +342,36 @@ public class Player : MonoBehaviour {
 	 *
 	 */
 
-	//Stunned
-	IEnumerator stunnedPlayer() {
-		//Debug.Log ("Player stunned");
+	public IEnumerator StunPlayer (float duration) {
+		var animator = GetComponent<Animator> ();
+		var controller = GetComponent<PlayerController> ();
+		var shooting = GetComponent<PlayerShooting> ();
+
 		float height = GetComponent<Collider2D>().bounds.extents.y + 0.5f;
 		GameObject swirlObj = Instantiate (stunSwirl, new Vector2(transform.position.x, transform.position.y + height), Quaternion.identity); //Instantiate exclamation point
-		StartCoroutine(fade_Out(swirlObj)); 
-		//swirlObj.transform.Rotate (0, 0, Time.deltaTime * 60); //Trying to rotate swirl here
 		swirlObj.transform.parent = this.transform;
-		Destroy (swirlObj, 1.25f);
 
-		GetComponent<PlayerController> ().enabled = false;
-		GetComponent<Animator> ().enabled = false;
+		// stun the player
+		controller.Stun ();
+		animator.SetInteger ("State", 0);
+		animator.enabled = false;
+		shooting.enabled = false;
+		GetComponent<SpriteRenderer> ().sprite = stunnedSprite;
 
-		yield return new WaitForSeconds (1);
+		// set timeout
+		yield return new WaitForSeconds (duration);
 
-		GetComponent<PlayerController> ().enabled = true;
-		GetComponent<Animator> ().enabled = true;
+		// unstun the player
+		animator.enabled = true;
+		shooting.enabled = true;
+		controller.Unstun ();
+		Destroy (swirlObj);
 		stunned = false;
 	}
 
 	IEnumerator fade_Out(GameObject x){
 		SpriteRenderer passed = x.GetComponent<SpriteRenderer> ();
-		float time = 1f;
+		float time = 0.5f;
 		while(passed.color.a > 0){
 			passed.color = new Color(passed.color.r, passed.color.g, passed.color.b, passed.color.a - (Time.deltaTime / time));
 			//passed.color -= Time.deltaTime / time;

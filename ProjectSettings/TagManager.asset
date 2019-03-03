@@ -38,6 +38,7 @@ TagManager:
   - EMP
   - Barrier
   - ProtocolGrenade
+  - BossIgnite
   layers:
   - Default
   - TransparentFX

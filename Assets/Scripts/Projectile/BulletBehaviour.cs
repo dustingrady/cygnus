@@ -48,7 +48,7 @@ public class BulletBehaviour : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D col){
-			Destroy (this.gameObject);
+		Destroy (this.gameObject);
 	}
 
 	public void setBullet(string s)

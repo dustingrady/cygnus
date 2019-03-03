@@ -46390,6 +46390,7 @@ GameObject:
   - component: {fileID: 663337633}
   - component: {fileID: 663337635}
   - component: {fileID: 663337634}
+  - component: {fileID: 663337636}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -46447,7 +46448,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Save Two
+  m_Text: 'No save file found!
 
 '
 --- !u!222 &663337635
@@ -46456,6 +46457,18 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 663337632}
+--- !u!114 &663337636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 663337632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bac738f55f8c9454abb282820242d9b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  saveSlot: 2
 --- !u!1 &674441139
 GameObject:
   m_ObjectHideFlags: 0
@@ -46816,6 +46829,7 @@ MonoBehaviour:
   startVolume: 0
   endVolume: 0.4
   fadeTime: 3
+  useBackgroundVolumeAsTarget: 0
   audio: {fileID: 0}
 --- !u!1 &769399494
 GameObject:
@@ -48013,7 +48027,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 7.7413177, y: -78}
-  m_SizeDelta: {x: 200, y: 44.9}
+  m_SizeDelta: {x: 800, y: 44.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1341352490
 MonoBehaviour:
@@ -48054,13 +48068,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1958153618}
-        m_MethodName: SaveTwo
-        m_Mode: 1
+      - m_Target: {fileID: 2014325164}
+        m_MethodName: LoadGame
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 2
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -49197,6 +49211,7 @@ GameObject:
   - component: {fileID: 1504500770}
   - component: {fileID: 1504500772}
   - component: {fileID: 1504500771}
+  - component: {fileID: 1504500773}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -49254,13 +49269,25 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Save Three
+  m_Text: No save file found!
 --- !u!222 &1504500772
 CanvasRenderer:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1504500769}
+--- !u!114 &1504500773
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1504500769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bac738f55f8c9454abb282820242d9b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  saveSlot: 3
 --- !u!1 &1515752354
 GameObject:
   m_ObjectHideFlags: 0
@@ -50195,6 +50222,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallingPrefab: {fileID: 0}
+  respawnTime: 5
 --- !u!19719996 &1610379811
 TilemapCollider2D:
   m_ObjectHideFlags: 0
@@ -50484,7 +50512,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 7.7413177, y: -156.3}
-  m_SizeDelta: {x: 215.75, y: 44.9}
+  m_SizeDelta: {x: 800, y: 44.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1656546657
 MonoBehaviour:
@@ -50525,13 +50553,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1958153618}
-        m_MethodName: SaveThree
-        m_Mode: 1
+      - m_Target: {fileID: 2014325164}
+        m_MethodName: LoadGame
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 3
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -52429,6 +52457,7 @@ GameObject:
   - component: {fileID: 1879173668}
   - component: {fileID: 1879173670}
   - component: {fileID: 1879173669}
+  - component: {fileID: 1879173671}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -52486,13 +52515,25 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Save One
+  m_Text: No save file found!
 --- !u!222 &1879173670
 CanvasRenderer:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1879173667}
+--- !u!114 &1879173671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1879173667}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bac738f55f8c9454abb282820242d9b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  saveSlot: 1
 --- !u!1 &1931772200
 GameObject:
   m_ObjectHideFlags: 0
@@ -68871,7 +68912,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 7.7413177, y: 0}
-  m_SizeDelta: {x: 200, y: 44.9}
+  m_SizeDelta: {x: 800, y: 44.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1964142435
 MonoBehaviour:
@@ -68912,13 +68953,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1958153618}
-        m_MethodName: SaveOne
-        m_Mode: 1
+      - m_Target: {fileID: 2014325164}
+        m_MethodName: LoadGame
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -69179,6 +69220,12 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2007468946}
+--- !u!114 &2014325164 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114954801635025596, guid: 7ec1878d15ce676448a31ba7dbcb3a6f,
+    type: 2}
+  m_PrefabInternal: {fileID: 223223242}
+  m_Script: {fileID: 11500000, guid: cae6abb53a0ad1340a97afc2e0f903ac, type: 3}
 --- !u!1 &2120048822
 GameObject:
   m_ObjectHideFlags: 0

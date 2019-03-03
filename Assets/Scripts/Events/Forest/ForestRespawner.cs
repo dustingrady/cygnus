@@ -18,6 +18,10 @@ public class ForestRespawner : MonoBehaviour {
 		Player.OnDeath += Respawn;
 	}
 
+	void OnDestroy() {
+		Player.OnDeath -= Respawn;
+	}
+
 
 	void MakeClones() {
 		foreach (GameObject map in originalMaps) {

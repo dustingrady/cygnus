@@ -13,7 +13,6 @@ public class BossDoor : MonoBehaviour {
 	public bool bossAlive = true;
 	private AudioController ac;
 
-
 	void Start() {
 		Player.OnDeath += ResetDoor;
 		door.GetComponent<SpriteRenderer> ().enabled = false;
@@ -24,6 +23,10 @@ public class BossDoor : MonoBehaviour {
 		ac = camera.GetComponent<AudioController>();
 
 		boss.SetActive (false);
+	}
+
+	void OnDestroy() {
+		Player.OnDeath -= ResetDoor;
 	}
 
 	void OnTriggerEnter2D(Collider2D col) {

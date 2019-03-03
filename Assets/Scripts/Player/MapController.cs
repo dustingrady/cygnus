@@ -33,16 +33,6 @@ public class MapController : MonoBehaviour
 
     void Update()
     {
-		/*
-        if (Input.GetAxis("Horizontal") > 0)
-        {
-			transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z);
-        }
-        else if (Input.GetAxis("Horizontal") < 0)
-        {
-			transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
-        }
-*/
         if (onTop)
         {
             if (Input.GetKeyDown("e"))

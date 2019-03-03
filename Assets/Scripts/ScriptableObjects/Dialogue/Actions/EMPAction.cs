@@ -25,5 +25,9 @@ public class EMPAction : DialogueAction {
 			}
 		}
 		inv.addItem (EMP);
+		inv.stackItem (EMP);
+		inv.stackItem (EMP);
+		inv.stackItem (EMP);
+		inv.stackItem (EMP);
 	}
 }

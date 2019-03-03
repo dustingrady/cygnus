@@ -8,21 +8,17 @@ public class AudioController : MonoBehaviour {
 	public float startingVolume;
 
 	void Start () {
-		source = gameObject.GetComponent<AudioSource> ();
-
-		if (audio.Length > 0) {
-			source.volume = startingVolume;
+		source = GameManager.instance.GetComponent<AudioSource> ();
+		console.log (audio [0].name);
+		if (audio.Length > 0 && source.clip != audio [0]) {
 			source.clip = audio [0]; //First song in array will be main background track
 			source.Play ();
 		}
 	}
 
 	public void ChangeVolume(float val) {
+		console.log (val);
 		GameManager.instance.backgroundMusicVolume = val;
 		source.volume = val;
-	}
-	
-	void Update () {
-		
 	}
 }

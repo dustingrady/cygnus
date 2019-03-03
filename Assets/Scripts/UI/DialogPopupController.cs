@@ -12,7 +12,6 @@ public class DialogPopupController : MonoBehaviour {
 		canvas = GameObject.Find("UI");
 		if (!dialogPopup) {
 			dialogPopup = Resources.Load<GameObject> ("Prefabs/UI/DialogueDisplay");
-
 		}
 	}
 
@@ -20,6 +19,14 @@ public class DialogPopupController : MonoBehaviour {
 		GameObject instance = Instantiate (dialogPopup);
 		instance.gameObject.GetComponentInChildren<Text> ().text = msg;
 		instance.transform.SetParent (canvas.transform, false);
+		Destroy (instance, duration);
+	}
+
+	public static void CreateDialogPopupLocation(string msg, float duration, Vector3 position){
+		GameObject instance = Instantiate (dialogPopup);
+		instance.gameObject.GetComponentInChildren<Text> ().text = msg;
+		instance.transform.SetParent (canvas.transform, false);
+		instance.transform.position = new Vector3(400f, 75f, 0f);
 		Destroy (instance, duration);
 	}
 }
