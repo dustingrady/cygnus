@@ -11,15 +11,32 @@ public class TurretType : Enemy {
 	private EnemyShooting es;
 	private LineRenderer line;
 
+	[SerializeField]
+	private bool bossMode = false;
+
+	// UI
+	BossHealthBar healthBar;
+
 	void Start(){
 		base.Start ();
 
 		line = this.gameObject.GetComponent<LineRenderer>();
 		es = gameObject.GetComponent<EnemyShooting>();
+
+		// find ui
+		healthBar = GameObject.Find("BossHealthBar").GetComponent<BossHealthBar>();
 	}
 
 
 	void Update(){
+		if (hitpoints < 0) {
+			healthBar.Disable ();
+		} else {
+			if (bossMode) {
+				healthBar.SetCurrentHealth (hitpoints);
+			}
+		}
+
 		EvaluateHealth ();
 		EvaluateTolerance ();
 

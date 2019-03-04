@@ -70,6 +70,9 @@ public class BossDoor : MonoBehaviour {
 		}
 		boss.SetActive (false);
 
+		BossHealthBar healthBar = GameObject.Find("BossHealthBar").GetComponent<BossHealthBar>();
+		healthBar.Disable();
+
 		// Reenable the collider
 		GetComponent<BoxCollider2D> ().enabled = true;
 	}

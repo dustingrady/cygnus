@@ -96,10 +96,12 @@ public class ButlerBoss : Enemy {
 		//Reference to Audio Controller
 		GameObject camera = GameObject.Find("Main Camera");
 		ac = camera.GetComponent<AudioController>();
-		if (ac.audio.Length > 1 && ac.audio [1] != null) {
-			ac.source.Stop ();
-			ac.source.clip = ac.audio [1]; //Switch to boss music
-			ac.source.Play ();
+		if (ac != null) {
+			if (ac.audio.Length > 1 && ac.audio [1] != null) {
+				ac.source.Stop ();
+				ac.source.clip = ac.audio [1]; //Switch to boss music
+				ac.source.Play ();
+			}
 		}
 
 		// Find UI

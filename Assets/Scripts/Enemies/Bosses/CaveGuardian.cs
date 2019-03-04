@@ -35,7 +35,6 @@ public class CaveGuardian : MonoBehaviour {
 	void Update () {
 		if (activated == false && !respawned) {
 			if (Vector3.Distance (transform.position, targetPos) > 0.05f) {
-				Debug.Log (Vector3.Distance (transform.position, targetPos));
 				transform.position = Vector3.MoveTowards (transform.position, targetPos, speed * Time.deltaTime);
 				pn.m_AmplitudeGain = 0.3f;
 				pn.m_FrequencyGain = 8f;
@@ -44,6 +43,9 @@ public class CaveGuardian : MonoBehaviour {
 				col.enabled = true;
 				es.enabled = true;
 				activated = true;
+
+				BossHealthBar healthBar = GameObject.Find("BossHealthBar").GetComponent<BossHealthBar>();
+				healthBar.Enable (800);
 
 				pn.m_AmplitudeGain = 0;
 				pn.m_FrequencyGain = 0;

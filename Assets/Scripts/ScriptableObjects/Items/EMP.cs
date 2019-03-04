@@ -6,7 +6,7 @@ using UnityEngine;
 public class EMP : Item {
 
     public string description;
-    private bool consumable = false;
+    private bool consumable = true;
 	Player player;
 	float speed = 2000.0f;
 	GameObject nade;
@@ -27,6 +27,8 @@ public class EMP : Item {
 
     public override bool checkType()
     {
+		Debug.Log("checking type");
+		Debug.Log(consumable);
         return consumable;
     } 
 

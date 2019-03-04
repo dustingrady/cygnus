@@ -9,10 +9,12 @@ public class AudioController : MonoBehaviour {
 
 	void Start () {
 		source = GameManager.instance.GetComponent<AudioSource> ();
-		console.log (audio [0].name);
-		if (audio.Length > 0 && source.clip != audio [0]) {
-			source.clip = audio [0]; //First song in array will be main background track
-			source.Play ();
+		if (audio.Length > 0) {
+			console.log (audio [0].name);
+			if (audio.Length > 0 && source.clip != audio [0]) {
+				source.clip = audio [0]; //First song in array will be main background track
+				source.Play ();
+			}
 		}
 	}
 
